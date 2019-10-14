@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IPatientMedicalDmDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.PatientMedicalDm" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEDICAL_CODE" property="medicalCode" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="DENTAL_POSITION" property="dentalPosition" jdbcType="VARCHAR" />
+    <result column="DENTAL_SURFACE" property="dentalSurface" jdbcType="VARCHAR" />
+    <result column="DM_DISPOSAL_REMARK" property="dmDisposalRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MEDICAL_CODE, CREATE_DATE, CREATE_ID, CREATE_NAME, REMARK, REMARK2, REMARK3, 
+    REMARK4, UPDATE_ID, UPDATE_NAME, UPDATE_DATE, DENTAL_POSITION, DENTAL_SURFACE, DM_DISPOSAL_REMARK
+  </sql>
+  
+  <resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.PatientMedicalDmDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+						<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.medicalCode != null and param.medicalCode !='' ">
+					<![CDATA[and MEDICAL_CODE =#{param.medicalCode}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findPatientMedicalDms" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalDmPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_medical_dm
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findPatientMedicalDmPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalDmPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_medical_dm
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findPatientMedicalDmPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalDmPage">
+		select count(*)
+		FROM patient_medical_dm
+		<include refid="findPage_condition" />
+	</select>
+	
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from patient_medical_dm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from patient_medical_dm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientMedicalDm" >
+    insert into patient_medical_dm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="medicalCode != null" >
+        MEDICAL_CODE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createName != null" >
+        CREATE_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateName != null" >
+        UPDATE_NAME,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="dentalPosition != null" >
+        DENTAL_POSITION,
+      </if>
+      <if test="dentalSurface != null" >
+        DENTAL_SURFACE,
+      </if>
+      <if test="dmDisposalRemark != null" >
+        DM_DISPOSAL_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalCode != null" >
+        #{medicalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dentalPosition != null" >
+        #{dentalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalSurface != null" >
+        #{dentalSurface,jdbcType=VARCHAR},
+      </if>
+      <if test="dmDisposalRemark != null" >
+        #{dmDisposalRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.PatientMedicalDm" >
+    update patient_medical_dm
+    <set >
+      <if test="medicalCode != null" >
+        MEDICAL_CODE = #{medicalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dentalPosition != null" >
+        DENTAL_POSITION = #{dentalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalSurface != null" >
+        DENTAL_SURFACE = #{dentalSurface,jdbcType=VARCHAR},
+      </if>
+      <if test="dmDisposalRemark != null" >
+        DM_DISPOSAL_REMARK = #{dmDisposalRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

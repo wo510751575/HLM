@@ -34,33 +34,72 @@
     <result column="UPDATE_NAME" jdbcType="VARCHAR" property="updateName" />
     <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
+  <resultMap id="checkResultMap" type="com.ye.business.hx.dto.PatientMedicalCheckDto">
+    <id column="C_CODE" property="code" jdbcType="VARCHAR" />
+    <result column="C_CHECK_ORAL_REMARK" property="checkOralRemark" jdbcType="VARCHAR" />
+    <result column="C_CHECK_AUXILIARY_REMARK" property="checkAuxiliaryRemark" jdbcType="VARCHAR" />
+    <result column="C_DENTAL_POSITION" property="dentalPosition" jdbcType="VARCHAR" />
+    <result column="C_DENTAL_SURFACE" property="dentalSurface" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="dmResultMap" type="com.ye.business.hx.dto.PatientMedicalDmDto">
+    <id column="D_CODE" property="code" jdbcType="VARCHAR" />
+    <result column="D_DENTAL_POSITION" property="dentalPosition" jdbcType="VARCHAR" />
+    <result column="D_DENTAL_SURFACE" property="dentalSurface" jdbcType="VARCHAR" />
+    <result column="D_DM_DISPOSAL_REMARK" property="dmDisposalRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="planResultMap" type="com.ye.business.hx.dto.PatientMedicalPlanDto">
+    <id column="P_CODE" property="code" jdbcType="VARCHAR" />
+    <result column="P_DENTAL_POSITION" property="dentalPosition" jdbcType="VARCHAR" />
+    <result column="P_DENTAL_SURFACE" property="dentalSurface" jdbcType="VARCHAR" />
+    <result column="P_PLAN_DIAGNOSIS_REMARK" property="planDiagnosisRemark" jdbcType="VARCHAR" />
+    <result column="P_PLAN_TREATMENT_REMARK" property="planTreatmentRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" type="com.ye.business.hx.dto.PatientMedicalDto" extends="BaseResultMap">
+		<collection property="checks"  ofType="com.ye.business.hx.dto.PatientMedicalCheckDto"   resultMap="checkResultMap"/>
+		<collection property="dms"  ofType="com.ye.business.hx.dto.PatientMedicalDmDto"   resultMap="dmResultMap"/>  
+		<collection property="plans"  ofType="com.ye.business.hx.dto.PatientMedicalPlanDto"   resultMap="planResultMap"/>    
+	</resultMap>
+	
+  
   <sql id="Base_Column_List">
-    CODE, PATIENT_RESERVATION_CODE, PATIENT_NO, PATIENT_NAME, DOCTOR_NO, DOCTOR_NAME, 
-    ASSISTANT_NO, ASSISTANT_NAME, VISITING_DATE, VISITING_TYPE, MAIN_REMARK, MAIN_CURRENT_REMARK, 
-    MAIN_PAST_REMARK, CHECK_ORAL_REMARK, CHECK_AUXILIARY_REMARK, PLAN_DIAGNOSIS_REMARK, 
-    PLAN_TREATMENT_REMARK, DM_DISPOSAL_REMARK, DM_MEDICAL_REMARK, OTHER_LABEL_REMARK, 
-    OTHER_REMARK, CREATE_DATE, CREATE_ID, CREATE_NAME, REMARK, REMARK2, REMARK3, REMARK4, 
-    UPDATE_ID, UPDATE_NAME, UPDATE_DATE
+    pm.CODE, pm.PATIENT_RESERVATION_CODE, pm.PATIENT_NO, pm.PATIENT_NAME, pm.DOCTOR_NO, pm.DOCTOR_NAME, 
+    pm.ASSISTANT_NO, pm.ASSISTANT_NAME, pm.VISITING_DATE, pm.VISITING_TYPE, pm.MAIN_REMARK, pm.MAIN_CURRENT_REMARK, 
+    pm.MAIN_PAST_REMARK, pm.CHECK_ORAL_REMARK, pm.CHECK_AUXILIARY_REMARK, pm.PLAN_DIAGNOSIS_REMARK, 
+    pm.PLAN_TREATMENT_REMARK, pm.DM_DISPOSAL_REMARK, pm.DM_MEDICAL_REMARK, pm.OTHER_LABEL_REMARK, 
+    pm.OTHER_REMARK, pm.CREATE_DATE, pm.CREATE_ID, pm.CREATE_NAME, pm.REMARK, pm.REMARK2, pm.REMARK3, pm.REMARK4, 
+    pm.UPDATE_ID, pm.UPDATE_NAME, pm.UPDATE_DATE
   </sql>
-
-	<resultMap id="FindResultMap"
-		type="com.ye.business.hx.dto.PatientMedicalDto"
-		extends="BaseResultMap"></resultMap>
+	<sql id="check_Column_List">
+      ck.CODE C_CODE,ck.CHECK_ORAL_REMARK C_CHECK_ORAL_REMARK,ck.CHECK_AUXILIARY_REMARK C_CHECK_AUXILIARY_REMARK
+      ,ck.DENTAL_POSITION C_DENTAL_POSITION,ck.DENTAL_SURFACE C_DENTAL_SURFACE
+  </sql>
+  <sql id="dm_Column_List">
+      dm.CODE D_CODE,dm.DENTAL_POSITION D_DENTAL_POSITION,dm.DENTAL_SURFACE D_DENTAL_SURFACE
+      ,dm.DM_DISPOSAL_REMARK D_DM_DISPOSAL_REMARK
+  </sql>
+	<sql id="plan_Column_List">
+      plan.CODE P_CODE,plan.DENTAL_POSITION P_DENTAL_POSITION,plan.DENTAL_SURFACE P_DENTAL_SURFACE
+      ,plan.PLAN_DIAGNOSIS_REMARK P_PLAN_DIAGNOSIS_REMARK,plan.PLAN_TREATMENT_REMARK P_PLAN_TREATMENT_REMARK
+  </sql>
+	
 	<sql id="findPage_condition">
 		<where>
 			<!-- 查询条件根据业务需求自由添加 -->
 			<if test="param!=null">
 				<if test="param.code != null and param.code !='' ">
-					<![CDATA[and code =#{param.code}]]>
+					<![CDATA[and pm.CODE =#{param.code}]]>
 				</if>
 				<if test="param.patientNo != null and param.patientNo !='' ">
-					<![CDATA[and PATIENT_NO =#{param.patientNo}]]>
+					<![CDATA[and pm.PATIENT_NO =#{param.patientNo}]]>
 				</if>
 			</if>
 		</where>
 		<if test="sortBy != null and sortBy != ''">
 			<if test="'createDesc'.equals(sortBy)">
-				order by CREATE_DATE desc
+				order by pm.CREATE_DATE desc
 			</if>
 		</if>
 	</sql>
@@ -69,7 +108,13 @@
 		parameterType="com.ye.business.hx.dto.FindPatientMedicalPage">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM patient_medical
+		,<include refid="check_Column_List" />
+		,<include refid="dm_Column_List" />
+		,<include refid="plan_Column_List" />
+		FROM patient_medical pm
+		LEFT JOIN patient_medical_check ck on ck.MEDICAL_CODE = pm.CODE
+		LEFT JOIN patient_medical_dm dm on dm.MEDICAL_CODE = pm.CODE
+		LEFT JOIN patient_medical_plan plan on plan.MEDICAL_CODE = pm.CODE
 		<include refid="findPage_condition" />
 
 	</select>
@@ -78,7 +123,13 @@
 		parameterType="com.ye.business.hx.dto.FindPatientMedicalPage">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM patient_medical
+		,<include refid="check_Column_List" />
+		,<include refid="dm_Column_List" />
+		,<include refid="plan_Column_List" />
+		FROM patient_medical pm
+		LEFT JOIN patient_medical_check ck on ck.MEDICAL_CODE = pm.CODE
+		LEFT JOIN patient_medical_dm dm on dm.MEDICAL_CODE = pm.CODE
+		LEFT JOIN patient_medical_plan plan on plan.MEDICAL_CODE = pm.CODE
 		<include refid="findPage_condition" />
 
 		limit ${start} , ${limit}
@@ -87,46 +138,34 @@
 	<select id="findPatientMedicalPageCount" resultType="int"
 		parameterType="com.ye.business.hx.dto.FindPatientMedicalPage">
 		select count(*)
-		FROM patient_medical
+		FROM patient_medical pm
 		<include refid="findPage_condition" />
 	</select>
 
-  
+  <select id="selectByCode" parameterType="java.lang.String" resultMap="FindResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,<include refid="check_Column_List" />
+	,<include refid="dm_Column_List" />
+	,<include refid="plan_Column_List" />
+	FROM patient_medical pm
+	LEFT JOIN patient_medical_check ck on ck.MEDICAL_CODE = pm.CODE
+	LEFT JOIN patient_medical_dm dm on dm.MEDICAL_CODE = pm.CODE
+	LEFT JOIN patient_medical_plan plan on plan.MEDICAL_CODE = pm.CODE
+    where pm.CODE = #{code,jdbcType=VARCHAR}
+  </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from patient_medical
-    where CODE = #{code,jdbcType=VARCHAR}
+    from patient_medical pm
+    where pm.CODE = #{code,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from patient_medical
     where CODE = #{code,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.ye.business.hx.domain.PatientMedical">
-    insert into patient_medical (CODE, PATIENT_RESERVATION_CODE, PATIENT_NO, 
-      PATIENT_NAME, DOCTOR_NO, DOCTOR_NAME, 
-      ASSISTANT_NO, ASSISTANT_NAME, VISITING_DATE, 
-      VISITING_TYPE, MAIN_REMARK, MAIN_CURRENT_REMARK, 
-      MAIN_PAST_REMARK, CHECK_ORAL_REMARK, CHECK_AUXILIARY_REMARK, 
-      PLAN_DIAGNOSIS_REMARK, PLAN_TREATMENT_REMARK, 
-      DM_DISPOSAL_REMARK, DM_MEDICAL_REMARK, OTHER_LABEL_REMARK, 
-      OTHER_REMARK, CREATE_DATE, CREATE_ID, 
-      CREATE_NAME, REMARK, REMARK2, 
-      REMARK3, REMARK4, UPDATE_ID, 
-      UPDATE_NAME, UPDATE_DATE)
-    values (#{code,jdbcType=VARCHAR}, #{patientReservationCode,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, 
-      #{patientName,jdbcType=VARCHAR}, #{doctorNo,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
-      #{assistantNo,jdbcType=VARCHAR}, #{assistantName,jdbcType=VARCHAR}, #{visitingDate,jdbcType=TIMESTAMP}, 
-      #{visitingType,jdbcType=VARCHAR}, #{mainRemark,jdbcType=VARCHAR}, #{mainCurrentRemark,jdbcType=VARCHAR}, 
-      #{mainPastRemark,jdbcType=VARCHAR}, #{checkOralRemark,jdbcType=VARCHAR}, #{checkAuxiliaryRemark,jdbcType=VARCHAR}, 
-      #{planDiagnosisRemark,jdbcType=VARCHAR}, #{planTreatmentRemark,jdbcType=VARCHAR}, 
-      #{dmDisposalRemark,jdbcType=VARCHAR}, #{dmMedicalRemark,jdbcType=VARCHAR}, #{otherLabelRemark,jdbcType=VARCHAR}, 
-      #{otherRemark,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
-      #{createName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
-      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
-      #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
-  </insert>
   <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientMedical">
     insert into patient_medical
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -414,40 +453,6 @@
         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where CODE = #{code,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.PatientMedical">
-    update patient_medical
-    set PATIENT_RESERVATION_CODE = #{patientReservationCode,jdbcType=VARCHAR},
-      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
-      PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
-      DOCTOR_NO = #{doctorNo,jdbcType=VARCHAR},
-      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
-      ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
-      ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
-      VISITING_DATE = #{visitingDate,jdbcType=TIMESTAMP},
-      VISITING_TYPE = #{visitingType,jdbcType=VARCHAR},
-      MAIN_REMARK = #{mainRemark,jdbcType=VARCHAR},
-      MAIN_CURRENT_REMARK = #{mainCurrentRemark,jdbcType=VARCHAR},
-      MAIN_PAST_REMARK = #{mainPastRemark,jdbcType=VARCHAR},
-      CHECK_ORAL_REMARK = #{checkOralRemark,jdbcType=VARCHAR},
-      CHECK_AUXILIARY_REMARK = #{checkAuxiliaryRemark,jdbcType=VARCHAR},
-      PLAN_DIAGNOSIS_REMARK = #{planDiagnosisRemark,jdbcType=VARCHAR},
-      PLAN_TREATMENT_REMARK = #{planTreatmentRemark,jdbcType=VARCHAR},
-      DM_DISPOSAL_REMARK = #{dmDisposalRemark,jdbcType=VARCHAR},
-      DM_MEDICAL_REMARK = #{dmMedicalRemark,jdbcType=VARCHAR},
-      OTHER_LABEL_REMARK = #{otherLabelRemark,jdbcType=VARCHAR},
-      OTHER_REMARK = #{otherRemark,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      CREATE_ID = #{createId,jdbcType=VARCHAR},
-      CREATE_NAME = #{createName,jdbcType=VARCHAR},
-      REMARK = #{remark,jdbcType=VARCHAR},
-      REMARK2 = #{remark2,jdbcType=VARCHAR},
-      REMARK3 = #{remark3,jdbcType=VARCHAR},
-      REMARK4 = #{remark4,jdbcType=VARCHAR},
-      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
-      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
-      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
   <select id="selectByPatientReservationCode" parameterType="java.lang.String" resultMap="BaseResultMap">

@@ -1,11 +1,18 @@
 package com.ye.business.hx.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PatientMedicalDto implements Serializable { 
 
-    /** CODE*/
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** CODE*/
     private String code;
 
     /** 患者服务CODE：FK*/
@@ -98,7 +105,44 @@ public class PatientMedicalDto implements Serializable {
     /** 更新时间*/
     private Date updateDate;
 
-    public String getCode() {
+    /**
+     * 口腔检查集合
+     */
+    private List<PatientMedicalCheckDto> checks = new ArrayList<>();
+    /**
+     * 处置与医嘱集合
+     */
+    private List<PatientMedicalDmDto> dms = new ArrayList<>();
+    /**
+     * 诊断与治疗计划集合
+     */
+    private List<PatientMedicalPlanDto> plans = new ArrayList<>();
+    
+	public List<PatientMedicalCheckDto> getChecks() {
+		return checks;
+	}
+
+	public void setChecks(List<PatientMedicalCheckDto> checks) {
+		this.checks = checks;
+	}
+
+	public List<PatientMedicalDmDto> getDms() {
+		return dms;
+	}
+
+	public void setDms(List<PatientMedicalDmDto> dms) {
+		this.dms = dms;
+	}
+
+	public List<PatientMedicalPlanDto> getPlans() {
+		return plans;
+	}
+
+	public void setPlans(List<PatientMedicalPlanDto> plans) {
+		this.plans = plans;
+	}
+
+	public String getCode() {
         return code;
     }
 
@@ -358,8 +402,9 @@ public class PatientMedicalDto implements Serializable {
 				+ ", dmMedicalRemark=" + dmMedicalRemark + ", otherLabelRemark=" + otherLabelRemark + ", otherRemark="
 				+ otherRemark + ", createDate=" + createDate + ", createId=" + createId + ", createName=" + createName
 				+ ", remark=" + remark + ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4
-				+ ", updateId=" + updateId + ", updateName=" + updateName + ", updateDate=" + updateDate + "]";
+				+ ", updateId=" + updateId + ", updateName=" + updateName + ", updateDate=" + updateDate + ", checks="
+				+ checks + ", dms=" + dms + ", plans=" + plans + "]";
 	}
-    
+
     
 }

@@ -9,16 +9,12 @@ import com.ye.business.hx.dto.PatientMedicalDto;
 public interface IPatientMedicalDao {
     int deleteByPrimaryKey(String code);
 
-    int insert(PatientMedical record);
-
     int insertSelective(PatientMedical record);
 
     PatientMedical selectByPrimaryKey(String code);
 
     int updateByPrimaryKeySelective(PatientMedical record);
 
-    int updateByPrimaryKey(PatientMedical record);
-    
     List<PatientMedicalDto> findPatientMedicals(FindPatientMedicalPage findPatientMedicalPage);
     
     List<PatientMedicalDto> findPatientMedicalPage(FindPatientMedicalPage findPatientMedicalPage);
@@ -28,4 +24,6 @@ public interface IPatientMedicalDao {
     PatientMedical selectByPatientReservationCode(String code);
     
     int updateByPrimaryKeyMedical(PatientMedical record);
+    
+    PatientMedicalDto selectByCode(String code);
 }

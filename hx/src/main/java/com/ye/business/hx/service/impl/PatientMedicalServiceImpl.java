@@ -1,5 +1,6 @@
 package com.ye.business.hx.service.impl;
 
+import java.util.Date;
 /**
  * Copyright &copy; 2017-2020  All rights reserved.
  *
@@ -21,10 +22,19 @@ import com.lj.base.core.util.AssertUtils;
 import com.lj.base.core.util.GUID;
 import com.lj.base.exception.TsfaServiceException;
 import com.ye.business.hx.constant.ErrorCode;
+import com.ye.business.hx.dao.IPatientMedicalCheckDao;
 import com.ye.business.hx.dao.IPatientMedicalDao;
+import com.ye.business.hx.dao.IPatientMedicalDmDao;
+import com.ye.business.hx.dao.IPatientMedicalPlanDao;
 import com.ye.business.hx.domain.PatientMedical;
+import com.ye.business.hx.domain.PatientMedicalCheck;
+import com.ye.business.hx.domain.PatientMedicalDm;
+import com.ye.business.hx.domain.PatientMedicalPlan;
 import com.ye.business.hx.dto.FindPatientMedicalPage;
+import com.ye.business.hx.dto.PatientMedicalCheckDto;
+import com.ye.business.hx.dto.PatientMedicalDmDto;
 import com.ye.business.hx.dto.PatientMedicalDto;
+import com.ye.business.hx.dto.PatientMedicalPlanDto;
 import com.ye.business.hx.dto.PatientServiceDto;
 import com.ye.business.hx.service.IPatientMedicalService;
 import com.ye.business.hx.service.IPatientServiceService;
@@ -54,7 +64,12 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 	// 服务预约/挂号/就诊
 	@Autowired
 	private IPatientServiceService patientServiceService;
-	
+	@Resource
+	private IPatientMedicalCheckDao patientMedicalCheckDao;
+	@Resource
+	private IPatientMedicalDmDao patientMedicalDmDao;
+	@Resource
+	private IPatientMedicalPlanDao patientMedicalPlanDao;
 	
 	@Override
 	public void addPatientMedical(
@@ -86,17 +101,14 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			patientMedical.setDmMedicalRemark(patientMedicalDto.getDmMedicalRemark());
 			patientMedical.setOtherLabelRemark(patientMedicalDto.getOtherLabelRemark());
 			patientMedical.setOtherRemark(patientMedicalDto.getOtherRemark());
-			patientMedical.setCreateDate(patientMedicalDto.getCreateDate());
+			patientMedical.setCreateDate(new Date());
 			patientMedical.setCreateId(patientMedicalDto.getCreateId());
 			patientMedical.setCreateName(patientMedicalDto.getCreateName());
 			patientMedical.setRemark(patientMedicalDto.getRemark());
 			patientMedical.setRemark2(patientMedicalDto.getRemark2());
 			patientMedical.setRemark3(patientMedicalDto.getRemark3());
 			patientMedical.setRemark4(patientMedicalDto.getRemark4());
-			patientMedical.setUpdateId(patientMedicalDto.getUpdateId());
-			patientMedical.setUpdateName(patientMedicalDto.getUpdateName());
-			patientMedical.setUpdateDate(patientMedicalDto.getUpdateDate());
-			patientMedicalDao.insert(patientMedical);
+			patientMedicalDao.insertSelective(patientMedical);
 			logger.debug("addPatientMedical(PatientMedicalDto) - end - return"); 
 		}catch (TsfaServiceException e) {
 			logger.error(e.getMessage(),e);
@@ -137,7 +149,7 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 	public void updatePatientMedical(
 			PatientMedicalDto patientMedicalDto)
 			throws TsfaServiceException {
-		logger.debug("updatePatientMedical(PatientMedicalDto patientMedicalDto={}) - start", patientMedicalDto); //$NON-NLS-1$
+		logger.debug("updatePatientMedical(PatientMedicalDto patientMedicalDto={}) - start", patientMedicalDto); 
 
 		AssertUtils.notNull(patientMedicalDto);
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getCode(),"Code不能为空");
@@ -165,18 +177,15 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			patientMedical.setDmMedicalRemark(patientMedicalDto.getDmMedicalRemark());
 			patientMedical.setOtherLabelRemark(patientMedicalDto.getOtherLabelRemark());
 			patientMedical.setOtherRemark(patientMedicalDto.getOtherRemark());
-			patientMedical.setCreateDate(patientMedicalDto.getCreateDate());
-			patientMedical.setCreateId(patientMedicalDto.getCreateId());
-			patientMedical.setCreateName(patientMedicalDto.getCreateName());
 			patientMedical.setRemark(patientMedicalDto.getRemark());
 			patientMedical.setRemark2(patientMedicalDto.getRemark2());
 			patientMedical.setRemark3(patientMedicalDto.getRemark3());
 			patientMedical.setRemark4(patientMedicalDto.getRemark4());
 			patientMedical.setUpdateId(patientMedicalDto.getUpdateId());
 			patientMedical.setUpdateName(patientMedicalDto.getUpdateName());
-			patientMedical.setUpdateDate(patientMedicalDto.getUpdateDate());
+			patientMedical.setUpdateDate(new Date());
 			AssertUtils.notUpdateMoreThanOne(patientMedicalDao.updateByPrimaryKeySelective(patientMedical));
-			logger.debug("updatePatientMedical(PatientMedicalDto) - end - return"); //$NON-NLS-1$
+			logger.debug("updatePatientMedical(PatientMedicalDto) - end - return"); 
 		}catch (TsfaServiceException e) {
 			logger.error(e.getMessage(),e);
 			throw e;
@@ -191,7 +200,7 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 	@Override
 	public PatientMedicalDto findPatientMedical(
 			PatientMedicalDto patientMedicalDto) throws TsfaServiceException {
-		logger.debug("findPatientMedical(FindPatientMedical findPatientMedical={}) - start", patientMedicalDto); //$NON-NLS-1$
+		logger.debug("findPatientMedical(FindPatientMedical findPatientMedical={}) - start", patientMedicalDto); 
 
 		AssertUtils.notNull(patientMedicalDto);
 		AssertUtils.notAllNull(patientMedicalDto.getCode(),"Code不能为空");
@@ -235,7 +244,7 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			findPatientMedicalReturn.setUpdateName(patientMedical.getUpdateName());
 			findPatientMedicalReturn.setUpdateDate(patientMedical.getUpdateDate());
 			
-			logger.debug("findPatientMedical(PatientMedicalDto) - end - return value={}", findPatientMedicalReturn); //$NON-NLS-1$
+			logger.debug("findPatientMedical(PatientMedicalDto) - end - return value={}", findPatientMedicalReturn); 
 			return findPatientMedicalReturn;
 		}catch (TsfaServiceException e) {
 			logger.error(e.getMessage(),e);
@@ -253,7 +262,7 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 	public Page<PatientMedicalDto> findPatientMedicalPage(
 			FindPatientMedicalPage findPatientMedicalPage)
 			throws TsfaServiceException {
-		logger.debug("findPatientMedicalPage(FindPatientMedicalPage findPatientMedicalPage={}) - start", findPatientMedicalPage); //$NON-NLS-1$
+		logger.debug("findPatientMedicalPage(FindPatientMedicalPage findPatientMedicalPage={}) - start", findPatientMedicalPage); 
 
 		AssertUtils.notNull(findPatientMedicalPage);
 		List<PatientMedicalDto> returnList=null;
@@ -267,7 +276,7 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 		}
 		Page<PatientMedicalDto> returnPage = new Page<PatientMedicalDto>(returnList, count, findPatientMedicalPage);
 
-		logger.debug("findPatientMedicalPage(FindPatientMedicalPage) - end - return value={}", returnPage); //$NON-NLS-1$
+		logger.debug("findPatientMedicalPage(FindPatientMedicalPage) - end - return value={}", returnPage); 
 		return  returnPage;
 	} 
 
@@ -300,17 +309,14 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			patientMedical.setDmMedicalRemark(patientMedicalDto.getDmMedicalRemark());
 			patientMedical.setOtherLabelRemark(patientMedicalDto.getOtherLabelRemark());
 			patientMedical.setOtherRemark(patientMedicalDto.getOtherRemark());
-			patientMedical.setCreateDate(patientMedicalDto.getCreateDate());
+			patientMedical.setCreateDate(new Date());
 			patientMedical.setCreateId(patientMedicalDto.getCreateId());
 			patientMedical.setCreateName(patientMedicalDto.getCreateName());
 			patientMedical.setRemark(patientMedicalDto.getRemark());
 			patientMedical.setRemark2(patientMedicalDto.getRemark2());
 			patientMedical.setRemark3(patientMedicalDto.getRemark3());
 			patientMedical.setRemark4(patientMedicalDto.getRemark4());
-			patientMedical.setUpdateId(patientMedicalDto.getUpdateId());
-			patientMedical.setUpdateName(patientMedicalDto.getUpdateName());
-			patientMedical.setUpdateDate(patientMedicalDto.getUpdateDate());
-			patientMedicalDao.insert(patientMedical);
+			patientMedicalDao.insertSelective(patientMedical);
 			
 			// 患者预约code不为空，修改患者预约咨询时间
 			if (StringUtils.isNotBlank(patientMedicalDto.getPatientReservationCode())) {
@@ -324,6 +330,44 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 				patientServiceDto.setMedicalDate(patientMedicalDto.getCreateDate());
 				
 				this.patientServiceService.updatePatientService(patientServiceDto);
+			}
+			
+			//口腔检查 
+			if(patientMedicalDto.getChecks().size()>0) {
+				for (PatientMedicalCheckDto check : patientMedicalDto.getChecks()) {
+					PatientMedicalCheck record = new PatientMedicalCheck();
+					record.setMedicalCode(patientMedical.getCode());
+					record.setCheckAuxiliaryRemark(check.getCheckAuxiliaryRemark());
+					record.setCheckOralRemark(check.getCheckOralRemark());
+					record.setDentalPosition(check.getDentalPosition());
+					record.setDentalSurface(check.getDentalSurface());
+					patientMedicalCheckDao.insertSelective(record);
+				}
+			}
+			
+			//处置与医嘱
+			if(patientMedicalDto.getDms().size()>0) {
+				for (PatientMedicalDmDto dm : patientMedicalDto.getDms()) {
+					PatientMedicalDm record = new PatientMedicalDm();
+					record.setMedicalCode(patientMedical.getCode());
+					record.setDmDisposalRemark(dm.getDmDisposalRemark());
+					record.setDentalPosition(dm.getDentalPosition());
+					record.setDentalSurface(dm.getDentalSurface());
+					patientMedicalDmDao.insertSelective(record);
+				}
+			}
+			
+			//诊断与治疗计划
+			if(patientMedicalDto.getPlans().size()>0) {
+				for (PatientMedicalPlanDto plan : patientMedicalDto.getPlans()) {
+					PatientMedicalPlan record = new PatientMedicalPlan();
+					record.setMedicalCode(patientMedical.getCode());
+					record.setPlanDiagnosisRemark(plan.getPlanDiagnosisRemark());
+					record.setPlanTreatmentRemark(plan.getPlanTreatmentRemark());
+					record.setDentalPosition(plan.getDentalPosition());
+					record.setDentalSurface(plan.getDentalSurface());
+					patientMedicalPlanDao.insertSelective(record);
+				}
 			}
 			
 			logger.debug("addPatientMedicalByReservation(PatientMedicalDto) - end - return"); 
@@ -340,7 +384,7 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 	
 	@Override
 	public PatientMedicalDto findPatientMedicalByPatientReservationCode(PatientMedicalDto patientMedicalDto) throws TsfaServiceException {
-		logger.debug("findPatientMedicalByPatientReservationCode(FindPatientMedical findPatientMedical={}) - start", patientMedicalDto); //$NON-NLS-1$
+		logger.debug("findPatientMedicalByPatientReservationCode(FindPatientMedical findPatientMedical={}) - start", patientMedicalDto); 
 
 		AssertUtils.notNull(patientMedicalDto);
 		AssertUtils.notAllNull(patientMedicalDto.getPatientReservationCode(),"患者服务Code不能为空");
@@ -384,8 +428,26 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			findPatientMedicalReturn.setUpdateName(patientMedical.getUpdateName());
 			findPatientMedicalReturn.setUpdateDate(patientMedical.getUpdateDate());
 			
-			logger.debug("findPatientMedicalByPatientReservationCode(PatientMedicalDto) - end - return value={}", findPatientMedicalReturn); //$NON-NLS-1$
+			logger.debug("findPatientMedicalByPatientReservationCode(PatientMedicalDto) - end - return value={}", findPatientMedicalReturn); 
 			return findPatientMedicalReturn;
+		}catch (TsfaServiceException e) {
+			logger.error(e.getMessage(),e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("查找患者病历信息信息错误！",e);
+			throw new TsfaServiceException(ErrorCode.PATIENT_MEDICAL_FIND_ERROR,"查找患者病历信息信息错误！",e);
+		}
+
+	}
+	
+	@Override
+	public PatientMedicalDto findPatientMedical(String code) throws TsfaServiceException {
+		logger.debug("findPatientMedical(String code={}) - start", code); 
+		AssertUtils.notAllNull(code,"Code不能为空");
+		try {
+			PatientMedicalDto patientMedical = patientMedicalDao.selectByCode(code);
+			logger.debug("findPatientMedical(String code) - end - return value={}", patientMedical); 
+			return patientMedical;
 		}catch (TsfaServiceException e) {
 			logger.error(e.getMessage(),e);
 			throw e;
@@ -396,55 +458,22 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 
 
 	}
-	
-	@Override
-	public void updatePatientMedicalByCode(PatientMedicalDto patientMedicalDto) throws TsfaServiceException {
-		logger.debug("updatePatientMedicalByCode(PatientMedicalDto patientMedicalDto={}) - start", patientMedicalDto); //$NON-NLS-1$
 
+
+	@Override
+	public void delPatientMedical(PatientMedicalDto patientMedicalDto) throws TsfaServiceException {
+		logger.debug("delPatientMedical(PatientMedicalDto patientMedicalDto={}) - start", patientMedicalDto); 
 		AssertUtils.notNull(patientMedicalDto);
-		AssertUtils.notNullAndEmpty(patientMedicalDto.getCode(),"Code不能为空");
+		AssertUtils.notAllNull(patientMedicalDto.getCode(),"Code不能为空");
+		int i =0;
 		try {
-			PatientMedical patientMedical = new PatientMedical();
-			//update数据录入
-			patientMedical.setCode(patientMedicalDto.getCode());
-			patientMedical.setPatientReservationCode(patientMedicalDto.getPatientReservationCode());
-			patientMedical.setPatientNo(patientMedicalDto.getPatientNo());
-			patientMedical.setPatientName(patientMedicalDto.getPatientName());
-			patientMedical.setDoctorNo(patientMedicalDto.getDoctorNo());
-			patientMedical.setDoctorName(patientMedicalDto.getDoctorName());
-			patientMedical.setAssistantNo(patientMedicalDto.getAssistantNo());
-			patientMedical.setAssistantName(patientMedicalDto.getAssistantName());
-			patientMedical.setVisitingDate(patientMedicalDto.getVisitingDate());
-			patientMedical.setVisitingType(patientMedicalDto.getVisitingType());
-			patientMedical.setMainRemark(patientMedicalDto.getMainRemark());
-			patientMedical.setMainCurrentRemark(patientMedicalDto.getMainCurrentRemark());
-			patientMedical.setMainPastRemark(patientMedicalDto.getMainPastRemark());
-			patientMedical.setCheckOralRemark(patientMedicalDto.getCheckOralRemark());
-			patientMedical.setCheckAuxiliaryRemark(patientMedicalDto.getCheckAuxiliaryRemark());
-			patientMedical.setPlanDiagnosisRemark(patientMedicalDto.getPlanDiagnosisRemark());
-			patientMedical.setPlanTreatmentRemark(patientMedicalDto.getPlanTreatmentRemark());
-			patientMedical.setDmDisposalRemark(patientMedicalDto.getDmDisposalRemark());
-			patientMedical.setDmMedicalRemark(patientMedicalDto.getDmMedicalRemark());
-			patientMedical.setOtherLabelRemark(patientMedicalDto.getOtherLabelRemark());
-			patientMedical.setOtherRemark(patientMedicalDto.getOtherRemark());
-			patientMedical.setCreateDate(patientMedicalDto.getCreateDate());
-			patientMedical.setCreateId(patientMedicalDto.getCreateId());
-			patientMedical.setCreateName(patientMedicalDto.getCreateName());
-			patientMedical.setRemark(patientMedicalDto.getRemark());
-			patientMedical.setRemark2(patientMedicalDto.getRemark2());
-			patientMedical.setRemark3(patientMedicalDto.getRemark3());
-			patientMedical.setRemark4(patientMedicalDto.getRemark4());
-			patientMedical.setUpdateId(patientMedicalDto.getUpdateId());
-			patientMedical.setUpdateName(patientMedicalDto.getUpdateName());
-			patientMedical.setUpdateDate(patientMedicalDto.getUpdateDate());
-			AssertUtils.notUpdateMoreThanOne(patientMedicalDao.updateByPrimaryKeyMedical(patientMedical));
-			logger.debug("updatePatientMedicalByCode(PatientMedicalDto) - end - return"); //$NON-NLS-1$
-		}catch (TsfaServiceException e) {
-			logger.error(e.getMessage(),e);
-			throw e;
-		} catch (Exception e) {
-			logger.error("患者病历信息更新信息错误！",e);
-			throw new TsfaServiceException(ErrorCode.PATIENT_MEDICAL_UPDATE_ERROR,"患者病历信息更新信息错误！",e);
+			i = patientMedicalDao.deleteByPrimaryKey(patientMedicalDto.getCode());
+		}  catch (Exception e) {
+			logger.error("患者病历信息不存在错误",e);
+			throw new TsfaServiceException(ErrorCode.PATIENT_MEDICAL_FIND_PAGE_ERROR,"患者病历信息不存在错误.！",e);
 		}
+
+		logger.debug("delPatientMedical(patientMedicalDto) - end - return value={}", i); 
+		
 	}
 }

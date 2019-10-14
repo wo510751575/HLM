@@ -129,16 +129,17 @@ public interface IPatientMedicalService {
 	public PatientMedicalDto findPatientMedicalByPatientReservationCode(PatientMedicalDto patientMedicalDto) throws TsfaServiceException;
 	
 	/**
-	 * 
-	 *
-	 * 方法说明：修改患者病历信息
-	 *
-	 * @param updatePatientMedical
+	 * 关联查询
+	 * @param code
 	 * @return
 	 * @throws TsfaServiceException
-	 *
-	 * @author lhy CreateDate: 2019-03-08
-	 *
 	 */
-	public void updatePatientMedicalByCode(PatientMedicalDto patientMedicalDto)throws TsfaServiceException;
+	public PatientMedicalDto findPatientMedical(String code) throws TsfaServiceException;
+	
+	/**
+	 * 删除病历
+	 * @param patientMedicalDto
+	 * @throws TsfaServiceException
+	 */
+	public void delPatientMedical(PatientMedicalDto patientMedicalDto)throws TsfaServiceException;
 }

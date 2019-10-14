@@ -52,7 +52,7 @@ public class ApiHelp extends SpringTestCase {
 //		businessParamMap.put("limit", 0);
 //		doPost("member/checkLoginPwd.do", businessParamMap);
 //		doPost("area/findAllList.do", businessParamMap);
-		doPost("member/appLogin.do", businessParamMap);
+		doPost("/hx/medical/findMedicalByCode.do", businessParamMap);
 	}
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {
@@ -159,6 +159,36 @@ public class ApiHelp extends SpringTestCase {
 		params.put("signature", signature);
 		params.put("token", "");
 		String result = HttpClientUtils.postToWeb(ApiHelp.URL + "member/appLogin.do", params);
+		System.out.println("result= " + result); 
+		@SuppressWarnings("rawtypes")
+		Map<String, Class> classMap = new HashMap<String, Class>();
+		classMap.put("returnObject", PersonMemberLoginReturn.class);
+		GeneralResponse response = (GeneralResponse) JsonUtils.objectFromJson(result, GeneralResponse.class, classMap);
+		String token = ((PersonMemberLoginReturn)response.getReturnObject()).getToken();
+		System.out.println(token);
+		return token;
+	}
+	
+	/**
+	 * 好乐美登录
+	 * @return
+	 */
+	public static String login_HLM() {
+		Map<String,String> params = ApiHelp.buildBaseParamters();
+//		PersonMemberLogin login = new PersonMemberLogin();
+//		login.setMobile("15889399351");
+//		login.setPwd(MD5.encryptByMD5("111111"));
+//		String paramJson = JsonUtils.jsonFromObject(login);
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("loginName", "xuyisheng");
+		paramMap.put("pwd", MD5.encryptByMD5("a123456"));
+		String paramJson = JsonUtils.jsonFromObject(paramMap);
+		params.put("paramJson", paramJson);
+		String signature = MD5.encryptByMD5Twice(paramJson, params.get("timestamp") + SGIN_PARAM);
+		System.out.println(signature);
+		params.put("signature", signature);
+//		params.put("token",token);
+		String result = HttpClientUtils.postToWeb(ApiHelp.URL + "hx/login.do", params);
 		System.out.println("result= " + result); 
 		@SuppressWarnings("rawtypes")
 		Map<String, Class> classMap = new HashMap<String, Class>();

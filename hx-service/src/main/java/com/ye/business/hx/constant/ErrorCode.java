@@ -342,4 +342,58 @@ public class ErrorCode {
 	/** 节日问候海报模板信息不存在错误. */
 	public static final String FESTIVAL_POSTER_NOT_EXIST_ERROR = "festival_poster_not_exist_error";
 	
+	/** 新增病历检查信息错误. */
+	public static final String PATIENT_MEDICAL_CHECK_ADD_ERROR = "patient_medical_check_add_error";
+	/** 病历检查信息更新错误. */
+	public static final String PATIENT_MEDICAL_CHECK_UPDATE_ERROR = "patient_medical_check_update_error";
+	/** 查找病历检查信息错误. */
+	public static final String PATIENT_MEDICAL_CHECK_FIND_ERROR = "patient_medical_check_find_error";
+	/** 病历检查信息分页查询错误. */
+	public static final String PATIENT_MEDICAL_CHECK_FIND_PAGE_ERROR = "patient_medical_check_find_page_error";
+	/** 病历检查信息不存在错误. */
+	public static final String PATIENT_MEDICAL_CHECK_NOT_EXIST_ERROR = "patient_medical_check_not_exist_error";
+	
+	/** 新增处置与医嘱信息错误. */
+	public static final String PATIENT_MEDICAL_DM_ADD_ERROR = "patient_medical_dm_add_error";
+	/** 处置与医嘱信息更新错误. */
+	public static final String PATIENT_MEDICAL_DM_UPDATE_ERROR = "patient_medical_dm_update_error";
+	/** 查找处置与医嘱信息错误. */
+	public static final String PATIENT_MEDICAL_DM_FIND_ERROR = "patient_medical_dm_find_error";
+	/** 处置与医嘱信息分页查询错误. */
+	public static final String PATIENT_MEDICAL_DM_FIND_PAGE_ERROR = "patient_medical_dm_find_page_error";
+	/** 处置与医嘱信息不存在错误. */
+	public static final String PATIENT_MEDICAL_DM_NOT_EXIST_ERROR = "patient_medical_dm_not_exist_error";
+	
+	/** 新增诊断与治疗计划信息错误. */
+	public static final String PATIENT_MEDICAL_PLAN_ADD_ERROR = "patient_medical_plan_add_error";
+	/** 诊断与治疗计划信息更新错误. */
+	public static final String PATIENT_MEDICAL_PLAN_UPDATE_ERROR = "patient_medical_plan_update_error";
+	/** 查找诊断与治疗计划信息错误. */
+	public static final String PATIENT_MEDICAL_PLAN_FIND_ERROR = "patient_medical_plan_find_error";
+	/** 诊断与治疗计划信息分页查询错误. */
+	public static final String PATIENT_MEDICAL_PLAN_FIND_PAGE_ERROR = "patient_medical_plan_find_page_error";
+	/** 诊断与治疗计划信息不存在错误. */
+	public static final String PATIENT_MEDICAL_PLAN_NOT_EXIST_ERROR = "patient_medical_plan_not_exist_error";
+	
+	/** 新增模版信息错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_ADD_ERROR = "patient_medical_template_add_error";
+	/** 模版信息更新错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_UPDATE_ERROR = "patient_medical_template_update_error";
+	/** 查找模版信息错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_FIND_ERROR = "patient_medical_template_find_error";
+	/** 模版信息分页查询错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_FIND_PAGE_ERROR = "patient_medical_template_find_page_error";
+	/** 模版信息不存在错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_NOT_EXIST_ERROR = "patient_medical_template_not_exist_error";
+	
+	/** 新增模版目录信息错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_LIST_ADD_ERROR = "patient_medical_template_list_add_error";
+	/** 模版目录信息更新错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_LIST_UPDATE_ERROR = "patient_medical_template_list_update_error";
+	/** 查找模版目录信息错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_LIST_FIND_ERROR = "patient_medical_template_list_find_error";
+	/** 模版目录信息分页查询错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_LIST_FIND_PAGE_ERROR = "patient_medical_template_list_find_page_error";
+	/** 模版目录信息不存在错误. */
+	public static final String PATIENT_MEDICAL_TEMPLATE_LIST_NOT_EXIST_ERROR = "patient_medical_template_list_not_exist_error";
 }

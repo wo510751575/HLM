@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IPatientMedicalTemplateListDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.PatientMedicalTemplateList" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+    <result column="parent_name" property="parentName" jdbcType="CHAR" />
+    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    code, name, parent_code, parent_name, order_no, creater, create_time
+  </sql>
+  
+  <resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.PatientMedicalTemplateListDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+						<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.parentCode != null and param.parentCode !='' ">
+						<![CDATA[and parent_code =#{param.parentCode}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findPatientMedicalTemplateLists" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalTemplateListPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_medical_template_list
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findPatientMedicalTemplateListPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalTemplateListPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_medical_template_list
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findPatientMedicalTemplateListPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalTemplateListPage">
+		select count(*)
+		FROM patient_medical_template_list
+		<include refid="findPage_condition" />
+	</select>
+	
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from patient_medical_template_list
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from patient_medical_template_list
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientMedicalTemplateList" >
+    insert into patient_medical_template_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentCode != null" >
+        parent_code,
+      </if>
+      <if test="parentName != null" >
+        parent_name,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        #{parentName,jdbcType=CHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.PatientMedicalTemplateList" >
+    update patient_medical_template_list
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=CHAR},
+      </if>
+      <if test="parentCode != null" >
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=CHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

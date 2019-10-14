@@ -1,0 +1,5 @@
+需求：
+1.https://192.168.3.20/svn/pt/产品/HTML/好乐美/好乐美_APP_1.2
+
+2. http://121.201.65.181/app/logo/jukeimlogo.png
+用于分享使用

@@ -250,5 +250,37 @@
 		<property name="serviceInterface"
 			value="com.ye.business.hx.service.IShopFestivalPosterService" />
 	</bean>
+	<!-- 病历相关 -->
+	<bean name="/patientMedicalCheckService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientMedicalCheckServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientMedicalCheckService" />
+	</bean>
+	<bean name="/patientMedicalDmService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientMedicalDmServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientMedicalDmService" />
+	</bean>
+	<bean name="/patientMedicalPlanService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientMedicalPlanServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientMedicalPlanService" />
+	</bean>
+	<bean name="/patientMedicalTemplateService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientMedicalTemplateServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientMedicalTemplateService" />
+	</bean>
+	<bean name="/patientMedicalTemplateListService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientMedicalTemplateListServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientMedicalTemplateListService" />
+	</bean>
+	
 	
 </beans>

@@ -290,6 +290,31 @@
 			value="com.ye.business.hx.service.IShopFestivalPosterService" />
 	</bean>
 	
-	
+	<!-- 病历相关 -->
+	<bean id="patientMedicalCheckService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientMedicalCheckService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientMedicalCheckService" />
+	</bean>
+	<bean id="patientMedicalDmService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientMedicalDmService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientMedicalDmService" />
+	</bean>
+	<bean id="patientMedicalPlanService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientMedicalPlanService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientMedicalPlanService" />
+	</bean>
+	<bean id="patientMedicalTemplateService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientMedicalTemplateService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientMedicalTemplateService" />
+	</bean>
+	<bean id="patientMedicalTemplateListService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientMedicalTemplateListService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientMedicalTemplateListService" />
+	</bean>
 </beans> 
 

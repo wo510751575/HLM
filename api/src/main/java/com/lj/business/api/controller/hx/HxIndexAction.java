@@ -112,10 +112,10 @@ public class HxIndexAction extends Action {
 	public Map<Object, Object> loginByUsername(HttpServletRequest request,PersonMemberLogin personMemberLogin,String captcha){
 		logger.debug("loginByUsername(PersonMemberLogin personMemberLogin={}) - start", personMemberLogin);
 		
-		String code = (String)request.getSession().getAttribute(ValidateCodeServlet.VALIDATE_CODE);
-		if (captcha == null || !captcha.toUpperCase().equals(code)){
-			throw new TsfaServiceException(ErrorCode.PERSON_LOGIN_ERROR,"验证码错误！");
-		}
+//		String code = (String)request.getSession().getAttribute(ValidateCodeServlet.VALIDATE_CODE);
+//		if (captcha == null || !captcha.toUpperCase().equals(code)){
+//			throw new TsfaServiceException(ErrorCode.PERSON_LOGIN_ERROR,"验证码错误！");
+//		}
 		personMemberLogin.setCheckGmAssistant(false);//非必須有导购助手
 		PersonMemberLoginReturn loginReturn = memberLoginService.personMemberLoginAPP(personMemberLogin);
 		// 生成令牌
