@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.dao.MerchantWordsDao" >
+    <resultMap id="problemResultMap" type="com.lj.business.ai.dto.MerchantWordsDto">
+        <result property="code" column="code" ></result>
+        <result property="merchantNo" column="merchant_no"></result>
+        <result property="problemCode" column="problem_code" ></result>
+        <result property="answerCode" column="answer_code" ></result>
+        <result property="word" column="word"></result>
+        <result property="count" column="count" />
+        <result property="wordType" column="word_type" />
+        <result property="status" column="status"></result>
+        <result property="remark" column="remark"></result>
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
+    
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+	    delete from merchant_pre_word
+	    where CODE = #{code,jdbcType=VARCHAR}
+	  </delete>
+    <delete id="deleteByProblemCode" parameterType="java.lang.String" >
+	    delete from merchant_pre_word
+	    where PROBLEM_CODE = #{problemCode,jdbcType=VARCHAR}
+	  </delete>
+    
+    <insert id="addMerchantWords">
+        INSERT  INTO  merchant_pre_word
+        (code,merchant_no,word_type,problem_code,answer_code,word,count,status,remark,create_date,update_date)
+        values
+        (#{code},#{merchantNo},#{wordType},#{problemCode},#{answerCode},#{word},#{count},#{status},#{remark},#{createDate},#{updateDate})
+    </insert>
+
+    <select id="matchMerchantWordByWords" resultMap="problemResultMap" >
+        select  * from merchant_pre_word
+        where merchant_no = #{merchantNo}
+        and  INSTR (#{word},word) &gt; 0
+        order by count DESC
+
+    </select>
+    <select id="findMerchantWordByProblemCode" resultType="com.lj.business.ai.dto.MerchantWordsDto">
+              select  * from merchant_pre_word where problem_code = #{problemCode}
+    </select>
+
+</mapper>

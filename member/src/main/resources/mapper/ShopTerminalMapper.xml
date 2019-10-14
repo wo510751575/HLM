@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IShopTerminalDao">
+	<resultMap id="BaseResultMap"
+		type="com.lj.business.member.domain.ShopTerminal">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="TERMINAL_CODE" property="terminalCode"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+		<result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+		<result column="USERNAME_WX" property="usernameWx"
+			jdbcType="VARCHAR" />
+		<result column="WX_NICKNAME" property="wxNickname"
+			jdbcType="VARCHAR" />
+		<result column="HEAD_ADDRESS" property="headAddress"
+			jdbcType="VARCHAR" />
+		<result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="VARCHAR" />
+		<result column="WX_VERSION_CODE" property="wxVersionCode"
+			jdbcType="INTEGER" />
+		<result column="WX_VERSION_NAME" property="wxVersionName"
+			jdbcType="VARCHAR" />
+		<result column="WX_BALANCE" property="wxBalance"
+			jdbcType="BIGINT" />
+		<result column="WX_PWD" property="wxPwd" jdbcType="VARCHAR" />
+		<result column="SIGN_TIME" property="signTime"
+			jdbcType="TIMESTAMP" />
+		<result column="WORK_KEY" property="workKey" jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="VERSION_NAME" property="versionName"
+			jdbcType="VARCHAR" />
+		<result column="VERSION_CODE" property="versionCode"
+			jdbcType="INTEGER" />
+		<result column="UPLOAD_FRIENDS_FLAG"
+			property="uploadFriendsFlag" jdbcType="INTEGER" />
+		<result column="CREATE_ID" property="createId"
+			jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+		<result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+		<result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+		<result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+		<result column="HEAD_URL" property="headurl" jdbcType="VARCHAR" />
+		<result column="NICK_NAME" property="nickname"
+			jdbcType="VARCHAR" />
+		<result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="findShopTerminalReturnMap"
+		type="com.lj.business.member.dto.shopterminal.FindShopTerminalReturn">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="TERMINAL_CODE" property="terminalCode"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+		<result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+		<result column="USERNAME_WX" property="usernameWx"
+			jdbcType="VARCHAR" />
+		<result column="WX_NICKNAME" property="wxNickname"
+			jdbcType="VARCHAR" />
+		<result column="HEAD_ADDRESS" property="headAddress"
+			jdbcType="VARCHAR" />
+		<result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="UPLOAD_FRIENDS_FLAG"
+			property="uploadFriendsFlag" jdbcType="INTEGER" />
+		<result column="VERSION_NAME" property="versionName"
+			jdbcType="VARCHAR" />
+		<result column="VERSION_CODE" property="versionCode"
+			jdbcType="INTEGER" />
+		<result column="WX_VERSION_NAME" property="wxVersionName"
+			jdbcType="VARCHAR" />
+		<result column="WX_VERSION_CODE" property="wxVersionCode"
+			jdbcType="INTEGER" />
+		<result column="UPLOAD_FRIENDS_FLAG"
+			property="uploadFriendsFlag" jdbcType="INTEGER" />
+		<result column="CREATE_ID" property="createId"
+			jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+		<result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+		<result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+		<result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+		<result column="HEAD_URL" property="headurl" jdbcType="VARCHAR" />
+		<result column="NICK_NAME" property="nickname"
+			jdbcType="VARCHAR" />
+			<result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap
+		type="com.lj.business.member.dto.shopterminal.FindShopTerminalPageReturn"
+		id="findShopTerminalPageResultMap">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="TERMINAL_CODE" property="terminalCode"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+		<result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+		<result column="USERNAME_WX" property="usernameWx"
+			jdbcType="VARCHAR" />
+		<result column="WX_NICKNAME" property="wxNickname"
+			jdbcType="VARCHAR" />
+		<result column="HEAD_ADDRESS" property="headAddress"
+			jdbcType="VARCHAR" />
+		<result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="UPLOAD_FRIENDS_FLAG"
+			property="uploadFriendsFlag" jdbcType="INTEGER" />
+		<result column="VERSION_NAME" property="versionName"
+			jdbcType="VARCHAR" />
+		<result column="VERSION_CODE" property="versionCode"
+			jdbcType="INTEGER" />
+		<result column="WX_VERSION_NAME" property="wxVersionName"
+			jdbcType="VARCHAR" />
+		<result column="WX_VERSION_CODE" property="wxVersionCode"
+			jdbcType="INTEGER" />
+		<result column="WX_PWD" property="wxPwd" jdbcType="VARCHAR" />
+		<result column="UPLOAD_FRIENDS_FLAG"
+			property="uploadFriendsFlag" jdbcType="INTEGER" />
+		<result column="CREATE_ID" property="createId"
+			jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+		<result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+		<result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+		<result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+		<result column="HEAD_URL" property="headurl" jdbcType="VARCHAR" />
+		<result column="NICK_NAME" property="nickname" jdbcType="VARCHAR" />
+		<result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap type="com.lj.business.member.dto.shopterminal.FindShopTidFromWebReturn" id="FindShopTidFromWebReturnMap">
+		<result column="CODE" property="tidCode" jdbcType="VARCHAR" />
+		<result column="TERMINAL_CODE" property="terminalCode" jdbcType="VARCHAR" />
+		<result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+		<result column="WX_NICKNAME" property="wxNickname" jdbcType="VARCHAR" />
+		<result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+		<result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="VARCHAR" />
+		<result column="WX_BALANCE" property="wxBalance" jdbcType="BIGINT" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+		<result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+		<result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+		<result column="SOURCE" property="source" jdbcType="VARCHAR" />
+		<result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+		
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		CODE, TERMINAL_CODE, MERCHANT_NO, MERCHANT_NAME,NO_WX, USERNAME_WX,
+		WX_NICKNAME, HEAD_ADDRESS, QCORD, SEX, WX_VERSION_CODE,
+		WX_VERSION_NAME, WX_BALANCE,
+		WX_PWD, SIGN_TIME, WORK_KEY, IMEI, STATUS, VERSION_NAME, VERSION_CODE,
+		UPLOAD_FRIENDS_FLAG, CREATE_ID,
+		CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4, ALIAS, HEAD_URL, NICK_NAME
+		,SHOP_NAME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from shop_terminal
+		where CODE = #{code,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from shop_terminal
+		where CODE = #{code,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insertSelective" parameterType="com.lj.business.member.domain.ShopTerminal" useGeneratedKeys="true" keyProperty="code">
+		insert into shop_terminal
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				CODE,
+			</if>
+			<if test="terminalCode != null">
+				TERMINAL_CODE,
+			</if>
+			<if test="merchantNo != null">
+				MERCHANT_NO,
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME,
+			</if>
+			<if test="noWx != null">
+				NO_WX,
+			</if>
+			<if test="usernameWx != null">
+				USERNAME_WX,
+			</if>
+			<if test="wxNickname != null">
+				WX_NICKNAME,
+			</if>
+			<if test="headAddress != null">
+				HEAD_ADDRESS,
+			</if>
+			<if test="qcord != null">
+				QCORD,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="wxVersionCode != null">
+				WX_VERSION_CODE,
+			</if>
+			<if test="wxVersionName != null">
+				WX_VERSION_NAME,
+			</if>
+			<if test="wxBalance != null">
+				WX_BALANCE,
+			</if>
+			<if test="wxPwd != null">
+				WX_PWD,
+			</if>
+			<if test="signTime != null">
+				SIGN_TIME,
+			</if>
+			<if test="workKey != null">
+				WORK_KEY,
+			</if>
+			<if test="uploadFriendsFlag != null">
+				UPLOAD_FRIENDS_FLAG,
+			</if>
+			<if test="imei != null">
+				IMEI,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="versionName != null">
+				VERSION_NAME,
+			</if>
+			<if test="versionCode != null">
+				VERSION_CODE,
+			</if>
+			<if test="createId != null">
+				CREATE_ID,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="remark2 != null">
+				REMARK2,
+			</if>
+			<if test="remark3 != null">
+				REMARK3,
+			</if>
+			<if test="remark4 != null">
+				REMARK4,
+			</if>
+			<if test="alias != null">
+				ALIAS,
+			</if>
+			<if test="headurl != null">
+				HEAD_URL,
+			</if>
+			<if test="nickname != null">
+				NICK_NAME,
+			</if>
+			<if test="shopName != null">
+				SHOP_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="terminalCode != null">
+				#{terminalCode,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null">
+				#{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				#{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="noWx != null">
+				#{noWx,jdbcType=VARCHAR},
+			</if>
+			<if test="usernameWx != null">
+				#{usernameWx,jdbcType=VARCHAR},
+			</if>
+			<if test="wxNickname != null">
+				#{wxNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="headAddress != null">
+				#{headAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="qcord != null">
+				#{qcord,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="wxVersionCode != null">
+				#{wxVersionCode,jdbcType=INTEGER},
+			</if>
+			<if test="wxVersionName != null">
+				#{wxVersionName,jdbcType=VARCHAR},
+			</if>
+			<if test="wxBalance != null">
+				#{wxBalance,jdbcType=BIGINT},
+			</if>
+			<if test="wxPwd != null">
+				#{wxPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="signTime != null">
+				#{signTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="workKey != null">
+				#{workKey,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadFriendsFlag != null">
+				#{uploadFriendsFlag,jdbcType=INTEGER},
+			</if>
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="versionName != null">
+				#{versionName,jdbcType=VARCHAR},
+			</if>
+			<if test="versionCode != null">
+				#{versionCode,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="remark2 != null">
+				#{remark2,jdbcType=VARCHAR},
+			</if>
+			<if test="remark3 != null">
+				#{remark3,jdbcType=VARCHAR},
+			</if>
+			<if test="remark4 != null">
+				#{remark4,jdbcType=VARCHAR},
+			</if>
+			<if test="alias != null">
+				#{alias,jdbcType=VARCHAR},
+			</if>
+			<if test="headurl != null">
+				#{headurl,jdbcType=VARCHAR},
+			</if>
+			<if test="nickname != null">
+				#{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="shopName != null">
+				#{shopName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.lj.business.member.domain.ShopTerminal">
+		update shop_terminal
+		<set>
+			<if test="terminalCode != null">
+				TERMINAL_CODE = #{terminalCode,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="noWx != null">
+				NO_WX = #{noWx,jdbcType=VARCHAR},
+			</if>
+			<if test="usernameWx != null">
+				USERNAME_WX = #{usernameWx,jdbcType=VARCHAR},
+			</if>
+			<if test="wxNickname != null">
+				WX_NICKNAME = #{wxNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="headAddress != null">
+				HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="qcord != null">
+				QCORD = #{qcord,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="wxVersionCode != null">
+				WX_VERSION_CODE = #{wxVersionCode,jdbcType=INTEGER},
+			</if>
+			<if test="wxVersionName != null">
+				WX_VERSION_NAME = #{wxVersionName,jdbcType=VARCHAR},
+			</if>
+			<if test="wxBalance != null">
+				WX_BALANCE = #{wxBalance,jdbcType=BIGINT},
+			</if>
+			<if test="wxPwd != null">
+				WX_PWD = #{wxPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="signTime != null">
+				SIGN_TIME = #{signTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="workKey != null">
+				WORK_KEY = #{workKey,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadFriendsFlag != null">
+				UPLOAD_FRIENDS_FLAG = #{uploadFriendsFlag,jdbcType=INTEGER},
+			</if>
+			<if test="imei != null">
+				IMEI = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="versionName != null">
+				VERSION_NAME = #{versionName,jdbcType=VARCHAR},
+			</if>
+			<if test="versionCode != null">
+				VERSION_CODE = #{versionCode,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="remark2 != null">
+				REMARK2 = #{remark2,jdbcType=VARCHAR},
+			</if>
+			<if test="remark3 != null">
+				REMARK3 = #{remark3,jdbcType=VARCHAR},
+			</if>
+			<if test="remark4 != null">
+				REMARK4 = #{remark4,jdbcType=VARCHAR},
+			</if>
+			<if test="alias != null">
+				ALIAS = #{alias,jdbcType=VARCHAR},
+			</if>
+			<if test="headurl != null">
+				HEAD_URL = #{headurl,jdbcType=VARCHAR},
+			</if>
+			<if test="nickname != null">
+				NICK_NAME = #{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="shopName != null">
+				SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CODE = #{code,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateShopTerminalShopName"
+		parameterType="com.lj.business.member.domain.ShopTerminal">
+		update shop_terminal
+		where #{shopNo,jdbcType=VARCHAR}
+	</update>
+
+	<sql id="findShopTerminalPage_condition">
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="terminalCode != null and terminalCode !=''">
+				and TERMINAL_CODE = #{terminalCode}
+			</if>
+			<if test="wxNickname != null and wxNickname !='' ">
+				and WX_NICKNAME like '%${wxNickname}%'
+			</if>
+			<if test="noWx != null and noWx !='' ">
+				and NO_WX = #{noWx}
+			</if>
+			<if test="imei != null and imei !='' ">
+				and IMEI = #{imei}
+			</if>
+			<if test="status != null and status != ''">
+				and STATUS = #{status}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询 -->
+	<select id="findShopTerminalPage"
+		resultMap="findShopTerminalPageResultMap"
+		parameterType="com.lj.business.member.dto.shopterminal.FindShopTerminalPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_terminal
+		<include refid="findShopTerminalPage_condition" />
+		order by CREATE_DATE ${sortDir}
+		limit ${start} , ${limit}
+	</select>
+
+	<select id="findShopTerminalPageCount" resultType="int"
+		parameterType="com.lj.business.member.dto.shopterminal.FindShopTerminalPage">
+		select count(*) FROM shop_terminal
+		<include refid="findShopTerminalPage_condition" />
+	</select>
+	
+	<select id="selectByWx" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from shop_terminal
+		where NO_WX = #{noWx,jdbcType=VARCHAR} and status=1 
+		limit 1
+	</select>
+
+	<select id="findAllNoWx" resultType="java.lang.String">
+		select NO_WX from shop_terminal
+	</select>
+
+	<select id="findAllImei" resultType="java.lang.String">
+		select IMEI from shop_terminal
+	</select>
+
+	<select id="findTerminalCountByShop" parameterType="string"
+		resultType="int">
+		select count(*) from shop_terminal where #{shopNo}
+	</select>
+
+	<select id="hasNoWx" parameterType="string"
+		resultType="java.lang.Integer">
+		select count(*) from shop_terminal where STATUS != 2 AND NO_WX=#{noWx}
+	</select>
+	<select id="hasImei" parameterType="string"
+		resultType="java.lang.Integer">
+		select count(*) from shop_terminal where STATUS != 2 AND IMEI=#{imei}
+	</select>
+
+	<!-- 查询商户下包含微信昵称的终端微信列表（有效终端） -->
+	<select id="findNoWxByWxNickname" resultType="string">
+		select NO_WX
+		from shop_terminal
+		where status = 1
+		and MERCHANT_NO = #{merchantNo}
+		and WX_NICKNAME like '%${wxNickname}%'
+	</select>
+
+	<!-- 查询导购助手管理的终端终端列表 -->
+	<select id="findShopTerminalFromWeb" resultMap="FindShopTidFromWebReturnMap">
+		SELECT t.CODE, t.TERMINAL_CODE, gs.NO_WX, t.WX_NICKNAME,
+		t.HEAD_URL HEAD_ADDRESS, 
+		t.QCORD, t.SEX, 
+		t.WX_BALANCE, 
+		t.IMEI,
+		t.ALIAS,
+		t.SHOP_NAME,
+		gs.SOURCE
+		FROM shop_terminal t,
+		gm_assistant_shop gs
+		where 
+			t.CODE = gs.TID_CODE
+		and t.status = 1
+		and gs.ASSISTANT_NO = #{param.assistantNo,jdbcType=VARCHAR}
+		and gs.MERCHANT_NO = #{param.merchantNo,jdbcType=VARCHAR}
+		<if test="param.provinceCode != null and param.provinceCode != ''">
+			and s.PROVINCE_CODE = #{param.provinceCode,jdbcType=VARCHAR}
+		</if>
+		<if test="param.cityCode != null and param.cityCode != ''">
+			and s.CITY_CODE = #{param.cityCode,jdbcType=VARCHAR}
+		</if>
+		<if test="param.cityAreaCode != null and param.cityAreaCode != ''">
+			and s.CITY_AREA_CODE = #{param.cityAreaCode,jdbcType=VARCHAR}
+		</if>
+		<if test="noWxList != null">
+			and t.NO_WX in
+			<foreach item="item" index="index" collection="noWxList"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by t.CREATE_DATE asc
+	</select>
+
+	<select id="findShopTerminalForecastName" resultType="string">
+		SELECT distinct gm.NO_WX
+		FROM guid_member gm, forecast_name fn
+		where gm.NO_WX = gm.NO_WX
+		and gm.MEMBER_NO = fn.MEMBER_NO_GM
+		<if test="noWxList != null">
+			and gm.NO_WX in
+			<foreach item="item" index="index" collection="noWxList"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<!-- 查询指定终端列表和微信列表下的有效终端（微信）列表 -->
+	<select id="findShopTidByShopNoAndWx"
+		resultMap="FindShopTidFromWebReturnMap">
+		SELECT t.CODE, t.TERMINAL_CODE, t.NO_WX, t.WX_NICKNAME,
+		t.HEAD_URL HEAD_ADDRESS, t.QCORD, t.SEX, t.IMEI
+		FROM shop_terminal t
+		where 
+		 t.status = 1
+		<if test="noWxList != null">
+			and t.NO_WX in
+			<foreach item="item" index="index" collection="noWxList"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by t.CREATE_DATE asc
+	</select>
+
+	<select id="findShopTerminalSelect"
+		resultMap="findShopTerminalReturnMap">
+		select
+		<include refid="Base_Column_List" />
+		from shop_terminal
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="noWx != null and noWx !='' ">
+				and NO_WX = #{noWx}
+			</if>
+			<if test="imei != null and imei !='' ">
+				and IMEI = #{imei}
+			</if>
+			<if test="remark != null and remark !='' ">
+				and REMARK = #{remark}
+			</if>
+			<if test="remark4 != null and remark4 !='' ">
+				and REMARK4 = #{remark4}
+			</if>
+			<if test="status != null and status !='' ">
+				and STATUS = #{status}
+			</if>
+			<if test="noWxList != null">
+				and NO_WX in
+				<foreach item="item" index="index" collection="noWxList"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<!-- 根据shopNo查找终端终端信息 -->
+	<select id="findShopTerminal"
+		resultType="com.lj.business.member.dto.shopterminal.FindShopTerminalReturn">
+		SELECT NO_WX noWx,QCORD
+		FROM shop_terminal
+		where STATUS = 1
+	</select>
+	<select id="findShopTerminalNormal"
+		resultMap="findShopTerminalReturnMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from shop_terminal
+		where
+		NO_WX = #{noWx}
+		and status = 1
+
+	</select>
+
+	<select id="findShopTerminalByWxList" resultType="string">
+		select distinct SHOP_NO
+		from shop_terminal
+		where
+		NO_WX in
+		<foreach item="item" index="index" collection="noWxList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and status = 1
+	</select>
+
+	<!-- 查询所有待检查版本的有效终端 -->
+	<select id="findAllShopTerminalByCheckVersion"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from shop_terminal
+		where status = 1
+		order by MERCHANT_NO
+	</select>
+
+	<!-- -->
+	<select id="findAllShopTerminalByWeiXin"
+		resultMap="findShopTerminalReturnMap"
+		parameterType="com.lj.business.member.dto.shopterminal.FindShopTerminal">
+		select
+		<include refid="Base_Column_List" />
+		from shop_terminal
+		where status = 1
+		<if test="remark4 != null and remark4 !=''">
+			and REMARK4 = #{remark4}
+		</if>
+		<if test="merchantNo != null and merchantNo !=''">
+			and MERCHANT_NO = #{merchantNo}
+		</if>
+	</select>
+
+
+	<!-- 查询尚未绑定的终端 -->
+	<select id="findShopTerminalsByNotBind"
+		resultMap="findShopTerminalPageResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_terminal WHERE
+		`STATUS`=1 and MERCHANT_NO = #{merchantNo}
+		AND `CODE` NOT IN (
+		SELECT TID_CODE FROM gm_assistant_shop WHERE MERCHANT_NO = #{merchantNo} and
+		TID_CODE is not null
+		<if test="assistantNo != null and assistantNo !='' ">
+			<![CDATA[and ASSISTANT_NO = #{assistantNo, jdbcType=VARCHAR}]]>
+		</if>
+		)
+		<if test="noWx != null and noWx !='' ">
+			<![CDATA[and NO_WX like CONCAT('%',#{noWx,jdbcType=VARCHAR},'%' )]]>
+		</if>
+	</select>
+	<!-- 查询已绑定的终端 -->
+	<select id="findShopTerminalsByBind"
+		resultMap="findShopTerminalPageResultMap">
+		SELECT
+		<include refid="Base_Column_List2" />
+		FROM shop_terminal t1, gm_assistant_shop t2 where
+		t1.`CODE`=t2.TID_CODE and t1.`STATUS`=1 AND
+		t1.MERCHANT_NO=#{merchantNo}
+	</select>
+	<sql id="Base_Column_List2">
+		t1.CODE, t1.TERMINAL_CODE, t1.MERCHANT_NO, t1.MERCHANT_NAME, t1. t1. t1.NO_WX,
+		t1.WX_NICKNAME,
+		t1.HEAD_ADDRESS, t1.QCORD, t1.SEX, t1.IMEI, t1.STATUS, t1.CREATE_ID, t1.VERSION_NAME,
+		t1.CREATE_DATE, t1.REMARK, t1.REMARK2, t1.REMARK3, t1.REMARK4
+	</sql>
+
+	<!-- 更新终端微信账户余额（根据CODE或noWx更新） -->
+	<update id="updateWxAccountBalance"
+		parameterType="com.lj.business.member.dto.shopterminal.UpdateShopTerminal">
+		update shop_terminal
+		set WX_BALANCE = #{wxBalance,jdbcType=BIGINT}
+		<choose>
+			<when test="code != null and code != ''">
+				where CODE = #{code,jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				where NO_WX = #{noWx,jdbcType=VARCHAR}
+			</otherwise>
+		</choose>
+	</update>
+	
+	
+<select id="findShopTerminalByWx" resultType="com.lj.business.member.dto.shopterminal.FindShopTerminalReturn" parameterType="com.lj.business.member.dto.shopterminal.FindShopTerminal" >
+    select <include refid="Base_Column_List" />
+     from shop_terminal
+     where status = 1
+     <if test ="remark4 != null and remark4 !=''">
+     and REMARK4 = #{remark4}
+     </if>
+     <if test="merchantNo != null and merchantNo !=''">
+     and MERCHANT_NO = #{merchantNo}
+     </if>
+     <if test="noWx != null and noWx !=''">
+     and NO_WX = #{noWx}
+     </if>
+  </select>
+  
+	  <!-- 根据商户号查询门店终端信息 -->
+  <select id="findShopTerminalByMerchantNo" parameterType="java.lang.String" resultMap="findShopTerminalReturnMap">
+  select * from shop_terminal where MERCHANT_NO = #{merchantNo} and STATUS=1
+  </select>
+  
+  <!-- 根据条件 统计微信总数  -->
+  <select id="getShopTerminalCount" parameterType="com.lj.business.member.domain.ShopTerminal" resultType='integer'>
+  	 SELECT count(*) from shop_terminal
+  	 <where>
+	  	 <if test="merchantNo != null and merchantNo.trim() !='' ">
+			MERCHANT_NO = #{merchantNo}
+		 </if>
+		 <if test="status != null ">
+			and STATUS = #{status}
+		 </if>
+	 </where>
+  </select>
+</mapper>

@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IChatRoomMemberDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.ChatRoomMember" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ROOM_CODE" property="roomCode" jdbcType="VARCHAR" />
+    <result column="NO_WX_ZK" property="noWxZk" jdbcType="VARCHAR" />
+    <result column="CHAT_ROOM_NAME" property="chatRoomName" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="HEAD_URL" property="headUrl" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindChatRoomMemberReturnResultMap" type="com.lj.business.member.dto.chatroom.FindChatRoomMemberReturn" extends="BaseResultMap"></resultMap>
+  <resultMap id="FindChatRoomMemberPageReturnResultMap" type="com.lj.business.member.dto.chatroom.FindChatRoomMemberPageReturn" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, ROOM_CODE, NO_WX_ZK, CHAT_ROOM_NAME, USER_NAME, NICK_NAME, HEAD_URL, STATUS, 
+    MEMBER_NO_GM, MEMBER_NAME_GM, MEMBER_NO, MEMBER_NAME,  MERCHANT_NO, 
+    MERCHANT_NAME, VERSION, CREATE_ID, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from chat_room_member
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from chat_room_member
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByCond" parameterType="com.lj.business.member.domain.ChatRoomMember">
+    delete from chat_room_member
+    <where>
+    	<if test="roomCode != null and roomCode !='' " >
+			and ROOM_CODE = #{roomCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="noWxZk != null and noWxZk !='' " >
+			and NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+	    </if>
+		<if test="chatRoomName != null and chatRoomName !='' " >
+			and CHAT_ROOM_NAME = #{chatRoomName,jdbcType=VARCHAR}
+	    </if>
+		<if test="userName != null and userName !='' " >
+			and USER_NAME = #{userName,jdbcType=VARCHAR}
+	    </if>
+    </where>
+  </delete>
+  
+  <update id="updateByCond" parameterType="com.lj.business.member.domain.ChatRoomMember" >
+    update chat_room_member
+    <set >
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ROOM_CODE = #{roomCode,jdbcType=VARCHAR}
+    <if test="userNames != null and userNames.length > 0 ">
+      	and USER_NAME in <foreach item="item" index="index" collection="userNames" open="(" separator="," close=")">#{item}</foreach>
+    </if>
+  </update>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.ChatRoomMember" >
+    insert into chat_room_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="roomCode != null" >
+        ROOM_CODE,
+      </if>
+      <if test="noWxZk != null" >
+        NO_WX_ZK,
+      </if>
+      <if test="chatRoomName != null" >
+        CHAT_ROOM_NAME,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="headUrl != null" >
+        HEAD_URL,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxZk != null" >
+        #{noWxZk,jdbcType=VARCHAR},
+      </if>
+      <if test="chatRoomName != null" >
+        #{chatRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.ChatRoomMember" >
+    update chat_room_member
+    <set >
+      <if test="roomCode != null" >
+        ROOM_CODE = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxZk != null" >
+        NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR},
+      </if>
+      <if test="chatRoomName != null" >
+        CHAT_ROOM_NAME = #{chatRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        HEAD_URL = #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByRoomCode" parameterType="com.lj.business.member.domain.ChatRoomMember" >
+    update chat_room_member
+    <set >
+      <if test="noWxZk != null" >
+        NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR},
+      </if>
+      <if test="chatRoomName != null" >
+        CHAT_ROOM_NAME = #{chatRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        HEAD_URL = #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROOM_CODE = #{roomCode,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="synChatRoomOwnerHeadUrl" parameterType="com.lj.business.member.domain.ChatRoomMember" >
+    update chat_room_member
+    <set >
+      <if test="headUrl != null" >
+        HEAD_URL = #{headUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+    and MEMBER_NO IS NULL
+    and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	and (HEAD_URL IS NULL OR HEAD_URL='' OR HEAD_URL !=#{headUrl,jdbcType=VARCHAR})
+  </update>
+  
+  <update id="synChatRoomMember" parameterType="com.lj.business.member.domain.ChatRoomMember" >
+    update chat_room_member
+    <set >
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+    and MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+	and MEMBER_NAME !=#{memberName,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="selectByRoomCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from chat_room_member
+    where ROOM_CODE = #{roomCode,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <!-- 分页查询 - begin -->
+	<sql id="findChatRoomMemberPage_condition">
+		<where>
+			<if test="roomCode != null and roomCode !='' " >
+				and ROOM_CODE = #{roomCode,jdbcType=VARCHAR}
+	        </if>
+			<if test="noWxZk != null and noWxZk !='' " >
+				and NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+	        </if>
+			<if test="chatRoomName != null and chatRoomName !='' " >
+				and CHAT_ROOM_NAME = #{chatRoomName,jdbcType=VARCHAR}
+	        </if>
+			<if test="userName != null and userName !='' " >
+				and USER_NAME = #{userName,jdbcType=VARCHAR}
+	        </if>
+			<if test="nickName != null and nickName !='' " >
+				and NICK_NAME like '%${nickName}%'
+	        </if>
+			<if test="status != null " >
+				and status = #{status,jdbcType=TINYINT}
+	        </if>
+			<if test="merchantNo != null and merchantNo !='' " >
+	        	and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+	        </if>
+			<!-- <if test="shopNos != null and shopNos.size() > 0">
+      	     and shop_no in
+	           <foreach item="item" index="index" collection="shopNos" open="(" separator="," close=")">  
+	              #{item}  
+	             </foreach>
+	        </if> -->
+		</where>
+	</sql>
+
+	<select id="findChatRoomMemberPage" resultMap="FindChatRoomMemberPageReturnResultMap" parameterType="com.lj.business.member.dto.chatroom.FindChatRoomMemberPage">
+		SELECT <include refid="Base_Column_List" />
+		FROM chat_room_member
+		<include refid="findChatRoomMemberPage_condition" />
+		order by CREATE_DATE desc,MEMBER_NO
+		limit ${start}, ${limit}
+	</select>
+	
+	<select id="findChatRoomMemberPageCount" resultType="int" parameterType="com.lj.business.member.dto.chatroom.FindChatRoomMemberPage">
+		select count(*) 
+		FROM chat_room_member
+		<include refid="findChatRoomMemberPage_condition" />
+	</select>
+	<!-- 分页查询 - end -->  
+	
+	<!-- 查询群聊下指定微信的群成员信息 -->
+	<select id="findChatRoomMemberByNoWx" resultMap="FindChatRoomMemberReturnResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM chat_room_member
+		where ROOM_CODE = #{roomCode,jdbcType=VARCHAR}
+		  and USER_NAME = #{userName,jdbcType=VARCHAR}
+		limit 1
+	</select>
+	
+	<!-- 获取群成员昵称以‘,’分隔，排除群主 -->
+	<select id="getNickNameByRoomCode" resultType="String">
+		SELECT GROUP_CONCAT(NICK_NAME) FROM chat_room_member WHERE ROOM_CODE =#{roomCode,jdbcType=VARCHAR} AND USER_NAME !=#{noWxGm,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="cancelClaimed" parameterType="com.lj.business.member.domain.ChatRoom" >
+    update chat_room_member
+    <set >
+      MEMBER_NO_GM=NULL,
+      MEMBER_NAME_GM=NULL
+    </set>
+    where ROOM_CODE = #{roomCode,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="delete" parameterType="com.lj.business.member.dto.chatroom.UpdateChatRoomMember">
+  	update chat_room_member
+  	set STATUS = #{status,jdbcType=INTEGER}
+  	WHERE 
+  	MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  	AND NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+  </update>
+</mapper>

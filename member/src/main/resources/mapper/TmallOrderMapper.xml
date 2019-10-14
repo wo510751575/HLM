@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.business.member.dao.ITmallOrderDao">
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.TmallOrder">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MEMBER_NAME" jdbcType="VARCHAR" property="memberName" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="NO_WW" jdbcType="VARCHAR" property="noWw" />
+    <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_URL" jdbcType="VARCHAR" property="productUrl" />
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount" />
+    <result column="ORDER_DATE" jdbcType="VARCHAR" property="orderDate" />
+    <result column="COMMENT_LEVEL" jdbcType="VARCHAR" property="commentLevel" />
+    <result column="COMMENT_CTX" jdbcType="VARCHAR" property="commentCtx" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, MERCHANT_NO, MEMBER_NAME, MOBILE, NO_WW, ORDER_NO, PRODUCT_NAME, PRODUCT_URL, 
+    AMOUNT, ORDER_DATE, COMMENT_LEVEL, COMMENT_CTX, CREATE_DATE, CREATE_ID, REMARK, REMARK2, 
+    REMARK3, REMARK4
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.lj.business.member.dto.TmallOrderDto"
+		extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				 <if test="param.memberName != null and param.memberName !='' ">
+					and MEMBER_NAME like CONCAT('%',#{param.memberName,jdbcType=VARCHAR},'%' )
+	 			  </if>
+				<if test="param.mobile != null and param.mobile !='' ">
+		  			and MOBILE like CONCAT('%',#{param.mobile,jdbcType=VARCHAR},'%' )
+				</if>
+				<if test="param.noWw != null and param.noWw !='' ">
+		  			and NO_WW like CONCAT('%',#{param.noWw,jdbcType=VARCHAR},'%' )
+				</if>
+				<if test="param.orderNo != null and param.orderNo !='' ">
+					<![CDATA[and ORDER_NO =#{param.orderNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					and MERCHANT_NO = #{param.merchantNo}
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findTmallOrders" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindTmallOrderPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tmall_order
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findTmallOrderPage" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindTmallOrderPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tmall_order
+		<include refid="findPage_condition" />
+		order by CREATE_DATE desc 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findTmallOrderPageCount" resultType="int"
+		parameterType="com.lj.business.member.dto.FindTmallOrderPage">
+		select count(*)
+		FROM tmall_order
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tmall_order
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tmall_order
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.TmallOrder">
+    insert into tmall_order (CODE, MERCHANT_NO, MEMBER_NAME, 
+      MOBILE, NO_WW, ORDER_NO, 
+      PRODUCT_NAME, PRODUCT_URL, AMOUNT, 
+      ORDER_DATE, COMMENT_LEVEL, COMMENT_CTX, 
+      CREATE_DATE, CREATE_ID, REMARK, 
+      REMARK2, REMARK3, REMARK4
+      )
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{noWw,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{productUrl,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, 
+      #{orderDate,jdbcType=VARCHAR}, #{commentLevel,jdbcType=VARCHAR}, #{commentCtx,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.TmallOrder">
+    insert into tmall_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="memberName != null">
+        MEMBER_NAME,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="noWw != null">
+        NO_WW,
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="productUrl != null">
+        PRODUCT_URL,
+      </if>
+      <if test="amount != null">
+        AMOUNT,
+      </if>
+      <if test="orderDate != null">
+        ORDER_DATE,
+      </if>
+      <if test="commentLevel != null">
+        COMMENT_LEVEL,
+      </if>
+      <if test="commentCtx != null">
+        COMMENT_CTX,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="noWw != null">
+        #{noWw,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productUrl != null">
+        #{productUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=VARCHAR},
+      </if>
+      <if test="commentLevel != null">
+        #{commentLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCtx != null">
+        #{commentCtx,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.TmallOrder">
+    update tmall_order
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="noWw != null">
+        NO_WW = #{noWw,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productUrl != null">
+        PRODUCT_URL = #{productUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="orderDate != null">
+        ORDER_DATE = #{orderDate,jdbcType=VARCHAR},
+      </if>
+      <if test="commentLevel != null">
+        COMMENT_LEVEL = #{commentLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCtx != null">
+        COMMENT_CTX = #{commentCtx,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.TmallOrder">
+    update tmall_order
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      NO_WW = #{noWw,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_URL = #{productUrl,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=BIGINT},
+      ORDER_DATE = #{orderDate,jdbcType=VARCHAR},
+      COMMENT_LEVEL = #{commentLevel,jdbcType=VARCHAR},
+      COMMENT_CTX = #{commentCtx,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

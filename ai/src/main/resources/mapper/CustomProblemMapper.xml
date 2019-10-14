@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.dao.CustomProblemDao">
+	<resultMap id="customResultMap" type="com.lj.business.ai.dto.CustomProblemDto">
+		<result property="code" column="code"></result>
+		<result property="merchantNo" column="merchant_no"></result>
+		<result property="memberName" column="member_no" />
+		<result property="memberNo" column="member_no" />
+		<result property="guidMemberNo" column="guid_member_no" />
+		<result property="guidMemberName" column="guid_member_name" />
+		<result property="customProblem" column="custom_problem" />
+		<result property="customProblemWord" column="custom_problem_word" />
+		<result property="isTargetAnswer" column="is_target_answer" />
+		<result property="merchantProblemCode" column="merchant_problem_code" />
+		<result property="merchantAnswer" column="merchant_answer" />
+		<result property="sessionId" column="session_id" />
+		<result property="sessionsSeq" column="session_seq"></result>
+		<result property="status" column="status"></result>
+		<result property="remark" column="remark"></result>
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+	</resultMap>
+	<sql id="customProblemColumn">
+		code ,session_id,session_seq,merchant_no,member_no , member_name,guid_member_no,guid_member_name
+		,custom_problem , custom_problem_word ,is_target_answer ,
+		merchant_problem_code ,merchant_answer,status ,remark , create_date ,
+		update_date
+	</sql>
+	<insert id="addCustomProblem">
+		INSERT INTO custom_problem
+		(code,session_id,session_seq,merchant_no,member_no,member_name,guid_member_no,guid_member_name
+		,custom_problem, custom_problem_word ,is_target_answer ,
+		merchant_problem_code ,merchant_answer,status ,remark
+		,create_date,update_date )
+		VALUES
+		(#{code},#{sessionId},#{sessionsSeq},#{merchantNo},#{memberNo},#{memberName},#{guidMemberNo},#{guidMemberName},#{customProblem},#{customProblemWord},#{isTargetAnswer},#{merchantProblemCode},#{merchantAnswer},#{status},#{remark},now(),#{updateDate})
+	</insert>
+	<update id="updateCustomProblem">
+		UPDATE custom_problem
+		set custom_problem = #{customProblem},
+		custom_problem_word = #{merchantProblemCode},
+		is_target_answer =#{isTargetAnswer},
+		merchant_problem_code =#{merchantAnswerCode},
+		merchant_answer = #{merchantAnswer}
+		status= #{status},
+		remark=#{remark},
+		update_date = #{updateDate}
+		where code = #{code}
+	</update>
+	<select id="findCustomProblemCountBySessionId" resultType="java.lang.Integer">
+
+		select ifnull(max(session_seq),0) from custom_problem where session_id
+		=#{sessionId}
+
+	</select>
+
+	<select id="getCustomProblemByCode" resultMap="customResultMap">
+		select
+		<include refid="customProblemColumn" />
+		from custom_problem where code = #{code}
+	</select>
+
+</mapper>

@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IImFriendsInfoDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.ImFriendsInfo" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="FRIENDS_ID" property="friendsId" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="NO_WX_SHOP" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM_NAME" property="memberNoGmName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="TIMESTAMP" property="timestamp" jdbcType="VARCHAR" />
+    <result column="SOURCETYPE" property="sourcetype" jdbcType="CHAR" />
+    <result column="TYPE" property="type" jdbcType="CHAR" />
+    <result column="SHAREURL" property="shareurl" jdbcType="VARCHAR" />
+    <result column="SHARETITLE" property="sharetitle" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="OPT_FLAG" property="optFlag" jdbcType="INTEGER" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="JOB_CODE" property="jobCode" jdbcType="VARCHAR" />
+    <result column="AUTO_CONTENT" property="autoContent" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="enc_key" property="encKey" jdbcType="VARCHAR"/>
+    <result column="img_status" property="imgStatus" jdbcType="VARCHAR"/>
+    <result column="TOREPLY_COUNT" property="toReplyCount" jdbcType="INTEGER"/>
+    <result column="WHO_TYPE" property="whoType" jdbcType="VARCHAR"/>
+    <result column="WHO_NO_WXS" property="whoNoWxs" jdbcType="VARCHAR"/>
+    <result column="REMIND_NO_WXS" property="remindNoWxs" jdbcType="VARCHAR"/>
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="imFriendsInfoDtoMap" type="com.lj.business.weixin.dto.ImFriendsInfoDto" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="FRIENDS_ID" property="friendsId" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="NO_WX_SHOP" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM_NAME" property="memberNoGmName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="TIMESTAMP" property="timestamp" jdbcType="VARCHAR" />
+    <result column="SOURCETYPE" property="sourcetype" jdbcType="CHAR" />
+    <result column="TYPE" property="type" jdbcType="CHAR" />
+    <result column="SHAREURL" property="shareurl" jdbcType="VARCHAR" />
+    <result column="SHARETITLE" property="sharetitle" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="OPT_FLAG" property="optFlag" jdbcType="INTEGER" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="JOB_CODE" property="jobCode" jdbcType="VARCHAR" />
+    <result column="AUTO_CONTENT" property="autoContent" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="enc_key" property="enckey" jdbcType="VARCHAR"/>
+    <result column="img_status" property="imgStatus" jdbcType="VARCHAR"/>
+    <result column="TOREPLY_COUNT" property="toReplyCount" jdbcType="INTEGER"/>
+    <result column="WHO_TYPE" property="whoType" jdbcType="VARCHAR"/>
+    <result column="WHO_NO_WXS" property="whoNoWxs" jdbcType="VARCHAR"/>
+    <result column="REMIND_NO_WXS" property="remindNoWxs" jdbcType="VARCHAR"/>
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 朋友圈 信息统计 -->
+  <resultMap id="ImFriendCountEntityResultMap" type="com.lj.business.weixin.domain.ImFriendsInfo" extends="BaseResultMap">
+    <result column="commentCount" property="commentCount" jdbcType="INTEGER"/>
+    <result column="likeCount" property="likeCount" jdbcType="INTEGER"/>
+</resultMap>
+  <sql id="Base_Column_List" >
+    CODE, FRIENDS_ID, MERCHANT_NO, MERCHANT_NAME,  NO_WX_SHOP, MEMBER_NO, 
+    MEMBER_NAME, NO_WX, NICK_NAME, TIMESTAMP, SOURCETYPE, TYPE, SHAREURL, SHARETITLE, 
+    IMG_ADDR, OPT_FLAG, SEND_TIME, STATUS, IMEI, JOB_CODE, AUTO_CONTENT, CREATE_DATE, 
+    REMARK, REMARK2, REMARK3, REMARK4,content,member_no_gm,member_no_gm_name,enc_key,img_status,TOREPLY_COUNT
+    ,WHO_TYPE,WHO_NO_WXS,REMIND_NO_WXS
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from im_friends_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <sql id="findImFriendsInfoPage_condition">
+  	<where>
+	  	<if test="merchantNo != null and merchantNo != ''">
+	  		and MERCHANT_NO = #{merchantNo}
+	  	</if>
+	  	<if test="noWx != null and noWx != ''">
+	  		and NO_WX = #{noWx}
+	  		and MEMBER_NO is not null
+	  	</if>
+	  	<if test="noWxShop != null and noWxShop != ''">
+	  		and NO_WX_SHOP = #{noWxShop}
+	  	</if>									
+	  	<if test="status != null and status != ''">
+	  		and STATUS = #{status}
+	  	</if>
+	  	<if test="memberNo!=null and ''!=memberNo">
+	  		and member_no =#{memberNo}
+	  	</if>
+	  	<if test="toReplyFlag != null and toReplyFlag == 1">
+	  		and TOREPLY_COUNT > 0
+	  	</if>
+	  	<choose>
+	  		<when test="optFlag!=null and ''!=optFlag">
+		  		and opt_flag = #{optFlag}
+		  	  <if test="optFlag == '2'">
+		  	  	and MEMBER_NO is not null
+		  	  </if>
+	  		</when>
+	  		<otherwise>
+  			 <if test="noWx ==null or ''== noWx">
+				and ((opt_flag = 2 and MEMBER_NO is not null) or opt_flag = 1)
+	          </if>
+	  		</otherwise>
+	  	</choose>
+	  	<if test="memberNoGm!=null and''!=memberNoGm">
+			and member_no_gm=#{memberNoGm}
+		</if>
+  	</where>
+  </sql>
+  
+  <sql id="findImFriendsInfoWebPage_condition">
+  	<where>
+	  	<if test="merchantNo != null and merchantNo != ''">
+	  		and MERCHANT_NO = #{merchantNo}
+	  	</if>
+	  	<if test="memberNoGm != null and memberNoGm != ''">
+	  		and MEMBER_NO_GM = #{memberNoGm}
+	  	</if>
+	  	<if test="noWx != null and noWx != ''">
+	  		and NO_WX = #{noWx}
+	  	</if>
+	  	<if test="noWxShop != null and noWxShop != ''">
+	  		and NO_WX_SHOP = #{noWxShop}
+	  	</if>
+	  	<if test="status != null and status != ''">
+	  		and STATUS = #{status}
+	  	</if>
+	  	<if test="memberNo!=null and ''!=memberNo">
+	  		and member_no =#{memberNo}
+	  	</if>
+	  	<choose>
+	  		<when test="optFlag!=null and ''!=optFlag">
+		  		and opt_flag = #{optFlag}
+		  	  <if test="optFlag == '2'">
+		  	  	and MEMBER_NO is not null
+		  	  </if>
+	  		</when>
+	  		<otherwise>
+	  			and (opt_flag = 1 or (opt_flag = 2 and MEMBER_NO is not null))
+	  		</otherwise>
+	  	</choose>
+		<if test="toReplyFlag != null and toReplyFlag == 1">
+	  		and TOREPLY_COUNT > 0
+	  	</if>
+  	</where>
+  </sql>
+  
+  <select id="findImFriendsInfoPage" resultMap="imFriendsInfoDtoMap">
+  	select <include refid="Base_Column_List"/>
+  	from im_friends_info
+  	<include refid="findImFriendsInfoPage_condition"/>
+  	order by TIMESTAMP  ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findImFriendsInfoPageCount" resultType="int">
+  	select count(1)
+  	from im_friends_info
+  	<include refid="findImFriendsInfoPage_condition"/>
+  </select>
+  <!-- 查询朋友圈待回复数量 -->
+  <select id="findImFriendsInfoToReplyCount" resultType="int">
+  	select sum(ifnull(TOREPLY_COUNT, 0))
+  	from im_friends_info
+  	<include refid="findImFriendsInfoWebPage_condition"/>
+  </select>
+  
+  <select id="findImFriendsInfoWebPage" resultMap="imFriendsInfoDtoMap">
+  	select <include refid="Base_Column_List"/>
+  	from im_friends_info
+  	<include refid="findImFriendsInfoWebPage_condition"/>
+  	order by TIMESTAMP  ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findImFriendsInfoWebPageCount" resultType="int">
+  	select count(1)
+  	from im_friends_info
+  	<include refid="findImFriendsInfoWebPage_condition"/>
+  </select>
+  
+  <!-- 查询指定客户周期外发送的朋友圈数量 客户编号必传-->
+  <select id="findFriendPointByMemberNo" resultType="java.lang.Integer" parameterType="map">
+  	SELECT COUNT(t1.CODE) FROM im_friends_info t1
+	LEFT JOIN friend_point_cycle t2 ON t1.MEMBER_NO = t2.MEMBER_NO
+	WHERE 
+	t1.STATUS=2 AND t1.MEMBER_NO = #{memberNo} AND t1.NO_WX_SHOP=#{shopWx}
+	AND
+	(t2.NEXT_TIME IS NULL  OR  t1.TIMESTAMP > UNIX_TIMESTAMP(t2.NEXT_TIME) )
+  </select>
+  
+  <select id="findImFriendsInfoPendingCommentCount" resultType="java.lang.Integer">
+  	SELECT COUNT(DISTINCT(t1.no_wx)) FROM im_friends_info t1
+	LEFT JOIN friend_point_cycle t2 ON t1.MEMBER_NO = t2.MEMBER_NO
+	WHERE t1.OPT_FLAG=2 and t1.MEMBER_NO is not null AND t1.STATUS=2 AND t1.no_wx_shop=#{noWxShop}
+    AND (t2.NEXT_TIME IS NULL OR t1.TIMESTAMP > UNIX_TIMESTAMP(t2.NEXT_TIME))
+  </select>
+  
+  <select id="findImFriendsInfoPendingCommentContentCount" resultType="java.lang.Integer">
+  	SELECT COUNT(1) FROM im_friends_info t1
+	LEFT JOIN friend_point_cycle t2 ON t1.MEMBER_NO = t2.MEMBER_NO
+	WHERE t1.OPT_FLAG=2 and t1.MEMBER_NO is not null AND t1.STATUS=2 AND t1.no_wx_shop=#{noWxShop}
+    AND (t2.NEXT_TIME IS NULL OR t1.TIMESTAMP > UNIX_TIMESTAMP(t2.NEXT_TIME))
+  </select>
+  
+  <select id="findImFriendsInfoPendingComment" resultMap="imFriendsInfoDtoMap">
+  	SELECT t1.* FROM im_friends_info t1
+	LEFT JOIN friend_point_cycle t2 ON t1.MEMBER_NO = t2.MEMBER_NO
+	WHERE t1.OPT_FLAG=2 and t1.MEMBER_NO is not null AND t1.STATUS=2 AND t1.no_wx_shop=#{noWxShop}
+    AND (t2.NEXT_TIME IS NULL OR t1.TIMESTAMP > UNIX_TIMESTAMP(t2.NEXT_TIME))
+    ORDER BY t1.TIMESTAMP DESC
+    limit ${start} , ${limit}
+  </select>
+  
+  <select id="findImFriendsInfos" resultMap="imFriendsInfoDtoMap">
+  	SELECT CODE,NO_WX_SHOP,SEND_TIME,STATUS 
+  	FROM im_friends_info 
+  	where JOB_CODE=#{jobCode} and merchant_no=#{merchantNo}
+  	<if test="status != null and status != ''" >
+        STATUS = #{status,jdbcType=VARCHAR},
+     </if>
+    ORDER BY SEND_TIME DESC,CREATE_DATE DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from im_friends_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.ImFriendsInfo" >
+    insert into im_friends_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="friendsId != null" >
+        FRIENDS_ID,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="noWxShop != null" >
+        NO_WX_SHOP,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="timestamp != null" >
+        TIMESTAMP,
+      </if>
+      <if test="sourcetype != null" >
+        SOURCETYPE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="shareurl != null" >
+        SHAREURL,
+      </if>
+      <if test="sharetitle != null" >
+        SHARETITLE,
+      </if>
+      <if test="imgAddr != null" >
+        IMG_ADDR,
+      </if>
+      <if test="optFlag != null" >
+        OPT_FLAG,
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="imei != null" >
+        IMEI,
+      </if>
+      <if test="jobCode != null" >
+        JOB_CODE,
+      </if>
+      <if test="autoContent != null" >
+        AUTO_CONTENT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="memberNoGm != null" >
+        member_no_gm,
+      </if>
+      <if test="memberNoGmName != null" >
+        member_no_gm_name,
+      </if>
+      <if test="toReplyCount != null" >
+        TOREPLY_COUNT,
+      </if>
+      <if test="encKey != null" >
+        enc_key,
+      </if>
+      <if test="imgStatus != null" >
+        img_status,
+      </if>
+      <if test="whoType != null" >
+        WHO_TYPE,
+      </if>
+      <if test="whoNoWxs != null" >
+        WHO_NO_WXS,
+      </if>
+      <if test="remindNoWxs != null" >
+        REMIND_NO_WXS,
+      </if>
+      app_read_flag ,web_read_flag
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="friendsId != null" >
+        #{friendsId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        #{timestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcetype != null" >
+        #{sourcetype,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="shareurl != null" >
+        #{shareurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetitle != null" >
+        #{sharetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAddr != null" >
+        #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="optFlag != null" >
+        #{optFlag,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCode != null" >
+        #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="autoContent != null" >
+        #{autoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGmName != null" >
+        #{memberNoGmName,jdbcType=VARCHAR},
+      </if>
+      <if test="toReplyCount != null" >
+        #{toReplyCount,jdbcType=INTEGER},
+      </if>
+      <if test="encKey != null" >
+        #{encKey,jdbcType=VARCHAR},
+      </if>
+      <if test="imgStatus != null" >
+        #{imgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="whoType != null" >
+        #{whoType,jdbcType=VARCHAR},
+      </if>
+      <if test="whoNoWxs != null" >
+        #{whoNoWxs,jdbcType=VARCHAR},
+      </if>
+      <if test="remindNoWxs != null" >
+        #{remindNoWxs,jdbcType=VARCHAR},
+      </if>
+       0,0
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.ImFriendsInfo" >
+    update im_friends_info
+    <set >
+      <if test="friendsId != null" >
+        FRIENDS_ID = #{friendsId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null and memberNo != ''" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null and memberName != ''" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null and memberNoGm != ''" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGmName != null and memberNoGmName != ''" >
+        MEMBER_NO_GM_NAME = #{memberNoGmName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null and timestamp != ''" >
+        TIMESTAMP = #{timestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcetype != null" >
+        SOURCETYPE = #{sourcetype,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=CHAR},
+      </if>
+      <if test="shareurl != null" >
+        SHAREURL = #{shareurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetitle != null" >
+        SHARETITLE = #{sharetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAddr != null and imgAddr != ''" >
+        IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="optFlag != null" >
+        OPT_FLAG = #{optFlag,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCode != null" >
+        JOB_CODE = #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="autoContent != null" >
+        AUTO_CONTENT = #{autoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="imgStatus != null and imgStatus != ''" >
+        img_status = #{imgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="toReplyCount != null" >
+        TOREPLY_COUNT = #{toReplyCount,jdbcType=INTEGER},
+      </if>
+      <if test="whoType != null and imgStatus != ''" >
+        WHO_TYPE = #{whoType,jdbcType=VARCHAR},
+      </if>
+      <if test="whoNoWxs != null and imgStatus != ''" >
+        WHO_NO_WXS = #{whoNoWxs,jdbcType=VARCHAR},
+      </if>
+      <if test="remindNoWxs != null and imgStatus != ''" >
+        REMIND_NO_WXS = #{remindNoWxs,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getFriendsInfoByFriendsId" resultMap="imFriendsInfoDtoMap">
+  		select 
+  		<include refid="Base_Column_List" />
+    	,
+    	<include refid="Blob_Column_List" />
+     from im_friends_info where friends_id = #{friendsId} and no_wx_shop = #{noWxShop} order by img_status desc, CREATE_DATE desc limit 1
+  </select>
+  <update id="updateAppReadFlag" >
+        update im_friends_info set app_read_flag = 1  <include refid="findImFriendsInfoPage_condition"/>
+  </update>
+  <update id="updateWebReadFlag" >
+        update im_friends_info set web_read_flag = 1	<include refid="findImFriendsInfoPage_condition"/>
+
+  </update>
+  
+  <update id="updateImFriendsInfoToReplyCount" >
+        update im_friends_info 
+        <![CDATA[set TOREPLY_COUNT = if(ifnull(TOREPLY_COUNT, 0) + #{delta,jdbcType=INTEGER} < 0, 0, ifnull(TOREPLY_COUNT, 0) + #{delta,jdbcType=INTEGER})]]>
+		where CODE = #{friendsCode,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findImFriendsNotRead" resultType="java.lang.Integer" >
+        select count(1) from im_friends_info
+      <include refid="findImFriendsInfoPage_condition">
+        </include>
+
+    <if test="appReadFlag== 1">
+        and app_read_flag = 0
+    </if>
+    <if test="webReadFlag == 1 ">
+      and web_read_flag = 0
+    </if>
+
+  </select>
+  
+  <!-- 根据微信信息更新其客户信息 -->
+  <update id="updateFriendsMemberInfo" parameterType="com.lj.business.weixin.dto.UpdateFriendsMemberInfo">
+  	update im_friends_info
+  	   set MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+           MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+           MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+           MEMBER_NO_GM_NAME = #{memberNameGm,jdbcType=VARCHAR}
+     where NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR}
+       and NO_WX = #{noWx,jdbcType=VARCHAR}
+       and OPT_FLAG = 2
+       and MEMBER_NO is null
+       and (MEMBER_NO_GM is null or member_no_gm ='')
+       <if test="beginTime != null">
+	  		and CREATE_DATE >= #{beginTime,jdbcType=TIMESTAMP}
+	   </if>
+  </update>
+
+  <!-- 解绑客户后，清除朋友圈数据 -->
+  <update id="updateCancleFriendsCommentData" parameterType="java.util.Map">
+    delete from im_friends_info  
+    where  MEMBER_NO_GM = #{memberNoGm} 
+      <if test="noWx !=null and noWx !=''">
+	 		and no_wx=#{noWx}
+	 </if>
+	 <if test="noWxGm !=null and noWxGm !=''">
+	 		and NO_WX_SHOP=#{noWxGm}
+	 </if>
+	 <if test="memberNo !=null and ''!=memberNo">
+	 		and MEMBER_NO=#{memberNo}
+	 </if>
+  </update>
+  
+   <!-- 查询朋友圈统计 -->
+  <select id="selectFriendsDatas" resultMap="ImFriendCountEntityResultMap" parameterType="java.lang.String" >
+      select im.*,(select COUNT(1) from im_comment_info com 
+      where im.friends_id=com.friends_id and OPT_FLAG = 2) as commentCount,
+      (select COUNT(1) from im_like_info lk where im.friends_id=lk.friends_id and OPT_FLAG = 2) as likeCount
+    from im_friends_info im
+    where MERCHANT_NO = #{merchantNo} and OPT_FLAG =1 
+       <if test="content != null and content !=''" >
+      and  content like concat(concat('%',#{content}),'%')
+   </if>
+
+   <if test="noWxShop != null and noWxShop !=''" >
+      and  NO_WX_SHOP=#{noWxShop}
+   </if>
+    <if test="startTime != null and endTime != null" >
+  and CREATE_DATE BETWEEN #{startTime} AND #{endTime}
+   </if> order by im.CREATE_DATE desc 
+    limit ${start} , ${limit}
+  </select>
+  
+   <!-- 查询朋友圈统计总数-->
+  <select id="selectFriendsDatasCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+      select count(1) 
+    from im_friends_info im
+    where MERCHANT_NO = #{merchantNo} and OPT_FLAG =1 
+   <if test="content != null and content !=''" >
+      and  content like concat(concat('%',#{content}),'%')
+   </if>
+
+   <if test="noWxShop != null and noWxShop !=''" >
+      and  NO_WX_SHOP=#{noWxShop}
+   </if>
+   <if test="startTime != null and endTime != null" >
+  and CREATE_DATE BETWEEN #{startTime} AND #{endTime}
+   </if>
+  </select>
+  
+  <delete id="delete">
+  	delete from im_friends_info
+  	where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  	and NO_WX_SHOP=#{noWx,jdbcType=VARCHAR}
+  </delete>
+</mapper>

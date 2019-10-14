@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.business.member.dao.ITmallBonusRecordDao">
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.TmallBonusRecord">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo" />
+    <result column="MEMBER_NAME" jdbcType="VARCHAR" property="memberName" />
+    <result column="NO_WX" jdbcType="VARCHAR" property="noWx" />
+    <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+    <result column="ORDER_AMT" jdbcType="BIGINT" property="orderAmt" />
+    <result column="BONUX_AMT" jdbcType="BIGINT" property="bonuxAmt" />
+    <result column="PUSH_TIME" jdbcType="TIMESTAMP" property="pushTime" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+    <result column="ORDER_DATE" jdbcType="TIMESTAMP" property="orderDate" />
+    <result column="NO_WW" jdbcType="VARCHAR" property="noWw" />
+    <result column="MCH_BILLNO" jdbcType="VARCHAR" property="mchBillno" />
+    <result column="SEND_LISTID" jdbcType="VARCHAR" property="sendListid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, MERCHANT_NO, MEMBER_NO, MEMBER_NAME, NO_WX, ORDER_NO, ORDER_AMT, BONUX_AMT, 
+    PUSH_TIME, STATUS, REMARK, REMARK2, REMARK3, REMARK4, ORDER_DATE,NO_WW,MCH_BILLNO,SEND_LISTID
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.lj.business.member.dto.TmallBonusRecordDto"
+		extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.orderNo != null and param.orderNo !='' ">
+					<![CDATA[and ORDER_NO like CONCAT('%',#{param.orderNo,jdbcType=VARCHAR},'%' )]]>
+				</if>
+				<if test="param.memberName != null and param.memberName !='' ">
+					and MEMBER_NAME like CONCAT('%',#{param.memberName,jdbcType=VARCHAR},'%' )
+	 			</if>
+	 			<if test="param.noWx != null and param.noWx !='' ">
+					and NO_WX like CONCAT('%',#{param.noWx,jdbcType=VARCHAR},'%' )
+	 			</if>
+	 			<if test="param.status != null and param.status !='' ">
+					and STATUS = #{param.status}
+				</if> 
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					and MERCHANT_NO = #{param.merchantNo}
+				</if>
+				<if test="noWxEq != null and noWxEq !='' ">
+					and (NO_WX =#{noWxEq} OR NO_WW = #{noWxEq})
+	 			</if>
+	 			<if test="orderNoEq != null and orderNoEq !='' ">
+					and ORDER_NO =#{orderNoEq}
+	 			</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findTmallBonusRecords" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindTmallBonusRecordPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tmall_bonus_record
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findTmallBonusRecordPage" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindTmallBonusRecordPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tmall_bonus_record
+		<include refid="findPage_condition" />
+		order by ORDER_DATE desc 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findTmallBonusRecordPageCount" resultType="int"
+		parameterType="com.lj.business.member.dto.FindTmallBonusRecordPage">
+		select count(*)
+		FROM tmall_bonus_record
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tmall_bonus_record
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tmall_bonus_record
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.TmallBonusRecord">
+    insert into tmall_bonus_record (CODE, MERCHANT_NO, MEMBER_NO, 
+      MEMBER_NAME, NO_WX, ORDER_NO, 
+      ORDER_AMT, BONUX_AMT, PUSH_TIME, 
+      STATUS, REMARK, REMARK2, 
+      REMARK3, REMARK4, ORDER_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{noWx,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{orderAmt,jdbcType=BIGINT}, #{bonuxAmt,jdbcType=BIGINT}, #{pushTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{orderDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.TmallBonusRecord">
+    insert into tmall_bonus_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null">
+        MEMBER_NAME,
+      </if>
+      <if test="noWx != null">
+        NO_WX,
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="orderAmt != null">
+        ORDER_AMT,
+      </if>
+      <if test="bonuxAmt != null">
+        BONUX_AMT,
+      </if>
+      <if test="pushTime != null">
+        PUSH_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+      <if test="orderDate != null">
+        ORDER_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null">
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null">
+        #{orderAmt,jdbcType=BIGINT},
+      </if>
+      <if test="bonuxAmt != null">
+        #{bonuxAmt,jdbcType=BIGINT},
+      </if>
+      <if test="pushTime != null">
+        #{pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.TmallBonusRecord">
+    update tmall_bonus_record
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null">
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null">
+        ORDER_AMT = #{orderAmt,jdbcType=BIGINT},
+      </if>
+      <if test="bonuxAmt != null">
+        BONUX_AMT = #{bonuxAmt,jdbcType=BIGINT},
+      </if>
+      <if test="pushTime != null">
+        PUSH_TIME = #{pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        ORDER_DATE = #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.TmallBonusRecord">
+    update tmall_bonus_record
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      ORDER_AMT = #{orderAmt,jdbcType=BIGINT},
+      BONUX_AMT = #{bonuxAmt,jdbcType=BIGINT},
+      PUSH_TIME = #{pushTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      ORDER_DATE = #{orderDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

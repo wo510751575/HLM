@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IImFriendsInfoTempDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.ImFriendsInfoTemp" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="NO_WX_SHOP" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="SOURCETYPE" property="sourcetype" jdbcType="CHAR" />
+    <result column="TYPE" property="type" jdbcType="CHAR" />
+    <result column="SHAREURL" property="shareurl" jdbcType="VARCHAR" />
+    <result column="SHARETITLE" property="sharetitle" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="OPT_FLAG" property="optFlag" jdbcType="INTEGER" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="JOB_CODE" property="jobCode" jdbcType="VARCHAR" />
+    <result column="AUTO_CONTENT" property="autoContent" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="imFriendsInfoTempDtoMap" type="com.lj.business.weixin.dto.ImFriendsInfoTempDto" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="NO_WX_SHOP" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="SOURCETYPE" property="sourcetype" jdbcType="CHAR" />
+    <result column="TYPE" property="type" jdbcType="CHAR" />
+    <result column="SHAREURL" property="shareurl" jdbcType="VARCHAR" />
+    <result column="SHARETITLE" property="sharetitle" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="OPT_FLAG" property="optFlag" jdbcType="INTEGER" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="JOB_CODE" property="jobCode" jdbcType="VARCHAR" />
+    <result column="AUTO_CONTENT" property="autoContent" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lj.business.weixin.domain.ImFriendsInfoTemp" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap type="com.lj.business.weixin.dto.ImFriendsInfoTempDto" id="ResultMapDto" extends="BaseResultMap">
+  	    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, FRIENDS_ID, MERCHANT_NO, MERCHANT_NAME,  NO_WX_SHOP, MEMBER_NO, 
+    MEMBER_NAME, NO_WX, NICK_NAME, TIMESTAMP, SOURCETYPE, TYPE, SHAREURL, SHARETITLE, 
+    IMG_ADDR, OPT_FLAG, SEND_TIME, STATUS, IMEI, JOB_CODE, AUTO_CONTENT, CREATE_DATE, 
+    REMARK, REMARK2, REMARK3, REMARK4,content
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+
+  <sql id="findImFriendsInfoPage_condition">
+  	<where>
+	  	<if test="merchantNo != null and merchantNo != ''">
+	  		and MERCHANT_NO = #{merchantNo}
+	  	</if>
+	  	<if test="noWx != null and noWx != ''">
+	  		and NO_WX = #{noWx}
+	  	</if>
+	  	<if test="noWxShop != null and noWxShop != ''">
+	  		and NO_WX_SHOP = #{noWxShop}
+	  	</if>
+	  	<if test="memberNo!=null and ''!=memberNo">
+	  		and t.member_no =#{memberNo}
+	  	</if>
+	  	<if test="optFlag!=null and ''!=optFlag">
+	  		and opt_flag = #{optFlag}
+	  	</if>
+  	</where>
+  </sql>
+  
+ 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from im_friends_info_temp
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.ImFriendsInfo" >
+    insert into im_friends_info_temp (CODE, MERCHANT_NO, 
+      MERCHANT_NAME,  
+      NO_WX_SHOP, MEMBER_NO, MEMBER_NAME, 
+      NO_WX, NICK_NAME, 
+      SOURCETYPE, TYPE, SHAREURL, 
+      SHARETITLE, IMG_ADDR, OPT_FLAG, 
+      SEND_TIME, STATUS, 
+      JOB_CODE, AUTO_CONTENT, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4, CONTENT)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR},  
+      #{noWxShop,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{noWx,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
+      #{sourcetype,jdbcType=CHAR}, #{type,jdbcType=CHAR}, #{shareurl,jdbcType=VARCHAR}, 
+      #{sharetitle,jdbcType=VARCHAR}, #{imgAddr,jdbcType=VARCHAR}, #{optFlag,jdbcType=INTEGER}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+      #{jobCode,jdbcType=VARCHAR}, #{autoContent,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.ImFriendsInfo" >
+    insert into im_friends_info_temp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="noWxShop != null" >
+        NO_WX_SHOP,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="sourcetype != null" >
+        SOURCETYPE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="shareurl != null" >
+        SHAREURL,
+      </if>
+      <if test="sharetitle != null" >
+        SHARETITLE,
+      </if>
+      <if test="imgAddr != null" >
+        IMG_ADDR,
+      </if>
+      <if test="optFlag != null" >
+        OPT_FLAG,
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      
+      <if test="jobCode != null" >
+        JOB_CODE,
+      </if>
+      <if test="autoContent != null" >
+        AUTO_CONTENT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+       
+      <if test="sourcetype != null" >
+        #{sourcetype,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="shareurl != null" >
+        #{shareurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetitle != null" >
+        #{sharetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAddr != null" >
+        #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="optFlag != null" >
+        #{optFlag,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      
+      <if test="jobCode != null" >
+        #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="autoContent != null" >
+        #{autoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+ <update id="updateStatus">
+ 		update im_friends_info_temp set status = #{status} where code=#{code}
+ </update>
+</mapper>

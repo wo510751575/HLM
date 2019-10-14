@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IGuidCardCustomerDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.GuidCardCustomer" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="GUID_CARD_CODE" property="guidCardCode" jdbcType="VARCHAR" />
+    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="FindGuidCardCustomerPageReturnMap" type="com.lj.business.member.dto.guidCardCustomer.FindGuidCardCustomerPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="GUID_CARD_CODE" property="guidCardCode" jdbcType="VARCHAR" />
+    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="FindGuidCardCustomerReturnMap" type="com.lj.business.member.dto.guidCardCustomer.FindGuidCardCustomerReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="GUID_CARD_CODE" property="guidCardCode" jdbcType="VARCHAR" />
+    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, GUID_CARD_CODE, OPEN_ID, TYPE, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from guid_card_customer
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from guid_card_customer
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.GuidCardCustomer" >
+    insert into guid_card_customer (CODE, GUID_CARD_CODE, OPEN_ID, 
+      TYPE, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{guidCardCode,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.GuidCardCustomer" >
+    insert into guid_card_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="guidCardCode != null" >
+        GUID_CARD_CODE,
+      </if>
+      <if test="openId != null" >
+        OPEN_ID,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="guidCardCode != null" >
+        #{guidCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.GuidCardCustomer" >
+    update guid_card_customer
+    <set >
+      <if test="guidCardCode != null" >
+        GUID_CARD_CODE = #{guidCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        OPEN_ID = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.GuidCardCustomer" >
+    update guid_card_customer
+    set GUID_CARD_CODE = #{guidCardCode,jdbcType=VARCHAR},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findGuidCardCustomerPage" resultMap="FindGuidCardCustomerPageReturnMap">
+  	select <include refid="Base_Column_List"/>
+  	from guid_card_customer
+  	order by CREATE_DATE ${sortDir}
+	limit ${start} , ${limit}
+  </select>
+  
+  <select id="findGuidCardCustomerPageCount" resultType="integer">
+  	select count(1)
+  	from guid_card_customer
+  </select>
+  
+  <select id="findGuidCardCustomerSelect" resultMap="FindGuidCardCustomerReturnMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from guid_card_customer
+    <where>
+    	<if test="guidCardCode != null" >
+		  and GUID_CARD_CODE = #{guidCardCode,jdbcType=VARCHAR}
+		</if>
+		<if test="openId != null" >
+		  and OPEN_ID = #{openId,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null" >
+		  and TYPE = #{type,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  <delete id="delGuidCardCustomerSelect">
+  	delete from guid_card_customer
+    <where>
+    	<if test="guidCardCode != null" >
+		  and GUID_CARD_CODE = #{guidCardCode,jdbcType=VARCHAR}
+		</if>
+		<if test="openId != null" >
+		  and OPEN_ID = #{openId,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null" >
+		  and TYPE = #{type,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </delete>
+  
+</mapper>

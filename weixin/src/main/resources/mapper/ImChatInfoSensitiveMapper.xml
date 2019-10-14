@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IImChatInfoSensitiveDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.ImChatInfoSensitive" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="NO_WX_GM" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+    <result column="RESOURCES_PATH" property="resourcesPath" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+    <result column="CHATROOM_TYPE" property="chatroomType" jdbcType="INTEGER" />
+    <result column="CHATROOM_NO_WX" property="chatroomNoWx" jdbcType="VARCHAR" />
+    <result column="MSG_SOURCE" property="msgSource" jdbcType="INTEGER" />
+    <result column="CHAT_ASSISTANT_CODE" property="chatAssistantCode" jdbcType="VARCHAR" />
+    <result column="CHAT_ASSISTANT_NAME" property="chatAssistantName" jdbcType="VARCHAR" />
+    <result column="SENSITIVE_WORDS" property="sensitiveWords" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="findImChatInfoSensitivePageReturn" type="com.lj.business.weixin.dto.FindImChatInfoSensitivePageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="NO_WX_GM" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+    <result column="RESOURCES_PATH" property="resourcesPath" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+    <result column="CHATROOM_TYPE" property="chatroomType" jdbcType="INTEGER" />
+    <result column="CHATROOM_NO_WX" property="chatroomNoWx" jdbcType="VARCHAR" />
+    <result column="MSG_SOURCE" property="msgSource" jdbcType="INTEGER" />
+    <result column="CHAT_ASSISTANT_CODE" property="chatAssistantCode" jdbcType="VARCHAR" />
+    <result column="CHAT_ASSISTANT_NAME" property="chatAssistantName" jdbcType="VARCHAR" />
+    <result column="SENSITIVE_WORDS" property="sensitiveWords" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.lj.business.weixin.domain.ImChatInfoSensitive" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_GM, MEMBER_NAME_GM, NO_WX_GM, MEMBER_NO, MEMBER_NAME, NO_WX, ALIAS, 
+     MERCHANT_NO, MERCHANT_NAME, TYPE, CHAT_TIME, RESOURCES_PATH, 
+    SHARE_TITLE, SHARE_DES, SHARE_URL, CHATROOM_TYPE, CHATROOM_NO_WX, MSG_SOURCE, CHAT_ASSISTANT_CODE, 
+    CHAT_ASSISTANT_NAME, SENSITIVE_WORDS, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  
+  <sql id ="findImChatInfoSensitive">
+    <where>
+      <if test="merchantName !=null and merchantName !=''">
+        and MERCHANT_NAME  like  CONCAT('%',#{merchantName,jdbcType=VARCHAR},'%') 
+      </if>
+      <if test="merchantNo !=null and merchantNo !=''">
+        and MERCHANT_NO = #{merchantNo}
+      </if>
+        <if test="chatAssistantName !=null and chatAssistantName !=''">
+         and CHAT_ASSISTANT_NAME = #{chatAssistantName,jdbcType=VARCHAR} 
+        </if>
+        <if test="chatAssistant !=null and chatAssistant !=''">
+         and (CHAT_ASSISTANT_NAME like  CONCAT('%',#{chatAssistant,jdbcType=VARCHAR},'%') 
+         or  MEMBER_NAME_GM like  CONCAT('%',#{chatAssistant,jdbcType=VARCHAR},'%'))
+        </if>
+    </where>
+  </sql>
+  
+  
+   <select id="findImChatInfoSensitivePage" resultMap="findImChatInfoSensitivePageReturn"  parameterType="com.lj.business.weixin.dto.FindImChatInfoSensitivePage"> 
+    select
+     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from im_chat_info_sensitive
+     <include refid="findImChatInfoSensitive" />
+    order by CREATE_DATE ${sortDir}
+    limit ${start} , ${limit}
+   </select>
+   
+    <select id="findImChatInfoSensitiveCount" resultType="int"  parameterType="com.lj.business.weixin.dto.FindImChatInfoSensitivePage"> 
+    select count(1) FROM im_chat_info_sensitive
+     <include refid="findImChatInfoSensitive"/>
+   </select>
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from im_chat_info_sensitive
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from im_chat_info_sensitive
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.ImChatInfoSensitive" >
+    insert into im_chat_info_sensitive (CODE, MEMBER_NO_GM, MEMBER_NAME_GM, 
+      NO_WX_GM, MEMBER_NO, MEMBER_NAME, 
+      NO_WX, ALIAS,  
+       MERCHANT_NO, MERCHANT_NAME, 
+      TYPE, CHAT_TIME, RESOURCES_PATH, 
+      SHARE_TITLE, SHARE_DES, SHARE_URL, 
+      CHATROOM_TYPE, CHATROOM_NO_WX, MSG_SOURCE, 
+      CHAT_ASSISTANT_CODE, CHAT_ASSISTANT_NAME, SENSITIVE_WORDS, 
+      CREATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4, CONTENT
+      )
+    values (#{code,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{noWxGm,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{noWx,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR},  
+       #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{chatTime,jdbcType=TIMESTAMP}, #{resourcesPath,jdbcType=VARCHAR}, 
+      #{shareTitle,jdbcType=VARCHAR}, #{shareDes,jdbcType=VARCHAR}, #{shareUrl,jdbcType=VARCHAR}, 
+      #{chatroomType,jdbcType=INTEGER}, #{chatroomNoWx,jdbcType=VARCHAR}, #{msgSource,jdbcType=INTEGER}, 
+      #{chatAssistantCode,jdbcType=VARCHAR}, #{chatAssistantName,jdbcType=VARCHAR}, #{sensitiveWords,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.ImChatInfoSensitive" >
+    insert into im_chat_info_sensitive
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="noWxGm != null" >
+        NO_WX_GM,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="alias != null" >
+        ALIAS,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="chatTime != null" >
+        CHAT_TIME,
+      </if>
+      <if test="resourcesPath != null" >
+        RESOURCES_PATH,
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE,
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES,
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL,
+      </if>
+      <if test="chatroomType != null" >
+        CHATROOM_TYPE,
+      </if>
+      <if test="chatroomNoWx != null" >
+        CHATROOM_NO_WX,
+      </if>
+      <if test="msgSource != null" >
+        MSG_SOURCE,
+      </if>
+      <if test="chatAssistantCode != null" >
+        CHAT_ASSISTANT_CODE,
+      </if>
+      <if test="chatAssistantName != null" >
+        CHAT_ASSISTANT_NAME,
+      </if>
+      <if test="sensitiveWords != null" >
+        SENSITIVE_WORDS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxGm != null" >
+        #{noWxGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="chatTime != null" >
+        #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourcesPath != null" >
+        #{resourcesPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chatroomType != null" >
+        #{chatroomType,jdbcType=INTEGER},
+      </if>
+      <if test="chatroomNoWx != null" >
+        #{chatroomNoWx,jdbcType=VARCHAR},
+      </if>
+      <if test="msgSource != null" >
+        #{msgSource,jdbcType=INTEGER},
+      </if>
+      <if test="chatAssistantCode != null" >
+        #{chatAssistantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chatAssistantName != null" >
+        #{chatAssistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="sensitiveWords != null" >
+        #{sensitiveWords,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.ImChatInfoSensitive" >
+    update im_chat_info_sensitive
+    <set >
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxGm != null" >
+        NO_WX_GM = #{noWxGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        ALIAS = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="chatTime != null" >
+        CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourcesPath != null" >
+        RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chatroomType != null" >
+        CHATROOM_TYPE = #{chatroomType,jdbcType=INTEGER},
+      </if>
+      <if test="chatroomNoWx != null" >
+        CHATROOM_NO_WX = #{chatroomNoWx,jdbcType=VARCHAR},
+      </if>
+      <if test="msgSource != null" >
+        MSG_SOURCE = #{msgSource,jdbcType=INTEGER},
+      </if>
+      <if test="chatAssistantCode != null" >
+        CHAT_ASSISTANT_CODE = #{chatAssistantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chatAssistantName != null" >
+        CHAT_ASSISTANT_NAME = #{chatAssistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="sensitiveWords != null" >
+        SENSITIVE_WORDS = #{sensitiveWords,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lj.business.weixin.domain.ImChatInfoSensitive" >
+    update im_chat_info_sensitive
+    set MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      NO_WX_GM = #{noWxGm,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      ALIAS = #{alias,jdbcType=VARCHAR},
+      
+      
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      CHATROOM_TYPE = #{chatroomType,jdbcType=INTEGER},
+      CHATROOM_NO_WX = #{chatroomNoWx,jdbcType=VARCHAR},
+      MSG_SOURCE = #{msgSource,jdbcType=INTEGER},
+      CHAT_ASSISTANT_CODE = #{chatAssistantCode,jdbcType=VARCHAR},
+      CHAT_ASSISTANT_NAME = #{chatAssistantName,jdbcType=VARCHAR},
+      SENSITIVE_WORDS = #{sensitiveWords,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.ImChatInfoSensitive" >
+    update im_chat_info_sensitive
+    set MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      NO_WX_GM = #{noWxGm,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      ALIAS = #{alias,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      CHATROOM_TYPE = #{chatroomType,jdbcType=INTEGER},
+      CHATROOM_NO_WX = #{chatroomNoWx,jdbcType=VARCHAR},
+      MSG_SOURCE = #{msgSource,jdbcType=INTEGER},
+      CHAT_ASSISTANT_CODE = #{chatAssistantCode,jdbcType=VARCHAR},
+      CHAT_ASSISTANT_NAME = #{chatAssistantName,jdbcType=VARCHAR},
+      SENSITIVE_WORDS = #{sensitiveWords,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

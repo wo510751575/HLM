@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IGuidIntroduceMaterialDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cm.domain.GuidIntroduceMaterial" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    
+    
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="TEMPLATE_NO" property="templateNo" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="POSITION" property="position" jdbcType="VARCHAR" />
+    <result column="SERVE_LEVEL" property="serveLevel" jdbcType="DOUBLE" />
+    <result column="PROFESSIONAL_LEVEL" property="professionalLevel" jdbcType="DOUBLE" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="SLOGAN" property="slogan" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="BaseResultPageMap" type="com.lj.business.cm.dto.guidIntroduceMaterial.FindGuidIntroduceMaterialPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    
+    
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="TEMPLATE_NO" property="templateNo" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="POSITION" property="position" jdbcType="VARCHAR" />
+    <result column="SERVE_LEVEL" property="serveLevel" jdbcType="DOUBLE" />
+    <result column="PROFESSIONAL_LEVEL" property="professionalLevel" jdbcType="DOUBLE" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="SLOGAN" property="slogan" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO,  MEMBER_NO_GM, MEMBER_NAME_GM, TEMPLATE_NO, HEAD_ADDRESS, NAME, POSITION, 
+    SERVE_LEVEL, PROFESSIONAL_LEVEL, MOBILE, COMPANY_NAME, COMPANY_ADDRESS, SLOGAN, REMARK, 
+    REMARK2, REMARK3, REMARK4 ,CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from guid_introduce_material
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from guid_introduce_material
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cm.domain.GuidIntroduceMaterial" >
+    insert into guid_introduce_material (CODE, MERCHANT_NO,  
+       MEMBER_NO_GM, MEMBER_NAME_GM, TEMPLATE_NO, HEAD_ADDRESS,
+      NAME, POSITION, SERVE_LEVEL, 
+      PROFESSIONAL_LEVEL, MOBILE, COMPANY_NAME, 
+      COMPANY_ADDRESS, SLOGAN, REMARK, 
+      REMARK2, REMARK3, REMARK4, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR},  
+       #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{templateNo,jdbcType=VARCHAR}, 
+      #{headAddress,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{serveLevel,jdbcType=DOUBLE}, 
+      #{professionalLevel,jdbcType=DOUBLE}, #{mobile,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{companyAddress,jdbcType=VARCHAR}, #{slogan,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cm.domain.GuidIntroduceMaterial" >
+    insert into guid_introduce_material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="templateNo != null">
+      	TEMPLATE_NO,
+      </if>
+      <if test="headAddress != null">
+      	HEAD_ADDRESS,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="position != null" >
+        POSITION,
+      </if>
+      <if test="serveLevel != null" >
+        SERVE_LEVEL,
+      </if>
+      <if test="professionalLevel != null" >
+        PROFESSIONAL_LEVEL,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="companyAddress != null" >
+        COMPANY_ADDRESS,
+      </if>
+      <if test="slogan != null" >
+        SLOGAN,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="templateNo != null">
+      	#{templateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null">
+      	#{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="serveLevel != null" >
+        #{serveLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="professionalLevel != null" >
+        #{professionalLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="slogan != null" >
+        #{slogan,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cm.domain.GuidIntroduceMaterial" >
+    update guid_introduce_material
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="templateNo != null">
+      	TEMPLATE_NO = #{templateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null">
+      	HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="serveLevel != null" >
+        SERVE_LEVEL = #{serveLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="professionalLevel != null" >
+        PROFESSIONAL_LEVEL = #{professionalLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="slogan != null" >
+        SLOGAN = #{slogan,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cm.domain.GuidIntroduceMaterial" >
+    update guid_introduce_material
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      
+      
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      TEMPLATE_NO = #{templateNo,jdbcType=VARCHAR},
+      HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      POSITION = #{position,jdbcType=VARCHAR},
+      SERVE_LEVEL = #{serveLevel,jdbcType=DOUBLE},
+      PROFESSIONAL_LEVEL = #{professionalLevel,jdbcType=DOUBLE},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      SLOGAN = #{slogan,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findGuidIntroduceMaterialPage" resultMap="BaseResultPageMap" parameterType="com.lj.business.cm.dto.guidIntroduceMaterial.FindGuidIntroduceMaterialPage">
+  	select 
+    <include refid="Base_Column_List" />
+    from guid_introduce_material
+    <where>
+    	<if test="code != null and code != ''">
+    		and CODE = #{code,jdbcType=VARCHAR}
+    	</if>
+    	<if test="name != null and name != ''">
+    		and NAME like CONCAT('%',#{name,jdbcType=VARCHAR},'%' )
+    		
+    	</if>
+    	<if test="merchantNo != null and merchantNo != ''" >
+        	and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      	</if>
+      	<if test="memberNoGm != null and memberNoGm != ''" >
+        	and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      	</if>
+    </where>
+    order by CREATE_DATE ${sortDir}
+    limit ${start},${limit}
+  </select>
+  
+  <select id="findGuidIntroduceMaterialPageCount" resultType="integer">
+  	select count(1)
+    from guid_introduce_material
+    <where>
+    	<if test="code != null and code != ''">
+    		and CODE = #{code,jdbcType=VARCHAR}
+    	</if>
+    	<if test="merchantNo != null and merchantNo != ''" >
+        	and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      	</if>
+      	<if test="memberNoGm != null and memberNoGm != ''" >
+        	and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      	</if>
+    </where>
+  </select>
+  
+  <select id="findCountMaterial" resultType="integer">
+  	select count(1) from guid_introduce_material
+  	<where>
+    	<if test="merchantNo != null and merchantNo != ''" >
+        	and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      	</if>
+      	<if test="memberNoGm != null and memberNoGm != ''" >
+        	and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      	</if>
+    </where>
+  </select>
+  
+</mapper>

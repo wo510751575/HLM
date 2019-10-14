@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.ad.dao.IBeansOrderDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.ad.domain.BeansOrder" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+    <result column="ORDER_TYPE" property="orderType" jdbcType="VARCHAR" />
+    <result column="SERVE_CODE" property="serveCode" jdbcType="VARCHAR" />
+    <result column="SERVE_NAME" property="serveName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GUID" property="memberNoGuid" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GUID" property="memberNameGuid" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="SERIAL_NUM" property="serialNum" jdbcType="VARCHAR" />
+    <result column="PAY_TYPE" property="payType" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="BIGINT" />
+    <result column="CREDITS" property="credits" jdbcType="INTEGER" />
+    <result column="PAY_TIME" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_CERT" property="payCert" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" type="com.ye.business.ad.dto.BeansOrderDto" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, ORDER_NO, ORDER_TYPE, SERVE_CODE, 
+    SERVE_NAME, MEMBER_NO_GUID, MEMBER_NAME_GUID, MOBILE, SERIAL_NUM, PAY_TYPE, AMOUNT,CREDITS, 
+    PAY_TIME, PAY_CERT, STATUS, UPDATE_ID, UPDATE_DATE, CREATE_ID, CREATE_DATE, REMARK, 
+    REMARK2, REMARK3
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+		<if test="param.status != null and param.status != '' ">
+		  <![CDATA[and STATUS = #{param.status} ]]>
+		</if>
+		<if test="param.remark2 != null and param.remark2 != '' ">
+		  <![CDATA[and remark2 = #{param.remark2} ]]>
+		</if>
+        <if test="param.payType != null and param.payType != '' ">
+		  <![CDATA[and PAY_TYPE = #{param.payType} ]]>
+		</if>
+		<if test="param.beginDate != null ">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') >= #{param.beginDate} ]]>
+		</if>
+		<if test="param.endDate != null ">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') <= #{param.endDate} ]]>
+		</if>
+		<if test="param.mobile != null and param.mobile != '' ">
+		  <![CDATA[and MOBILE = #{param.mobile} ]]>
+		</if>
+		<if test="param.memberNoGuid != null and param.memberNoGuid != '' ">
+		  <![CDATA[and MEMBER_NO_GUID = #{param.memberNoGuid} ]]>
+		</if>
+		<if test="param.memberNameGuid != null and param.memberNameGuid != '' ">
+		  <![CDATA[and MEMBER_NAME_GUID like concat('%', #{param.memberNameGuid}, '%') ]]>
+		</if>
+		
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by UPDATE_DATE desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findBeansOrders" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindBeansOrderPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM beans_order
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findBeansOrderPage" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindBeansOrderPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM beans_order
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findBeansOrderPageCount" resultType="int" parameterType="com.ye.business.ad.dto.FindBeansOrderPage">
+	select count(*)
+	FROM beans_order
+	  <include refid="findPage_condition" />
+  </select>
+    
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from beans_order
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from beans_order
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.ad.domain.BeansOrder" >
+    insert into beans_order (CODE, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, ORDER_NO, 
+      ORDER_TYPE, SERVE_CODE, SERVE_NAME, 
+      MEMBER_NO_GUID, MEMBER_NAME_GUID, MOBILE, 
+      SERIAL_NUM, PAY_TYPE, AMOUNT, CREDITS, 
+      PAY_TIME, PAY_CERT, STATUS, 
+      UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+      CREATE_DATE, REMARK, REMARK2, 
+      REMARK3)
+    values (#{code,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{orderType,jdbcType=VARCHAR}, #{serveCode,jdbcType=VARCHAR}, #{serveName,jdbcType=VARCHAR}, 
+      #{memberNoGuid,jdbcType=VARCHAR}, #{memberNameGuid,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{serialNum,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT},#{credits,jdbcType=INTEGER},  
+      #{payTime,jdbcType=TIMESTAMP}, #{payCert,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.ad.domain.BeansOrder" >
+    insert into beans_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE,
+      </if>
+      <if test="serveCode != null" >
+        SERVE_CODE,
+      </if>
+      <if test="serveName != null" >
+        SERVE_NAME,
+      </if>
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="serialNum != null" >
+        SERIAL_NUM,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="credits != null" >
+        CREDITS,
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME,
+      </if>
+      <if test="payCert != null" >
+        PAY_CERT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="serveCode != null" >
+        #{serveCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serveName != null" >
+        #{serveName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null" >
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null" >
+        #{serialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="credits != null" >
+        #{credits,jdbcType=INTEGER},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCert != null" >
+        #{payCert,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.ad.domain.BeansOrder" >
+    update beans_order
+    <set >
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="serveCode != null" >
+        SERVE_CODE = #{serveCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serveName != null" >
+        SERVE_NAME = #{serveName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null" >
+        SERIAL_NUM = #{serialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCert != null" >
+        PAY_CERT = #{payCert,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.ad.domain.BeansOrder" >
+    update beans_order
+    set SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      ORDER_TYPE = #{orderType,jdbcType=VARCHAR},
+      SERVE_CODE = #{serveCode,jdbcType=VARCHAR},
+      SERVE_NAME = #{serveName,jdbcType=VARCHAR},
+      MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      SERIAL_NUM = #{serialNum,jdbcType=VARCHAR},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=BIGINT},
+      PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      PAY_CERT = #{payCert,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

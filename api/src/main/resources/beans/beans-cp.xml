@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<bean id="couponService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>cp</value>
+		</property>
+		<property name="serviceName">
+			<value>couponService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.cp.service.ICouponService</value>
+		</property>
+	</bean>
+
+	<bean id="couponTypeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>cp</value>
+		</property>
+		<property name="serviceName">
+			<value>couponTypeService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.cp.service.ICouponTypeService</value>
+		</property>
+	</bean>
+	
+	<bean id="couponRuleService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>cp</value>
+		</property>
+		<property name="serviceName">
+			<value>couponRuleService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.cp.service.ICouponRuleService</value>
+		</property>
+	</bean>
+
+	<bean id="couponMemberRelationService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>cp</value>
+		</property>
+		<property name="serviceName">
+			<value>couponMemberRelationService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.cp.service.ICouponMemberRelationService</value>
+		</property>
+	</bean>
+	
+     <bean id="couponRuleExService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>cp</value>
+		</property>
+		<property name="serviceName">
+			<value>couponRuleExService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.cp.service.ICouponRuleExService</value>
+		</property>
+	</bean>
+
+</beans> 
+

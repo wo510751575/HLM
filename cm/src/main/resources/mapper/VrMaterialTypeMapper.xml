@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IVrMaterialTypeDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cm.domain.VrMaterialType" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="TYPE_COUNT" property="typeCount" jdbcType="INTEGER" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ATTENTION_RATE" property="customerAttentionRate" jdbcType="DOUBLE" />
+    <result column="MATERIAL_DIMENSION" property="materialDimension" jdbcType="VARCHAR" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="findVrMaterialTypeReturns" type="com.lj.business.cm.dto.vrMaterialType.FindVrMaterialTypeReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="TYPE_COUNT" property="typeCount" jdbcType="INTEGER" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ATTENTION_RATE" property="customerAttentionRate" jdbcType="DOUBLE" />
+    <result column="MATERIAL_DIMENSION" property="materialDimension" jdbcType="VARCHAR" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="findVrMaterialTypePageReturns" type="com.lj.business.cm.dto.vrMaterialType.FindVrMaterialTypePageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="TYPE_COUNT" property="typeCount" jdbcType="INTEGER" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ATTENTION_RATE" property="customerAttentionRate" jdbcType="DOUBLE" />
+    <result column="MATERIAL_DIMENSION" property="materialDimension" jdbcType="VARCHAR" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO,TYPE_NAME, TYPE_COUNT, IMG_ADDR, 
+    CUSTOMER_ATTENTION_RATE, MATERIAL_DIMENSION, SHOW_INDEX, CREATE_ID, CREATE_DATE, 
+    REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  
+  <sql id="findVrMaterialTypePageReturn_contion">
+    <where>
+      <if test="merchantNo != null and merchantNo != ''">
+        and MERCHANT_NO =#{merchantNo}
+      </if>
+         <if test="typeName != null and typeName != ''">
+          AND TYPE_NAME like CONCAT('%',#{typeName,jdbcType=VARCHAR},'%' )
+      </if>
+    </where>
+  </sql>
+  
+  
+    
+     <!-- 分页查询 -->
+   <select id="findVrMaterialTypePage" resultMap="findVrMaterialTypePageReturns" parameterType="com.lj.business.cm.dto.vrMaterialType.FindVrMaterialTypePage" >
+   SELECT  
+    <include refid="Base_Column_List" />
+   FROM vr_material_type 
+   <include refid="findVrMaterialTypePageReturn_contion" />
+   order by code ${sortDir}
+   limit ${start},${limit}
+   </select>
+  
+  <select id="findVrMaterialTypePageCount" resultType="int" parameterType="com.lj.business.cm.dto.vrMaterialType.FindVrMaterialTypePage" >
+    select  count(*)
+     FROM vr_material_type 
+     <include refid="findVrMaterialTypePageReturn_contion" />
+  </select>
+  
+   <select id="findVrMaterialTypeReturnList" resultMap="findVrMaterialTypeReturns" parameterType="com.lj.business.cm.dto.vrMaterialType.FindVrMaterialType" >
+    select 
+    <include refid="Base_Column_List" />
+   from vr_material_type
+   where MERCHANT_NO = #{merchantNo}
+   <if test="materialDimension !=null and materialDimension !=''">
+   and MATERIAL_DIMENSION = #{materialDimension} 
+   </if>
+   order by SHOW_INDEX 
+  </select>
+  
+   <select id="findVrMaterialTypeShowIndexList" resultType="java.lang.Integer" >
+    select 
+    SHOW_INDEX
+   from vr_material_type
+   where MERCHANT_NO = #{merchantNo}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vr_material_type
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from vr_material_type
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cm.domain.VrMaterialType" >
+    insert into vr_material_type (CODE, MERCHANT_NO,TYPE_NAME, TYPE_COUNT, 
+      IMG_ADDR, CUSTOMER_ATTENTION_RATE, MATERIAL_DIMENSION, 
+      SHOW_INDEX, CREATE_ID, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR},
+      #{typeName,jdbcType=VARCHAR}, #{typeCount,jdbcType=INTEGER}, 
+      #{imgAddr,jdbcType=VARCHAR}, #{customerAttentionRate,jdbcType=DOUBLE}, #{materialDimension,jdbcType=VARCHAR}, 
+      #{showIndex,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cm.domain.VrMaterialType" >
+    insert into vr_material_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="typeCount != null" >
+        TYPE_COUNT,
+      </if>
+      <if test="imgAddr != null" >
+        IMG_ADDR,
+      </if>
+      <if test="customerAttentionRate != null" >
+        CUSTOMER_ATTENTION_RATE,
+      </if>
+      <if test="materialDimension != null" >
+        MATERIAL_DIMENSION,
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCount != null" >
+        #{typeCount,jdbcType=INTEGER},
+      </if>
+      <if test="imgAddr != null" >
+        #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAttentionRate != null" >
+        #{customerAttentionRate,jdbcType=DOUBLE},
+      </if>
+      <if test="materialDimension != null" >
+        #{materialDimension,jdbcType=VARCHAR},
+      </if>
+      <if test="showIndex != null" >
+        #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cm.domain.VrMaterialType" >
+    update vr_material_type
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCount != null" >
+        TYPE_COUNT = #{typeCount,jdbcType=INTEGER},
+      </if>
+      <if test="imgAddr != null" >
+        IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAttentionRate != null" >
+        CUSTOMER_ATTENTION_RATE = #{customerAttentionRate,jdbcType=DOUBLE},
+      </if>
+      <if test="materialDimension != null" >
+        MATERIAL_DIMENSION = #{materialDimension,jdbcType=VARCHAR},
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cm.domain.VrMaterialType" >
+    update vr_material_type
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      TYPE_COUNT = #{typeCount,jdbcType=INTEGER},
+      IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      CUSTOMER_ATTENTION_RATE = #{customerAttentionRate,jdbcType=DOUBLE},
+      MATERIAL_DIMENSION = #{materialDimension,jdbcType=VARCHAR},
+      SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

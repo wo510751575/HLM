@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IBatchSendMessageDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.BatchSendMessage" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="room_codes" property="roomCodes" jdbcType="VARCHAR" />
+    <result column="room_persons" property="roomPersons" jdbcType="VARCHAR" />
+    <result column="member_no" property="memberNo" jdbcType="VARCHAR" />
+    <result column="no_wx_gm" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="img_addr" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="send_date" property="sendDate" jdbcType="VARCHAR" />
+   
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, room_codes, room_persons, member_no, no_wx_gm, img_addr, type, create_date, 
+    send_date
+  </sql>
+
+
+  <insert id="addBatchSendMessage" parameterType="com.lj.business.member.domain.AddFriends" >
+    insert into add_friends (CODE, room_codes, room_persons, member_no, no_wx_gm, img_addr, type, create_date, 
+    send_date)
+    values (#{code,jdbcType=VARCHAR}, #{roomCodes,jdbcType=VARCHAR}, #{roomPersons,jdbcType=VARCHAR}, 
+      #{memberNo,jdbcType=VARCHAR}, #{noWxGm,jdbcType=VARCHAR}, #{imgAddr,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{sendDate,jdbcType=VARCHAR}, 
+   )
+  </insert>
+  
+  
+	<select id="findBatchSendMessagePageCount" resultType="java.lang.Integer" parameterType="com.lj.business.member.domain.BatchSendMessage">
+	   select count(1) from batch_send_message 
+	   where 1=1 
+	   <if test="roomCodes != null" >
+        and room_codes = #{roomCodes,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNo != null" >
+        and member_no = #{memberNo,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null" >
+        and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null and endTime != null " >
+        and create_date between  #{startTime,jdbcType=VARCHAR}  and #{endTime}
+      </if>
+      <if test="sendDate != null" >
+       send_date =  #{sendDate}
+      </if>
+
+	</select>
+	
+	
+	<select id="findBatchSendMessagePageList" resultMap="BaseResultMap" parameterType="com.lj.business.member.domain.BatchSendMessage" >
+	select * from batch_send_message 
+	   where 1=1 
+	   <if test="roomCodes != null" >
+        and room_codes = #{roomCodes,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNo != null" >
+        and member_no = #{memberNo,jdbcType=VARCHAR}
+      </if>
+       <if test="merchantNo != null" >
+        and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+       <if test="startTime != null and endTime != null " >
+        and create_date between  #{startTime,jdbcType=VARCHAR}  and #{endTime}
+      </if>
+      <if test="sendDate != null" >
+       send_date =  #{sendDate}
+      </if>
+      order by create_date desc limit #{start},#{limit}
+	</select>
+	
+	
+
+	
+</mapper>

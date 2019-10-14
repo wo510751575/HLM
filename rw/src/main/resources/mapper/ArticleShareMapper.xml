@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.rw.dao.IArticleShareDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.rw.domain.ArticleShare" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GUID" property="memberNoGuid" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GUID" property="memberNameGuid" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="ARTICLE_CODE" property="articleCode" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GUID_VIEW" property="memberNoGuidView" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GUID_VIEW" property="memberNameGuidView" jdbcType="VARCHAR" />
+    <result column="SHOP_NO_VIEW" property="shopNoView" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME_VIEW" property="shopNameView" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO_VIEW" property="merchantNoView" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME_VIEW" property="merchantNameView" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CRETAE_NAME" property="cretaeName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="MAIN_IMAGE" jdbcType="VARCHAR" property="mainImage" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+  </resultMap>
+  
+  <!-- 分组统计当前用户分享文章点击展示数量 -->
+  <resultMap id="FindResultGoupMap" type="com.ye.business.rw.dto.ArticleShareDto">
+  	<result column="ARTICLE_CODE" property="articleCode" jdbcType="VARCHAR" />
+  	<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  	<result column="READ_NUM" property="readNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap type="java.lang.Long" id="recordCounts">
+  	<result column="recordCounts" jdbcType="BIGINT"/>
+  </resultMap>
+  
+  <resultMap id="FindResultMap" extends="BaseResultMap" type="com.ye.business.rw.dto.ArticleShareDto"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+    ARTICLE_CODE, MEMBER_NO_GUID_VIEW, MEMBER_NAME_GUID_VIEW, SHOP_NO_VIEW, SHOP_NAME_VIEW, 
+    MERCHANT_NO_VIEW, MERCHANT_NAME_VIEW, CREATE_ID, CRETAE_NAME, CREATE_DATE, REMARK, 
+    REMARK2, REMARK3, REMARK4, UPDATE_TIME, MAIN_IMAGE, TITLE
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+        <if test="param.articleCode != null and param.articleCode != '' ">
+		  <![CDATA[and ARTICLE_CODE = #{param.articleCode} ]]>
+		</if>
+        <if test="param.memberNoGuid != null and param.memberNoGuid != '' ">
+		  <![CDATA[and MEMBER_NO_GUID = #{param.memberNoGuid} ]]>
+		</if>
+		<if test="param.shopNo != null and param.shopNo != '' ">
+		  <![CDATA[and SHOP_NO = #{param.shopNo} ]]>
+		</if>
+        <if test="param.createId != null and param.createId != '' ">
+		  <![CDATA[and CREATE_ID = #{param.createId} ]]>
+		</if>
+		<if test="param.createDate != null and param.createDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') = #{param.createDate} ]]>
+		</if>
+		<if test="param.beginDate != null and param.beginDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') >= #{param.beginDate} ]]>
+		</if>
+		<if test="param.endDate != null and param.endDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') <= #{param.endDate} ]]>
+		</if>
+		<if test="param.hasMemberNoGuidViewNotEmpty != null and param.hasMemberNoGuidViewNotEmpty != '' ">
+		  <![CDATA[and MEMBER_NO_GUID_VIEW is not null and MEMBER_NO_GUID_VIEW != '' and MEMBER_NO_GUID_VIEW != #{param.hasMemberNoGuidViewNotEmpty} ]]>
+		</if>
+		<if test="param.remark4 != null and param.remark4 != ''">
+			<![CDATA[and REMARK4 = #{param.remark4} ]]>
+		</if>
+		<if test="param.memberNoGuidList != null and param.memberNoGuidList.size() > 0">
+			and MEMBER_NO_GUID in <foreach collection="param.memberNoGuidList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="param.startTime != null and param.startTime != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') >= date_format(#{param.startTime}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="param.endTime != null and param.endTime != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') <= date_format(#{param.endTime}, '%Y-%m-%d') ]]>
+		</if>
+        <if test="param.title != null and param.title != '' ">
+		  <![CDATA[and TITLE like concat('%', #{param.title}, '%') ]]>
+		</if>
+      </if>
+    </where>
+    <!-- 分组 -->
+    <if test="param.hasGroupArticleCode != null and param.hasGroupArticleCode != ''">
+    	group by ARTICLE_CODE
+    </if>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by CREATE_DATE desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findArticleShares" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindArticleSharePage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM article_share
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findArticleSharePage" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindArticleSharePage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM article_share
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findArticleSharePageCount" resultType="int" parameterType="com.ye.business.rw.dto.FindArticleSharePage">
+	select count(*)
+	FROM article_share
+	  <include refid="findPage_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from article_share
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from article_share
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.rw.domain.ArticleShare" >
+    insert into article_share (CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, ARTICLE_CODE, MEMBER_NO_GUID_VIEW, 
+      MEMBER_NAME_GUID_VIEW, SHOP_NO_VIEW, SHOP_NAME_VIEW, 
+      MERCHANT_NO_VIEW, MERCHANT_NAME_VIEW, CREATE_ID, 
+      CRETAE_NAME, CREATE_DATE, REMARK, 
+      REMARK2, REMARK3, REMARK4, 
+      UPDATE_TIME, MAIN_IMAGE, 
+      TITLE)
+    values (#{code,jdbcType=VARCHAR}, #{memberNoGuid,jdbcType=VARCHAR}, #{memberNameGuid,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{articleCode,jdbcType=VARCHAR}, #{memberNoGuidView,jdbcType=VARCHAR}, 
+      #{memberNameGuidView,jdbcType=VARCHAR}, #{shopNoView,jdbcType=VARCHAR}, #{shopNameView,jdbcType=VARCHAR}, 
+      #{merchantNoView,jdbcType=VARCHAR}, #{merchantNameView,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{cretaeName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{mainImage,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.rw.domain.ArticleShare" >
+    insert into article_share
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="articleCode != null" >
+        ARTICLE_CODE,
+      </if>
+      <if test="memberNoGuidView != null" >
+        MEMBER_NO_GUID_VIEW,
+      </if>
+      <if test="memberNameGuidView != null" >
+        MEMBER_NAME_GUID_VIEW,
+      </if>
+      <if test="shopNoView != null" >
+        SHOP_NO_VIEW,
+      </if>
+      <if test="shopNameView != null" >
+        SHOP_NAME_VIEW,
+      </if>
+      <if test="merchantNoView != null" >
+        MERCHANT_NO_VIEW,
+      </if>
+      <if test="merchantNameView != null" >
+        MERCHANT_NAME_VIEW,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="cretaeName != null" >
+        CRETAE_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="mainImage != null" >
+        MAIN_IMAGE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null" >
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCode != null" >
+        #{articleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuidView != null" >
+        #{memberNoGuidView,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuidView != null" >
+        #{memberNameGuidView,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNoView != null" >
+        #{shopNoView,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNameView != null" >
+        #{shopNameView,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNoView != null" >
+        #{merchantNoView,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNameView != null" >
+        #{merchantNameView,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="cretaeName != null" >
+        #{cretaeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mainImage != null" >
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.rw.domain.ArticleShare" >
+    update article_share
+    <set >
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCode != null" >
+        ARTICLE_CODE = #{articleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuidView != null" >
+        MEMBER_NO_GUID_VIEW = #{memberNoGuidView,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuidView != null" >
+        MEMBER_NAME_GUID_VIEW = #{memberNameGuidView,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNoView != null" >
+        SHOP_NO_VIEW = #{shopNoView,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNameView != null" >
+        SHOP_NAME_VIEW = #{shopNameView,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNoView != null" >
+        MERCHANT_NO_VIEW = #{merchantNoView,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNameView != null" >
+        MERCHANT_NAME_VIEW = #{merchantNameView,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="cretaeName != null" >
+        CRETAE_NAME = #{cretaeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mainImage != null" >
+        MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.rw.domain.ArticleShare" >
+    update article_share
+    set MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      ARTICLE_CODE = #{articleCode,jdbcType=VARCHAR},
+      MEMBER_NO_GUID_VIEW = #{memberNoGuidView,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID_VIEW = #{memberNameGuidView,jdbcType=VARCHAR},
+      SHOP_NO_VIEW = #{shopNoView,jdbcType=VARCHAR},
+      SHOP_NAME_VIEW = #{shopNameView,jdbcType=VARCHAR},
+      MERCHANT_NO_VIEW = #{merchantNoView,jdbcType=VARCHAR},
+      MERCHANT_NAME_VIEW = #{merchantNameView,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CRETAE_NAME = #{cretaeName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+ 
+  <select id="findArticleSharePageForGroup" parameterType="com.ye.business.rw.dto.FindArticleSharePage" resultMap="FindResultGoupMap,recordCounts">
+  	select SQL_CALC_FOUND_ROWS
+	  ARTICLE_CODE, MAX(CREATE_DATE) CREATE_DATE, COUNT(MEMBER_NO_GUID_VIEW) READ_NUM
+    from article_share 
+      <include refid="findPage_condition" />
+	limit ${start} , ${limit};
+	select FOUND_ROWS() as recordCounts;
+  </select>
+  
+  <select id="findArticleSharePageForView" parameterType="com.ye.business.rw.dto.FindArticleSharePage" resultMap="FindResultMap,recordCounts">
+  	select distinct SQL_CALC_FOUND_ROWS
+	  ARTICLE_CODE, MEMBER_NO_GUID_VIEW
+    from article_share 
+      <include refid="findPage_condition" />
+    limit ${start} , ${limit};
+	select FOUND_ROWS() as recordCounts;
+  </select>
+  
+  <select id="findReadCount" parameterType="com.ye.business.rw.dto.ArticleDto" resultType="java.lang.Integer">
+  	select count(REMARK4) from  article_share 
+  	<where>
+  		REMARK4 = 'read'
+  		<if test="memberNoGuid != null and memberNoGuid != ''">
+  		and MEMBER_NO_GUID = #{memberNoGuid}
+  		</if>
+  		<!-- <if test="merchantNo != null and merchantNo != ''">
+  		and MERCHANT_NO = #{merchantNo}
+  		</if> -->
+  		<if test="code != null and code != ''">
+  		and ARTICLE_CODE = #{code}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="findShareCount" parameterType="com.ye.business.rw.dto.ArticleDto" resultType="java.lang.Integer">
+  	select count(REMARK4) from  article_share 
+  	<where>
+  		REMARK4 = 'share'
+  		<if test="memberNoGuid != null and memberNoGuid != ''">
+  		and MEMBER_NO_GUID = #{memberNoGuid}
+  		</if>
+  		<!-- <if test="merchantNo != null and merchantNo != ''">
+  		and MERCHANT_NO = #{merchantNo}
+  		</if> -->
+  		<if test="code != null and code != ''">
+  		and ARTICLE_CODE = #{code}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="findArticleShareForGroupList" parameterType="com.ye.business.rw.dto.FindArticleSharePage" resultMap="FindResultMap">
+	SELECT
+	    MEMBER_NO_GUID, COUNT(MEMBER_NO_GUID) readNum, MAX(CREATE_DATE) CREATE_DATE
+	FROM article_share
+		<include refid="findPage_condition" />
+	GROUP BY MEMBER_NO_GUID
+  </select>
+  
+  <select id="findArticleShareInfoForGroupList" parameterType="com.ye.business.rw.dto.FindArticleSharePage" resultMap="FindResultMap,recordCounts">
+	SELECT SQL_CALC_FOUND_ROWS
+	    MEMBER_NO_GUID, COUNT(ARTICLE_CODE) readNum, ARTICLE_CODE, MAX(CREATE_DATE) CREATE_DATE
+	    , TITLE, MAIN_IMAGE
+	FROM article_share
+		<include refid="findPage_condition" />
+	GROUP BY MEMBER_NO_GUID, ARTICLE_CODE
+	ORDER BY CREATE_DATE DESC
+	limit ${start} , ${limit};
+	select FOUND_ROWS() as recordCounts;
+  </select>
+  
+</mapper>

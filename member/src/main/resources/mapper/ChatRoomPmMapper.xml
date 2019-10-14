@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IChatRoomPmDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.ChatRoom" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="member_no_gm" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="no_wx_gm" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="pm_code" property="pmCode" jdbcType="VARCHAR" />
+<result column="pm_name" property="pmName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <select id="findByPmCode" parameterType="com.lj.business.member.domain.ChatRoomPm" resultMap="BaseResultMap">
+   select * from chat_room_pm where pm_code =#{pmCode}
+   </select>
+   
+   <select id="selectRoomGroup" parameterType="com.lj.business.member.domain.ChatRoomPm" resultMap="BaseResultMap">
+   select * from chat_room_pm where member_no_gm =#{memberNoGm} and no_wx_gm=#{noWxGm}
+   </select>
+   
+     <insert id="insertSelective" parameterType="com.lj.business.member.domain.ChatRoomPm" >
+    insert into chat_room_pm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="pmCode != null" >
+        PM_CODE,
+      </if>
+      <if test="pmName != null" >
+        pm_name,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="noWxGm != null" >
+        no_wx_gm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="pmCode != null" >
+        #{pmCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pmName != null" >
+       #{pmName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxGm != null" >
+        #{noWxGm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  </mapper>

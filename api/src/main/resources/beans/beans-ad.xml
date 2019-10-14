@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<bean id="advertiseService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="advertiseService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseService" />
+	</bean>
+	
+	<bean id="advertiseTypeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="advertiseTypeService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseTypeService" />
+	</bean>
+	
+	<bean id="carouselService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="carouselService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.ICarouselService" />
+	</bean>
+	
+	<bean id="rwUserBeansService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="rwUserBeansService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IRwUserBeansService" />
+	</bean>
+	
+	<bean id="advertiseViewService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="advertiseViewService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseViewService" />
+	</bean>
+	
+	<bean id="advertiseShowService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="advertiseShowService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseShowService" />
+	</bean>
+	
+	<bean id="carouselViewService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="carouselViewService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.ICarouselViewService" />
+	</bean>
+	
+	<bean id="carouselShowService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="carouselShowService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.ICarouselShowService" />
+	</bean>
+	
+	<bean id="serverInfoService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="serverInfoService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IServerInfoService" />
+	</bean>
+	
+	<bean id="rwOrderService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="rwOrderService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IRwOrderService" />
+	</bean>
+	
+	<bean id="rwServerService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="rwServerService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IRwServerService" />
+	</bean>
+	
+	<bean id="beansOrderService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="beansOrderService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IBeansOrderService" />
+	</bean>
+	
+	<bean id="billService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="ad" />
+		<property name="serviceName" value="billService" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IBillService" />
+	</bean>
+
+</beans> 
+

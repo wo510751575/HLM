@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cp.dao.ICouponRecordsDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cp.domain.CouponRecords" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    
+    
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="ADD_FRIENDS_CODE" property="addFriendsCode" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="COUPON_NO" property="couponNo" jdbcType="VARCHAR" />
+    <result column="COUPON_NAME" property="couponName" jdbcType="VARCHAR" />
+    <result column="USE_DATE" property="useDate" jdbcType="DATE" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+    <resultMap id="findCouponRecordsPageReturns" type="com.lj.business.cp.couponRecords.FindCouponRecordsPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    
+    
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="ADD_FRIENDS_CODE" property="addFriendsCode" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="COUPON_NO" property="couponNo" jdbcType="VARCHAR" />
+    <result column="COUPON_NAME" property="couponName" jdbcType="VARCHAR" />
+    <result column="USE_DATE" property="useDate" jdbcType="DATE" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="COUPON_NOTES" property="couponNotes" jdbcType="DECIMAL" />
+    <result column="COUPON_TYPE" property="couponType" jdbcType="VARCHAR" />
+    <result column="RULE_STATUS" property="ruleStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO,  MEMBER_NO, MEMBER_NAME,ADD_FRIENDS_CODE,NICK_NAME, COUPON_NO, COUPON_NAME, 
+    USE_DATE, CREATE_ID, CREATE_DATE
+  </sql>
+  
+  <sql id="findCouponRulePage_condtion">
+    <where>
+      <if test="merchantNo !=null and merchantNo !='' ">
+       and MERCHANT_NO = #{merchantNo}
+      </if>
+        <if test="couponName !=null and couponName !='' ">
+       and COUPON_NAME = #{couponName}
+      </if>
+      <if test="startTime != null" >
+        <![CDATA[and CREATE_DATE >= #{startTime}]]>
+        </if>
+        <if test="endTime != null" >
+            <![CDATA[and CREATE_DATE <= #{endTime}]]>
+        </if>
+    </where>
+  </sql>
+  
+  
+   <select id="findCouponRecordsPage" resultMap="findCouponRecordsPageReturns" parameterType="com.lj.business.cp.couponRecords.FindCouponRecordsPage" >
+   SELECT cr.cr.COUPON_NAME, cr.COUPON_NO,crl.COUPON_NAME,crl.COUPON_NOTES,crl.COUPON_TYPE,cr.USE_DATE,crl.RULE_STATUS, cr.MEMBER_NO,
+   cr.ADD_FRIENDS_CODE,cr.MEMBER_NAME,cr.NICK_NAME
+   FROM coupon_records cr LEFT JOIN  coupon c on cr.COUPON_NO = c.COUPON_NO 
+   LEFT JOIN coupon_rule crl ON c.RULE_NO = crl.CODE
+   WHERE cr.MERCHANT_NO = #{merchantNo}
+    <if test="startTime != null" >
+      <![CDATA[and cr.USE_DATE >= #{startTime}]]>
+    </if>
+    <if test="endTime != null" >
+       <![CDATA[and cr.USE_DATE <= #{endTime}]]>
+    </if>
+   order by cr.CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+   
+   <select id="findCouponRecordsPageCount" resultType="int" parameterType="com.lj.business.cp.dto.couponRule.FindCouponRulePage" >
+   SELECT count(*) 
+   FROM coupon_records 
+ 	<include refid="findCouponRulePage_condtion" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_records
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_records
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cp.domain.CouponRecords" >
+    insert into coupon_records (CODE, MERCHANT_NO,  
+       MEMBER_NO, MEMBER_NAME,ADD_FRIENDS_CODE ,NICK_NAME,
+      COUPON_NO, COUPON_NAME, USE_DATE, 
+      CREATE_ID, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR},  
+       #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{addFriendsCode,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR},
+      #{couponNo,jdbcType=VARCHAR}, #{couponName,jdbcType=VARCHAR}, #{useDate,jdbcType=DATE}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cp.domain.CouponRecords" >
+    insert into coupon_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="addFriendsCode !=null">
+        ADD_FRIENDS_CODE,
+      </if>
+      <if test="nickName !=null"> 
+        NICK_NAME,
+      </if>
+      <if test="couponNo != null" >
+        COUPON_NO,
+      </if>
+      <if test="couponName != null" >
+        COUPON_NAME,
+      </if>
+      <if test="useDate != null" >
+        USE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+       <if test="addFriendsCode !=null">
+        #{addFriendsCode,jdbcType=VARCHAR},
+       </if>
+      <if test="nickName !=null"> 
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNo != null" >
+        #{couponNo,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null" >
+        #{useDate,jdbcType=DATE},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cp.domain.CouponRecords" >
+    update coupon_records
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="addFriendsCode !=null">
+        ADD_FRIENDS_CODE = #{addFriendsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName !=null"> 
+       NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNo != null" >
+        COUPON_NO = #{couponNo,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        COUPON_NAME = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null" >
+        USE_DATE = #{useDate,jdbcType=DATE},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cp.domain.CouponRecords" >
+    update coupon_records
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      
+      
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      ADD_FRIENDS_CODE = #{addFriendsCode,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      COUPON_NO = #{couponNo,jdbcType=VARCHAR},
+      COUPON_NAME = #{couponName,jdbcType=VARCHAR},
+      USE_DATE = #{useDate,jdbcType=DATE},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

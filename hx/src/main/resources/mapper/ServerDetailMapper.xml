@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IServerDetailDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.ServerDetail">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="SERVER_CODE" jdbcType="VARCHAR" property="serverCode" />
+    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
+    <result column="SERVER_NUM" jdbcType="INTEGER" property="serverNum" />
+    <result column="PRICE" jdbcType="BIGINT" property="price" />
+  	<result column="IS_SHOP" jdbcType="VARCHAR" property="isShop" />
+  	<result column="SERVER_DESC" jdbcType="VARCHAR" property="serverDesc" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, SERVER_CODE, USER_TYPE, SERVER_NUM, PRICE, IS_SHOP, SERVER_DESC, CREATE_DATE
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.ServerDetailDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.serverCode != null and param.serverCode !='' ">
+					<![CDATA[and SERVER_CODE =#{param.serverCode}]]>
+				</if>
+				<if test="param.serverCodes != null and param.serverCodes.size() > 0 ">
+					and SERVER_CODE in <foreach collection="param.serverCodes" item="temp" open="(" separator="," close=")">#{temp}</foreach>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findServerDetails" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindServerDetailPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM server_detail
+		<include refid="findPage_condition" />
+		order by CREATE_DATE desc
+	</select>
+	<!-- 分页查询 -->
+	<select id="findServerDetailPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindServerDetailPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM server_detail
+		<include refid="findPage_condition" />
+		order by CREATE_DATE desc
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findServerDetailPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindServerDetailPage">
+		select count(*)
+		FROM server_detail
+		<include refid="findPage_condition" />
+	</select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from server_detail
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from server_detail
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.ServerDetail">
+    insert into server_detail (CODE, SERVER_CODE, USER_TYPE, 
+      SERVER_NUM, PRICE, IS_SHOP, 
+      SERVER_DESC, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{serverCode,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{serverNum,jdbcType=INTEGER}, #{price,jdbcType=BIGINT}, #{isShop,jdbcType=VARCHAR}, 
+      #{serverDesc,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.ServerDetail">
+    insert into server_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="serverCode != null">
+        SERVER_CODE,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="serverNum != null">
+        SERVER_NUM,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="isShop != null">
+        IS_SHOP,
+      </if>
+      <if test="serverDesc != null">
+        SERVER_DESC,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="serverCode != null">
+        #{serverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="serverNum != null">
+        #{serverNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=BIGINT},
+      </if>
+      <if test="isShop != null">
+        #{isShop,jdbcType=VARCHAR},
+      </if>
+      <if test="serverDesc != null">
+        #{serverDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.ServerDetail">
+    update server_detail
+    <set>
+      <if test="serverCode != null">
+        SERVER_CODE = #{serverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="serverNum != null">
+        SERVER_NUM = #{serverNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=BIGINT},
+      </if>
+      <if test="isShop != null">
+        IS_SHOP = #{isShop,jdbcType=VARCHAR},
+      </if>
+      <if test="serverDesc != null">
+        SERVER_DESC = #{serverDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.ServerDetail">
+    update server_detail
+    set SERVER_CODE = #{serverCode,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      SERVER_NUM = #{serverNum,jdbcType=INTEGER},
+      PRICE = #{price,jdbcType=BIGINT},
+      IS_SHOP = #{isShop,jdbcType=VARCHAR},
+      SERVER_DESC = #{serverDesc,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByServerCode" parameterType="java.lang.String">
+    delete from server_detail
+    where SERVER_CODE = #{serverCode,jdbcType=VARCHAR}
+  </delete>
+</mapper>

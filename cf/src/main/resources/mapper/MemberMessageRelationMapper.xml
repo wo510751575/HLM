@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cf.dao.IMemberMessageRelationDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cf.domain.MemberMessageRelation" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MSG_NO" property="msgNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MEMBER_WX_NO" property="memberWxNo" jdbcType="VARCHAR" />
+    <result column="PUSH_DATE" property="pushDate" jdbcType="TIMESTAMP" />
+    <result column="SUCCESS_DATE" property="successDate" jdbcType="TIMESTAMP" />
+    <result column="MSG_STATUS" property="msgStatus" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MSG_NO, MERCHANT_NO, MERCHANT_NAME, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    MEMBER_NO, MEMBER_NAME, MEMBER_WX_NO, PUSH_DATE, SUCCESS_DATE, MSG_STATUS, UPDATE_ID, 
+    UPDATE_DATE, CREATE_ID, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_message_relation
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from member_message_relation
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cf.domain.MemberMessageRelation" >
+    insert into member_message_relation (CODE, MSG_NO, MERCHANT_NO, 
+      MERCHANT_NAME, SHOP_NO, SHOP_NAME, 
+      MEMBER_NO_GM, MEMBER_NAME_GM, MEMBER_NO, 
+      MEMBER_NAME, MEMBER_WX_NO, PUSH_DATE, 
+      SUCCESS_DATE, MSG_STATUS, UPDATE_ID, 
+      UPDATE_DATE, CREATE_ID, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{msgNo,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{memberWxNo,jdbcType=VARCHAR}, #{pushDate,jdbcType=TIMESTAMP}, 
+      #{successDate,jdbcType=TIMESTAMP}, #{msgStatus,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cf.domain.MemberMessageRelation" >
+    insert into member_message_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="msgNo != null" >
+        MSG_NO,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="memberWxNo != null" >
+        MEMBER_WX_NO,
+      </if>
+      <if test="pushDate != null" >
+        PUSH_DATE,
+      </if>
+      <if test="successDate != null" >
+        SUCCESS_DATE,
+      </if>
+      <if test="msgStatus != null" >
+        MSG_STATUS,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="msgNo != null" >
+        #{msgNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberWxNo != null" >
+        #{memberWxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pushDate != null" >
+        #{pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="successDate != null" >
+        #{successDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgStatus != null" >
+        #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cf.domain.MemberMessageRelation" >
+    update member_message_relation
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberWxNo != null" >
+        MEMBER_WX_NO = #{memberWxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pushDate != null" >
+        PUSH_DATE = #{pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="successDate != null" >
+        SUCCESS_DATE = #{successDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgStatus != null" >
+        MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where MSG_NO = #{msgNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cf.domain.MemberMessageRelation" >
+    update member_message_relation
+    set MSG_NO = #{msgNo,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      MEMBER_WX_NO = #{memberWxNo,jdbcType=VARCHAR},
+      PUSH_DATE = #{pushDate,jdbcType=TIMESTAMP},
+      SUCCESS_DATE = #{successDate,jdbcType=TIMESTAMP},
+      MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="findMemberMessageRelationByMerDay" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from member_message_relation
+    <where>
+    	<if test="merchantNo != null and merchantNo != ''code">
+    		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    	</if>
+    	<if test="msgStatus != null and msgStatus != ''">
+    		and MSG_STATUS = #{msgStatus,jdbcType=VARCHAR}
+    	</if>
+    	<if test="beginDate != null and beginDate != ''">
+    		<![CDATA[and PUSH_DATE >= #{beginDate,jdbcType=TIMESTAMP}]]>
+    	</if>
+    	<if test="endDate != null and endDate != ''">
+    		<![CDATA[and PUSH_DATE <= #{endDate,jdbcType=TIMESTAMP}]]>
+    	</if>
+    </where>
+    
+  </select>
+  
+</mapper>

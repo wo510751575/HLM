@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IShopConfigDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.ShopConfig">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="LABLE_NAME" jdbcType="VARCHAR" property="lableName" />
+    <result column="LABLE_NO" jdbcType="VARCHAR" property="lableNo" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="INDEX_NO" jdbcType="INTEGER" property="indexNo" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+     <result column="ENNAME" jdbcType="VARCHAR" property="enname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, LABLE_NAME, LABLE_NO, PARENT_CODE, 
+    UPDATE_ID, UPDATE_DATE, CREATE_ID, CREATE_DATE, INDEX_NO, REMARK, ENNAME
+  </sql>
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.ShopConfigDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.shopNo != null and param.shopNo !='' ">
+					<![CDATA[and SHOP_NO =#{param.shopNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.lableNo != null and param.lableNo !='' ">
+					<![CDATA[and LABLE_NO =#{param.lableNo}]]>
+				</if>
+				<if test="param.parentCode != null and param.parentCode !='' ">
+					<![CDATA[and PARENT_CODE =#{param.parentCode}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findShopConfigs" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopConfigPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_config
+		<include refid="findPage_condition" />
+		order by INDEX_NO 
+	</select>
+	<!-- 分页查询 -->
+	<select id="findShopConfigPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopConfigPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_config
+		<include refid="findPage_condition" />
+		order by INDEX_NO 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findShopConfigPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindShopConfigPage">
+		select count(*)
+		FROM shop_config
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop_config
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from shop_config
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ye.business.hx.domain.ShopConfig">
+    insert into shop_config (CODE, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, LABLE_NAME, 
+      LABLE_NO, PARENT_CODE, UPDATE_ID, 
+      UPDATE_DATE, CREATE_ID, CREATE_DATE, 
+      INDEX_NO, REMARK, ENNAME
+      )
+    values (#{code,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{lableName,jdbcType=VARCHAR}, 
+      #{lableNo,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{indexNo,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{enname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.ShopConfig">
+    insert into shop_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="lableName != null">
+        LABLE_NAME,
+      </if>
+      <if test="lableNo != null">
+        LABLE_NO,
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="indexNo != null">
+        INDEX_NO,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="enname != null">
+        ENNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="lableName != null">
+        #{lableName,jdbcType=VARCHAR},
+      </if>
+      <if test="lableNo != null">
+        #{lableNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indexNo != null">
+        #{indexNo,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="enname != null">
+        #{enname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.ShopConfig">
+    update shop_config
+    <set>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="lableName != null">
+        LABLE_NAME = #{lableName,jdbcType=VARCHAR},
+      </if>
+      <if test="lableNo != null">
+        LABLE_NO = #{lableNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indexNo != null">
+        INDEX_NO = #{indexNo,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="enname != null">
+        ENNAME = #{enname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.ShopConfig">
+    update shop_config
+    set SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      LABLE_NAME = #{lableName,jdbcType=VARCHAR},
+      LABLE_NO = #{lableNo,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      INDEX_NO = #{indexNo,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ENNAME = #{enname,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select resultType="java.lang.Integer" id="findNextShopConfigIndexNo" parameterType="com.ye.business.hx.domain.ShopConfig">
+	SELECT MAX(index_no)+1 from shop_config WHERE
+	<choose>
+		<when test="parentCode == null">
+			PARENT_CODE is null 
+		</when>
+		<otherwise>
+			PARENT_CODE = #{parentCode}
+		</otherwise>
+	</choose>
+	and MERCHANT_NO=#{merchantNo}
+  </select>
+  
+  <sql id="findPage_condition_second">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and s.code =#{param.code}]]>
+				</if>
+				<if test="param.shopNo != null and param.shopNo !='' ">
+					<![CDATA[and s.SHOP_NO =#{param.shopNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and s.MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.lableNo != null and param.lableNo !='' ">
+					<![CDATA[and s.LABLE_NO =#{param.lableNo}]]>
+				</if>
+				<if test="param.parentCode != null and param.parentCode !='' ">
+					<![CDATA[and s.PARENT_CODE =#{param.parentCode}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+  
+  	<!-- 分页查询所有二级 -->
+	<select id="findSecondShopConfigPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopConfigPage">
+		SELECT s.* from shop_config s
+		JOIN shop_config p on s.PARENT_CODE=p.`CODE` and p.PARENT_CODE=#{parentCode}
+		<include refid="findPage_condition_second" />
+		order by s.INDEX_NO 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询查询所有二级总数 -->
+	<select id="findSecondShopConfigPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindShopConfigPage">
+		select count(*)
+		FROM shop_config s
+		JOIN shop_config p on s.PARENT_CODE=p.`CODE` and p.PARENT_CODE=#{parentCode}
+		<include refid="findPage_condition_second" />
+	</select>
+	
+	<!-- 删除 -->
+	<delete id="deleteShopConfig"
+	parameterType="com.ye.business.hx.dto.ShopConfigDto">
+		delete from shop_config
+		where CODE = #{code,jdbcType=VARCHAR} 
+		<if test="merchantNo != null and merchantNo !='' ">
+			and MERCHANT_NO=#{merchantNo}
+		</if>
+	</delete>
+</mapper>

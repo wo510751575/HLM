@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/tx    
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd  
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd ">
+	<context:annotation-config />
+	
+	<!-- 	省市区服务 -->
+	<bean name="/areaHessianService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="areaHessianServiceImpl" />
+		<property name="serviceInterface" value="com.lj.oms.service.AreaHessianService" />
+	</bean>
+	<!-- 	机构服务 -->
+	<bean name="/officeHessianService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="officeHessianServiceImpl" />
+		<property name="serviceInterface" value="com.lj.oms.service.OfficeHessianService" />
+	</bean>
+	<!-- 	字典服务 -->
+	<bean name="/dictHessianService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="dictHessianServiceImpl" />
+		<property name="serviceInterface" value="com.lj.oms.service.DictHessianService" />
+	</bean>
+	<!-- 	卖客星球对外创建用户服务 -->
+	<bean name="/maike51HessianService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="maike51HessianServiceImpl" />
+		<property name="serviceInterface" value="com.lj.oms.service.Maike51HessianService" />
+	</bean>
+	
+	<!-- 	快推对外创建用户服务 -->
+	<bean name="/kuaiTuiHessianService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="kuaiTuiHessianServiceImpl" />
+		<property name="serviceInterface" value="com.lj.oms.service.KuaiTuiHessianService" />
+	</bean>
+	<!-- 	用户服务 -->
+	<bean name="/userHessianService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="userHessianServiceImpl" />
+		<property name="serviceInterface" value="com.lj.oms.service.UserHessianService" />
+	</bean>
+	<!-- 系统服务 -->
+	<bean name="/systemService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="systemService" />
+		<property name="serviceInterface" value="com.lj.oms.service.ISystemService" />
+	</bean>
+	<!-- 	角色服务 -->
+	<bean name="/roleHessianService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="roleHessianServiceImpl" />
+		<property name="serviceInterface" value="com.lj.oms.service.RoleHessianService" />
+	</bean>
+</beans>

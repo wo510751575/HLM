@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IGuidCardDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.GuidCard" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="POSITION" property="position" jdbcType="VARCHAR" />
+    <result column="ADDR_INFO" property="addrInfo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+    <result column="PAGE_VIEW" property="pageView" jdbcType="INTEGER" />
+    <result column="NUM_PRAISE" property="numPraise" jdbcType="INTEGER" />
+    <result column="NUM_COLLECTION" property="numCollection" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="FindGuidCardPageReturnMap" type="com.lj.business.member.dto.guidCard.FindGuidCardPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="POSITION" property="position" jdbcType="VARCHAR" />
+    <result column="ADDR_INFO" property="addrInfo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+    <result column="PAGE_VIEW" property="pageView" jdbcType="INTEGER" />
+    <result column="NUM_PRAISE" property="numPraise" jdbcType="INTEGER" />
+    <result column="NUM_COLLECTION" property="numCollection" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="FindGuidCardReturnMap" type="com.lj.business.member.dto.guidCard.FindGuidCardReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="POSITION" property="position" jdbcType="VARCHAR" />
+    <result column="ADDR_INFO" property="addrInfo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+    <result column="PAGE_VIEW" property="pageView" jdbcType="INTEGER" />
+    <result column="NUM_PRAISE" property="numPraise" jdbcType="INTEGER" />
+    <result column="NUM_COLLECTION" property="numCollection" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_GM, MEMBER_NAME_GM,  MERCHANT_NO, MERCHANT_NAME, POSITION,
+    ADDR_INFO, STATUS, MOBILE, AGE, GENDER, HEAD_ADDRESS, QCORD, PAGE_VIEW, NUM_PRAISE, 
+    NUM_COLLECTION, CREATE_ID, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from guid_card
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from guid_card
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.GuidCard" >
+    insert into guid_card
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test=" position != null" >
+        POSITION,
+      </if>
+      <if test="addrInfo != null" >
+        ADDR_INFO,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="mobile != null and mobile != '' " >
+        MOBILE,
+      </if>
+      <if test="age != null" >
+        AGE,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS,
+      </if>
+      <if test="qcord != null" >
+        QCORD,
+      </if>
+      <if test="pageView != null" >
+        PAGE_VIEW,
+      </if>
+      <if test="numPraise != null" >
+        NUM_PRAISE,
+      </if>
+      <if test="numCollection != null" >
+        NUM_COLLECTION,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test=" position != null" >
+      	#{position,jdbcType=VARCHAR},
+      </if>
+      <if test="addrInfo != null" >
+        #{addrInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null  and mobile != '' " >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="qcord != null" >
+        #{qcord,jdbcType=VARCHAR},
+      </if>
+      <if test="pageView != null" >
+        #{pageView,jdbcType=INTEGER},
+      </if>
+      <if test="numPraise != null" >
+        #{numPraise,jdbcType=INTEGER},
+      </if>
+      <if test="numCollection != null" >
+        #{numCollection,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.GuidCard" >
+    update guid_card
+    <set >
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="addrInfo != null" >
+        ADDR_INFO = #{addrInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null  and mobile != '' " >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="qcord != null" >
+        QCORD = #{qcord,jdbcType=VARCHAR},
+      </if>
+      <if test="pageView != null" >
+        PAGE_VIEW = #{pageView,jdbcType=INTEGER},
+      </if>
+      <if test="numPraise != null" >
+        NUM_PRAISE = #{numPraise,jdbcType=INTEGER},
+      </if>
+      <if test="numCollection != null" >
+        NUM_COLLECTION = #{numCollection,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findGuidCardPage" resultMap="FindGuidCardPageReturnMap">
+  	select <include refid="Base_Column_List"/>
+  	from guid_card
+  	<where>
+  		<if test="code != null and code != ''" >
+		 and CODE = #{code,jdbcType=VARCHAR}
+		</if>
+  		<if test="memberNoGm != null and memberNoGm != ''" >
+		 and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+		<if test="memberNameGm != null and memberNameGm != ''" >
+		  and MEMBER_NAME_GM LIKE CONCAT(CONCAT('%', #{memberNameGm}), '%')
+		</if>
+		<if test="merchantNo != null and merchantNo != ''" >
+		  and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+		<if test="merchantName != null and merchantName != ''" >
+		  and MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR}
+		</if>
+		<if test="position != null and position != ''" >
+		  and POSITION = #{position,jdbcType=VARCHAR}
+		</if>
+		<if test="addrInfo != null and addrInfo != ''" >
+		  and ADDR_INFO = #{addrInfo,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null and status != ''" >
+		  and STATUS = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="mobile != null and mobile != ''" >
+		  and MOBILE = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="age != null" >
+		  and AGE = #{age,jdbcType=INTEGER}
+		</if>
+		<if test="gender != null and gender != ''" >
+		  and GENDER = #{gender,jdbcType=VARCHAR}
+		</if>
+		<if test="headAddress != null and headAddress != ''" >
+		  and HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR}
+		</if>
+		<if test="qcord != null and qcord != ''" >
+		  and QCORD = #{qcord,jdbcType=VARCHAR}
+		</if>
+		<if test="pageView != null" >
+		  and PAGE_VIEW = #{pageView,jdbcType=INTEGER}
+		</if>
+		<if test="numPraise != null" >
+		  and NUM_PRAISE = #{numPraise,jdbcType=INTEGER}
+		</if>
+		<if test="numCollection != null" >
+		  and NUM_COLLECTION = #{numCollection,jdbcType=INTEGER}
+		</if>
+		<if test="createId != null" >
+		  and CREATE_ID = #{createId,jdbcType=VARCHAR}
+		</if>
+		<if test="createDate != null" >
+		  and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+		</if>
+		
+	  <if test="shopNos != null and shopNos.size() > 0">
+      	 and SHOP_NO in
+      	<foreach item="item" index="index" collection="shopNos" open="(" separator="," close=")">  
+            #{item}  
+        </foreach>
+       </if>
+		
+  	</where>
+  	order by CREATE_DATE ${sortDir}
+	limit ${start} , ${limit}
+  </select>
+  
+  <select id="findGuidCardPageCount" resultType="integer">
+  	select count(1)
+	from guid_card
+  	<where>
+  		<if test="code != null" >
+		 and CODE = #{code,jdbcType=VARCHAR}
+		</if>
+  		<if test="memberNoGm != null" >
+		 and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+		<if test="memberNameGm != null" >
+		  and MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="merchantNo != null" >
+		  and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+		<if test="merchantName != null" >
+		  and MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR}
+		</if>
+		<if test="position != null" >
+		  and POSITION = #{position,jdbcType=VARCHAR}
+		</if>
+		<if test="addrInfo != null" >
+		  and ADDR_INFO = #{addrInfo,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null" >
+		  and STATUS = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="mobile != null" >
+		  and MOBILE = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="age != null" >
+		  and AGE = #{age,jdbcType=INTEGER}
+		</if>
+		<if test="gender != null" >
+		  and GENDER = #{gender,jdbcType=VARCHAR}
+		</if>
+		<if test="headAddress != null" >
+		  and HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR}
+		</if>
+		<if test="qcord != null" >
+		  and QCORD = #{qcord,jdbcType=VARCHAR}
+		</if>
+		<if test="pageView != null" >
+		  and PAGE_VIEW = #{pageView,jdbcType=INTEGER}
+		</if>
+		<if test="numPraise != null" >
+		  and NUM_PRAISE = #{numPraise,jdbcType=INTEGER}
+		</if>
+		<if test="numCollection != null" >
+		  and NUM_COLLECTION = #{numCollection,jdbcType=INTEGER}
+		</if>
+		<if test="createId != null" >
+		  and CREATE_ID = #{createId,jdbcType=VARCHAR}
+		</if>
+		<if test="createDate != null" >
+		  and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+		</if>
+  	</where>
+  </select>
+  
+  <select id="findGuidCardByGm" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from guid_card
+  	<where>
+  		<if test="code != null">
+  			and CODE = #{code,jdbcType=VARCHAR}
+  		</if>
+  		<if test="memberNoGm != null">
+  			and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+  		</if>
+  		
+  	</where>
+  </select>
+  
+  <update id="addGuidCardTypeNum">
+  	update guid_card
+  	set ${type} = ${type} + 1
+  	where code = #{guidCardCode}
+  </update>
+  
+  <update id="redGuidCardTypeNum">
+  	update guid_card
+  	set ${type} = ${type} - 1
+  	where code = #{guidCardCode}
+  </update>
+  
+  <update id="updateGuidCardByShop">
+  	update guid_card
+  	<set>
+      <if test="addrInfo != null" >
+        ADDR_INFO = #{addrInfo,jdbcType=VARCHAR},
+      </if>
+        <if test="position != null" >
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+		  MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+	   </if>
+	  <if test="mobile != null">
+	  	MOBILE = #{mobile,jdbcType=VARCHAR},
+	  </if>
+	  <if test="qcord != null" >
+		  QCORD = #{qcord,jdbcType=VARCHAR},
+	  </if>
+	  <if test="age != null" >
+		  AGE = #{age,jdbcType=INTEGER},
+	   </if>
+  	</set>
+  		 where  1=1  
+       <if test="memberNoGm != null and memberNoGm !=''" >
+        and MEMBER_NO_GM = #{memberNoGm}
+      </if>
+  </update>
+  
+  
+  <select id="findGuidCardByCode" resultMap="FindGuidCardReturnMap">
+  	select <include refid="Base_Column_List"/>
+  	from guid_card
+  	where CODE in
+  	<foreach collection="list" open="(" separator="," close=")" item="item">
+  		#{item}
+  	</foreach>
+  </select>
+  
+</mapper>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IShopScheduleDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.ShopSchedule">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="SCHEDULE_NAME" jdbcType="VARCHAR" property="scheduleName" />
+    <result column="WORK_TIME" jdbcType="TIME" property="workTime" />
+    <result column="OFF_TIME" jdbcType="TIME" property="offTime" />
+    <result column="APT_FLAG" jdbcType="VARCHAR" property="aptFlag" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, SCHEDULE_NAME, WORK_TIME, OFF_TIME, 
+    APT_FLAG, DEL_FLAG, UPDATE_ID, UPDATE_DATE, CREATE_ID, CREATE_DATE
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.ShopScheduleDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+						<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.codes != null and param.codes.size() > 0 ">
+					and code in <foreach collection="param.codes" item="code" open="(" close=")" separator=",">#{code}</foreach>
+				</if>
+				<if test="param.shopNo != null and param.shopNo !='' ">
+						<![CDATA[and SHOP_NO =#{param.shopNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+						<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.delFlag != null and param.delFlag !='' ">
+						<![CDATA[and DEL_FLAG =#{param.delFlag}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findShopSchedules" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopSchedulePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_schedule
+		<include refid="findPage_condition" />
+		order by CREATE_DATE 
+	</select>
+	<!-- 分页查询 -->
+	<select id="findShopSchedulePage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopSchedulePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_schedule
+		<include refid="findPage_condition" />
+		order by CREATE_DATE 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findShopSchedulePageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindShopSchedulePage">
+		select count(*)
+		FROM shop_schedule
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop_schedule
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from shop_schedule
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.ShopSchedule">
+    insert into shop_schedule (CODE, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, SCHEDULE_NAME, 
+      WORK_TIME, OFF_TIME, APT_FLAG, 
+      DEL_FLAG, UPDATE_ID, UPDATE_DATE, 
+      CREATE_ID, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{scheduleName,jdbcType=VARCHAR}, 
+      #{workTime,jdbcType=TIME}, #{offTime,jdbcType=TIME}, #{aptFlag,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.ShopSchedule">
+    insert into shop_schedule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="scheduleName != null">
+        SCHEDULE_NAME,
+      </if>
+      <if test="workTime != null">
+        WORK_TIME,
+      </if>
+      <if test="offTime != null">
+        OFF_TIME,
+      </if>
+      <if test="aptFlag != null">
+        APT_FLAG,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleName != null">
+        #{scheduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=TIME},
+      </if>
+      <if test="offTime != null">
+        #{offTime,jdbcType=TIME},
+      </if>
+      <if test="aptFlag != null">
+        #{aptFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.ShopSchedule">
+    update shop_schedule
+    <set>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleName != null">
+        SCHEDULE_NAME = #{scheduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        WORK_TIME = #{workTime,jdbcType=TIME},
+      </if>
+      <if test="offTime != null">
+        OFF_TIME = #{offTime,jdbcType=TIME},
+      </if>
+      <if test="aptFlag != null">
+        APT_FLAG = #{aptFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.ShopSchedule">
+    update shop_schedule
+    set SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SCHEDULE_NAME = #{scheduleName,jdbcType=VARCHAR},
+      WORK_TIME = #{workTime,jdbcType=TIME},
+      OFF_TIME = #{offTime,jdbcType=TIME},
+      APT_FLAG = #{aptFlag,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

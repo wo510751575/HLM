@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.ad.dao.ICarouselDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.ad.domain.Carousel" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GUID" property="memberNoGuid" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GUID" property="memberNameGuid" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="LINK" property="link" jdbcType="VARCHAR" />
+    <result column="ADV_LINK" property="advLink" jdbcType="VARCHAR" />
+    <result column="ADV_TYPE_CODE" property="advTypeCode" jdbcType="VARCHAR" />
+    <result column="ADV_TYPE" property="advType" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="NUM_ORDER" property="numOrder" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="PRICE_SUM" property="priceSum" jdbcType="INTEGER" />
+    <result column="PRICE_CLICK" property="priceClick" jdbcType="INTEGER" />
+    <result column="PRICE_VIEW" property="priceView" jdbcType="INTEGER" />
+    <result column="RELEASE_DATE" property="releaseDate" jdbcType="TIMESTAMP" />
+    <result column="UP_DATE" property="upDate" jdbcType="TIMESTAMP" />
+    <result column="DOWN_DATE" property="downDate" jdbcType="TIMESTAMP" />
+    <result column="ADV_STATUS" property="advStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" type="com.ye.business.ad.dto.CarouselDto" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+    MEMBER_NO, STATE, LINK, ADV_LINK, ADV_TYPE_CODE, ADV_TYPE, SOURCE, NUM_ORDER, REMARK, 
+    CREATE_ID, CREATE_DATE, UPDATE_ID, UPDATE_DATE, PRICE_SUM, PRICE_CLICK, PRICE_VIEW, 
+    RELEASE_DATE, UP_DATE, DOWN_DATE, ADV_STATUS
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+      	<if test="param.merchantNo != null and param.merchantNo != ''">
+      		<![CDATA[and MERCHANT_NO = #{param.merchantNo} ]]>
+      	</if>
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+        <if test="param.advType != null and param.advType != '' ">
+		  <![CDATA[and ADV_TYPE = #{param.advType} ]]>
+		</if>
+        <if test="param.advTypeCode != null and param.advTypeCode != '' ">
+		  <![CDATA[and ADV_TYPE_CODE = #{param.advTypeCode} ]]>
+		</if>
+		<if test="param.advStatus != null and param.advStatus != '' ">
+		  <![CDATA[and ADV_STATUS = #{param.advStatus} ]]>
+		</if>
+        <if test="param.source != null and param.source != '' ">
+		  <![CDATA[and SOURCE like concat('%', #{param.source}, '%') ]]>
+		</if>
+        <if test="param.createId != null and param.createId != '' ">
+		  <![CDATA[and CREATE_ID = #{param.createId} ]]>
+		</if>
+		<if test="param.state != null and param.state != '' ">
+		  <![CDATA[and STATE = #{param.state} ]]>
+		</if>
+		<if test="param.beginDateUp != null and param.beginDateUp != ''">
+		  <![CDATA[and date_format(UP_DATE, '%Y-%m-%d') >= date_format(#{param.beginDateUp,jdbcType=TIMESTAMP}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="param.endDateUp != null and param.endDateUp != ''">
+		  <![CDATA[and date_format(UP_DATE, '%Y-%m-%d') <= date_format(#{param.endDateUp,jdbcType=TIMESTAMP}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="param.beginDateDown != null and param.beginDateDown != ''">
+		  <![CDATA[and date_format(DOWN_DATE, '%Y-%m-%d') >= date_format(#{param.beginDateDown,jdbcType=TIMESTAMP}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="param.endDateDown != null and param.endDateDown != ''">
+		  <![CDATA[and date_format(DOWN_DATE, '%Y-%m-%d') <= date_format(#{param.endDateDown,jdbcType=TIMESTAMP}, '%Y-%m-%d') ]]>
+		</if>
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by UPDATE_DATE desc
+      </if>
+	  <if test="'numOrder'.equals(sortBy)">
+	    order by NUM_ORDER desc, rand()
+	  </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findCarousels" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindCarouselPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM carousel
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findCarouselPage" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindCarouselPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM carousel
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findCarouselPageCount" resultType="int" parameterType="com.ye.business.ad.dto.FindCarouselPage">
+	select count(*)
+	FROM carousel
+	  <include refid="findPage_condition" />
+  </select>
+    
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from carousel
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from carousel
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.ad.domain.Carousel" >
+    insert into carousel (CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, MEMBER_NO, STATE, 
+      LINK, ADV_LINK, ADV_TYPE_CODE, 
+      ADV_TYPE, SOURCE, NUM_ORDER, 
+      REMARK, CREATE_ID, CREATE_DATE, 
+      UPDATE_ID, UPDATE_DATE, PRICE_SUM, 
+      PRICE_CLICK, PRICE_VIEW, RELEASE_DATE, 
+      UP_DATE, DOWN_DATE, ADV_STATUS
+      )
+    values (#{code,jdbcType=VARCHAR}, #{memberNoGuid,jdbcType=VARCHAR}, #{memberNameGuid,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{advLink,jdbcType=VARCHAR}, #{advTypeCode,jdbcType=VARCHAR}, 
+      #{advType,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{numOrder,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{priceSum,jdbcType=INTEGER}, 
+      #{priceClick,jdbcType=INTEGER}, #{priceView,jdbcType=INTEGER}, #{releaseDate,jdbcType=TIMESTAMP}, 
+      #{upDate,jdbcType=TIMESTAMP}, #{downDate,jdbcType=TIMESTAMP}, #{advStatus,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.ad.domain.Carousel" >
+    insert into carousel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="link != null" >
+        LINK,
+      </if>
+      <if test="advLink != null" >
+        ADV_LINK,
+      </if>
+      <if test="advTypeCode != null" >
+        ADV_TYPE_CODE,
+      </if>
+      <if test="advType != null" >
+        ADV_TYPE,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="numOrder != null" >
+        NUM_ORDER,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="priceSum != null" >
+        PRICE_SUM,
+      </if>
+      <if test="priceClick != null" >
+        PRICE_CLICK,
+      </if>
+      <if test="priceView != null" >
+        PRICE_VIEW,
+      </if>
+      <if test="releaseDate != null" >
+        RELEASE_DATE,
+      </if>
+      <if test="upDate != null" >
+        UP_DATE,
+      </if>
+      <if test="downDate != null" >
+        DOWN_DATE,
+      </if>
+      <if test="advStatus != null" >
+        ADV_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null" >
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="advLink != null" >
+        #{advLink,jdbcType=VARCHAR},
+      </if>
+      <if test="advTypeCode != null" >
+        #{advTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="advType != null" >
+        #{advType,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="numOrder != null" >
+        #{numOrder,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priceSum != null" >
+        #{priceSum,jdbcType=INTEGER},
+      </if>
+      <if test="priceClick != null" >
+        #{priceClick,jdbcType=INTEGER},
+      </if>
+      <if test="priceView != null" >
+        #{priceView,jdbcType=INTEGER},
+      </if>
+      <if test="releaseDate != null" >
+        #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upDate != null" >
+        #{upDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downDate != null" >
+        #{downDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advStatus != null" >
+        #{advStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.ad.domain.Carousel" >
+    update carousel
+    <set >
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        LINK = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="advLink != null" >
+        ADV_LINK = #{advLink,jdbcType=VARCHAR},
+      </if>
+      <if test="advTypeCode != null" >
+        ADV_TYPE_CODE = #{advTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="advType != null" >
+        ADV_TYPE = #{advType,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="numOrder != null" >
+        NUM_ORDER = #{numOrder,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priceSum != null" >
+        PRICE_SUM = #{priceSum,jdbcType=INTEGER},
+      </if>
+      <if test="priceClick != null" >
+        PRICE_CLICK = #{priceClick,jdbcType=INTEGER},
+      </if>
+      <if test="priceView != null" >
+        PRICE_VIEW = #{priceView,jdbcType=INTEGER},
+      </if>
+      <if test="releaseDate != null" >
+        RELEASE_DATE = #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upDate != null" >
+        UP_DATE = #{upDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downDate != null" >
+        DOWN_DATE = #{downDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advStatus != null" >
+        ADV_STATUS = #{advStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.ad.domain.Carousel" >
+    update carousel
+    set MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      LINK = #{link,jdbcType=VARCHAR},
+      ADV_LINK = #{advLink,jdbcType=VARCHAR},
+      ADV_TYPE_CODE = #{advTypeCode,jdbcType=VARCHAR},
+      ADV_TYPE = #{advType,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      NUM_ORDER = #{numOrder,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      PRICE_SUM = #{priceSum,jdbcType=INTEGER},
+      PRICE_CLICK = #{priceClick,jdbcType=INTEGER},
+      PRICE_VIEW = #{priceView,jdbcType=INTEGER},
+      RELEASE_DATE = #{releaseDate,jdbcType=TIMESTAMP},
+      UP_DATE = #{upDate,jdbcType=TIMESTAMP},
+      DOWN_DATE = #{downDate,jdbcType=TIMESTAMP},
+      ADV_STATUS = #{advStatus,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKeyBatchSelective" parameterType="com.ye.business.ad.dto.CarouselDto" >
+    update carousel
+    <set >
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        LINK = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="advLink != null" >
+        ADV_LINK = #{advLink,jdbcType=VARCHAR},
+      </if>
+      <if test="advTypeCode != null" >
+        ADV_TYPE_CODE = #{advTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="advType != null" >
+        ADV_TYPE = #{advType,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="numOrder != null" >
+        NUM_ORDER = #{numOrder,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priceSum != null" >
+        PRICE_SUM = #{priceSum,jdbcType=INTEGER},
+      </if>
+      <if test="priceClick != null" >
+        PRICE_CLICK = #{priceClick,jdbcType=INTEGER},
+      </if>
+      <if test="priceView != null" >
+        PRICE_VIEW = #{priceView,jdbcType=INTEGER},
+      </if>
+      <if test="releaseDate != null" >
+        RELEASE_DATE = #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upDate != null" >
+        UP_DATE = #{upDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downDate != null" >
+        DOWN_DATE = #{downDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advStatus != null" >
+        ADV_STATUS = #{advStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where
+    	CODE in <foreach collection="codeList" item="item" open="(" separator="," close=")">#{item,jdbcType=VARCHAR}</foreach>
+  </update>
+  
+</mapper>

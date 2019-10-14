@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IClientExpTotalDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.ClientExpTotal" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="ST_DATE" property="stDate" jdbcType="DATE" />
+    <result column="NUM_ADD" property="numAdd" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+    <resultMap id="findReturnMap" type="com.lj.business.st.dto.FindClientExpReturn" >
+    <result column="NUM_ADD" property="numAdd" jdbcType="INTEGER" />
+    <result column="ST_DATE" property="stDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, ST_DATE, NUM_ADD, 
+    CREATE_DATE
+      
+  </sql>  
+    <sql id="FindClientExpTotals">
+	 <where>
+	  <if test="merchantNo != null and merchantNo !='' ">
+		and MERCHANT_NO = #{merchantNo}
+	  </if>		    
+	  <if test="shopNo != null and shopNo !='' ">
+		and SHOP_NO = #{shopNo}
+	  </if>
+	  
+      <if test="startTime != null ">
+		<![CDATA[and ST_DATE >= #{startTime}]]>
+	  </if>
+	  
+	  <if test="endTime != null "> 
+		<![CDATA[and ST_DATE <= #{endTime}]]>
+		</if>
+	 </where>
+	</sql>
+	  
+	<select id="findClientExpTotal" resultMap="findReturnMap" parameterType="map">
+	 select SUM(NUM_ADD)AS NUM_ADD,ST_DATE 
+	 from client_exp_total
+	 <include refid="FindClientExpTotals" />
+	  group by ST_DATE
+	  order by ST_DATE ${sortDir} 
+	</select>
+
+  <select id="findClientExpTotalList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.FindClientExpTotal">
+    select
+    MERCHANT_NO, SHOP_NO, SHOP_NAME, ST_DATE,
+    SUM(NUM_ADD) NUM_ADD 
+    from client_exp_total
+   WHERE 1 = 1
+    <if test="merchantNo != null and merchantNo !='' ">
+      and MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null and shopNo !='' ">
+      and SHOP_NO = #{shopNo}
+    </if>
+    <if test="beginDate != null and beginDate!=''">
+      <![CDATA[and ST_DATE >= #{beginDate}]]>
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      <![CDATA[and ST_DATE <= #{endDate}]]>
+    </if>
+    GROUP BY ST_DATE
+	ORDER BY ST_DATE ASC
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from client_exp_total
+    
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.ClientExpTotal" >
+    insert into client_exp_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="stDate != null" >
+        ST_DATE,
+      </if>
+      <if test="numAdd != null" >
+        NUM_ADD,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="stDate != null" >
+        #{stDate,jdbcType=DATE},
+      </if>
+      <if test="numAdd != null" >
+        #{numAdd,jdbcType=INTEGER},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+
+</mapper>

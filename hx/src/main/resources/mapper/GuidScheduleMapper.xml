@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IGuidScheduleDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.GuidSchedule">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="MEMBER_NO_GUID" jdbcType="VARCHAR" property="memberNoGuid" />
+    <result column="MEMBER_NAME_GUID" jdbcType="VARCHAR" property="memberNameGuid" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="DAY_NUM" jdbcType="INTEGER" property="dayNum" />
+    <result column="SCHEDULE_CODE" jdbcType="VARCHAR" property="scheduleCode" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+    TYPE, DAY_NUM, SCHEDULE_CODE, CREATE_ID, CREATE_DATE
+  </sql>
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.GuidScheduleDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.type != null and param.type != ''">
+		          <![CDATA[and TYPE = #{param.type,jdbcType=VARCHAR}]]>
+		        </if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.shopNo != null and param.shopNo !='' ">
+					<![CDATA[and SHOP_NO =#{param.shopNo}]]>
+				</if>
+				<if test="param.dayNum != null ">
+					<![CDATA[and DAY_NUM =#{param.dayNum}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findGuidSchedules" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindGuidSchedulePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM guid_schedule
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findGuidSchedulePage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindGuidSchedulePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM guid_schedule
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findGuidSchedulePageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindGuidSchedulePage">
+		select count(*)
+		FROM guid_schedule
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from guid_schedule
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from guid_schedule
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.GuidSchedule">
+    insert into guid_schedule (CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, TYPE, DAY_NUM, 
+      SCHEDULE_CODE, CREATE_ID, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{memberNoGuid,jdbcType=VARCHAR}, #{memberNameGuid,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{dayNum,jdbcType=INTEGER}, 
+      #{scheduleCode,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.GuidSchedule">
+    insert into guid_schedule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="memberNoGuid != null">
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null">
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="dayNum != null">
+        DAY_NUM,
+      </if>
+      <if test="scheduleCode != null">
+        SCHEDULE_CODE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null">
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null">
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="dayNum != null">
+        #{dayNum,jdbcType=INTEGER},
+      </if>
+      <if test="scheduleCode != null">
+        #{scheduleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.GuidSchedule">
+    update guid_schedule
+    <set>
+      <if test="memberNoGuid != null">
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null">
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="dayNum != null">
+        DAY_NUM = #{dayNum,jdbcType=INTEGER},
+      </if>
+      <if test="scheduleCode != null">
+        SCHEDULE_CODE = #{scheduleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.GuidSchedule">
+    update guid_schedule
+    set MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      DAY_NUM = #{dayNum,jdbcType=INTEGER},
+      SCHEDULE_CODE = #{scheduleCode,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <sql id="findPage_condition_groupguid">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.memberNoGuids != null and param.memberNoGuids.size() > 0">
+    	     		and MEMBER_NO_GUID in
+		         <foreach item="item" index="index" collection="param.memberNoGuids" open="(" separator="," close=")">  
+		          	 #{item}  
+		          </foreach>
+     			</if>
+     			<if test="param.type != null and param.type !='' ">
+					<![CDATA[and TYPE =#{param.type}]]>
+				</if>
+     			<if test="param.shopNo != null and param.shopNo !='' ">
+					<![CDATA[and SHOP_NO =#{param.shopNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+  	<!-- 分页查询 -->
+	<select id="findGuidSchedulePageGroupByGuid" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindGuidSchedulePage">
+		SELECT DISTINCT MEMBER_NO_GUID
+		FROM guid_schedule
+		<include refid="findPage_condition_groupguid" />
+		ORDER BY CREATE_DATE 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findGuidSchedulePageGroupByGuidCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindGuidSchedulePage">
+		select count(DISTINCT MEMBER_NO_GUID)
+		FROM guid_schedule
+		<include refid="findPage_condition_groupguid" />
+	</select>
+  
+  	 <resultMap id="GuidScheduleCycleDtoMap" type="com.ye.business.hx.dto.GuidScheduleCycleDto">
+	    <result column="MEMBER_NO_GUID" jdbcType="VARCHAR" property="memberNoGuid" />
+	    <result column="MEMBER_NAME_GUID" jdbcType="VARCHAR" property="memberNameGuid" />
+	    <collection property="schedules" ofType="com.ye.business.hx.dto.GuidScheduleDto">
+		    <result column="CODE" jdbcType="VARCHAR" property="code" />
+ 		    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+		    <result column="DAY_NUM" jdbcType="INTEGER" property="dayNum" />
+		    <result column="SCHEDULE_CODE" jdbcType="VARCHAR" property="scheduleCode" />
+		    <result column="SCHEDULE_NAME" jdbcType="VARCHAR" property="scheduleName" />
+		    <result column="APT_FLAG" jdbcType="VARCHAR" property="aptFlag" />
+	    </collection>
+ 	</resultMap>
+  
+    <!-- 按人查出所有排班 -->
+  	<select id="findGuidScheduleByGm" resultMap="GuidScheduleCycleDtoMap"
+		parameterType="com.ye.business.hx.dto.GuidScheduleDto">
+		select g.MEMBER_NO_GUID,g.MEMBER_NAME_GUID,g.SCHEDULE_CODE,s.SCHEDULE_NAME,s.APT_FLAG,g.DAY_NUM,g.TYPE,g.`CODE`
+		from guid_schedule g JOIN shop_schedule s on g.SCHEDULE_CODE=s.`CODE` 
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="memberNoGuids != null and memberNoGuids.size() > 0">
+   	     		and g.MEMBER_NO_GUID in
+	         <foreach item="item" index="index" collection="memberNoGuids" open="(" separator="," close=")">  
+	          	 #{item}  
+	          </foreach>
+    			</if>
+    			<if test="type != null and type !='' ">
+				<![CDATA[and g.TYPE =#{type}]]>
+			</if>
+    			<if test="shopNo != null and shopNo !='' ">
+				<![CDATA[and g.SHOP_NO =#{shopNo}]]>
+			</if>
+			<if test="merchantNo != null and merchantNo !='' ">
+				<![CDATA[and g.MERCHANT_NO =#{merchantNo}]]>
+			</if>
+		</where>
+		ORDER BY g.MEMBER_NO_GUID,g.DAY_NUM 
+	</select>
+	
+	<!-- 查可预约的员工 -->
+	<select id="findEnableGuidSchedule" resultMap="GuidScheduleCycleDtoMap"
+		parameterType="com.ye.business.hx.dto.GuidScheduleDto">
+		SELECT DISTINCT g.MEMBER_NO_GUID,g.MEMBER_NAME_GUID from guid_schedule g JOIN shop_schedule s on g.SCHEDULE_CODE=s.`CODE` 
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="memberNoGuids != null and memberNoGuids.size() > 0">
+   	     		and g.MEMBER_NO_GUID in
+	         	<foreach item="item" index="index" collection="memberNoGuids" open="(" separator="," close=")">  
+	          	 #{item}  
+	         	</foreach>
+    		</if>
+    		<if test="type != null and type !='' ">
+				<![CDATA[and g.TYPE =#{type}]]>
+			</if>
+    		<if test="shopNo != null and shopNo !='' ">
+				<![CDATA[and g.SHOP_NO =#{shopNo}]]>
+			</if>
+			<if test="dayNum != null and dayNum !='' ">
+				<![CDATA[and g.DAY_NUM =#{dayNum}]]>
+			</if>
+			<if test="aptFlag != null and aptFlag !='' ">
+				<![CDATA[and s.APT_FLAG =#{aptFlag}]]>
+			</if>
+			<if test="merchantNo != null and merchantNo !='' ">
+				<![CDATA[and g.MERCHANT_NO =#{merchantNo}]]>
+			</if>
+			<if test="workTime != null">
+				<![CDATA[and s.WORK_TIME <= #{workTime}]]>
+			</if>
+			<if test="offTime != null"> 
+				<![CDATA[and s.OFF_TIME >= #{offTime}]]>
+			</if>
+		</where>
+		ORDER BY g.CREATE_DATE,g.MEMBER_NO_GUID
+		
+	</select>
+	
+	<!-- 员工固定排班转移到当周 -->
+  	<insert id="batchAddGuidScheduleWeek">
+  		<![CDATA[
+  		INSERT INTO `guid_schedule` (`CODE`, `MEMBER_NO_GUID`, `MEMBER_NAME_GUID`, `SHOP_NO`, `SHOP_NAME`, `MERCHANT_NO`, `MERCHANT_NAME`, `TYPE`, `DAY_NUM`, `SCHEDULE_CODE`, `CREATE_ID`, `CREATE_DATE`)
+
+		SELECT CONCAT(g.`CODE`,'_1') as `CODE` ,g.MEMBER_NO_GUID,g.MEMBER_NAME_GUID,g.SHOP_NO,g.SHOP_NAME,g.MERCHANT_NO,g.MERCHANT_NAME,
+		'WEEK',g.DAY_NUM,g.SCHEDULE_CODE,g.CREATE_ID,SYSDATE()
+		from  guid_schedule g JOIN shop_schedule s on g.SCHEDULE_CODE=s.`CODE`
+		WHERE g.TYPE='FIXED' 
+		ORDER BY g.DAY_NUM
+		]]>
+  	</insert>
+  	
+  	<delete id="deleteWeekGuidSchedule">
+  		<![CDATA[
+  		delete from guid_schedule where type = 'WEEK' 
+  		]]>
+  	</delete>
+  	
+	<delete id="deleteGuidSchedule" parameterType="com.ye.business.hx.dto.GuidScheduleDto">
+	    delete from guid_schedule
+	    where MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR}
+	    and TYPE=#{type}
+		  <if test="dayNum != null ">
+					<![CDATA[and DAY_NUM =#{dayNum}]]>
+			</if>
+	</delete>
+</mapper>

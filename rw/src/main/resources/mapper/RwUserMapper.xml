@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.rw.dao.IRwUserDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.rw.domain.RwUser" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GUID" property="memberNoGuid" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GUID" property="memberNameGuid" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="USER_LEVEL" property="userLevel" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_AREA_CODE" property="cityAreaCode" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="LOGO_ADDR" property="logoAddr" jdbcType="VARCHAR" />
+    <result column="WEBSITE_URL" property="websiteUrl" jdbcType="VARCHAR" />
+    <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="PWD" property="pwd" jdbcType="VARCHAR" />
+    <result column="ENCRYPTION_CODE" property="encryptionCode" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="QCORD" property="qcord" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NO_WX_PERSONAL" property="noWxPersonal" jdbcType="VARCHAR" />
+    <result column="LOGIN_WX_OPENID" property="loginWxOpenid" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" type="com.ye.business.rw.dto.RwUserDto" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, STATUS, 
+    USER_LEVEL, MOBILE, IMEI, EMAIL, NICK_NAME, AREA_CODE, AREA_NAME, PROVINCE_CODE, 
+    CITY_CODE, CITY_AREA_CODE, ADDRESS, AGE, GENDER, LOGO_ADDR, WEBSITE_URL, COMPANY_ID, 
+    COMPANY_NAME, LOGIN_NAME, PWD, ENCRYPTION_CODE, BIRTHDAY, HEAD_ADDRESS, QCORD, NO_WX, NO_WX_PERSONAL, 
+    LOGIN_WX_OPENID, CREATE_ID, CREATE_DATE, UPDATE_ID, UPDATE_DATE, REMARK, REMARK2, 
+    REMARK3, REMARK4
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+        <if test="param.status != null and param.status != '' ">
+		  <![CDATA[and STATUS = #{param.status} ]]>
+		</if>
+		<if test="param.userLevel != null and param.userLevel != '' ">
+		  <![CDATA[and USER_LEVEL = #{param.userLevel} ]]>
+		</if>
+        <if test="param.nickName != null and param.nickName != '' ">
+		  <![CDATA[and NICK_NAME like concat('%', #{param.nickName}, '%') ]]>
+		</if>
+        <if test="param.mobile != null and param.mobile != '' ">
+		  <![CDATA[and MOBILE like concat('%', #{param.mobile}, '%') ]]>
+		</if>
+		<if test="param.beginDate != null and param.beginDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') >= #{param.beginDate} ]]>
+		</if>
+		<if test="param.endDate != null and param.endDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') <= #{param.endDate} ]]>
+		</if>
+		<if test="param.noWx != null and param.noWx != '' ">
+		  <![CDATA[and NO_WX = #{param.noWx} ]]>
+		</if>
+		<if test="param.memberNoGuidList != null and param.memberNoGuidList.size() > 0 ">		  
+		  and MEMBER_NO_GUID in <foreach collection="param.memberNoGuidList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="param.memberNoGuid != null and param.memberNoGuid != '' ">
+		  <![CDATA[and MEMBER_NO_GUID = #{param.memberNoGuid} ]]>
+		</if>
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by CREATE_DATE desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findRwUsers" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindRwUserPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM rw_user
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findRwUserPage" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindRwUserPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM rw_user
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findRwUserPageCount" resultType="int" parameterType="com.ye.business.rw.dto.FindRwUserPage">
+	select count(*)
+	FROM rw_user
+	  <include refid="findPage_condition" />
+  </select>
+  
+  <select id="selectByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rw_user
+    where LOGIN_NAME = #{loginName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rw_user
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rw_user
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.rw.domain.RwUser" >
+    insert into rw_user (CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, STATUS, USER_LEVEL, 
+      MOBILE, IMEI, EMAIL, 
+      NICK_NAME, AREA_CODE, AREA_NAME, 
+      PROVINCE_CODE, CITY_CODE, CITY_AREA_CODE, 
+      ADDRESS, AGE, GENDER, 
+      LOGO_ADDR, WEBSITE_URL, COMPANY_ID, 
+      COMPANY_NAME, LOGIN_NAME, PWD, 
+      ENCRYPTION_CODE, BIRTHDAY, HEAD_ADDRESS, QCORD, 
+      NO_WX, NO_WX_PERSONAL, LOGIN_WX_OPENID, 
+      CREATE_ID, CREATE_DATE, UPDATE_ID, 
+      UPDATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{memberNoGuid,jdbcType=VARCHAR}, #{memberNameGuid,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{userLevel,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{cityAreaCode,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{gender,jdbcType=VARCHAR}, 
+      #{logoAddr,jdbcType=VARCHAR}, #{websiteUrl,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{encryptionCode,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{headAddress,jdbcType=VARCHAR}, #{qcord,jdbcType=VARCHAR}, 
+      #{noWx,jdbcType=VARCHAR}, #{noWxPersonal,jdbcType=VARCHAR}, #{loginWxOpenid,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.rw.domain.RwUser" >
+    insert into rw_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="userLevel != null" >
+        USER_LEVEL,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="imei != null" >
+        IMEI,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="cityAreaCode != null" >
+        CITY_AREA_CODE,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="age != null" >
+        AGE,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="logoAddr != null" >
+        LOGO_ADDR,
+      </if>
+      <if test="websiteUrl != null" >
+        WEBSITE_URL,
+      </if>
+      <if test="companyId != null" >
+        COMPANY_ID,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="pwd != null" >
+        PWD,
+      </if>
+      <if test="encryptionCode != null" >
+        ENCRYPTION_CODE,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS,
+      </if>
+      <if test="qcord != null" >
+        QCORD,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="noWxPersonal != null" >
+        NO_WX_PERSONAL,
+      </if>
+      <if test="loginWxOpenid != null" >
+        LOGIN_WX_OPENID,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null" >
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAreaCode != null" >
+        #{cityAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="logoAddr != null" >
+        #{logoAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteUrl != null" >
+        #{websiteUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptionCode != null" >
+        #{encryptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="qcord != null" >
+        #{qcord,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxPersonal != null" >
+        #{noWxPersonal,jdbcType=VARCHAR},
+      </if>
+      <if test="loginWxOpenid != null" >
+        #{loginWxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.rw.domain.RwUser" >
+    update rw_user
+    <set >
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null" >
+        USER_LEVEL = #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAreaCode != null" >
+        CITY_AREA_CODE = #{cityAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="logoAddr != null" >
+        LOGO_ADDR = #{logoAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteUrl != null" >
+        WEBSITE_URL = #{websiteUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        PWD = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptionCode != null" >
+        ENCRYPTION_CODE = #{encryptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="qcord != null" >
+        QCORD = #{qcord,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxPersonal != null" >
+        NO_WX_PERSONAL = #{noWxPersonal,jdbcType=VARCHAR},
+      </if>
+      <if test="loginWxOpenid != null" >
+        LOGIN_WX_OPENID = #{loginWxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.rw.domain.RwUser" >
+    update rw_user
+    set MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      USER_LEVEL = #{userLevel,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      CITY_AREA_CODE = #{cityAreaCode,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      LOGO_ADDR = #{logoAddr,jdbcType=VARCHAR},
+      WEBSITE_URL = #{websiteUrl,jdbcType=VARCHAR},
+      COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      PWD = #{pwd,jdbcType=VARCHAR},
+      ENCRYPTION_CODE = #{encryptionCode,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      QCORD = #{qcord,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      NO_WX_PERSONAL = #{noWxPersonal,jdbcType=VARCHAR},
+      LOGIN_WX_OPENID = #{loginWxOpenid,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

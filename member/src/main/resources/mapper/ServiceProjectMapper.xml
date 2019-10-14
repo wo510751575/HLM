@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IServiceProjectDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.ServiceProject" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="findServiceProjectPageReturns" type="com.lj.business.member.dto.service.project.FindServiceProjectPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindServiceProjectAppReturnMap" type="com.lj.business.member.dto.service.project.FindServiceProjectAppReturn" >
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+    
+    <collection property="propertyList" javaType="java.util.List" ofType="com.lj.business.member.dto.service.projectproperty.FindProjectPropertyAppReturn">  
+		<result property="code" column="PROPERTY_CODE" />
+		<result property="propertyName" column="PROPERTY_NAME" />
+		<result property="valueRange" column="VALUE_RANGE" />
+	</collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, PROJECT_NAME, SHOW_INDEX,  MERCHANT_NO, MERCHANT_NAME, CREATE_ID, 
+    CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  
+    <sql id="findServiceProjectPages">
+    <where>
+       <if test="merchantNo != null and merchantNo !='' " >
+        and  MERCHANT_NO = #{merchantNo}
+      </if>
+       <if test="projectName != null and projectName !='' " >
+        and  PROJECT_NAME like CONCAT('%',#{projectName,jdbcType=VARCHAR},'%' )
+      </if>
+       <if test="shopNos != null and shopNos.size() > 0">
+      	  and SHOP_NO in
+        <foreach item="item" index="index" collection="shopNos" open="(" separator="," close=")">  
+          #{item}  
+       </foreach>
+      </if>
+    </where>
+    </sql>
+    
+    
+      <!-- 分页查询 -->
+   <select id="findServiceProjectPage" resultMap="findServiceProjectPageReturns" parameterType="com.lj.business.member.dto.service.project.FindServiceProjectPage" >
+  SELECT   
+  	<include refid="Base_Column_List" />
+  FROM service_project 
+ 	 <include refid="findServiceProjectPages" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findServiceProjectPageCount" resultType="int" parameterType="com.lj.business.member.dto.service.project.FindServiceProjectPage" >
+    select  count(*)
+     FROM service_project 
+     <include refid="findServiceProjectPages" />
+  </select>
+  
+  
+   <select id="findServiceProjectList" resultType="com.lj.business.member.dto.service.project.FindServiceProjectAppReturn" parameterType="com.lj.business.member.dto.service.project.FindServiceProjectApp" >
+      SELECT  CODE code,  PROJECT_NAME  projectName
+      FROM service_project 
+ 	 <include refid="findServiceProjectPages" />
+   </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from service_project
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.lj.business.member.domain.ServiceProject" >
+    insert into service_project (CODE, PROJECT_NAME, SHOW_INDEX, 
+       MERCHANT_NO, 
+      MERCHANT_NAME, CREATE_ID, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{showIndex,jdbcType=INTEGER}, 
+       #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, now(), 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.ServiceProject" >
+    insert into service_project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="projectName != null" >
+        PROJECT_NAME,
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="showIndex != null" >
+        #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.ServiceProject" >
+    update service_project
+    <set >
+      <if test="projectName != null" >
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.ServiceProject" >
+    update service_project
+    set PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- APP查询所有服务项目列表 -->
+  <select id="findServiceProjectApp" parameterType="com.lj.business.member.dto.service.project.FindServiceProjectApp" resultMap="FindServiceProjectAppReturnMap">
+  	SELECT pt.CODE, pt.PROJECT_NAME, py.CODE PROPERTY_CODE, py.PROPERTY_NAME, py.VALUE_RANGE 
+      FROM service_project pt, project_property py 
+     where pt.#{shopNo,jdbcType=VARCHAR}
+       and pt.CODE = py.PROJECT_CODE
+     order by pt.SHOW_INDEX asc, py.SHOW_INDEX asc
+  </select>
+</mapper>

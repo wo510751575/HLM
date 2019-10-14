@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+  
+	<bean id="workRatioGmService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>workRatioGmService</value>
+		</property>
+		<property name="serviceInterface">   
+			<value>com.lj.business.st.service.IWorkRatioGmService</value>  
+		</property>
+    </bean>  
+    <bean id="unContactTotalService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>unContactTotalService</value>
+		</property>
+		<property name="serviceInterface">   
+			<value>com.lj.business.st.service.IUnContactTotalService</value>  
+		</property>
+    </bean>
+	<bean id="pmTypeTotalService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>pmTypeTotalService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IPmTypeTotalService</value>
+		</property>
+	</bean>
+	<bean id="workRatioShopService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>workRatioShopService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IWorkRatioShopService</value>
+		</property>
+	</bean>
+	<bean id="materialTotalService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>materialTotalService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IMaterialTotalService</value>
+		</property>
+	</bean>
+	<bean id="cfCountAnalyzeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>cfCountAnalyzeService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.ICfCountAnalyzeService</value>
+		</property>
+	</bean>
+	<bean id="pmLabelTotalService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>pmLabelTotalService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IPmLabelTotalService</value>
+		</property>
+	</bean>
+	<bean id="areaOrderAnalyzeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>areaOrderAnalyzeService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IAreaOrderAnalyzeService</value>
+		</property>
+	</bean>
+	<bean id="socialAnalyzeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>socialAnalyzeService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.ISocialAnalyzeService</value>
+		</property>
+	</bean>
+	<bean id="pmTalkTotalService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>pmTalkTotalService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IPmTalkTotalService</value>
+		</property>
+	</bean>
+	<bean id="workBrDayChooseService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>workBrDayChooseService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IWorkBrDayChooseService</value>
+		</property>
+	</bean>
+	<bean id="cfAnalyzeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>cfAnalyzeService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.ICfAnalyzeService</value>
+		</property>
+	</bean>
+	<bean id="bestGmChooseService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>bestGmChooseService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IBestGmChooseService</value>
+		</property>
+	</bean>
+	<bean id="salesGmDayDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>salesGmDayDetailService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.ISalesGmDayDetailService</value>
+		</property>
+	</bean>
+	<bean id="salesGmDayFirstService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>salesGmDayFirstService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.ISalesGmDayFirstService</value>
+		</property>
+	</bean>
+	<bean id="clientExpTotalService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>clientExpTotalService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IClientExpTotalService</value>
+		</property>
+	</bean>
+	
+	<!-- 段志鹏	2017-08-01	区域工作统计 -->
+	<bean id="workRatioAreaService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="workRatioAreaService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWorkRatioAreaService" />
+	</bean>
+
+	<bean id="clientAnalyzeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>clientAnalyzeService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IClientAnalyzeService</value>
+		</property>
+	</bean>
+	
+	<bean id="readDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>readDetailService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.IReadDetailService</value>
+		</property>
+	</bean>
+	
+	<!-- 今日客户汇总 -->
+	<bean id="todayMemberSummaryService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>st</value>
+		</property>
+		<property name="serviceName">
+			<value>todayMemberSummaryService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.st.service.ITodayMemberSummaryService</value>
+		</property>
+	</bean>
+	
+</beans> 
+

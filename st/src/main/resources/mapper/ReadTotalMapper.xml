@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IReadTotalDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.ReadTotal" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="URL_ADDRESS" property="urlAddress" jdbcType="VARCHAR" />
+    <result column="VISIT_NUM" property="visitNum" jdbcType="BIGINT" />
+    <result column="VISIT_NUM_PERSON" property="visitNumPerson" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, NAME, URL_ADDRESS, VISIT_NUM, VISIT_NUM_PERSON, CREATE_DATE
+  </sql>
+  
+  <select id="selectByParamKey" resultMap="BaseResultMap" parameterType="com.lj.business.st.domain.ReadTotal" >
+    select 
+    <include refid="Base_Column_List" />
+    from read_total
+    where URL_ADDRESS =  #{urlAddress,jdbcType=VARCHAR}
+  </select>
+  <update id="updateVisitNum" parameterType="com.lj.business.st.domain.ReadTotal" >
+    update read_total
+    set 
+      VISIT_NUM = VISIT_NUM + 1
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateVisitNumPerson" parameterType="com.lj.business.st.domain.ReadTotal" >
+    update read_total
+    set 
+      VISIT_NUM_PERSON = VISIT_NUM_PERSON + 1
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from read_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from read_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.ReadTotal" >
+    insert into read_total (CODE, NAME, URL_ADDRESS, 
+      VISIT_NUM, VISIT_NUM_PERSON, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{urlAddress,jdbcType=VARCHAR}, 
+      #{visitNum,jdbcType=BIGINT}, #{visitNumPerson,jdbcType=BIGINT}, NOW()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.ReadTotal" >
+    insert into read_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="urlAddress != null" >
+        URL_ADDRESS,
+      </if>
+      <if test="visitNum != null" >
+        VISIT_NUM,
+      </if>
+      <if test="visitNumPerson != null" >
+        VISIT_NUM_PERSON,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="urlAddress != null" >
+        #{urlAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="visitNum != null" >
+        #{visitNum,jdbcType=BIGINT},
+      </if>
+      <if test="visitNumPerson != null" >
+        #{visitNumPerson,jdbcType=BIGINT},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.ReadTotal" >
+    update read_total
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="urlAddress != null" >
+        URL_ADDRESS = #{urlAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="visitNum != null" >
+        VISIT_NUM = #{visitNum,jdbcType=BIGINT},
+      </if>
+      <if test="visitNumPerson != null" >
+        VISIT_NUM_PERSON = #{visitNumPerson,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.ReadTotal" >
+    update read_total
+    set NAME = #{name,jdbcType=VARCHAR},
+      URL_ADDRESS = #{urlAddress,jdbcType=VARCHAR},
+      VISIT_NUM = #{visitNum,jdbcType=BIGINT},
+      VISIT_NUM_PERSON = #{visitNumPerson,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- 服务注册 -->
+	
+	<!-- 广告 -->
+	<bean name="/advertiseService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="advertiseServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseService" />
+	</bean>
+	
+	<!-- 广告类型 -->
+	<bean name="/advertiseTypeService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="advertiseTypeServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseTypeService" />
+	</bean>
+	
+	<!-- 广告显示记录 -->
+	<bean name="/advertiseShowService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="advertiseShowServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseShowService" />
+	</bean>
+	
+	<!-- 广告查看记录 -->
+	<bean name="/advertiseViewService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="advertiseViewServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IAdvertiseViewService" />
+	</bean>
+	
+	<!-- 轮播广告 -->
+	<bean name="/carouselService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="carouselServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.ICarouselService" />
+	</bean>
+	
+	<!-- 广告显示记录 -->
+	<bean name="/carouselShowService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="carouselShowServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.ICarouselShowService" />
+	</bean>
+	
+	<!-- 广告查看记录 -->
+	<bean name="/carouselViewService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="carouselViewServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.ICarouselViewService" />
+	</bean>
+	
+	<!-- 用户豆子记录 -->
+	<bean name="/rwUserBeansService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="rwUserBeansServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IRwUserBeansService" />
+	</bean>
+	
+	<!-- 用户豆子更新记录 -->
+	<bean name="/rwUserBeansChangeService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="rwUserBeansChangeServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IRwUserBeansChangeService" />
+	</bean>
+	
+	<!-- 用户豆子充值记录 -->
+	<bean name="/beansOrderService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="beansOrderServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IBeansOrderService" />
+	</bean>
+	
+	<!-- 服务记录 -->
+	<bean name="/serverInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="serverInfoServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IServerInfoService" />
+	</bean>
+	
+	<!-- 服务订单记录 -->
+	<bean name="/rwOrderService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="rwOrderServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IRwOrderService" />
+	</bean>
+	
+	<!-- 服务登记记录 -->
+	<bean name="/rwServerService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="rwServerServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IRwServerService" />
+	</bean>
+	
+	<!-- 广告下架定时任务 -->
+	<bean name="/advertiseJobService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="advertiseJobServiceImpl"/>
+		  </bean>
+		</property>
+		<property name="serviceInterface" value="com.lj.cc.clientintf.IJob" />
+	</bean>
+	
+	<!--广告上下架任务调度  -->
+	<bean name="/advertiseJobTask"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean class="com.lj.cc.clientintf.JobService">
+		     <property name="paramJob" ref="advertiseJobTask"/>
+		     <property name="taskExecutor" ref="taskExecutor"/>	<!-- 线程池管理, 查看配置beans/beans-service.xml-->
+		  </bean>		  
+		</property>
+		<property name="serviceInterface" value="com.lj.cc.clientintf.IParamJob" />
+	</bean>
+
+	<!-- 交易流水 -->
+	<bean name="/billService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="billServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.ad.service.IBillService" />
+	</bean>
+	
+
+</beans>

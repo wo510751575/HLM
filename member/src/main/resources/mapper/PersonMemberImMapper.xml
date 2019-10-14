@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IPersonMemberImDao" >
+  <resultMap id="FindImFriendsPageReturnMap" type="com.lj.business.member.dto.im.FindImFriendsPageReturn" >
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NO_WX_ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_WX" property="nickNameRemarkWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_LOCAL" property="nickNameRemarkLocal" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime"  />
+    <!-- 客户分类 -->
+    <result column="PM_TYPE_CODE" property="pmTypeCode" jdbcType="VARCHAR" />
+    <result column="PM_TYPE_NAME" property="pmTypeName" jdbcType="VARCHAR" />
+    <result column="shop_wx" property="shopWx" jdbcType="VARCHAR" />
+    <result column="CODE" property="codePm" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+  <resultMap id="FindPersonMemberByChatReturnResultMap" type="com.lj.business.member.dto.im.FindPersonMemberByChatReturn" >
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NO_WX_ALIAS" property="noWxAlias" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+  </resultMap>
+    
+    <resultMap id="FindGmMemberRelateInfoResultMap"
+               type="com.lj.business.member.dto.im.GmMemberRelateInfoDto">
+        <result column="CODE" property="code" jdbcType="VARCHAR"/>
+        <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR"/>
+        <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR"/>
+        <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR"/>
+        <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR"/>
+        <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR"/>
+        <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="gmWx" property="gmWx" jdbcType="VARCHAR"/>
+        <result column="NO_WX" property="noWx" jdbcType="VARCHAR"/>
+        <result column="NO_WX_ALIAS" property="noWxAlias" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 查询客户最大版本号 -->
+    <select id="findMaxVersion" parameterType="com.lj.business.member.dto.im.FindMaxVersion" resultType="long">
+    	select ifnull(max(pm.version), 0) 
+    	  from person_member pm
+		<where>
+			<!-- 电商版，不需要限制那么多，跟终端走 -->
+			pm.WX_FRIENDS = 1
+			and pm.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    		and pm.SHOP_WX = #{noWxGm,jdbcType=VARCHAR}
+		</where> 
+
+    	<!-- <choose>
+    		<when test="noWxGm != null and noWxGm != ''">
+    			, guid_member gm
+    			where pm.MEMBER_NO = pmb.MEMBER_NO
+    			  and pm.WX_FRIENDS = 1
+    			  and pmb.NO_WX is not null
+    			  and pm.MEMBER_NO_GM = gm.MEMBER_NO
+    			  and gm.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    			  and gm.NO_WX = #{noWxGm,jdbcType=VARCHAR}
+    			  <if test="memberNoGm != null and memberNoGm != ''">
+    			  	and pm.MEMBER_NO = #{memberNoGm,jdbcType=VARCHAR}
+    			  </if>
+    		</when>
+    		<otherwise>
+    			where pm.MEMBER_NO = pmb.MEMBER_NO
+    			  and pm.WX_FRIENDS = 1
+    			  and pmb.NO_WX is not null
+    			  and pm.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    			  and pm.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+    		</otherwise>
+    	</choose>  -->
+    </select>
+    
+  
+  <!-- 分页查询IM微信好友 begin -->
+	<sql id="findImFriendsWhere">
+		<where>
+			pm.WX_FRIENDS = 1
+			and pmb.NO_WX is not null
+			<if test="version != null and version != ''">
+				and pm.VERSION > #{version,jdbcType=BIGINT}
+			</if>
+			<if test="noWxGm != null and noWxGm != ''">
+				and pm.SHOP_WX = #{noWxGm,jdbcType=BIGINT}
+			</if>
+			<if test="merchantNo != null and merchantNo != ''">
+				and pm.MERCHANT_NO = #{merchantNo,jdbcType=BIGINT}
+			</if>
+			<if test="memberNoGm != null and memberNoGm != ''">
+				and pm.MEMBER_NO_GM = #{memberNoGm,jdbcType=BIGINT}
+			</if>
+			<if test="searchKey != null and searchKey != ''">
+				and 
+				(pm.MEMBER_NAME like CONCAT('%',#{searchKey,jdbcType=VARCHAR},'%' )
+				OR pm.NICK_NAME_REMARK_WX like CONCAT('%',#{searchKey,jdbcType=VARCHAR},'%' )
+				)
+			</if>
+			
+		</where>
+    </sql>
+
+	<select id="findImFriendsCount" resultType="int" parameterType="com.lj.business.member.dto.im.FindImFriendsPage">
+		select count(pm.CODE)
+		  from person_member pm
+		  LEFT JOIN person_member_base pmb ON pm.MEMBER_NO = pmb.MEMBER_NO
+		       <include refid="findImFriendsWhere" />
+	</select>
+
+	<select id="findImFriendsList" resultMap="FindImFriendsPageReturnMap" parameterType="com.lj.business.member.dto.im.FindImFriendsPage">
+		select  pm.MEMBER_NO_GM,pm.MEMBER_NO, pm.CODE,
+    		   IF(pm.NICK_NAME_REMARK_WX IS NULL OR pm.NICK_NAME_REMARK_WX='',pm.MEMBER_NAME,pm.NICK_NAME_REMARK_WX) MEMBER_NAME
+    		   , pmb.NO_WX, pmb.NO_WX_ALIAS, pm.NICK_NAME_REMARK_WX, pm.NICK_NAME_REMARK_LOCAL, 
+    		   pmb.HEAD_ADDRESS, pmb.SEX, pmb.MOBILE, pm.VERSION, UNIX_TIMESTAMP(pm.CREATE_DATE) * 1000 CREATE_TIME 
+    		   ,pm.PM_TYPE_CODE, pm.PM_TYPE_NAME,pm.shop_wx 
+		  from person_member pm
+		  LEFT JOIN person_member_base pmb ON pm.MEMBER_NO = pmb.MEMBER_NO
+		       <include refid="findImFriendsWhere" />
+		 	order by pm.CREATE_DATE desc
+		 	limit ${start}, ${limit}
+	</select>
+  	<!-- 分页查询IM微信好友 end -->
+  	
+  	<!-- 查询客户信息(IM聊天) -->
+  	<select id="findPersonMemberByChat" resultMap="FindPersonMemberByChatReturnResultMap" parameterType="com.lj.business.member.dto.im.FindPersonMemberByChat">
+	select pm.*, pmb.NO_WX, pmb.NO_WX_ALIAS, pmb.HEAD_ADDRESS
+      from person_member pm, person_member_base pmb
+     where pm.MEMBER_NO = pmb.MEMBER_NO 
+       and pm.WX_FRIENDS = 1
+       <if test="memberNo != null and memberNo != ''">
+	       and pm.MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+		</if>
+       <if test="memberNoGm != null and memberNoGm != ''">
+	       and pm.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+       <if test="noWx != null and noWx != ''">
+	       and pmb.NO_WX = #{noWx,jdbcType=VARCHAR}
+		</if>
+       <if test="noWxGm != null and noWxGm != ''">
+	       and pm.SHOP_WX = #{noWxGm,jdbcType=VARCHAR}
+		</if>
+     limit 1
+  </select>
+  	
+    <select id="findGmMemberRelateInfo" resultMap="FindGmMemberRelateInfoResultMap">
+        SELECT gm.MEMBER_NO AS member_no_gm, pmb.MEMBER_NO,pmb.NO_WX,
+        gm.NO_WX AS gmWx, pmb.NO_WX_ALIAS,
+        pm.MERCHANT_NO,pm.MERCHANT_NAME, pm.WX_FRIENDS
+        FROM person_member pm, person_member_base pmb, guid_member gm
+        WHERE pm.MEMBER_NO = pmb.MEMBER_NO
+        AND pm.MEMBER_NO_GM = gm.MEMBER_NO
+        AND pm.WX_FRIENDS = 1;
+    </select>
+    <select id="getGmMemberWxInfo" resultType="map" >
+        SELECT pmb.NO_WX as noWx, gm.NO_WX AS gmWx, pmb.NO_WX_ALIAS as noWxAlias,pmb.MEMBER_NAME as memberName
+        FROM person_member pm, person_member_base pmb, guid_member gm
+        WHERE pm.MEMBER_NO = pmb.MEMBER_NO AND pm.MEMBER_NO_GM = gm.MEMBER_NO AND pm.WX_FRIENDS = 1
+        AND pm.MEMBER_NO_GM=#{memberNoGm,jdbcType=VARCHAR}
+        AND pm.MEMBER_NO=#{memberNo,jdbcType=VARCHAR}
+    </select>
+  	<!-- 查询绑定导购微信号所有客户的微信列表 -->
+  	<select id="findMemberWxByNoWxGm" resultType="string">
+	select pmb.NO_WX
+      from person_member pm, person_member_base pmb, guid_member gm 
+     where pm.MEMBER_NO = pmb.MEMBER_NO 
+       and pm.MEMBER_NO_GM = gm.MEMBER_NO
+       and pm.WX_FRIENDS = 1
+       and pmb.NO_WX is not null
+       and gm.NO_WX = #{noWxGm,jdbcType=VARCHAR}
+<!--        and gm.#{shopNo,jdbcType=VARCHAR} -->
+  </select>
+  
+  <!-- 查询拥有指定分组客户的导购绑定微信列表 -->
+  <select id="findNoWxByPmTypeCode" resultType="string" parameterType="string">
+  	select DISTINCT(gm.NO_WX) 
+  	  from person_member pm, 
+  	  guid_member gm   
+  	 where  pm.WX_FRIENDS = 1
+       and pm.MEMBER_NO_GM = gm.MEMBER_NO
+  	   and pm.PM_TYPE_CODE = #{pmTypeCode,jdbcType=VARCHAR} 
+  </select>
+  
+  	<!-- 返回终端下添加了指定微信的客户信息 -->
+  	<select id="findPersonMemberByShopAndNoWx" resultType="com.lj.business.member.dto.im.FindPersonMemberByShopAndNoWxReturn" parameterType="com.lj.business.member.dto.im.FindPersonMemberByShopAndNoWx">
+	select pm.MEMBER_NO memberNo, pmb.no_wx noWx, pmb.NO_WX_ALIAS noWxAlias, pmb.HEAD_ADDRESS headAddress, pm.MEMBER_NO_GM memberNoGm
+      from person_member pm, person_member_base pmb 
+     where pm.MEMBER_NO = pmb.MEMBER_NO 
+       and pm.WX_FRIENDS = 1
+       and (pmb.NO_WX =#{noWx,jdbcType=VARCHAR} or pmb.no_wx_alias=#{noWx,jdbcType=VARCHAR})
+       and pm.#{shopNo,jdbcType=VARCHAR}
+     limit 1
+  </select>
+  
+  <!-- 统计导购助手下未回复客户数 -->
+  <select id="findUnrespMemberCount" resultType="int">
+  	select count(*)
+  	  from gm_assistant_shop gas, shop_terminal st, guid_member gm, person_member pm, pm_chat_behavior pcb
+	 where gas.TID_CODE = st.CODE 
+	   and st.STATUS = '1'
+	   and gas.ASSISTANT_NO = #{assistantNo}
+	   and st.gm.SHOP_NO
+       and st.NO_WX = gm.NO_WX
+	   and gm.member_no = pm.member_no_gm
+	   and pm.WX_FRIENDS = 1
+	   and pm.member_no_gm = pcb.member_no_gm
+	   and pm.member_no = pcb.member_no
+	   and pcb.UNRESP_FLAG = 1
+	   <if test="beginTime != null">
+		   and pcb.MEMBER_CHAT_TIME >= #{beginTime}
+	   </if>
+  </select>
+</mapper>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.ad.dao.IServerInfoDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.ad.domain.ServerInfo" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="SERVER_NAME" property="serverName" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="BIGINT" />
+    <result column="ORIGINAL_PRICE" property="originalPrice" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ye.business.ad.domain.ServerInfo" extends="BaseResultMap" >
+    <result column="CTX" property="ctx" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" type="com.ye.business.ad.dto.ServerInfoDto" extends="ResultMapWithBLOBs"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, MERCHANT_NAME, SERVER_NAME, PRICE, ORIGINAL_PRICE, STATUS, UPDATE_ID, 
+    UPDATE_DATE, CREATE_ID, CREATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    CTX
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+        <if test="param.createId != null and param.createId != '' ">
+		  <![CDATA[and CREATE_ID = #{param.createId} ]]>
+		</if>
+		<if test="param.merchantNo != null and param.merchantNo != '' ">
+		  <![CDATA[and MERCHANT_NO = #{param.merchantNo} ]]>
+		</if>
+		<if test="param.status != null and param.status != '' ">
+		  <![CDATA[and STATUS = #{param.status} ]]>
+		</if>
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by UPDATE_DATE desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findServerInfos" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindServerInfoPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM server_info
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findServerInfoPage" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindServerInfoPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM server_info
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findServerInfoPageCount" resultType="int" parameterType="com.ye.business.ad.dto.FindServerInfoPage">
+	select count(*)
+	FROM server_info
+	  <include refid="findPage_condition" />
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from server_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from server_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.ad.domain.ServerInfo" >
+    insert into server_info (CODE, MERCHANT_NO, MERCHANT_NAME, 
+      SERVER_NAME, PRICE, ORIGINAL_PRICE, 
+      STATUS, UPDATE_ID, UPDATE_DATE, 
+      CREATE_ID, CREATE_DATE, CTX
+      )
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{serverName,jdbcType=VARCHAR}, #{price,jdbcType=BIGINT}, #{originalPrice,jdbcType=BIGINT}, 
+      #{status,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{ctx,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.ad.domain.ServerInfo" >
+    insert into server_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="serverName != null" >
+        SERVER_NAME,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="ctx != null" >
+        CTX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null" >
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=BIGINT},
+      </if>
+      <if test="originalPrice != null" >
+        #{originalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctx != null" >
+        #{ctx,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.ad.domain.ServerInfo" >
+    update server_info
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null" >
+        SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=BIGINT},
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE = #{originalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctx != null" >
+        CTX = #{ctx,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ye.business.ad.domain.ServerInfo" >
+    update server_info
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=BIGINT},
+      ORIGINAL_PRICE = #{originalPrice,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CTX = #{ctx,jdbcType=LONGVARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.ad.domain.ServerInfo" >
+    update server_info
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=BIGINT},
+      ORIGINAL_PRICE = #{originalPrice,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

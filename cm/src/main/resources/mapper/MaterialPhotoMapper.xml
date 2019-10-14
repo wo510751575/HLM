@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IMaterialPhotoDao">
+<resultMap id="baseResultMap" type="com.lj.business.cm.domain.MaterialPhoto">
+	<id column="CODE" property="code" jdbcType="VARCHAR" />
+	<result column="PHOTO_NAME" property="photoName" jdbcType="VARCHAR" />
+	<result column="FOLDER_NAME" property="folderName" jdbcType="VARCHAR" />
+	<result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+	<result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+	<result column="SIZE" property="size" jdbcType="DOUBLE" />
+	<result column="PHOTO_LOCATION" property="photoLocation" jdbcType="VARCHAR" />
+	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+	<result column="SMALL_PHOTO_LOCATION" property="smallPhotoLocation" jdbcType="VARCHAR" />
+	<result column="COUNT" property="count" jdbcType="INTEGER" />
+	<result column="LENGTH" property="length" jdbcType="INTEGER" />
+	<result column="WIDTH" property="width" jdbcType="INTEGER" />
+</resultMap>
+
+<resultMap id="findMaterialPhotoPageReturnMap" type="com.lj.business.cm.dto.wordsType.FindMaterialPhotoPage" >
+	<id column="CODE" property="code" jdbcType="VARCHAR" />
+	<result column="PHOTO_NAME" property="photoName" jdbcType="VARCHAR" />
+	<result column="FOLDER_NAME" property="folderName" jdbcType="VARCHAR" />
+	<result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+	<result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+	<result column="SIZE" property="size" jdbcType="DOUBLE" />
+	<result column="PHOTO_LOCATION" property="photoLocation" jdbcType="VARCHAR" />
+	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+	<result column="SMALL_PHOTO_LOCATION" property="smallPhotoLocation" jdbcType="VARCHAR" />
+	<result column="COUNT" property="count" jdbcType="INTEGER" />
+	<result column="LENGTH" property="length" jdbcType="INTEGER" />
+	<result column="WIDTH" property="width" jdbcType="INTEGER" />
+</resultMap>
+
+<sql id="Base_Column_List">
+	CODE,PHOTO_NAME,FOLDER_NAME,PARENT_ID,PARENT_IDS,SIZE,PHOTO_LOCATION,
+	UPDATE_TIME,MERCHANT_NO,SMALL_PHOTO_LOCATION,COUNT,LENGTH,WIDTH
+</sql>
+
+<sql id="findMaterialPhotoPage_condition" >
+  	 <where>
+		<if test="merchantNo != null">
+		(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+		</if>
+		<if test="photoName != null and photoName != ''">
+		AND (PHOTO_NAME like CONCAT('%',#{photoName,jdbcType=VARCHAR},'%' ) or FOLDER_NAME like CONCAT('%',#{photoName,jdbcType=VARCHAR},'%' ))
+		</if>
+		<if test="parentId != null">
+		AND PARENT_ID = #{parentId,jdbcType=VARCHAR}
+		</if>
+	</where>
+  </sql>
+  
+<insert id="addMaterialVideo" parameterType="com.lj.business.cm.dto.AddMaterialPhoto">
+	INSERT INTO material_photo
+	(CODE,PHOTO_NAME,FOLDER_NAME,PARENT_ID,
+	PARENT_IDS,SIZE,PHOTO_LOCATION,UPDATE_TIME,
+	MERCHANT_NO,SMALL_PHOTO_LOCATION,
+	COUNT,LENGTH,WIDTH)
+	values(#{code,jdbcType=VARCHAR},#{photoName,jdbcType=VARCHAR},
+	#{folderName,jdbcType=VARCHAR},#{parentId,jdbcType=VARCHAR},
+	#{parentIds,jdbcType=VARCHAR},#{size,jdbcType=DOUBLE},
+	#{photoLocation,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP},
+	#{merchantNo,jdbcType=VARCHAR},#{smallPhotoLocation,jdbcType=VARCHAR},
+	#{count,jdbcType=INTEGER},#{length,jdbcType=INTEGER},
+	#{width,jdbcType=INTEGER})
+</insert>
+
+<select id="findMaterialPhotoPage" parameterType="com.lj.business.cm.dto.wordsType.FindMaterialPhotoPage" resultMap="findMaterialPhotoPageReturnMap">
+	SELECT 
+	<include refid="Base_Column_List" />
+	FROM material_photo
+	<include refid="findMaterialPhotoPage_condition" />
+	order by FOLDER_NAME DESC
+	limit ${start},${limit}
+</select>
+
+<select id="findMaterialPhotoCount" parameterType="com.lj.business.cm.dto.wordsType.FindMaterialPhotoPage" resultType="java.lang.Integer">
+	SELECT 
+	count(*)
+	FROM material_photo
+	<include refid="findMaterialPhotoPage_condition" />
+</select>
+
+<delete id="delete" parameterType="com.lj.business.cm.dto.AddMaterialPhoto">
+	DELETE FROM material_photo
+	WHERE (
+	CODE like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+	OR PARENT_IDS like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+	)
+</delete>
+
+<select id="selectParentIds" parameterType="java.lang.String" resultType="java.lang.String">
+	SELECT PARENT_IDS 
+	FROM material_photo
+	WHERE CODE = #{parentId,jdbcType=VARCHAR}
+</select>
+
+<select id="getCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT count(*) 
+	from material_photo
+	WHERE PARENT_ID = #{parentId,jdbcType=VARCHAR}
+</select>
+
+<update id="updateCount" parameterType="com.lj.business.cm.dto.AddMaterialPhoto">
+	UPDATE material_photo
+	SET COUNT = #{count,jdbcType=INTEGER}
+	WHERE CODE = #{code,jdbcType=VARCHAR}
+</update>
+
+<select id="findChild" parameterType="java.lang.String" resultType="java.util.Map">
+	select s1.code id,s1.PARENT_ID pId,s1.PHOTO_LOCATION url,
+    	CASE WHEN (SELECT count(s2.code) from material_photo s2 WHERE s2.parent_id=s1.code)=0 THEN false ELSE true END as hasChild
+    from material_photo s1
+    where s1.parent_id = #{parentId}
+
+
+
+</select>
+
+</mapper>

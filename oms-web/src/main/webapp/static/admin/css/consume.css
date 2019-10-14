@@ -1,0 +1,39 @@
+*{ margin: 0; padding: 0; font-style: normal; list-style: none; font-style: '微软雅黑','宋体'; }
+html,body{ width: 100%; }
+
+.main{ width: 100%; max-width: 500px; margin: 0 auto;}
+
+.main .beauty-list .d{ background: #d3d3d3; color:#fff; font-size: 12px; line-height: 34px; text-indent: 10px;}
+.main .beauty-list .content{ display: flex; align-items: flex-start; padding-left: 10px; box-sizing: border-box;}
+.main .beauty-list .content .rt-list{ border-left: 1px solid #a2a3b8; flex-grow: 1; padding: 10px;}
+.main .beauty-list .content .rt-list .rt{ margin-bottom: 15px;}
+.main .beauty-list .content .rt-list .rt:last-child{ margin-bottom: 0px;}
+.main .beauty-list .content .t{ font-size:12px; width:52px; flex-shrink: 0; color:#333; display: flex; justify-content: space-between; align-items: center; margin-right: -4px; padding-top: 6px;}
+.main .beauty-list .content .t .circleF{ background: #fff; padding:5px 0; display: flex; position: relative; z-index: 5;}
+.main .beauty-list .content .t .circle{ width:7px; height: 7px; border-radius: 7px; background: #9d9eb3 !important;}
+.main .beauty-list .content .rt .type{ display: flex; flex-grow: 1; flex-wrap: wrap; align-items: center;}
+.main .beauty-list .content .rt .type .tp{ height:22px; line-height: 22px; margin-right: 8px; border:1px solid #f31d5f; min-width: 50px; padding:0 5px; box-sizing: border-box; text-align: center; color: #f31d5f;
+border-radius: 34px; font-size: 13px; margin-bottom:5px;}
+.main .beauty-list .content .rt .img-list{ display: flex; flex-wrap: wrap; font-size: 0; align-items: stretch; margin-top:10px;}
+.main .beauty-list .content .rt li{ width: 32%; margin-left: 2%; margin-bottom: 2%; overflow: hidden; display: flex; align-items: center;}
+.main .beauty-list .content .rt li img{ width: 100%}
+.main .beauty-list .content .rt li:nth-child(3n + 1){ margin-left: 0; }
+.main .beauty-list .content .cnt{ margin-top:12px; color: #333; font-size: 14px; word-break: break-all;}
+.main .beauty-list .content .dz{ margin-top:-5px; color: #333; font-size: 14px; word-break: break-all;}
+.main .beauty-list .content .myd{ margin-top:10px; display: flex; align-items: center; color: #333; font-size: 14px;}
+.main .beauty-list .content .myd .tp{ height:22px; line-height: 22px; border-radius: 22px; color: #fff; font-size: 12px; text-align: center; width: 54px; margin-left:10px; background: #f31d5f;}
+
+.swiper-container-frame{ position: fixed; z-index: 50; display: flex; align-items: center; justify-content: center; left:0; top:0; background:rgba(0,0,0,0.5); width:100%; height: 100%; }
+.swiper-container-frame .swiper-slide{ text-align: center; }
+.swiper-container-frame .swiper-slide img{ width:100%;}
+.swiper-container-frame .swiper-wrapper{ align-items:center;}
+
+.empty{ min-height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center;}
+.empty .empty-f{ font-size:12px; color:#9d9d9d; margin-top:26px;}
+.empty .empty-img{ width:33.33%; }
+.empty .empty-img img{ width:100%; }
+
+.loadMore{ height:40px; display:none; background:#e3e3e3; width:90%; margin:10px auto; font-size:12px; color:#333; border:none; text-align:center; line-height:40px; border-radius:5px;}
+
+
+

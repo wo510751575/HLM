@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IWxJobRedPackInfoDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.WxJobRedPackInfo" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="JOB_CODE" property="jobCode" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="CHAR" />
+    <result column="wx_no_shop" property="wxNoShop" jdbcType="VARCHAR" />
+    
+    <result column="send_redpack_gm" property="sendRedpackGm" jdbcType="VARCHAR" />
+    <result column="redpack_type" property="redpackType" jdbcType="VARCHAR" />
+    <result column="redpack_content" property="redpackContent" jdbcType="VARCHAR" />
+    <result column="redpack_amount" property="redpackAmount" jdbcType="BIGINT" />
+    <result column="redpack_count" property="redpackCount" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    code, JOB_CODE, merchant_no, wx_no_shop,  send_redpack_gm, redpack_type, 
+    redpack_content, redpack_amount, redpack_count, create_date, update_date, status, 
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_job_redpack_info
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_job_redpack_info
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.WxJobRedPackInfo" >
+    insert into wx_job_redpack_info (code, JOB_CODE, merchant_no, 
+      wx_no_shop,  send_redpack_gm, 
+      redpack_type, redpack_content, redpack_amount, 
+      redpack_count, create_date, update_date, 
+      status, remark)
+    values (#{code,jdbcType=VARCHAR}, #{jobCode,jdbcType=VARCHAR}, #{merchantNo,jdbcType=CHAR}, 
+      #{wxNoShop,jdbcType=VARCHAR},  #{sendRedpackGm,jdbcType=VARCHAR}, 
+      #{redpackType,jdbcType=VARCHAR}, #{redpackContent,jdbcType=VARCHAR}, #{redpackAmount,jdbcType=BIGINT}, 
+      #{redpackCount,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.WxJobRedPackInfo" >
+    insert into wx_job_redpack_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="jobCode != null" >
+        JOB_CODE,
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no,
+      </if>
+      <if test="wxNoShop != null" >
+        wx_no_shop,
+      </if>
+      <if test="sendRedpackGm != null" >
+        send_redpack_gm,
+      </if>
+      <if test="redpackType != null" >
+        redpack_type,
+      </if>
+      <if test="redpackContent != null" >
+        redpack_content,
+      </if>
+      <if test="redpackAmount != null" >
+        redpack_amount,
+      </if>
+      <if test="redpackCount != null" >
+        redpack_count,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCode != null" >
+        #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=CHAR},
+      </if>
+      <if test="wxNoShop != null" >
+        #{wxNoShop,jdbcType=VARCHAR},
+      </if>
+      <if test="sendRedpackGm != null" >
+        #{sendRedpackGm,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackType != null" >
+        #{redpackType,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackContent != null" >
+        #{redpackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackAmount != null" >
+        #{redpackAmount,jdbcType=BIGINT},
+      </if>
+      <if test="redpackCount != null" >
+        #{redpackCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.WxJobRedPackInfo" >
+    update wx_job_redpack_info
+    <set >
+      <if test="jobCode != null" >
+        JOB_CODE = #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=CHAR},
+      </if>
+      <if test="wxNoShop != null" >
+        wx_no_shop = #{wxNoShop,jdbcType=VARCHAR},
+      </if>
+      <if test="sendRedpackGm != null" >
+        send_redpack_gm = #{sendRedpackGm,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackType != null" >
+        redpack_type = #{redpackType,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackContent != null" >
+        redpack_content = #{redpackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackAmount != null" >
+        redpack_amount = #{redpackAmount,jdbcType=BIGINT},
+      </if>
+      <if test="redpackCount != null" >
+        redpack_count = #{redpackCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.WxJobRedPackInfo" >
+    update wx_job_redpack_info
+    set JOB_CODE = #{jobCode,jdbcType=VARCHAR},
+      merchant_no = #{merchantNo,jdbcType=CHAR},
+      wx_no_shop = #{wxNoShop,jdbcType=VARCHAR},
+      
+      send_redpack_gm = #{sendRedpackGm,jdbcType=VARCHAR},
+      redpack_type = #{redpackType,jdbcType=VARCHAR},
+      redpack_content = #{redpackContent,jdbcType=VARCHAR},
+      redpack_amount = #{redpackAmount,jdbcType=BIGINT},
+      redpack_count = #{redpackCount,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="delete" parameterType="com.lj.business.weixin.dto.WxJobRedPackInfoDto">
+		delete from wx_job_redpack_info
+		where WX_NO_SHOP = #{wxNoShop,jdbcType=VARCHAR}
+		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  </delete>
+</mapper>

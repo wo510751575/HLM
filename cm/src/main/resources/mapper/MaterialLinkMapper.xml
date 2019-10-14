@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IMaterialLinkDao">
+	<resultMap type="com.lj.business.cm.dto.FindMaterialLinkPageReturn" id="baseResultMap">
+		<id column="CODE" property="code" jdbcType="VARCHAR"/>
+		<result column="TITLE" property="title" jdbcType="VARCHAR"/>
+		<result column="URL" property="url" jdbcType="VARCHAR"/>
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR"/>
+		<result column="PHOTO" property="photo" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		CODE,TITLE,URL,UPDATE_TIME,MERCHANT_NO,PHOTO
+	</sql>
+	
+	<select id="findMaterialLinkPage" parameterType="com.lj.business.cm.dto.FindMaterialLinkPage" resultMap="baseResultMap">
+		 SELECT  
+	    <include refid="Base_Column_List" />
+	    FROM material_link
+	    <where>
+	    	<if test="merchantNo != null">
+			(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+			</if>
+	    	<if test="title != null">
+	    	AND TITLE like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+	    	</if>
+	    	<if test="begainTime != null and endTime != null">
+	    	AND UPDATE_TIME BETWEEN #{begainTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+	    	</if>
+	    </where> 
+	</select>
+	
+	<select id="findMaterialLinkPageCount" parameterType="com.lj.business.cm.dto.FindMaterialLinkPage" resultType="java.lang.Integer">
+		SELECT  
+	    count(*)
+	    FROM material_link
+	    <where>
+	    	<if test="merchantNo != null">
+			(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+			</if>
+	    	<if test="title != null">
+	    	AND TITLE like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+	    	</if>
+	    	<if test="begainTime != null and endTime != null">
+	    	AND UPDATE_TIME BETWEEN #{begainTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+	    	</if>
+	    </where> 
+	</select>
+	
+	<insert id="add" parameterType="com.lj.business.cm.dto.FindMaterialLinkPage">
+		INSERT INTO material_link(
+		CODE,TITLE,URL,UPDATE_TIME,MERCHANT_NO,PHOTO
+		) values(
+		#{code,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP},
+		#{merchantNo,jdbcType=VARCHAR},#{photo,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.lj.business.cm.dto.FindMaterialLinkPage">
+		UPDATE material_link
+		<set>
+			<if test="title != null">
+			TITLE = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+			URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="photo != null">
+			PHOTO = #{photo,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+			UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+			</if>
+		</set>
+		<where>
+			<if test="code != null">
+			CODE = #{code,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="com.lj.business.cm.dto.FindMaterialLinkPage">
+		DELETE FROM material_link
+		WHERE CODE = #{code,jdbcType=VARCHAR}
+	</delete>
+	
+</mapper>

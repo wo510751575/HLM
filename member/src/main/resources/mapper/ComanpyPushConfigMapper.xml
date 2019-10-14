@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IComanpyPushConfigDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.ComanpyPushConfig" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="findComanpyPushConfigPageResultMap" type="com.lj.business.member.dto.company.FindComanpyPushConfigPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="findComanpyPushConfigSelectiveResultMap" type="com.lj.business.member.dto.company.FindComanpyPushConfigSelectiveReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, COMPANY_NO, COMPANY_NAME, STATUS, SORT, TYPE, CONTENT, MERCHANT_NO, CREATE_DATE, 
+    UPDATE_DATE, REMARK
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from comanpy_push_config
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findComanpyPushConfigPage" resultMap="findComanpyPushConfigPageResultMap" parameterType="com.lj.business.member.dto.company.FindCompanyPushConfigPage">
+		select 
+    	<include refid="Base_Column_List" />
+    	from comanpy_push_config
+		<include refid="findComanpyPushConfigPage_condition" />
+		order by SORT asc, UPDATE_DATE desc
+		limit ${start}, ${limit}
+	</select>
+	
+	<select id="findComanpyPushConfigPageCount" resultType="int" parameterType="com.lj.business.member.dto.company.FindCompanyPushConfigPage">
+		SELECT 
+			count(*)
+		from comanpy_push_config
+		<include refid="findComanpyPushConfigPage_condition" />
+	</select>
+	
+	<sql id="findComanpyPushConfigPage_condition">
+		<where>
+			<if test="merchantNo != null and merchantNo != ''" >
+        		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="companyNo != null and companyNo != ''" >
+        		and COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+      		</if>
+		</where>
+	</sql>
+	
+	<select id="findComanpyPushConfigSelective" resultMap="findComanpyPushConfigSelectiveResultMap" parameterType="com.lj.business.member.dto.company.FindComanpyPushConfigSelective">
+		select 
+    	<include refid="Base_Column_List" />
+    	from comanpy_push_config
+		<include refid="findComanpyPushConfigSelective_condition" />
+		order by SORT asc, UPDATE_DATE desc
+	</select>
+	
+	<sql id="findComanpyPushConfigSelective_condition">
+		<where>
+			<if test="merchantNo != null and merchantNo != ''" >
+        		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="companyNo != null and companyNo != ''" >
+        		and COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="status != null and status != ''" >
+        		and STATUS = #{status,jdbcType=VARCHAR}
+      		</if>
+		</where>
+	</sql>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from comanpy_push_config
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.lj.business.member.domain.ComanpyPushConfig" >
+    insert into comanpy_push_config (CODE, COMPANY_NO, COMPANY_NAME, 
+      STATUS, SORT, TYPE, 
+      CONTENT, MERCHANT_NO, CREATE_DATE, 
+      UPDATE_DATE, REMARK)
+    values (#{code,jdbcType=VARCHAR}, #{companyNo,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.ComanpyPushConfig" >
+    insert into comanpy_push_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="companyNo != null" >
+        COMPANY_NO,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNo != null" >
+        #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.ComanpyPushConfig" >
+    update comanpy_push_config
+    <set >
+      <if test="companyNo != null" >
+        COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.ComanpyPushConfig" >
+    update comanpy_push_config
+    set COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

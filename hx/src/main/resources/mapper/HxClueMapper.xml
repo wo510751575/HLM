@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IHxClueDao">
+	<resultMap id="BaseResultMap" type="com.ye.business.hx.domain.HxClue">
+		<id column="CODE" jdbcType="VARCHAR" property="code" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="PHONE" jdbcType="VARCHAR" property="phone" />
+		<result column="SEX" jdbcType="VARCHAR" property="sex" />
+		<result column="AGE" jdbcType="INTEGER" property="age" />
+		<result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+		<result column="CITY" jdbcType="VARCHAR" property="city" />
+		<result column="AREA" jdbcType="VARCHAR" property="area" />
+		<result column="ADDR_INFO" jdbcType="VARCHAR" property="addrInfo" />
+		<result column="SOURCE" jdbcType="VARCHAR" property="source" />
+		<result column="WECHAT_NO" jdbcType="VARCHAR" property="wechatNo" />
+		<result column="WECHAT_NAME" jdbcType="VARCHAR" property="wechatName" />
+		<result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
+		<result column="USER_PRICE" jdbcType="BIGINT" property="userPrice" />
+		<result column="STATUS" jdbcType="VARCHAR" property="status" />
+		<result column="VALID_STATUS" jdbcType="VARCHAR" property="validStatus" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+		<result column="PROJECT" jdbcType="VARCHAR" property="project" />
+		<result column="RESERVE_DATE" jdbcType="DATE" property="reserveDate" />
+		<result column="RESERVE_TIME" jdbcType="VARCHAR" property="reserveTime" />
+		<result column="FOLLOW_NAME" jdbcType="VARCHAR" property="followName" />
+		<result column="WISH_LEVEL" jdbcType="VARCHAR" property="wishLevel" />
+		<result column="COMPLAINT" jdbcType="VARCHAR" property="complaint" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CODE, NAME, PHONE, SEX, AGE, PROVINCE, CITY, AREA, ADDR_INFO, SOURCE,
+		WECHAT_NO,
+		WECHAT_NAME, USER_TYPE, USER_PRICE, STATUS, VALID_STATUS, CREATE_TIME, ORDER_NO,
+		PROJECT, RESERVE_DATE, RESERVE_TIME, FOLLOW_NAME, WISH_LEVEL,
+		COMPLAINT, REMARK, PATIENT_NO
+	</sql>
+	<resultMap id="FindResultMap" type="com.ye.business.hx.dto.HxClueDto"
+		extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findHxClues" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindHxCluePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM hx_clue
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findHxCluePage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindHxCluePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM hx_clue
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findHxCluePageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindHxCluePage">
+		select count(*)
+		FROM hx_clue
+		<include refid="findPage_condition" />
+	</select>
+
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from hx_clue
+		where CODE = #{code,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from hx_clue
+		where CODE = #{code,jdbcType=VARCHAR}
+	</delete>
+	 <insert id="insert" parameterType="com.ye.business.hx.domain.HxClue">
+    insert into hx_clue (CODE, NAME, PHONE, 
+      SEX, AGE, PROVINCE, 
+      CITY, AREA, ADDR_INFO, 
+      SOURCE, WECHAT_NO, WECHAT_NAME, 
+      USER_TYPE, USER_PRICE, STATUS, 
+      VALID_STATUS, CREATE_TIME, ORDER_NO, 
+      PROJECT, RESERVE_DATE, RESERVE_TIME, 
+      FOLLOW_NAME, WISH_LEVEL, COMPLAINT, 
+      REMARK, PATIENT_NO)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{addrInfo,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{wechatNo,jdbcType=VARCHAR}, #{wechatName,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=VARCHAR}, #{userPrice,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, 
+      #{validStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=VARCHAR}, 
+      #{project,jdbcType=VARCHAR}, #{reserveDate,jdbcType=DATE}, #{reserveTime,jdbcType=VARCHAR}, 
+      #{followName,jdbcType=VARCHAR}, #{wishLevel,jdbcType=VARCHAR}, #{complaint,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.HxClue">
+    insert into hx_clue
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="age != null">
+        AGE,
+      </if>
+      <if test="province != null">
+        PROVINCE,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="area != null">
+        AREA,
+      </if>
+      <if test="addrInfo != null">
+        ADDR_INFO,
+      </if>
+      <if test="source != null">
+        SOURCE,
+      </if>
+      <if test="wechatNo != null">
+        WECHAT_NO,
+      </if>
+      <if test="wechatName != null">
+        WECHAT_NAME,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="userPrice != null">
+        USER_PRICE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="validStatus != null">
+        VALID_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="project != null">
+        PROJECT,
+      </if>
+      <if test="reserveDate != null">
+        RESERVE_DATE,
+      </if>
+      <if test="reserveTime != null">
+        RESERVE_TIME,
+      </if>
+      <if test="followName != null">
+        FOLLOW_NAME,
+      </if>
+      <if test="wishLevel != null">
+        WISH_LEVEL,
+      </if>
+      <if test="complaint != null">
+        COMPLAINT,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addrInfo != null">
+        #{addrInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNo != null">
+        #{wechatNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null">
+        #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="userPrice != null">
+        #{userPrice,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="validStatus != null">
+        #{validStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null">
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveDate != null">
+        #{reserveDate,jdbcType=DATE},
+      </if>
+      <if test="reserveTime != null">
+        #{reserveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="followName != null">
+        #{followName,jdbcType=VARCHAR},
+      </if>
+      <if test="wishLevel != null">
+        #{wishLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="complaint != null">
+        #{complaint,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.HxClue">
+    update hx_clue
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addrInfo != null">
+        ADDR_INFO = #{addrInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNo != null">
+        WECHAT_NO = #{wechatNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null">
+        WECHAT_NAME = #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="userPrice != null">
+        USER_PRICE = #{userPrice,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="validStatus != null">
+        VALID_STATUS = #{validStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null">
+        PROJECT = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveDate != null">
+        RESERVE_DATE = #{reserveDate,jdbcType=DATE},
+      </if>
+      <if test="reserveTime != null">
+        RESERVE_TIME = #{reserveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="followName != null">
+        FOLLOW_NAME = #{followName,jdbcType=VARCHAR},
+      </if>
+      <if test="wishLevel != null">
+        WISH_LEVEL = #{wishLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="complaint != null">
+        COMPLAINT = #{complaint,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.HxClue">
+    update hx_clue
+    set NAME = #{name,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR},
+      ADDR_INFO = #{addrInfo,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      WECHAT_NO = #{wechatNo,jdbcType=VARCHAR},
+      WECHAT_NAME = #{wechatName,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      USER_PRICE = #{userPrice,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=VARCHAR},
+      VALID_STATUS = #{validStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      PROJECT = #{project,jdbcType=VARCHAR},
+      RESERVE_DATE = #{reserveDate,jdbcType=DATE},
+      RESERVE_TIME = #{reserveTime,jdbcType=VARCHAR},
+      FOLLOW_NAME = #{followName,jdbcType=VARCHAR},
+      WISH_LEVEL = #{wishLevel,jdbcType=VARCHAR},
+      COMPLAINT = #{complaint,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+	<select id="clueQuantity" resultType="int" parameterType="com.ye.business.hx.domain.HxClue">
+		SELECT COUNT(1) FROM hx_clue WHERE VALID_STATUS=#{validStatus}
+		<if test="status != null">
+			AND `STATUS`=#{status}
+		</if>
+	</select>
+	<select id="queryClueCount" resultType="int" parameterType="com.ye.business.hx.dto.params.ClueParams">
+		SELECT COUNT(1) FROM hx_clue WHERE VALID_STATUS='VALID'
+		<if test="project != null">
+			AND PROJECT=#{project}
+		</if>
+		<if test="status != null">
+			AND `STATUS`=#{status}
+		</if>
+		<if test="addr != null">
+			AND ADDR_INFO LIKE CONCAT('%',#{addr},'%')
+		</if>
+		<if test="userType != null">
+			AND USER_TYPE=#{userType}
+		</if>
+	</select>
+	<select id="queryClueList" resultType="com.ye.business.hx.dto.vo.ClueListVo" parameterType="com.ye.business.hx.dto.params.ClueParams">
+		SELECT a.`CODE` code,a.`NAME` name,a.PHONE phone,a.SEX sex,a.AGE age,a.PROVINCE province,a.CITY city,a.AREA area,
+a.ADDR_INFO addrInfo,a.SOURCE source,a.WECHAT_NO wechatNo,a.WECHAT_NAME wechatName,a.USER_TYPE userType,a.USER_PRICE userPrice,
+a.`STATUS` status,a.VALID_STATUS validStatus,a.CREATE_TIME createTime,a.ORDER_NO orderNo,a.PROJECT project,a.RESERVE_DATE reserveDate,a.RESERVE_TIME reserveTime,
+a.FOLLOW_NAME followName,a.WISH_LEVEL wishLevel,a.COMPLAINT complaint,a.REMARK remark,b.LABLE_NAME userTypeName FROM hx_clue a 
+LEFT JOIN shop_config b ON a.USER_TYPE=b.`CODE` WHERE a.VALID_STATUS='VALID' 
+		<if test="project != null and project !='' ">
+			AND a.PROJECT LIKE CONCAT('%',#{project},'%')
+		</if>
+		<if test="status != null">
+			AND a.`STATUS`=#{status}
+		</if>
+		<if test="addr != null and addr !='' ">
+			AND a.ADDR_INFO LIKE CONCAT('%',#{addr},'%')
+		</if>
+		<if test="userType != null">
+			AND a.USER_TYPE=#{userType}
+		</if>
+		ORDER BY a.`STATUS` ASC,a.CREATE_TIME DESC LIMIT #{start},#{limit}
+	</select>
+	<select id="selectByOrderNo" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from hx_clue
+		where ORDER_NO = #{orderno,jdbcType=VARCHAR}
+	</select>
+</mapper>

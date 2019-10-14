@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cp.dao.ICouponTypeDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cp.domain.CouponType" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COUPON_TYPE" property="couponType" jdbcType="VARCHAR" />
+    <result column="COUPON_REMARK" property="couponRemark" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="USE_ENABLE" property="useEnable" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+    <resultMap id="findCouponTypePageReturn" type="com.lj.business.cp.dto.couponType.FindCouponTypePageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COUPON_TYPE" property="couponType" jdbcType="VARCHAR" />
+    <result column="COUPON_REMARK" property="couponRemark" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="USE_ENABLE" property="useEnable" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, COUPON_TYPE, COUPON_REMARK, MERCHANT_NO, MERCHANT_NAME, use_enable, UPDATE_ID, 
+    UPDATE_DATE, CREATE_ID, CREATE_DATE
+  </sql>
+  <sql id="Base_Column_List_Entity" >
+    CODE  code, 
+    COUPON_TYPE  couponType, 
+    COUPON_REMARK  couponRemark, 
+    MERCHANT_NO  merchantNo, 
+    MERCHANT_NAME  merchantName, 
+    USE_ENABLE  useEnable, 
+    UPDATE_ID  updateId, 
+    UPDATE_DATE  updateDate, 
+    CREATE_ID  createId, 
+    CREATE_DATE  createDate
+  </sql>
+  <sql id="findPageReturns">
+   <where>
+       <if test="merchantNo != null and merchantNo !=''" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if> 
+       <if test="couponType != null and couponType !=''" >
+        and  COUPON_TYPE LIKE CONCAT('%',#{couponType,jdbcType=VARCHAR},'%' )
+        </if>
+   </where>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_type
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="findCouponTypePage" resultMap="findCouponTypePageReturn" parameterType="com.lj.business.cp.dto.couponType.FindCouponTypePage" >
+   SELECT 
+   <include refid="Base_Column_List" />
+   FROM coupon_type
+   <include refid="findPageReturns" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+    <select id="findCouponTypePageCount" resultType="int" parameterType="com.lj.business.cp.dto.couponType.FindCouponTypePage" >
+   SELECT  count(*)
+   FROM coupon_type
+   <include refid="findPageReturns" />
+  </select>
+  
+  <!-- create by 杨杰  可以作为查询List的公共返回 -->
+  <select id="findCouponTypeList" resultType="com.lj.business.cp.dto.couponType.FindCouponTypeReturn" parameterType="com.lj.business.cp.dto.couponType.FindCouponType">
+  	select 
+    <include refid="Base_Column_List_Entity" />
+    from coupon_type
+    where 1 = 1
+    <if test="useEnable != null">
+    	AND USE_ENABLE = #{useEnable}
+    </if>
+    <if test="merchantNo != null and merchantNo !=''" >
+        AND MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if> 
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_type
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cp.domain.CouponType" >
+    insert into coupon_type (CODE, COUPON_TYPE, COUPON_REMARK, 
+      MERCHANT_NO, MERCHANT_NAME, use_enable, 
+      UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+      CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{couponType,jdbcType=VARCHAR}, #{couponRemark,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{useEnable,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cp.domain.CouponType" >
+    insert into coupon_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="couponType != null" >
+        COUPON_TYPE,
+      </if>
+      <if test="couponRemark != null" >
+        COUPON_REMARK,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="useEnable != null" >
+        use_enable,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null" >
+        #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponRemark != null" >
+        #{couponRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="useEnable != null" >
+        #{useEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cp.domain.CouponType" >
+    update coupon_type
+    <set >
+      <if test="couponType != null" >
+        COUPON_TYPE = #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponRemark != null" >
+        COUPON_REMARK = #{couponRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="useEnable != null" >
+        use_enable = #{useEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cp.domain.CouponType" >
+    update coupon_type
+    set COUPON_TYPE = #{couponType,jdbcType=VARCHAR},
+      COUPON_REMARK = #{couponRemark,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      use_enable = #{useEnable,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

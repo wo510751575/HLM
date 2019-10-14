@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.ICouponMultiPushPmDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.CouponMultiPushPm" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="NO_WX_SHOP" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="PUSH_CODE" property="pushCode" jdbcType="VARCHAR" />
+    <result column="PUSH_TERMINAL_CODE" property="pushTerminalCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+    <result column="COUPON_CODE" property="couponCode" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, MERCHANT_NAME,  NO_WX_SHOP, MEMBER_NO, MEMBER_NO_GM, 
+    PUSH_CODE, PUSH_TERMINAL_CODE, STATUS, FAIL_REASON, COUPON_CODE, CREATE_ID, CREATE_DATE, 
+    UPDATE_ID, UPDATE_DATE
+  </sql>
+  
+  <select id="selectBySelective" resultMap="BaseResultMap" parameterType="com.lj.business.weixin.domain.CouponMultiPushPm" >
+    select
+    <include refid="Base_Column_List" />
+    from coupon_multi_push_pm
+    <where>
+      <if test="merchantNo != null" >
+        and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantName != null" >
+        and MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR}
+      </if>
+      <if test="noWxShop != null" >
+        and NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNo != null" >
+        and MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNoGm != null" >
+        and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="pushCode != null" >
+        and PUSH_CODE = #{pushCode,jdbcType=VARCHAR}
+      </if>
+      <if test="pushTerminalCode != null" >
+        and PUSH_TERMINAL_CODE = #{pushTerminalCode,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        and STATUS = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="failReason != null" >
+        and FAIL_REASON = #{failReason,jdbcType=VARCHAR}
+      </if>
+      <if test="couponCode != null" >
+        and COUPON_CODE = #{couponCode,jdbcType=VARCHAR}
+      </if>
+      <if test="createId != null" >
+        and CREATE_ID = #{createId,jdbcType=VARCHAR}
+      </if>
+      <if test="createDate != null" >
+        and CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateId != null" >
+        and UPDATE_ID = #{updateId,jdbcType=VARCHAR}
+      </if>
+      <if test="updateDate != null" >
+        and UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_multi_push_pm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_multi_push_pm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.CouponMultiPushPm" >
+    insert into coupon_multi_push_pm (CODE, MERCHANT_NO, MERCHANT_NAME, 
+       NO_WX_SHOP, 
+      MEMBER_NO, MEMBER_NO_GM, PUSH_CODE, 
+      PUSH_TERMINAL_CODE, STATUS, FAIL_REASON, 
+      COUPON_CODE, CREATE_ID, CREATE_DATE, 
+      UPDATE_ID, UPDATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+       #{noWxShop,jdbcType=VARCHAR}, 
+      #{memberNo,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{pushCode,jdbcType=VARCHAR}, 
+      #{pushTerminalCode,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{failReason,jdbcType=VARCHAR}, 
+      #{couponCode,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.CouponMultiPushPm" >
+    insert into coupon_multi_push_pm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="noWxShop != null" >
+        NO_WX_SHOP,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="pushCode != null" >
+        PUSH_CODE,
+      </if>
+      <if test="pushTerminalCode != null" >
+        PUSH_TERMINAL_CODE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+      <if test="couponCode != null" >
+        COUPON_CODE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="pushCode != null" >
+        #{pushCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pushTerminalCode != null" >
+        #{pushTerminalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="couponCode != null" >
+        #{couponCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.CouponMultiPushPm" >
+    update coupon_multi_push_pm
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="pushCode != null" >
+        PUSH_CODE = #{pushCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pushTerminalCode != null" >
+        PUSH_TERMINAL_CODE = #{pushTerminalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="couponCode != null" >
+        COUPON_CODE = #{couponCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.CouponMultiPushPm" >
+    update coupon_multi_push_pm
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      PUSH_CODE = #{pushCode,jdbcType=VARCHAR},
+      PUSH_TERMINAL_CODE = #{pushTerminalCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      COUPON_CODE = #{couponCode,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

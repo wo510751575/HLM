@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IBillDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.Bill">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
+    <result column="PATIENT_NAME" jdbcType="VARCHAR" property="patientName" />
+    <result column="MEDICAL_NO" jdbcType="VARCHAR" property="medicalNo" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="BILL_TYPE" jdbcType="VARCHAR" property="billType" />
+    <result column="ORIGINAL_AMOUNT" jdbcType="BIGINT" property="originalAmount" />
+    <result column="REALLY_AMOUNT" jdbcType="BIGINT" property="reallyAmount" />
+    <result column="DISCOUNT_NUM" jdbcType="INTEGER" property="discountNum" />
+    <result column="PAY_AMOUNT" jdbcType="BIGINT" property="payAmount" />
+    <result column="DEBT_AMOUNT" jdbcType="BIGINT" property="debtAmount" />
+    <result column="RT_AMOUNT" jdbcType="BIGINT" property="rtAmount" />
+    <result column="PAY_STATUS" jdbcType="VARCHAR" property="payStatus" />
+    <result column="RT_STATUS" jdbcType="VARCHAR" property="rtStatus" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CLINIC_TIME" jdbcType="TIMESTAMP" property="clinicTime" />
+    <result column="PAY_TIME" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK1" jdbcType="VARCHAR" property="remark1" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE,BILL_NO, PATIENT_NO, PATIENT_NAME, MEDICAL_NO, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+    BILL_TYPE, ORIGINAL_AMOUNT, REALLY_AMOUNT, DISCOUNT_NUM, PAY_AMOUNT, DEBT_AMOUNT, RT_AMOUNT, 
+    PAY_STATUS, RT_STATUS, STATUS, CLINIC_TIME, PAY_TIME, UPDATE_ID, UPDATE_DATE, CREATE_ID, CREATE_NAME, 
+    CREATE_DATE, REMARK, REMARK1, REMARK2, REMARK3, REMARK4
+  </sql>
+  
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.BillDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+						<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.patientNo != null and param.patientNo !='' ">
+					<![CDATA[and PATIENT_NO =#{param.patientNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.notPayStatus != null and param.notPayStatus !='' ">
+						<![CDATA[and PAY_STATUS !=#{param.notPayStatus}]]>
+				</if>
+				<if test="param.payStatus != null and param.payStatus !='' ">
+						<![CDATA[and PAY_STATUS =#{param.payStatus}]]>
+				</if>
+				<if test="param.rtStatus != null and param.rtStatus !='' ">
+						<![CDATA[and RT_STATUS =#{param.rtStatus}]]>
+				</if>
+				<if test="param.status != null and param.status !='' ">
+						<![CDATA[and STATUS =#{param.status}]]>
+				</if>
+				<if test="param.patientName != null and param.patientName !='' ">
+  					AND PATIENT_NAME LIKE CONCAT('%',#{param.patientName},'%') 
+  				</if>
+  				<if test="param.billNo != null and param.billNo !='' ">
+					<![CDATA[and BILL_NO =#{param.billNo}]]>
+				</if>
+				<if test="param.payStartDate != null">
+					<![CDATA[and PAY_TIME >= #{param.payStartDate}]]>
+				</if>
+				<if test="param.payEndDate != null"> 
+					<![CDATA[and PAY_TIME <= #{param.payEndDate}]]>
+				</if>
+				<if test="param.clinicStartDate != null">
+					<![CDATA[and CLINIC_TIME >= #{param.clinicStartDate}]]>
+				</if>
+				<if test="param.clinicEndDate != null"> 
+					<![CDATA[and CLINIC_TIME <= #{param.clinicEndDate}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findBills" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindBillPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM bill
+		<include refid="findPage_condition" />
+		ORDER BY CREATE_DATE desc 
+	</select>
+	<!-- 分页查询 -->
+	<select id="findBillPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindBillPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM bill
+		<include refid="findPage_condition" />
+		ORDER BY CREATE_DATE desc 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findBillPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindBillPage">
+		select count(*)
+		FROM bill
+		<include refid="findPage_condition" />
+	</select>  
+	
+  <select id="billSumBySearch" resultMap="FindResultMap" parameterType="com.ye.business.hx.dto.FindBillPage">
+	  	SELECT sum(PAY_AMOUNT) as PAY_AMOUNT,sum(RT_AMOUNT) as RT_AMOUNT,sum(DEBT_AMOUNT) as DEBT_AMOUNT 
+	  	from bill  
+	  	<include refid="findPage_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bill
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bill
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+   <insert id="insert" parameterType="com.ye.business.hx.domain.Bill">
+    insert into bill (CODE, BILL_NO, PATIENT_NO, 
+      PATIENT_NAME, MEDICAL_NO, SHOP_NO, 
+      SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+      BILL_TYPE, ORIGINAL_AMOUNT, REALLY_AMOUNT, 
+      DISCOUNT_NUM, PAY_AMOUNT, DEBT_AMOUNT, 
+      RT_AMOUNT, PAY_STATUS, RT_STATUS, 
+      STATUS, CLINIC_TIME, PAY_TIME, 
+      UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+      CREATE_NAME, CREATE_DATE, REMARK, 
+      REMARK1, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{billNo,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, 
+      #{patientName,jdbcType=VARCHAR}, #{medicalNo,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{billType,jdbcType=VARCHAR}, #{originalAmount,jdbcType=BIGINT}, #{reallyAmount,jdbcType=BIGINT}, 
+      #{discountNum,jdbcType=INTEGER}, #{payAmount,jdbcType=BIGINT}, #{debtAmount,jdbcType=BIGINT}, 
+      #{rtAmount,jdbcType=BIGINT}, #{payStatus,jdbcType=VARCHAR}, #{rtStatus,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{clinicTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.Bill">
+    insert into bill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO,
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME,
+      </if>
+      <if test="medicalNo != null">
+        MEDICAL_NO,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="billType != null">
+        BILL_TYPE,
+      </if>
+      <if test="originalAmount != null">
+        ORIGINAL_AMOUNT,
+      </if>
+      <if test="reallyAmount != null">
+        REALLY_AMOUNT,
+      </if>
+      <if test="discountNum != null">
+        DISCOUNT_NUM,
+      </if>
+      <if test="payAmount != null">
+        PAY_AMOUNT,
+      </if>
+      <if test="debtAmount != null">
+        DEBT_AMOUNT,
+      </if>
+      <if test="rtAmount != null">
+        RT_AMOUNT,
+      </if>
+      <if test="payStatus != null">
+        PAY_STATUS,
+      </if>
+      <if test="rtStatus != null">
+        RT_STATUS,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="clinicTime != null">
+        CLINIC_TIME,
+      </if>
+      <if test="payTime != null">
+        PAY_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createName != null">
+        CREATE_NAME,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark1 != null">
+        REMARK1,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null">
+        #{medicalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null">
+        #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="originalAmount != null">
+        #{originalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="reallyAmount != null">
+        #{reallyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="discountNum != null">
+        #{discountNum,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=BIGINT},
+      </if>
+      <if test="debtAmount != null">
+        #{debtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="rtAmount != null">
+        #{rtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rtStatus != null">
+        #{rtStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicTime != null">
+        #{clinicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.Bill">
+    update bill
+    <set>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null">
+        MEDICAL_NO = #{medicalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null">
+        BILL_TYPE = #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="originalAmount != null">
+        ORIGINAL_AMOUNT = #{originalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="reallyAmount != null">
+        REALLY_AMOUNT = #{reallyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="discountNum != null">
+        DISCOUNT_NUM = #{discountNum,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null">
+        PAY_AMOUNT = #{payAmount,jdbcType=BIGINT},
+      </if>
+      <if test="debtAmount != null">
+        DEBT_AMOUNT = #{debtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="rtAmount != null">
+        RT_AMOUNT = #{rtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="payStatus != null">
+        PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rtStatus != null">
+        RT_STATUS = #{rtStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicTime != null">
+        CLINIC_TIME = #{clinicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        REMARK1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.Bill">
+    update bill
+    set BILL_NO = #{billNo,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      MEDICAL_NO = #{medicalNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      BILL_TYPE = #{billType,jdbcType=VARCHAR},
+      ORIGINAL_AMOUNT = #{originalAmount,jdbcType=BIGINT},
+      REALLY_AMOUNT = #{reallyAmount,jdbcType=BIGINT},
+      DISCOUNT_NUM = #{discountNum,jdbcType=INTEGER},
+      PAY_AMOUNT = #{payAmount,jdbcType=BIGINT},
+      DEBT_AMOUNT = #{debtAmount,jdbcType=BIGINT},
+      RT_AMOUNT = #{rtAmount,jdbcType=BIGINT},
+      PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      RT_STATUS = #{rtStatus,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CLINIC_TIME = #{clinicTime,jdbcType=TIMESTAMP},
+      PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK1 = #{remark1,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="billSum" resultMap="FindResultMap" parameterType="com.ye.business.hx.dto.BillDto">
+  	SELECT sum(b.PAY_AMOUNT) as PAY_AMOUNT,sum(b.RT_AMOUNT) as RT_AMOUNT,sum(b.DEBT_AMOUNT) as DEBT_AMOUNT from bill b 
+  	where 
+  	b.PATIENT_NO =#{patientNo}
+  	and b.MERCHANT_NO =#{merchantNo}
+	and b.`STATUS`=#{status} and b.PAY_STATUS !='UNPAY'
+  </select>
+  
+</mapper>

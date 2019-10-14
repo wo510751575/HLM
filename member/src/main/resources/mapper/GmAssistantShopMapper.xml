@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IGmAssistantShopDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.GmAssistantShop" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ASSISTANT_NO" property="assistantNo" jdbcType="VARCHAR" />
+    <result column="ASSISTANT_NAME" property="assistantName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="TID_CODE" property="tidCode" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="head_url" property="headUrl" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="TERMINAL_CODE" property="terminalCode" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="WX_NICKNAME" property="wxNickname" jdbcType="VARCHAR" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="memberNo" property="memberNo" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="GmAssistantShopPageReturn" type="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShopPageReturn" extends="BaseResultMap">
+    	<result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+  	</resultMap>
+  <resultMap id="FindGmAssistantShopReturnMap" type="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShopReturn" extends="BaseResultMap">
+  	</resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, ASSISTANT_NO, ASSISTANT_NAME, MERCHANT_NO, MERCHANT_NAME,  TID_CODE, 
+    CREATE_ID, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4,TERMINAL_CODE,NO_WX,WX_NICKNAME,LOGIN_NAME,SOURCE,SHOP_NAME
+  </sql>
+  
+  <sql id="findGmAssistantShopPageCond">
+    <where>
+      <if test="merchantNo != null and merchantNo !='' ">
+	   		and MERCHANT_NO = #{merchantNo}
+	   </if>
+	   <if test="code != null and code !=''">
+	   		and CODE = #{code}
+	   </if>
+	   <if test="assistantNo != null and assistantNo != '' ">
+	    	and ASSISTANT_NO =#{assistantNo}
+	   </if>
+	   <if test="tidCode != null and tidCode != '' ">
+	    	and TID_CODE =#{tidCode}
+	   </if>
+	   <if test="noWx != null and noWx != '' ">
+	    	and NO_WX like CONCAT('%',#{noWx},'%' )
+	   </if>
+	   <if test="assistantName != null and assistantName != '' ">
+	    	and ASSISTANT_NAME like CONCAT('%',#{assistantName,jdbcType=VARCHAR},'%' )
+	   </if>
+	   <if test="assistantNos != null and assistantNos.size() > 0">
+	      	     and ASSISTANT_NO in
+	           <foreach item="item" index="index" collection="assistantNos" open="(" separator="," close=")">  
+	            	 #{item}  
+	            </foreach>
+	    </if>
+    </where>
+   </sql>
+   
+   <!-- 分页查询 -->
+   <select id="findGmAssistantShopPage" resultMap="GmAssistantShopPageReturn" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShopPage" >
+  SELECT   
+  	<include refid="Base_Column_List" />
+  FROM gm_assistant_shop 
+  <include refid="findGmAssistantShopPageCond" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+     <!-- 分页查询 -->
+   <select id="findGmAssistantWithTerminalPage" resultMap="GmAssistantShopPageReturn" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShopPage" >
+  SELECT   
+  	  gas.CODE, gas.ASSISTANT_NO, gas.ASSISTANT_NAME, gas.MERCHANT_NO, gas.MERCHANT_NAME,  gas.TID_CODE, 
+    gas.CREATE_ID, gas.CREATE_DATE, gas.REMARK, gas.REMARK2, gas.REMARK3, gas.REMARK4,gas.TERMINAL_CODE,
+    gas.NO_WX,gas.LOGIN_NAME,st.head_url,st.WX_NICKNAME ,st.ALIAS,st.SHOP_NAME,gas.SOURCE
+  FROM gm_assistant_shop gas 
+  left join shop_terminal st on st.no_wx=gas.no_wx  
+  where gas.login_name=#{loginName}
+    	and st.STATUS =1
+     <if test="merchantNo !=null and merchantNo !='' ">
+         and gas.MERCHANT_NO = #{merchantNo} 
+      </if>
+      <if test="source != null and source == true ">
+         and gas.SOURCE IS NULL
+      </if>
+   order by gas.CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  
+  
+  <select id="findGmAssistantWithTerminalCount" resultType="int" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShopPage" >
+    SELECT  count(*)
+    FROM gm_assistant_shop gas 
+    left join shop_terminal st on st.no_wx=gas.no_wx  
+    where gas.login_name=#{loginName}
+    	and st.STATUS =1
+     <if test="merchantNo !=null and merchantNo !='' ">
+         and gas.MERCHANT_NO = #{merchantNo} 
+      </if>
+      <if test="source != null and source == true ">
+         and gas.SOURCE IS NULL
+      </if>
+
+  </select>
+  
+  <select id="findGmAssistantShopList" resultMap="FindGmAssistantShopReturnMap" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShop">
+   SELECT
+   <include refid="Base_Column_List" />
+   FROM gm_assistant_shop 
+   <include refid="findAssistantShop" />
+   order by LAST_LOGIN_DATE desc,SOURCE
+  </select>
+  
+  <select id="findListGroupByNoWx" resultMap="FindGmAssistantShopReturnMap" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShop">
+   SELECT
+   <include refid="Base_Column_List" />
+   FROM gm_assistant_shop 
+   <include refid="findAssistantShop" />
+   GROUP BY NO_WX
+  </select>
+  
+  <select id="findGmAssistantNoWxListByLoginName" resultMap="BaseResultMap" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShop">
+   SELECT 
+	<include refid="Base_Column_List" />
+   FROM gm_assistant_shop t
+   where login_name=#{loginName} 
+   order by LAST_LOGIN_DATE desc,SOURCE
+  </select>
+  
+   <sql id="findAssistantShop">
+    <where>
+      <if test="assistantNo !=null and assistantNo !='' ">
+         and ASSISTANT_NO = #{assistantNo}
+      </if>
+      <if test="merchantNo != null and merchantNo !='' ">
+         and MERCHANT_NO=#{merchantNo}
+      </if>
+      <if test="tidCode != null and tidCode !='' ">
+         and TID_CODE=#{tidCode}
+      </if>
+      <if test="noWx != null and noWx !='' ">
+         and NO_WX=#{noWx}
+      </if>
+      <if test="loginNames != null and loginNames !='' ">
+         and LOGIN_NAME in <foreach item="item" index="index" collection="loginNames" open="(" separator="," close=")">#{item}</foreach>
+      </if>
+      <if test="source != null and source == true ">
+         and SOURCE IS NULL
+      </if>
+      <if test="source != null and source == false ">
+         and SOURCE IS NOT NULL
+      </if>
+      <if test="loginName != null and loginName !='' ">
+         and LOGIN_NAME=#{loginName}
+      </if>
+      <if test="searchVal != null and searchVal !='' ">
+         and( 
+         LOGIN_NAME like CONCAT('%',#{searchVal},'%')
+         OR ASSISTANT_NAME like CONCAT('%',#{searchVal},'%')
+         )
+      </if>
+      
+    </where>
+   </sql>
+  
+  <select id="findGmAssistantShopPageCount" resultType="int" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShopPage" >
+    SELECT  count(*)
+    FROM gm_assistant_shop 
+     <include refid="findGmAssistantShopPageCond" />
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from gm_assistant_shop
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from gm_assistant_shop
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByAssistantNo" >
+	    delete from gm_assistant_shop
+	    where ASSISTANT_NO =#{assistantNo} 
+		AND MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}  
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.GmAssistantShop" >
+    insert into gm_assistant_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="assistantNo != null" >
+        ASSISTANT_NO,
+      </if>
+      <if test="assistantName != null" >
+        ASSISTANT_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="tidCode != null" >
+        TID_CODE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="terminalCode != null" >
+        TERMINAL_CODE,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="wxNickname != null" >
+        WX_NICKNAME,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantNo != null" >
+        #{assistantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantName != null" >
+        #{assistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="tidCode != null" >
+        #{tidCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalCode != null" >
+        #{terminalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNickname != null" >
+        #{wxNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.GmAssistantShop" >
+    update gm_assistant_shop
+    <set >
+      <if test="assistantNo != null" >
+        ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantName != null" >
+        ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="tidCode != null" >
+       TID_CODE =  #{tidCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalCode != null" >
+        TERMINAL_CODE = #{terminalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNickname != null" >
+        WX_NICKNAME = #{wxNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询导购助手管理的终端列表 -->
+  <select id="findGroupConcatByAssNo" resultType="string" >
+  		select GROUP_CONCAT(no_wx) from gm_assistant_shop 
+		where ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询导购助手管理的终端列表 -->
+  <select id="findTidCodesByAssistantNo" resultType="string" >
+  	 select GROUP_CONCAT(NO_WX SEPARATOR ',') from gm_assistant_shop
+		WHERE ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR}
+		AND MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} 
+ 		GROUP BY ASSISTANT_NO
+  </select>
+  
+  
+ <!-- 查询导购助手管理的终端列表 -->
+  <select id="findShopNoFromWeb" resultType="string" parameterType="com.lj.business.member.dto.shopterminal.FindShopTidFromWeb">
+  	select t.SHOP_NO 
+  	  from gm_assistant_shop t
+  	<choose>
+  		<!-- 没有选择省市区条件 -->
+  		<when test="provinceCode == null and provinceCode !='' and cityCode == null and cityCode !='' and cityAreaCode == null and cityAreaCode !=''">
+  			where 
+  				ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR}
+  			   and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  		</when>
+  		<!-- 有选择省市区条件 -->
+  		<otherwise>
+  			where 
+  				t.ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR}
+  			  and t.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  			<if test="provinceCode != null and provinceCode != ''">
+  			  and s.PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR}
+  			</if>
+  			<if test="cityCode != null and cityCode != ''">
+  			  and s.CITY_CODE = #{cityCode,jdbcType=VARCHAR}
+  			</if>
+  			<if test="cityAreaCode != null and cityAreaCode != ''">
+  			  and s.CITY_AREA_CODE = #{cityAreaCode,jdbcType=VARCHAR}
+  			</if>
+  		</otherwise>
+  	</choose>
+  </select>
+  
+  <!-- IM导购助手查询包括可用终端终端的终端 -->
+  <select id="findGmAssistantShopListByIm" resultType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShopByImReturn" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShop">
+   SELECT s.SHOP_NO shopNo, s.SHOP_NAME shopName
+     FROM shop s,
+	   		(select DISTINCT(gas.SHOP_NO) SHOP_NO
+	   		   from gm_assistant_shop gas, shop_terminal st 
+	   		  where gas.TID_CODE = st.CODE 
+	   		    and st.STATUS = '1'
+	   		    and gas.ASSISTANT_NO = #{assistantNo}
+	   		    and gas.MERCHANT_NO=#{merchantNo}
+	   		    and st.MERCHANT_NO=#{merchantNo}
+	   		) t
+    where s.t.SHOP_NO
+      and s.MEMBER_NO_MERCHANT=#{merchantNo}
+  </select>
+  
+  <update id="synByLoginName" >
+  	update gm_assistant_shop set LOGIN_NAME = #{loginName} where LOGIN_NAME=#{oldLoginName}
+  </update>
+  
+  
+    <!-- 查询已被某微信授权接收信息的导购 -->
+  <select id="findGmAssistantListByWx" resultMap="BaseResultMap" parameterType="com.lj.business.member.dto.gmAssistantShop.FindGmAssistantShop">
+   select gms.login_name as loginName,gms.no_wx as noWx,gms.ASSISTANT_NO as memberNo,gm.HEAD_ADDRESS head_url,gms.ASSISTANT_NAME as assistantName
+   from  gm_assistant_shop gms 
+   left join guid_member gm on gm.login_name=gms.login_name and gms.MERCHANT_NO=gm.MERCHANT_NO
+   <where>
+      <if test="merchantNo != null and merchantNo !='' ">
+	   		and gms.MERCHANT_NO = #{merchantNo}
+	   </if>
+	   <if test="noWx != null and noWx !=''">
+	   		and gms.no_wx=#{noWx}
+	   </if>
+	   <if test="assistantNo != null and assistantNo != '' ">
+	    	and gms.ASSISTANT_NO =#{assistantNo}
+	   </if>
+	   <if test="tidCode != null and tidCode != '' ">
+	    	and gms.TID_CODE =#{tidCode}
+	   </if>
+	   <if test="loginName != null and loginName != '' ">
+	    	and gms.login_name =#{loginName}
+	   </if>
+    </where>
+  </select>
+  
+  <select id="get" resultMap="BaseResultMap" parameterType="com.lj.business.member.domain.GmAssistantShop" >
+    select  <include refid="Base_Column_List" />
+    from gm_assistant_shop
+    <include refid="findGmAssistantShopPageCond" />
+    limit 1
+  </select>
+  
+  <update id="updateLastDate" parameterType="com.lj.business.member.domain.GmAssistantShop">
+  	update gm_assistant_shop set LAST_LOGIN_DATE = now()
+  	where NO_WX=#{noWx} AND ASSISTANT_NO = #{assistantNo}
+  </update>
+  
+  <delete id="delete" parameterType="com.lj.business.member.dto.gmAssistantShop.UpdateGmAssistantShop">
+  	delete from gm_assistant_shop
+  	where NO_WX=#{noWx,jdbcType=VARCHAR} and
+  	MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>  

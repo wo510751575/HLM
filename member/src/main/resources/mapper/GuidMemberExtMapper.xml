@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IGuidMemberExtDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.GuidMemberExt" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_MERCHANT" property="memberNoMerchant" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_MERCHANT" property="memberNameMerchant" jdbcType="VARCHAR" />
+    
+    
+    <result column="SHOP_NO_MERCHANT" property="shopNoMerchant" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="JOB_NUM" property="jobNum" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NO_WX_PSW" property="noWxPsw" jdbcType="VARCHAR" />
+    <result column="WORK_DATE" property="workDate" jdbcType="TIMESTAMP" />
+    <result column="POSITION" property="position" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_MERCHANT, MEMBER_NAME_MERCHANT,  SHOP_NO_MERCHANT, 
+    MEMBER_NAME, JOB_NUM, BIRTHDAY, MOBILE, AGE, GENDER, NO_WX, NO_WX_PSW, WORK_DATE, 
+    POSITION, AREA_NAME, STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from guid_member_ext
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from guid_member_ext
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.GuidMemberExt" >
+    insert into guid_member_ext (CODE, MEMBER_NO_MERCHANT, MEMBER_NAME_MERCHANT, 
+       SHOP_NO_MERCHANT, 
+      MEMBER_NAME, JOB_NUM, BIRTHDAY, 
+      MOBILE, AGE, GENDER, 
+      NO_WX, NO_WX_PSW, WORK_DATE, 
+      POSITION, AREA_NAME, STATUS, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{code,jdbcType=VARCHAR}, #{memberNoMerchant,jdbcType=VARCHAR}, #{memberNameMerchant,jdbcType=VARCHAR}, 
+       #{shopNoMerchant,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{noWx,jdbcType=VARCHAR}, #{noWxPsw,jdbcType=VARCHAR}, #{workDate,jdbcType=TIMESTAMP}, 
+      #{position,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.GuidMemberExt" >
+    insert into guid_member_ext
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoMerchant != null" >
+        MEMBER_NO_MERCHANT,
+      </if>
+      <if test="memberNameMerchant != null" >
+        MEMBER_NAME_MERCHANT,
+      </if>
+      <if test="shopNoMerchant != null" >
+        SHOP_NO_MERCHANT,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="jobNum != null" >
+        JOB_NUM,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="age != null" >
+        AGE,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="noWxPsw != null" >
+        NO_WX_PSW,
+      </if>
+      <if test="workDate != null" >
+        WORK_DATE,
+      </if>
+      <if test="position != null" >
+        POSITION,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoMerchant != null" >
+        #{memberNoMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameMerchant != null" >
+        #{memberNameMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNoMerchant != null" >
+        #{shopNoMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null" >
+        #{jobNum,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxPsw != null" >
+        #{noWxPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="workDate != null" >
+        #{workDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.GuidMemberExt" >
+    update guid_member_ext
+    <set >
+      <if test="memberNoMerchant != null" >
+        MEMBER_NO_MERCHANT = #{memberNoMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameMerchant != null" >
+        MEMBER_NAME_MERCHANT = #{memberNameMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNoMerchant != null" >
+        SHOP_NO_MERCHANT = #{shopNoMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null" >
+        JOB_NUM = #{jobNum,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        AGE = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxPsw != null" >
+        NO_WX_PSW = #{noWxPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="workDate != null" >
+        WORK_DATE = #{workDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null" >
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.GuidMemberExt" >
+    update guid_member_ext
+    set MEMBER_NO_MERCHANT = #{memberNoMerchant,jdbcType=VARCHAR},
+      MEMBER_NAME_MERCHANT = #{memberNameMerchant,jdbcType=VARCHAR},
+      
+      
+      SHOP_NO_MERCHANT = #{shopNoMerchant,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      JOB_NUM = #{jobNum,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      NO_WX_PSW = #{noWxPsw,jdbcType=VARCHAR},
+      WORK_DATE = #{workDate,jdbcType=TIMESTAMP},
+      POSITION = #{position,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <resultMap id="FindResultMap" type="com.lj.business.member.dto.GuidMemberExtDto" extends="BaseResultMap">
+  </resultMap>
+  <select id="findGuidMemberExtByMobile" resultMap="BaseResultMap" parameterType="com.lj.business.member.dto.GuidMemberExtDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from guid_member_ext
+    where SHOP_NO_MERCHANT = #{shopNoMerchant,jdbcType=VARCHAR}  and  MEMBER_NO_MERCHANT = #{memberNoMerchant,jdbcType=VARCHAR}  and  MOBILE = #{mobile,jdbcType=VARCHAR}  
+  </select>
+</mapper>

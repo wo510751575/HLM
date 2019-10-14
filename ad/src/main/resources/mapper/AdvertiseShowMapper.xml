@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.ad.dao.IAdvertiseShowDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.ad.domain.AdvertiseShow" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="ADVERTISE_CODE" property="advertiseCode" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CRETAE_NAME" property="cretaeName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ARTICLE_CODE" property="articleCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultGroupMap" type="map" >
+    <result column="ADVERTISE_CODE" property="advertiseCode" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" type="com.ye.business.ad.dto.AdvertiseShowDto" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, ADVERTISE_CODE, CREATE_ID, CRETAE_NAME, CREATE_DATE, 
+    REMARK, REMARK2, REMARK3, REMARK4, UPDATE_TIME, ARTICLE_CODE
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+		<if test="param.merchantNo != null and param.merchantNo != '' ">
+		  <![CDATA[and MERCHANT_NO = #{param.merchantNo} ]]>
+		</if>
+		<if test="param.advertiseCode != null and param.advertiseCode != '' ">
+		  <![CDATA[and ADVERTISE_CODE = #{param.advertiseCode} ]]>
+		</if>
+        <if test="param.cretaeName != null and param.cretaeName != '' ">
+		  <![CDATA[and CRETAE_NAME like concat('%', #{param.cretaeName}, '%') ]]>
+		</if>
+        <if test="param.createId != null and param.createId != '' ">
+		  <![CDATA[and CREATE_ID = #{param.createId} ]]>
+		</if>
+        <if test="param.articleCode != null and param.articleCode != '' ">
+		  <![CDATA[and ARTICLE_CODE = #{param.articleCode} ]]>
+		</if>
+		<if test="param.advertiseCodeList != null and param.advertiseCodeList.size() > 0">
+			and ADVERTISE_CODE in <foreach collection="param.advertiseCodeList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="param.memberNoGuidList != null and param.memberNoGuidList.size() > 0">
+			and CREATE_ID in <foreach collection="param.memberNoGuidList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="param.articleCodeList != null and param.articleCodeList.size() > 0">
+			and ARTICLE_CODE in <foreach collection="param.articleCodeList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="param.startTime != null">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') >= date_format(#{param.startTime}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="param.endTime != null">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') <= date_format(#{param.endTime}, '%Y-%m-%d') ]]>
+		</if>
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by UPDATE_TIME desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findAdvertiseShows" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindAdvertiseShowPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM advertise_show
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findAdvertiseShowPage" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindAdvertiseShowPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM advertise_show
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findAdvertiseShowPageCount" resultType="int" parameterType="com.ye.business.ad.dto.FindAdvertiseShowPage">
+	select count(*)
+	FROM advertise_show
+	  <include refid="findPage_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from advertise_show
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from advertise_show
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.ad.domain.AdvertiseShow" >
+    insert into advertise_show (CODE, MERCHANT_NO, ADVERTISE_CODE, 
+      CREATE_ID, CRETAE_NAME, 
+      CREATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4, UPDATE_TIME, 
+      ARTICLE_CODE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{advertiseCode,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=VARCHAR}, #{cretaeName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{articleCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.ad.domain.AdvertiseShow" >
+    insert into advertise_show
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="advertiseCode != null" >
+        ADVERTISE_CODE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="cretaeName != null" >
+        CRETAE_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="articleCode != null" >
+        ARTICLE_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="advertiseCode != null" >
+        #{advertiseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="cretaeName != null" >
+        #{cretaeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleCode != null" >
+        #{articleCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.ad.domain.AdvertiseShow" >
+    update advertise_show
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="advertiseCode != null" >
+        ADVERTISE_CODE = #{advertiseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="cretaeName != null" >
+        CRETAE_NAME = #{cretaeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleCode != null" >
+        ARTICLE_CODE = #{articleCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.ad.domain.AdvertiseShow" >
+    update advertise_show
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      ADVERTISE_CODE = #{advertiseCode,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CRETAE_NAME = #{cretaeName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      ARTICLE_CODE = #{articleCode,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据广告code分组统计次数 -->
+  <select id="findAdvertiseShowPageCountForGroupAdvertiseCode" resultMap="FindResultGroupMap" parameterType="com.ye.business.ad.dto.FindAdvertiseShowPage">
+	select 
+	  ADVERTISE_CODE, COUNT(ADVERTISE_CODE) NUM
+	FROM advertise_show
+	  <include refid="findPage_condition" />
+	GROUP BY ADVERTISE_CODE
+  </select>
+  
+  <select id="findGroupTotalByExample" parameterType="com.ye.business.ad.dto.AdvertiseDto" resultMap="FindResultMap">
+  	select 
+  		ADVERTISE_CODE, count(ADVERTISE_CODE) num
+  		<choose>
+	  		<when test="timeDimension != null and 'hour'.equals(timeDimension)">, date_format(CREATE_DATE, '%Y-%m-%d %H:00:00') CREATE_DATE</when>
+	  		<otherwise>, date_format(CREATE_DATE, '%Y-%m-%d') CREATE_DATE</otherwise>
+	  	</choose>  
+  	from advertise_show 
+  	<where>
+  		<if test="code != null and code != ''">
+  			and ADVERTISE_CODE = #{code,jdbcType=VARCHAR}
+  		</if>
+  		<if test="beginDate != null">
+  			<![CDATA[ and date_format(CREATE_DATE, '%Y-%m-%d') >= date_format(#{beginDate}, '%Y-%m-%d') ]]>
+  		</if>
+  		<if test="endDate != null">
+  			<![CDATA[ and date_format(CREATE_DATE, '%Y-%m-%d') <= date_format(#{endDate}, '%Y-%m-%d') ]]>
+  		</if>
+  	</where>
+  	group by ADVERTISE_CODE
+  	<choose>
+  		<when test="timeDimension != null and 'hour'.equals(timeDimension)">, date_format(CREATE_DATE, '%Y-%m-%d %H')</when>
+  		<otherwise>, date_format(CREATE_DATE, '%Y-%m-%d')</otherwise>
+  	</choose>
+  	order by ADVERTISE_CODE, CREATE_DATE
+  </select>
+  
+  <select id="findAdvertiseShowForGroupList" parameterType="com.ye.business.ad.dto.FindAdvertiseShowPage" resultMap="FindResultMap">
+	SELECT
+	    CREATE_ID, COUNT(CREATE_ID) num, MAX(CREATE_DATE) CREATE_DATE
+	FROM advertise_show
+		<include refid="findPage_condition" />
+	GROUP BY CREATE_ID
+  </select>
+  <select id="findAdvertiseShowInfoForGroupList" parameterType="com.ye.business.ad.dto.FindAdvertiseShowPage" resultMap="FindResultMap">
+	SELECT
+	    CREATE_ID, COUNT(CREATE_ID) num, MAX(CREATE_DATE) CREATE_DATE, ARTICLE_CODE
+	FROM advertise_show
+		<include refid="findPage_condition" />
+	GROUP BY CREATE_ID, ARTICLE_CODE
+  </select>
+  
+  <select id="findCodeListByExample" resultType="java.lang.String" parameterType="com.ye.business.ad.dto.AdvertiseShowDto" >
+    select ADVERTISE_CODE
+    from advertise_show
+    <where>
+    	<if test="advertiseCodeList != null and advertiseCodeList.size() > 0">
+			and ADVERTISE_CODE in <foreach collection="advertiseCodeList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="createId != null and createId != '' ">
+		  <![CDATA[and CREATE_ID = #{createId} ]]>
+		</if>
+		<if test="remark != null and remark != '' ">
+		  <![CDATA[and REMARK = #{remark} ]]>
+		</if>
+		<if test="createDate != null">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') = date_format(#{createDate,jdbcType=TIMESTAMP}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="articleCode != null and articleCode != '' ">
+		  <![CDATA[and ARTICLE_CODE = #{articleCode} ]]>
+		</if>
+    </where>
+  </select>
+  
+</mapper>

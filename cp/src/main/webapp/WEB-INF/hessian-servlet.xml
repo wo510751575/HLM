@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+      
+      <!-- 优惠券 -->
+	 <bean name="/couponService" 
+	 class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="couponServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.cp.service.ICouponService" />
+	</bean>
+      <!-- 优惠券规则 -->
+	 <bean name="/couponRuleService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="couponRuleServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.cp.service.ICouponRuleService" />
+	</bean>
+	
+	   <!-- 优惠券类型 -->
+	 <bean name="/couponTypeService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="couponTypeServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.cp.service.ICouponTypeService" />
+	</bean>
+
+	<!-- 优惠券与用户关联 -->
+	 <bean name="/couponMemberRelationService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="couponMemberRelationServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.cp.service.ICouponMemberRelationService" />
+	</bean>
+	
+     <!-- 消费记录表 -->
+	 <bean name="/couponRecordsService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="couponRecordsServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.cp.service.ICouponRecordsService" />
+	</bean>
+	
+	 <!-- 优惠券规则业务扩展表 -->
+	 <bean name="/couponRuleExService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="couponRuleExServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.cp.service.ICouponRuleExService" />
+	</bean>
+	
+		<!-- 获取每个导购未分组的人数 -->
+	<bean name="/couponRuleMissionService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="couponRuleMissionServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	
+</beans> 

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cf.dao.ICallChatInfoDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cf.domain.CallChatInfo" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="LINKMAN_REMARK" property="linkmanRemark" jdbcType="VARCHAR" />
+    <result column="CALL_TIME" property="callTime" jdbcType="BIGINT" />
+    <result column="CALL_DATE" property="callDate" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO, MEMBER_NAME, MOBILE, LINKMAN_REMARK, CALL_TIME, CALL_DATE, STATUS, 
+    CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from call_chat_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from call_chat_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cf.domain.CallChatInfo" >
+    insert into call_chat_info (CODE, MEMBER_NO, MEMBER_NAME, 
+      MOBILE, LINKMAN_REMARK, CALL_TIME, 
+      CALL_DATE, STATUS, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{linkmanRemark,jdbcType=VARCHAR}, #{callTime,jdbcType=BIGINT}, 
+      #{callDate,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cf.domain.CallChatInfo" >
+    insert into call_chat_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="linkmanRemark != null" >
+        LINKMAN_REMARK,
+      </if>
+      <if test="callTime != null" >
+        CALL_TIME,
+      </if>
+      <if test="callDate != null" >
+        CALL_DATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanRemark != null" >
+        #{linkmanRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="callTime != null" >
+        #{callTime,jdbcType=BIGINT},
+      </if>
+      <if test="callDate != null" >
+        #{callDate,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cf.domain.CallChatInfo" >
+    update call_chat_info
+    <set >
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanRemark != null" >
+        LINKMAN_REMARK = #{linkmanRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="callTime != null" >
+        CALL_TIME = #{callTime,jdbcType=BIGINT},
+      </if>
+      <if test="callDate != null" >
+        CALL_DATE = #{callDate,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cf.domain.CallChatInfo" >
+    update call_chat_info
+    set MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      LINKMAN_REMARK = #{linkmanRemark,jdbcType=VARCHAR},
+      CALL_TIME = #{callTime,jdbcType=BIGINT},
+      CALL_DATE = #{callDate,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getMaxCallDateByGuidNo" resultType="java.lang.Long">
+  	select CALL_DATE from call_chat_info
+  	where MEMBER_NO = #{memberNoGuid,jdbcType=VARCHAR}
+  	order by CALL_DATE desc
+  	limit 1
+  </select>
+  
+</mapper>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IFriendsLinkMaterialDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cm.domain.FriendsLinkMaterial" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="MATERIAL_TYPE" property="materialType" jdbcType="VARCHAR" />
+    <result column="IMAGE_URL" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="LINK_URL" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="AUTO_COMMENT" property="autoComment" jdbcType="INTEGER" />
+    <result column="COMMENT_CONTENT" property="commentContent" jdbcType="VARCHAR" />
+    <result column="DELETE_FLAG" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="findFriendsLinkMaterialPageReturn" type="com.lj.business.cm.friendsLinkMaterial.FindFriendsLinkMaterialPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="MATERIAL_TYPE" property="materialType" jdbcType="VARCHAR" />
+    <result column="IMAGE_URL" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="LINK_URL" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="AUTO_COMMENT" property="autoComment" jdbcType="INTEGER" />
+    <result column="COMMENT_CONTENT" property="commentContent" jdbcType="VARCHAR" />
+    <result column="DELETE_FLAG" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, TITLE, SHARE_TITLE, CONTENT, MATERIAL_TYPE, IMAGE_URL, LINK_URL, 
+    AUTO_COMMENT, COMMENT_CONTENT, DELETE_FLAG, CREATE_ID, CREATE_DATE, REMARK, REMARK2, 
+    REMARK3, REMARK4
+  </sql>
+  
+  <sql id="findFriendsLinkMaterial_Page">
+   <where>
+     <if test="merchantNo !=null and merchantNo !=''">
+        and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+     </if>
+     <if test="title !=null and title !=''">
+        and TITLE = #{title,jdbcType=VARCHAR}
+     </if>
+     <if test="materialType !=null and materialType !=''">
+         and MATERIAL_TYPE = #{materialType,jdbcType=VARCHAR}
+     </if>
+     <if test="deleteFlag !=null and deleteFlag !='' ">
+        and DELETE_FLAG= #{deleteFlag,jdbcType = INTEGER}
+     </if>
+     <if test="conditionStr !=null and conditionStr !=''">
+        and (TITLE like  CONCAT('%',#{conditionStr,jdbcType=VARCHAR},'%') 
+        or CONTENT like CONCAT('%',#{conditionStr,jdbcType=VARCHAR},'%'))
+     </if>
+     <if test="startDate != null ">
+		<![CDATA[and CREATE_DATE >= #{startDate}]]>
+	 </if>
+	 <if test="endDate != null"> 
+		<![CDATA[and CREATE_DATE <= #{endDate}]]>
+	 </if>
+   </where>
+  </sql>
+  
+  
+   <select id="findFriendsLinkMaterialPage" resultMap="findFriendsLinkMaterialPageReturn" parameterType="com.lj.business.cm.friendsLinkMaterial.FindFriendsLinkMaterialPage">
+		SELECT
+    		<include refid="Base_Column_List" />
+		  FROM friends_link_material
+		     <include refid="findFriendsLinkMaterial_Page" />
+		 order by CREATE_DATE DESC
+		 limit ${start}, ${limit}
+  </select>
+  
+  <select id="findFriendsLinkMaterialPageCount" resultType="int" parameterType="com.lj.business.cm.friendsLinkMaterial.FindFriendsLinkMaterialPage">
+		SELECT COUNT(*) 
+		FROM friends_link_material
+		<include refid="findFriendsLinkMaterial_Page" />
+  </select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from friends_link_material
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from friends_link_material
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cm.domain.FriendsLinkMaterial" >
+    insert into friends_link_material (CODE, MERCHANT_NO, TITLE, 
+      SHARE_TITLE, CONTENT, MATERIAL_TYPE, 
+      IMAGE_URL, LINK_URL, AUTO_COMMENT, 
+      COMMENT_CONTENT, DELETE_FLAG, CREATE_ID, 
+      CREATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{shareTitle,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{materialType,jdbcType=VARCHAR}, 
+      #{imageUrl,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, #{autoComment,jdbcType=INTEGER}, 
+      #{commentContent,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cm.domain.FriendsLinkMaterial" >
+    insert into friends_link_material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="materialType != null" >
+        MATERIAL_TYPE,
+      </if>
+      <if test="imageUrl != null" >
+        IMAGE_URL,
+      </if>
+      <if test="linkUrl != null" >
+        LINK_URL,
+      </if>
+      <if test="autoComment != null" >
+        AUTO_COMMENT,
+      </if>
+      <if test="commentContent != null" >
+        COMMENT_CONTENT,
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="materialType != null" >
+        #{materialType,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="autoComment != null" >
+        #{autoComment,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null" >
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cm.domain.FriendsLinkMaterial" >
+    update friends_link_material
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="materialType != null" >
+        MATERIAL_TYPE = #{materialType,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        IMAGE_URL = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        LINK_URL = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="autoComment != null" >
+        AUTO_COMMENT = #{autoComment,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null" >
+        COMMENT_CONTENT = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cm.domain.FriendsLinkMaterial" >
+    update friends_link_material
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      MATERIAL_TYPE = #{materialType,jdbcType=VARCHAR},
+      IMAGE_URL = #{imageUrl,jdbcType=VARCHAR},
+      LINK_URL = #{linkUrl,jdbcType=VARCHAR},
+      AUTO_COMMENT = #{autoComment,jdbcType=INTEGER},
+      COMMENT_CONTENT = #{commentContent,jdbcType=VARCHAR},
+      DELETE_FLAG = #{deleteFlag,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

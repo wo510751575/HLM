@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IPmChatBehaviorDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.PmChatBehavior" >
+    <id column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <id column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <id column="NO_WX_GM" property="noWxGm" jdbcType="TIMESTAMP" />
+    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+    <result column="THIRD_UNREAD_FLAG" property="thirdUnreadFlag" jdbcType="INTEGER" />
+    
+<!--     <result column="UNRESP_FLAG" property="unrespFlag" jdbcType="TINYINT" /> -->
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MEMBER_NO, MEMBER_NO_GM, CHAT_TIME, THIRD_UNREAD_FLAG, MEMBER_CHAT_TIME, UNRESP_FLAG,NO_WX_GM
+  </sql>
+  
+  <insert id="insertOrUpdate" parameterType="com.lj.business.member.dto.UpdatePmChatBehavior" >
+    insert into PM_CHAT_BEHAVIOR
+    <trim prefix="(MEMBER_NO,MEMBER_NO_GM, NO_WX_GM ," suffix=")" suffixOverrides="," >
+      <if test="chatTime != null" >
+        CHAT_TIME,
+      </if>
+      <if test="thirdUnreadFlag != null" >
+        THIRD_UNREAD_FLAG,
+      </if>
+      <if test="memberChatTime != null" >
+        MEMBER_CHAT_TIME,
+      </if>
+      <if test="unrespFlag != null" >
+        UNRESP_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{memberNo,jdbcType=VARCHAR},
+        #{memberNoGm,jdbcType=VARCHAR},
+        #{noWxGm,jdbcType=VARCHAR},
+      <if test="chatTime != null" >
+        #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thirdUnreadFlag != null" >
+        #{thirdUnreadFlag,jdbcType=INTEGER},
+      </if>
+      <if test="memberChatTime != null" >
+        #{memberChatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unrespFlag != null" >
+        #{unrespFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+    ON DUPLICATE KEY UPDATE 
+    <trim prefix="" suffix="" suffixOverrides="," >
+      <if test="chatTime != null" >
+	    CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thirdUnreadFlag != null" >
+        THIRD_UNREAD_FLAG = #{thirdUnreadFlag,jdbcType=INTEGER},
+      </if>
+      <if test="memberChatTime != null" >
+        MEMBER_CHAT_TIME = #{memberChatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unrespFlag != null" >
+        UNRESP_FLAG = #{unrespFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  
+  <delete id="delete" parameterType="com.lj.business.member.dto.UpdatePmChatBehavior">
+  	delete from PM_CHAT_BEHAVIOR
+  	where NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+  </delete>
+</mapper>

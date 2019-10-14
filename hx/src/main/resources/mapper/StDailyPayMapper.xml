@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IStDailyPayDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.StDailyPay">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="ST_DATE" jdbcType="DATE" property="stDate" />
+    <result column="PAY_TYPE" jdbcType="VARCHAR" property="payType" />
+    <result column="PAY_TYPE_NAME" jdbcType="VARCHAR" property="payTypeName" />
+    <result column="PAY_AMOUNT" jdbcType="BIGINT" property="payAmount" />
+    <result column="PAY_MODE" jdbcType="VARCHAR" property="payMode" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, ST_DATE, PAY_TYPE, PAY_TYPE_NAME, 
+    PAY_AMOUNT, PAY_MODE, CREATE_DATE
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.StDailyPayDto" extends="BaseResultMap">
+		<result column="PAY_AMOUNT_STR" jdbcType="VARCHAR" property="payAmountStr" />
+	</resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findStDailyPays" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindStDailyPayPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM st_daily_pay
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findStDailyPayPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindStDailyPayPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM st_daily_pay
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findStDailyPayPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindStDailyPayPage">
+		select count(*)
+		FROM st_daily_pay
+		<include refid="findPage_condition" />
+	</select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from st_daily_pay
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from st_daily_pay
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.StDailyPay">
+    insert into st_daily_pay (CODE, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, ST_DATE, 
+      PAY_TYPE, PAY_TYPE_NAME, PAY_AMOUNT, 
+      PAY_MODE, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{stDate,jdbcType=DATE}, 
+      #{payType,jdbcType=VARCHAR}, #{payTypeName,jdbcType=VARCHAR}, #{payAmount,jdbcType=BIGINT}, 
+      #{payMode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.StDailyPay">
+    insert into st_daily_pay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="stDate != null">
+        ST_DATE,
+      </if>
+      <if test="payType != null">
+        PAY_TYPE,
+      </if>
+      <if test="payTypeName != null">
+        PAY_TYPE_NAME,
+      </if>
+      <if test="payAmount != null">
+        PAY_AMOUNT,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="stDate != null">
+        #{stDate,jdbcType=DATE},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=BIGINT},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.StDailyPay">
+    update st_daily_pay
+    <set>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="stDate != null">
+        ST_DATE = #{stDate,jdbcType=DATE},
+      </if>
+      <if test="payType != null">
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        PAY_TYPE_NAME = #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        PAY_AMOUNT = #{payAmount,jdbcType=BIGINT},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.StDailyPay">
+    update st_daily_pay
+    set SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      ST_DATE = #{stDate,jdbcType=DATE},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      PAY_TYPE_NAME = #{payTypeName,jdbcType=VARCHAR},
+      PAY_AMOUNT = #{payAmount,jdbcType=BIGINT},
+      PAY_MODE = #{payMode,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  	<!-- 员工当周排班转移到历史 -->
+  	<insert id="batchAddStDailyPay" parameterType="java.lang.String">
+  		<![CDATA[
+  		INSERT INTO st_daily_pay(CODE ,MERCHANT_NO,MERCHANT_NAME,PAY_TYPE,PAY_TYPE_NAME,PAY_MODE,PAY_AMOUNT,CREATE_DATE,ST_DATE)
+
+		SELECT CONCAT(pt.PAY_TYPE,t.PAY_MODE,#{stDate}) as `CODE`, t.MERCHANT_NO,t.MERCHANT_NAME,pt.PAY_TYPE,pt.PAY_TYPE_NAME,t.PAY_MODE,sum(pt.PAY_AMOUNT) as PAY_AMOUNT ,SYSDATE() as CREATE_DATE,#{stDate} as ST_DATE  from bill_payment t 
+		JOIN bill_pay_type_detail pt on t.OPERATE_CODE=pt.OPERATE_CODE
+		where
+		t.`STATUS`='NORMAL' AND 
+		DATE_FORMAT(t.CREATE_DATE,'%Y%m%d') = #{stDate}
+		AND CONCAT(pt.PAY_TYPE,t.PAY_MODE,#{stDate}) NOT in( SELECT l.`CODE` from st_daily_pay l where DATE_FORMAT(l.ST_DATE,'%Y%m%d') = #{stDate} ) 
+		GROUP BY t.MERCHANT_NO,pt.PAY_TYPE,t.PAY_MODE
+		]]>
+  	</insert>
+
+	<sql id="findPage_conditionGroupByStDay">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.payMode != null and param.payMode !='' ">
+					<![CDATA[and PAY_MODE =#{param.payMode}]]>
+				</if>
+				<if test="param.startDate != null">
+					<![CDATA[and ST_DATE >= #{param.startDate}]]>
+				</if>
+				<if test="param.endDate != null"> 
+					<![CDATA[and ST_DATE <= #{param.endDate}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询 -->
+	<select id="findStDailyPayPageGroupByStDay" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindStDailyPayPage">
+		SELECT ST_DATE , GROUP_CONCAT(PAY_TYPE) as PAY_TYPE,GROUP_CONCAT(PAY_TYPE_NAME)  as PAY_TYPE_NAME,GROUP_CONCAT(PAY_AMOUNT)   as PAY_AMOUNT_STR
+		from st_daily_pay 
+		<include refid="findPage_conditionGroupByStDay" />
+		GROUP BY ST_DATE,MERCHANT_NO 
+		ORDER BY ST_DATE desc 
+		limit ${start} , ${limit}
+		
+	</select>
+	<!-- 查询总数 -->
+	<select id="findStDailyPayPageCountGroupByStDay" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindStDailyPayPage">
+		SELECT count(DISTINCT ST_DATE,MERCHANT_NO ) from st_daily_pay 
+		<include refid="findPage_conditionGroupByStDay" />
+	</select>
+	<!-- 按支付方式合计金额 -->
+	<select id="stDailyPaySumGroupByPayType" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindStDailyPayPage">
+		SELECT  PAY_TYPE,  PAY_TYPE_NAME,SUM(PAY_AMOUNT)  as PAY_AMOUNT
+		from st_daily_pay 
+		<include refid="findPage_conditionGroupByStDay" />
+		GROUP BY PAY_TYPE,MERCHANT_NO
+	</select>
+	
+</mapper>

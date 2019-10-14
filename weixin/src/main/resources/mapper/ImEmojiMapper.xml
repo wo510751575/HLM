@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IImEmojiDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.ImEmoji" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PACKAGE_CODE" property="packageCode" jdbcType="VARCHAR" />
+    <result column="EMOJI_NAME" property="emojiName" jdbcType="VARCHAR" />
+    <result column="EMOJI_URL" property="emojiUrl" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="com.lj.business.weixin.dto.imemoji.FindImEmojiPageReturn" id="findImEmojiPageResultMap">
+  	<id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PACKAGE_CODE" property="packageCode" jdbcType="VARCHAR" />
+    <result column="EMOJI_NAME" property="emojiName" jdbcType="VARCHAR" />
+    <result column="EMOJI_URL" property="emojiUrl" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, PACKAGE_CODE, EMOJI_NAME, EMOJI_URL, VERSION, STATUS, SHOW_INDEX, CREATE_ID, 
+    CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  
+  <sql id="findImEmojiPage_condition" >
+  	 <where>
+	       <if test="packageCode != null and packageCode != ''" >
+	        and  PACKAGE_CODE  = #{packageCode,jdbcType=VARCHAR}
+	      </if>
+	      <if test="emojiName != null and emojiName != ''" >
+	        and  EMOJI_NAME like CONCAT('%',#{emojiName,jdbcType=VARCHAR},'%' )
+	      </if>
+	       <if test="status != null and status != ''" >
+	        and  STATUS  = #{status,jdbcType=INTEGER}
+	      </if>
+			
+      </where>
+  </sql>
+  
+  <!-- 分页查询 -->
+   <select id="findImEmojiPage" resultMap="findImEmojiPageResultMap" parameterType="com.lj.business.weixin.dto.imemoji.FindImEmojiPage" >
+  SELECT   
+  	<include refid="Base_Column_List" />
+  FROM im_emoji
+ 	 <include refid="findImEmojiPage_condition" />
+   order by SHOW_INDEX asc
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findImEmojiPageCount" resultType="int" parameterType="com.lj.business.weixin.dto.imemoji.FindImEmojiPage" >
+    select  count(*) FROM im_emoji
+     <include refid="findImEmojiPage_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from im_emoji
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from im_emoji
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.ImEmoji" >
+    insert into im_emoji (CODE, PACKAGE_CODE, EMOJI_NAME, 
+      EMOJI_URL, VERSION, STATUS, 
+      SHOW_INDEX, CREATE_ID, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{packageCode,jdbcType=VARCHAR}, #{emojiName,jdbcType=VARCHAR}, 
+      #{emojiUrl,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{showIndex,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.ImEmoji" >
+    insert into im_emoji
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="packageCode != null" >
+        PACKAGE_CODE,
+      </if>
+      <if test="emojiName != null" >
+        EMOJI_NAME,
+      </if>
+      <if test="emojiUrl != null" >
+        EMOJI_URL,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="packageCode != null" >
+        #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="emojiName != null" >
+        #{emojiName,jdbcType=VARCHAR},
+      </if>
+      <if test="emojiUrl != null" >
+        #{emojiUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showIndex != null" >
+        #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.ImEmoji" >
+    update im_emoji
+    <set >
+      <if test="packageCode != null" >
+        PACKAGE_CODE = #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="emojiName != null" >
+        EMOJI_NAME = #{emojiName,jdbcType=VARCHAR},
+      </if>
+      <if test="emojiUrl != null" >
+        EMOJI_URL = #{emojiUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.ImEmoji" >
+    update im_emoji
+    set PACKAGE_CODE = #{packageCode,jdbcType=VARCHAR},
+      EMOJI_NAME = #{emojiName,jdbcType=VARCHAR},
+      EMOJI_URL = #{emojiUrl,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=INTEGER},
+      SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询表情包所有显示序号 -->
+  <select id="findAllShowIndex" resultType="java.lang.Integer">
+  	select SHOW_INDEX  from im_emoji where PACKAGE_CODE = #{packageCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

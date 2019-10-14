@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.business.weixin.dao.IMerchantSendFriendsJobDao">
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.MerchantSendFriendsJob">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+    <result column="IMG_ADDR" jdbcType="VARCHAR" property="imgAddr" />
+    <result column="LINK_URL" jdbcType="VARCHAR" property="linkUrl" />
+    <result column="AUTO_COMMENT" jdbcType="INTEGER" property="autoComment" />
+    <result column="AUTO_CONTENT" jdbcType="VARCHAR" property="autoContent" />
+    <result column="NO_WXS" jdbcType="VARCHAR" property="noWxs" />
+    <result column="EXECUTE_TIME" jdbcType="TIMESTAMP" property="executeTime" />
+    <result column="real_execute_time" jdbcType="TIMESTAMP" property="realExecuteTime" />
+    <result column="JOB_STATE" jdbcType="INTEGER" property="jobState" />
+    <result column="SENT_NO_WXS" jdbcType="VARCHAR" property="sentNoWxs" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_USER_LEVEL" jdbcType="VARCHAR" property="createUserLevel" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+    <result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, MERCHANT_NO, MERCHANT_NAME, CONTENT, IMG_ADDR, LINK_URL, AUTO_COMMENT, AUTO_CONTENT, 
+    NO_WXS, EXECUTE_TIME, real_execute_time, JOB_STATE, SENT_NO_WXS, CREATE_ID, CREATE_USER_LEVEL, 
+    CREATE_DATE, type, remark, REMARK2, REMARK3, REMARK4, CREATE_NAME
+  </sql>
+  
+  <resultMap id="FindResultMap" type="com.lj.business.weixin.dto.MerchantSendFriendsJobDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findMerchantSendFriendsJobs" resultMap="FindResultMap"
+		parameterType="com.lj.business.weixin.dto.FindMerchantSendFriendsJobPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM merchant_send_friends_job
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findMerchantSendFriendsJobPage" resultMap="FindResultMap"
+		parameterType="com.lj.business.weixin.dto.FindMerchantSendFriendsJobPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM merchant_send_friends_job
+		<include refid="findPage_condition" />
+		order by CREATE_DATE DESC
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findMerchantSendFriendsJobPageCount" resultType="int"
+		parameterType="com.lj.business.weixin.dto.FindMerchantSendFriendsJobPage">
+		select count(*)
+		FROM merchant_send_friends_job
+		<include refid="findPage_condition" />
+	</select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_send_friends_job
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from merchant_send_friends_job
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.MerchantSendFriendsJob">
+    insert into merchant_send_friends_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+      <if test="imgAddr != null">
+        IMG_ADDR,
+      </if>
+      <if test="linkUrl != null">
+        LINK_URL,
+      </if>
+      <if test="autoComment != null">
+        AUTO_COMMENT,
+      </if>
+      <if test="autoContent != null">
+        AUTO_CONTENT,
+      </if>
+      <if test="noWxs != null">
+        NO_WXS,
+      </if>
+      <if test="executeTime != null">
+        EXECUTE_TIME,
+      </if>
+      <if test="realExecuteTime != null">
+        real_execute_time,
+      </if>
+      <if test="jobState != null">
+        JOB_STATE,
+      </if>
+      <if test="sentNoWxs != null">
+        SENT_NO_WXS,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createUserLevel != null">
+        CREATE_USER_LEVEL,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+      <if test="createName != null">
+        CREATE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAddr != null">
+        #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null">
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="autoComment != null">
+        #{autoComment,jdbcType=INTEGER},
+      </if>
+      <if test="autoContent != null">
+        #{autoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxs != null">
+        #{noWxs,jdbcType=VARCHAR},
+      </if>
+      <if test="executeTime != null">
+        #{executeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realExecuteTime != null">
+        #{realExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobState != null">
+        #{jobState,jdbcType=INTEGER},
+      </if>
+      <if test="sentNoWxs != null">
+        #{sentNoWxs,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserLevel != null">
+        #{createUserLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.MerchantSendFriendsJob">
+    update merchant_send_friends_job
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAddr != null">
+        IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null">
+        LINK_URL = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="autoComment != null">
+        AUTO_COMMENT = #{autoComment,jdbcType=INTEGER},
+      </if>
+      <if test="autoContent != null">
+        AUTO_CONTENT = #{autoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxs != null">
+        NO_WXS = #{noWxs,jdbcType=VARCHAR},
+      </if>
+      <if test="executeTime != null">
+        EXECUTE_TIME = #{executeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realExecuteTime != null">
+        real_execute_time = #{realExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobState != null">
+        JOB_STATE = #{jobState,jdbcType=INTEGER},
+      </if>
+      <if test="sentNoWxs != null">
+        SENT_NO_WXS = #{sentNoWxs,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserLevel != null">
+        CREATE_USER_LEVEL = #{createUserLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

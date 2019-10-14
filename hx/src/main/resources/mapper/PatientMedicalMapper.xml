@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IPatientMedicalDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.PatientMedical">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="PATIENT_RESERVATION_CODE" jdbcType="VARCHAR" property="patientReservationCode" />
+    <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
+    <result column="PATIENT_NAME" jdbcType="VARCHAR" property="patientName" />
+    <result column="DOCTOR_NO" jdbcType="VARCHAR" property="doctorNo" />
+    <result column="DOCTOR_NAME" jdbcType="VARCHAR" property="doctorName" />
+    <result column="ASSISTANT_NO" jdbcType="VARCHAR" property="assistantNo" />
+    <result column="ASSISTANT_NAME" jdbcType="VARCHAR" property="assistantName" />
+    <result column="VISITING_DATE" jdbcType="TIMESTAMP" property="visitingDate" />
+    <result column="VISITING_TYPE" jdbcType="VARCHAR" property="visitingType" />
+    <result column="MAIN_REMARK" jdbcType="VARCHAR" property="mainRemark" />
+    <result column="MAIN_CURRENT_REMARK" jdbcType="VARCHAR" property="mainCurrentRemark" />
+    <result column="MAIN_PAST_REMARK" jdbcType="VARCHAR" property="mainPastRemark" />
+    <result column="CHECK_ORAL_REMARK" jdbcType="VARCHAR" property="checkOralRemark" />
+    <result column="CHECK_AUXILIARY_REMARK" jdbcType="VARCHAR" property="checkAuxiliaryRemark" />
+    <result column="PLAN_DIAGNOSIS_REMARK" jdbcType="VARCHAR" property="planDiagnosisRemark" />
+    <result column="PLAN_TREATMENT_REMARK" jdbcType="VARCHAR" property="planTreatmentRemark" />
+    <result column="DM_DISPOSAL_REMARK" jdbcType="VARCHAR" property="dmDisposalRemark" />
+    <result column="DM_MEDICAL_REMARK" jdbcType="VARCHAR" property="dmMedicalRemark" />
+    <result column="OTHER_LABEL_REMARK" jdbcType="VARCHAR" property="otherLabelRemark" />
+    <result column="OTHER_REMARK" jdbcType="VARCHAR" property="otherRemark" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_NAME" jdbcType="VARCHAR" property="updateName" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, PATIENT_RESERVATION_CODE, PATIENT_NO, PATIENT_NAME, DOCTOR_NO, DOCTOR_NAME, 
+    ASSISTANT_NO, ASSISTANT_NAME, VISITING_DATE, VISITING_TYPE, MAIN_REMARK, MAIN_CURRENT_REMARK, 
+    MAIN_PAST_REMARK, CHECK_ORAL_REMARK, CHECK_AUXILIARY_REMARK, PLAN_DIAGNOSIS_REMARK, 
+    PLAN_TREATMENT_REMARK, DM_DISPOSAL_REMARK, DM_MEDICAL_REMARK, OTHER_LABEL_REMARK, 
+    OTHER_REMARK, CREATE_DATE, CREATE_ID, CREATE_NAME, REMARK, REMARK2, REMARK3, REMARK4, 
+    UPDATE_ID, UPDATE_NAME, UPDATE_DATE
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.PatientMedicalDto"
+		extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.patientNo != null and param.patientNo !='' ">
+					<![CDATA[and PATIENT_NO =#{param.patientNo}]]>
+				</if>
+			</if>
+		</where>
+		<if test="sortBy != null and sortBy != ''">
+			<if test="'createDesc'.equals(sortBy)">
+				order by CREATE_DATE desc
+			</if>
+		</if>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findPatientMedicals" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_medical
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findPatientMedicalPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_medical
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findPatientMedicalPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindPatientMedicalPage">
+		select count(*)
+		FROM patient_medical
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient_medical
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from patient_medical
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.PatientMedical">
+    insert into patient_medical (CODE, PATIENT_RESERVATION_CODE, PATIENT_NO, 
+      PATIENT_NAME, DOCTOR_NO, DOCTOR_NAME, 
+      ASSISTANT_NO, ASSISTANT_NAME, VISITING_DATE, 
+      VISITING_TYPE, MAIN_REMARK, MAIN_CURRENT_REMARK, 
+      MAIN_PAST_REMARK, CHECK_ORAL_REMARK, CHECK_AUXILIARY_REMARK, 
+      PLAN_DIAGNOSIS_REMARK, PLAN_TREATMENT_REMARK, 
+      DM_DISPOSAL_REMARK, DM_MEDICAL_REMARK, OTHER_LABEL_REMARK, 
+      OTHER_REMARK, CREATE_DATE, CREATE_ID, 
+      CREATE_NAME, REMARK, REMARK2, 
+      REMARK3, REMARK4, UPDATE_ID, 
+      UPDATE_NAME, UPDATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{patientReservationCode,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, 
+      #{patientName,jdbcType=VARCHAR}, #{doctorNo,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
+      #{assistantNo,jdbcType=VARCHAR}, #{assistantName,jdbcType=VARCHAR}, #{visitingDate,jdbcType=TIMESTAMP}, 
+      #{visitingType,jdbcType=VARCHAR}, #{mainRemark,jdbcType=VARCHAR}, #{mainCurrentRemark,jdbcType=VARCHAR}, 
+      #{mainPastRemark,jdbcType=VARCHAR}, #{checkOralRemark,jdbcType=VARCHAR}, #{checkAuxiliaryRemark,jdbcType=VARCHAR}, 
+      #{planDiagnosisRemark,jdbcType=VARCHAR}, #{planTreatmentRemark,jdbcType=VARCHAR}, 
+      #{dmDisposalRemark,jdbcType=VARCHAR}, #{dmMedicalRemark,jdbcType=VARCHAR}, #{otherLabelRemark,jdbcType=VARCHAR}, 
+      #{otherRemark,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientMedical">
+    insert into patient_medical
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="patientReservationCode != null">
+        PATIENT_RESERVATION_CODE,
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO,
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME,
+      </if>
+      <if test="doctorNo != null">
+        DOCTOR_NO,
+      </if>
+      <if test="doctorName != null">
+        DOCTOR_NAME,
+      </if>
+      <if test="assistantNo != null">
+        ASSISTANT_NO,
+      </if>
+      <if test="assistantName != null">
+        ASSISTANT_NAME,
+      </if>
+      <if test="visitingDate != null">
+        VISITING_DATE,
+      </if>
+      <if test="visitingType != null">
+        VISITING_TYPE,
+      </if>
+      <if test="mainRemark != null">
+        MAIN_REMARK,
+      </if>
+      <if test="mainCurrentRemark != null">
+        MAIN_CURRENT_REMARK,
+      </if>
+      <if test="mainPastRemark != null">
+        MAIN_PAST_REMARK,
+      </if>
+      <if test="checkOralRemark != null">
+        CHECK_ORAL_REMARK,
+      </if>
+      <if test="checkAuxiliaryRemark != null">
+        CHECK_AUXILIARY_REMARK,
+      </if>
+      <if test="planDiagnosisRemark != null">
+        PLAN_DIAGNOSIS_REMARK,
+      </if>
+      <if test="planTreatmentRemark != null">
+        PLAN_TREATMENT_REMARK,
+      </if>
+      <if test="dmDisposalRemark != null">
+        DM_DISPOSAL_REMARK,
+      </if>
+      <if test="dmMedicalRemark != null">
+        DM_MEDICAL_REMARK,
+      </if>
+      <if test="otherLabelRemark != null">
+        OTHER_LABEL_REMARK,
+      </if>
+      <if test="otherRemark != null">
+        OTHER_REMARK,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createName != null">
+        CREATE_NAME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateName != null">
+        UPDATE_NAME,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="patientReservationCode != null">
+        #{patientReservationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorNo != null">
+        #{doctorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null">
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantNo != null">
+        #{assistantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantName != null">
+        #{assistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingDate != null">
+        #{visitingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitingType != null">
+        #{visitingType,jdbcType=VARCHAR},
+      </if>
+      <if test="mainRemark != null">
+        #{mainRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mainCurrentRemark != null">
+        #{mainCurrentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPastRemark != null">
+        #{mainPastRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkOralRemark != null">
+        #{checkOralRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAuxiliaryRemark != null">
+        #{checkAuxiliaryRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="planDiagnosisRemark != null">
+        #{planDiagnosisRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="planTreatmentRemark != null">
+        #{planTreatmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="dmDisposalRemark != null">
+        #{dmDisposalRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="dmMedicalRemark != null">
+        #{dmMedicalRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="otherLabelRemark != null">
+        #{otherLabelRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="otherRemark != null">
+        #{otherRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.PatientMedical">
+    update patient_medical
+    <set>
+      <if test="patientReservationCode != null">
+        PATIENT_RESERVATION_CODE = #{patientReservationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorNo != null">
+        DOCTOR_NO = #{doctorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null">
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantNo != null">
+        ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantName != null">
+        ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingDate != null">
+        VISITING_DATE = #{visitingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitingType != null">
+        VISITING_TYPE = #{visitingType,jdbcType=VARCHAR},
+      </if>
+      <if test="mainRemark != null">
+        MAIN_REMARK = #{mainRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mainCurrentRemark != null">
+        MAIN_CURRENT_REMARK = #{mainCurrentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPastRemark != null">
+        MAIN_PAST_REMARK = #{mainPastRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkOralRemark != null">
+        CHECK_ORAL_REMARK = #{checkOralRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAuxiliaryRemark != null">
+        CHECK_AUXILIARY_REMARK = #{checkAuxiliaryRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="planDiagnosisRemark != null">
+        PLAN_DIAGNOSIS_REMARK = #{planDiagnosisRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="planTreatmentRemark != null">
+        PLAN_TREATMENT_REMARK = #{planTreatmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="dmDisposalRemark != null">
+        DM_DISPOSAL_REMARK = #{dmDisposalRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="dmMedicalRemark != null">
+        DM_MEDICAL_REMARK = #{dmMedicalRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="otherLabelRemark != null">
+        OTHER_LABEL_REMARK = #{otherLabelRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="otherRemark != null">
+        OTHER_REMARK = #{otherRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.PatientMedical">
+    update patient_medical
+    set PATIENT_RESERVATION_CODE = #{patientReservationCode,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      DOCTOR_NO = #{doctorNo,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
+      ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+      VISITING_DATE = #{visitingDate,jdbcType=TIMESTAMP},
+      VISITING_TYPE = #{visitingType,jdbcType=VARCHAR},
+      MAIN_REMARK = #{mainRemark,jdbcType=VARCHAR},
+      MAIN_CURRENT_REMARK = #{mainCurrentRemark,jdbcType=VARCHAR},
+      MAIN_PAST_REMARK = #{mainPastRemark,jdbcType=VARCHAR},
+      CHECK_ORAL_REMARK = #{checkOralRemark,jdbcType=VARCHAR},
+      CHECK_AUXILIARY_REMARK = #{checkAuxiliaryRemark,jdbcType=VARCHAR},
+      PLAN_DIAGNOSIS_REMARK = #{planDiagnosisRemark,jdbcType=VARCHAR},
+      PLAN_TREATMENT_REMARK = #{planTreatmentRemark,jdbcType=VARCHAR},
+      DM_DISPOSAL_REMARK = #{dmDisposalRemark,jdbcType=VARCHAR},
+      DM_MEDICAL_REMARK = #{dmMedicalRemark,jdbcType=VARCHAR},
+      OTHER_LABEL_REMARK = #{otherLabelRemark,jdbcType=VARCHAR},
+      OTHER_REMARK = #{otherRemark,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPatientReservationCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient_medical
+    where PATIENT_RESERVATION_CODE = #{patientReservationCode,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  <update id="updateByPrimaryKeyMedical" parameterType="com.ye.business.hx.domain.PatientMedical">
+    update patient_medical
+    set 
+      DOCTOR_NO = #{doctorNo,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
+      ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+      VISITING_DATE = #{visitingDate,jdbcType=TIMESTAMP},
+      VISITING_TYPE = #{visitingType,jdbcType=VARCHAR},
+      MAIN_REMARK = #{mainRemark,jdbcType=VARCHAR},
+      MAIN_CURRENT_REMARK = #{mainCurrentRemark,jdbcType=VARCHAR},
+      MAIN_PAST_REMARK = #{mainPastRemark,jdbcType=VARCHAR},
+      CHECK_ORAL_REMARK = #{checkOralRemark,jdbcType=VARCHAR},
+      CHECK_AUXILIARY_REMARK = #{checkAuxiliaryRemark,jdbcType=VARCHAR},
+      PLAN_DIAGNOSIS_REMARK = #{planDiagnosisRemark,jdbcType=VARCHAR},
+      PLAN_TREATMENT_REMARK = #{planTreatmentRemark,jdbcType=VARCHAR},
+      DM_DISPOSAL_REMARK = #{dmDisposalRemark,jdbcType=VARCHAR},
+      DM_MEDICAL_REMARK = #{dmMedicalRemark,jdbcType=VARCHAR},
+      OTHER_LABEL_REMARK = #{otherLabelRemark,jdbcType=VARCHAR},
+      OTHER_REMARK = #{otherRemark,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

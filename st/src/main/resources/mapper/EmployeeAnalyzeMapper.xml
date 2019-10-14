@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IEmployeeAnalyzeDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.EmployeeAnalyze" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="ST_DATE" property="stDate" jdbcType="DATE" />
+    <result column="NUM_EMPLOYEE" property="numEmployee" jdbcType="BIGINT" />
+    <result column="RATIO_AGE_TWENTY" property="ratioAgeTwenty" jdbcType="DECIMAL" />
+    <result column="NUM_AGE_TWENTY" property="numAgeTwenty" jdbcType="INTEGER" />
+    <result column="RATIO_AGE_THIRTY" property="ratioAgeThirty" jdbcType="DECIMAL" />
+    <result column="NUM_AGE_THIRTY" property="numAgeThirty" jdbcType="INTEGER" />
+    <result column="RATIO_AGE_FORTY" property="ratioAgeForty" jdbcType="DECIMAL" />
+    <result column="NUM_AGE_FORTY" property="numAgeForty" jdbcType="INTEGER" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="NUM_AGE_FIFTY" property="numAgeFifty" jdbcType="INTEGER" />
+    <result column="RATIO_AGE_FIFTY" property="ratioAgeFifty" jdbcType="DECIMAL" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, ST_DATE, NUM_EMPLOYEE, 
+    RATIO_AGE_TWENTY, NUM_AGE_TWENTY, RATIO_AGE_THIRTY, NUM_AGE_THIRTY, RATIO_AGE_FORTY, 
+    NUM_AGE_FORTY, DIMENSION_ST, NUM_AGE_FIFTY, RATIO_AGE_FIFTY, CREATE_DATE
+  </sql>
+  
+      <sql id="findEmployeeAnalyze">
+	 <where>
+	  <if test="merchantNo != null and merchantNo !='' ">
+		and MERCHANT_NO = #{merchantNo}
+	  </if>		    
+	  <if test="shopNo != null and shopNo !='' ">
+		and SHOP_NO = #{shopNo}
+	  </if>
+	  <if test="endTime != null "> 
+		<![CDATA[and  DATE_FORMAT(ST_DATE, 'yyyy-MM-dd') <= #{endTime}]]>
+		</if>
+	 </where>
+	</sql>
+  
+  <select id="findEmployeeAnalyzeList" resultType="map" parameterType="map">
+    select 
+    <include refid="Base_Column_List"/>
+    from employee_analyze
+    <include refid="findEmployeeAnalyze"/>
+    order by ST_DATE desc
+  </select>
+
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.EmployeeAnalyze" >
+    insert into employee_analyze
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="stDate != null" >
+        ST_DATE,
+      </if>
+      <if test="numEmployee != null" >
+        NUM_EMPLOYEE,
+      </if>
+      <if test="ratioAgeTwenty != null" >
+        RATIO_AGE_TWENTY,
+      </if>
+      <if test="numAgeTwenty != null" >
+        NUM_AGE_TWENTY,
+      </if>
+      <if test="ratioAgeThirty != null" >
+        RATIO_AGE_THIRTY,
+      </if>
+      <if test="numAgeThirty != null" >
+        NUM_AGE_THIRTY,
+      </if>
+      <if test="ratioAgeForty != null" >
+        RATIO_AGE_FORTY,
+      </if>
+      <if test="numAgeForty != null" >
+        NUM_AGE_FORTY,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+      <if test="numAgeFifty != null" >
+        NUM_AGE_FIFTY,
+      </if>
+      <if test="ratioAgeFifty != null" >
+        RATIO_AGE_FIFTY,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="stDate != null" >
+        #{stDate,jdbcType=DATE},
+      </if>
+      <if test="numEmployee != null" >
+        #{numEmployee,jdbcType=BIGINT},
+      </if>
+      <if test="ratioAgeTwenty != null" >
+        #{ratioAgeTwenty,jdbcType=DECIMAL},
+      </if>
+      <if test="numAgeTwenty != null" >
+        #{numAgeTwenty,jdbcType=INTEGER},
+      </if>
+      <if test="ratioAgeThirty != null" >
+        #{ratioAgeThirty,jdbcType=DECIMAL},
+      </if>
+      <if test="numAgeThirty != null" >
+        #{numAgeThirty,jdbcType=INTEGER},
+      </if>
+      <if test="ratioAgeForty != null" >
+        #{ratioAgeForty,jdbcType=DECIMAL},
+      </if>
+      <if test="numAgeForty != null" >
+        #{numAgeForty,jdbcType=INTEGER},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="numAgeFifty != null" >
+        #{numAgeFifty,jdbcType=INTEGER},
+      </if>
+      <if test="ratioAgeFifty != null" >
+        #{ratioAgeFifty,jdbcType=DECIMAL},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+
+
+</mapper>

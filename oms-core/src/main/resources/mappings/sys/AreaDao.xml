@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.oms.dao.sys.AreaDao">
+    <cache/>
+	<sql id="areaColumns">
+		a.id,
+		a.parent_id AS "parent.id",
+		a.parent_ids,
+		a.code,
+		a.name,
+		a.sort,
+		a.type,
+		a.zone,
+		a.initial,
+		a.remarks,
+		a.create_by AS "createBy.id",
+		a.create_date,
+		a.update_by AS "updateBy.id",
+		a.update_date,
+		a.del_flag,
+		p.name AS "parent.name"
+	</sql>
+	
+	<sql id="areaJoins">
+		LEFT JOIN sys_office p ON p.id = a.parent_id
+    </sql>
+    
+	<select id="get" resultType="com.lj.oms.entity.sys.Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="getByCode" resultType="com.lj.oms.entity.sys.Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.code = #{code}
+	</select>
+	
+	<select id="getProvinceByCode" resultType="com.lj.oms.entity.sys.Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.code = #{code} and a.type = 2
+	</select>
+	
+	<select id="findList" resultType="com.lj.oms.entity.sys.Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		OR a.id = #{currentUser.office.area.id}
+		ORDER BY a.code
+	</select>
+	
+	<select id="findAllList" resultType="com.lj.oms.entity.sys.Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.code
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="com.lj.oms.entity.sys.Area">
+		SELECT
+			a.id,
+			a.parent_id AS "parent.id",
+			a.parent_ids
+		FROM sys_area a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_ids LIKE #{parentIds}
+		ORDER BY a.code
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_area(
+			id, 
+			parent_id, 
+			parent_ids, 
+			code, 
+			name, 
+			sort,
+			type,
+			zone, 
+			initial, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{parent.id}, 
+			#{parentIds}, 
+			#{code}, 
+			#{name}, 
+			#{sort}, 
+			#{type},
+			#{zone}, 
+			#{initial},
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<insert id="batchInsert">
+		INSERT INTO sys_area(
+			id, 
+			parent_id, 
+			parent_ids, 
+			code, 
+			name, 
+			sort,
+			type,
+			zone, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			initial,
+			remarks, 
+			del_flag
+		) VALUES 
+		<foreach collection="list" item="item" separator="," >
+		(
+			#{item.id}, 
+			#{item.parentId}, 
+			#{item.parentIds}, 
+			#{item.code}, 
+			#{item.name}, 
+			#{item.sort}, 
+			#{item.type},
+			#{item.zone}, 
+			#{item.createById}, 
+			#{item.createDate}, 
+			#{item.updateById}, 
+			#{item.updateDate}, 
+			#{item.initial}, 
+			#{item.remarks}, 
+			#{item.delFlag}
+		)
+		</foreach>
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_area SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}, 
+			code = #{code}, 
+			name = #{name}, 
+			sort = #{sort}, 
+			type = #{type},
+			zone = #{zone}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			initial = #{initial},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="batchUpdate">
+	  <foreach collection="list" item="item" open="" close="" separator=";">
+		UPDATE sys_area SET 
+			name = #{item.name}, 
+			update_date = #{item.updateDate}
+		WHERE code = #{item.code} 
+	  </foreach>	
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE sys_area SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_area SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+	</update>
+	
+	
+  <select id="selectProvince" resultType="com.lj.oms.entity.sys.Area">
+    select 
+    <include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+    where a.parent_id = 1 AND a.type=2 and a.del_flag = '0'
+  </select>
+  
+  <select id="selectCity" resultType="com.lj.oms.entity.sys.Area">
+    select 
+    id,code,name
+    from sys_area
+    where type=3 and del_flag = '0'
+  </select>
+  
+  <select id="selectRegion" resultType="com.lj.oms.entity.sys.Area">
+    select 
+    id,code,name
+    from sys_area
+    where type=4 and del_flag = '0'
+  </select>
+  
+  <select id="selectAreaByParentId" resultType="com.lj.oms.entity.sys.Area" parameterType="java.lang.String">
+    select 
+    id,code,name,parent_id parentId 
+    from sys_area
+    where parent_id = #{value}
+    order by sort
+  </select>
+  
+  <!-- 查询所有的省市区信息 -->
+  <select id="FindProvinceAndCityarea" resultType="com.lj.oms.entity.sys.Area">
+    select 
+    parent_id,parent_ids,name,code,type,zone 
+    from sys_area
+    where del_flag = '0'
+  </select>
+  
+  
+  <select id="selectAreaNameByParentId" resultType="java.lang.String" parameterType="java.lang.String">
+    select name from sys_area where id = #{value}
+  </select>
+  
+  <select id="selectAreaById" resultType="java.lang.String" parameterType="java.lang.String">
+   select parent_ids from sys_area where id = #{value}
+  </select>
+  
+    <!-- 根据区ID获取市名称，市ID以及省名称，省ID-->
+   <select id="selectInfoByAreaId" resultType="java.util.Map" parameterType="java.lang.String">
+  SELECT t1.code AS province_id,t1.name,t2.country_id,t2.country_name,t2.city_id,t2.city_name FROM sys_area t1, 
+  (SELECT c.code AS city_id,c.parent_id,c.name AS city_name ,ct.name AS country_name,ct.code AS country_id FROM sys_area c,
+  ( SELECT t.name,t.parent_id,t.code FROM sys_area t WHERE id = #{value,jdbcType=VARCHAR}) ct
+   WHERE c.id = ct.parent_id )t2 WHERE t1.id = t2.parent_id 
+  </select>
+    <!-- 根据市ID获取市名称，市ID以及省名称，省ID-->
+   <select id="selectInfoByCityId" resultType="java.util.Map" parameterType="java.lang.String">
+  SELECT c.code AS province_id,c.name AS province_name,c.parent_id ,ct.code AS city_id,ct.name AS city_name FROM sys_area c,
+  ( SELECT t.name,t.parent_id,t.code FROM sys_area t WHERE id = #{value,jdbcType=VARCHAR}) ct
+   WHERE c.id = ct.parent_id
+  </select>
+  <select id="getChildById" resultType="com.lj.oms.entity.sys.Area">
+     SELECT * FROM sys_area WHERE parent_id=#{pid}
+  </select>
+   <select id="findHotList" resultType="com.lj.oms.entity.sys.Area">
+     SELECT 
+     *
+     FROM sys_area WHERE id in 
+     <foreach item="item" index="index" collection="hotCity" open="(" separator="," close=")">  
+       #{item}  
+     </foreach>  
+  </select>
+  
+  <!-- 只取到地市级别 	AND type <=3-->
+  <!-- 修改只取市  luoshuming type = 3 -->
+   <select id="findPinyinList" resultType="com.lj.oms.entity.dto.AreaPinyinDto">
+	   <![CDATA[
+	   		SELECT
+			a.initial as pinyin,GROUP_CONCAT(CONCAT(a.`name`,'-',a.`code`)) as citys
+			FROM
+				sys_area a
+			where a.initial is NOT NULL
+			AND type =3
+            and del_flag ='0'
+			group BY a.initial
+			ORDER BY a.initial ASC,a.sort asc 
+	   ]]>
+	
+  </select>
+  
+  
+  <select id="findAreaByCityName" resultType="com.lj.oms.entity.sys.Area">
+     SELECT <include refid="areaColumns"/>
+     FROM sys_area a 
+     <include refid="areaJoins"/>
+     WHERE a.name like CONCAT('%',#{cityName},'%') 
+     limit 1
+  </select>
+  
+  <select id="findChild" resultType="java.util.Map" parameterType="java.lang.String" >
+    select s1.*,
+    	CASE WHEN (SELECT count(s2.id) from sys_area s2 WHERE s2.parent_id=s1.id)=0 THEN false ELSE true END as hasChild,
+    	(SELECT label from sys_dict s3 where s3.type='sys_area_type' and s3.`value` = s1.type) as type_label,
+    	(SELECT label from sys_dict s3 where s3.type='erp_dict_1' and s3.`value` = s1.zone) as zone_label
+    from sys_area s1
+    where s1.parent_id = #{parentId}
+  </select>
+</mapper>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+ 
+ 	<bean id="guidScheduleLogService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>guidScheduleLogService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IGuidScheduleLogService" />
+	</bean>
+	
+	<bean id="guidScheduleService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>guidScheduleService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IGuidScheduleService" />
+	</bean>
+		 
+	<bean id="hxClueOrderService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>hxClueOrderService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IHxClueOrderService" />
+	</bean>
+		 
+	<bean id="hxClueService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>hxClueService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IHxClueService" />
+	</bean>
+		 
+	<bean id="hxPatientService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>hxPatientService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IHxPatientService" />
+	</bean>
+		 
+	<bean id="patientMedicalService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>patientMedicalService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientMedicalService" />
+	</bean>
+		 
+	<bean id="patientServiceAdvisoryService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>patientServiceAdvisoryService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientServiceAdvisoryService" />
+	</bean>
+	
+		 
+	<bean id="patientServiceChooseService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>patientServiceChooseService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientServiceChooseService" />
+	</bean>
+		 
+	<bean id="patientServiceService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>patientServiceService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientServiceService" />
+	</bean>
+	
+		 
+	<bean id="serverDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>serverDetailService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IServerDetailService" />
+	</bean>
+	
+		 
+	<bean id="hlmServerInfoService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>serverInfoService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IServerInfoService" />
+	</bean>
+	
+		 
+	<bean id="shopConfigService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>shopConfigService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopConfigService" />
+	</bean>
+	
+		 
+	<bean id="shopOrderService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>shopOrderService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopOrderService" />
+	</bean>
+	
+		 
+	<bean id="shopScheduleService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>shopScheduleService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopScheduleService" />
+	</bean>
+		 
+	<bean id="shopServerDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>shopServerDetailService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopServerDetailService" />
+	</bean>
+	
+	<bean id="shopServerService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>shopServerService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopServerService" />
+	</bean>
+	
+	<bean id="projectPriceService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>projectPriceService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IProjectPriceService" />
+	</bean>
+	
+	 
+	
+	<bean id="billDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>billDetailService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillDetailService" />
+	</bean>
+	
+	<bean id="billOperateService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>billOperateService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillOperateService" />
+	</bean>
+	
+	<bean id="billPaymentService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>billPaymentService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillPaymentService" />
+	</bean>
+	
+	<bean id="billRefundDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>billRefundDetailService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillRefundDetailService" />
+	</bean>
+	
+	<bean id="billRefundService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>billRefundService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillRefundService" />
+	</bean>
+	
+	<bean id="hlmBillService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName" ><value>billService</value></property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillService" />
+	</bean>
+
+	<bean id="payDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName">
+			<value>payDetailService</value>
+		</property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPayDetailService" />
+	</bean>
+
+	<bean id="payTypeDetailService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName">
+			<value>payTypeDetailService</value>
+		</property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPayTypeDetailService" />
+	</bean>
+
+	<bean id="stDailyPayService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName">
+			<value>stDailyPayService</value>
+		</property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IStDailyPayService" />
+	</bean>
+	
+	<bean id="ptTreatmentRecordService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName">
+			<value>ptTreatmentRecordService</value>
+		</property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPtTreatmentRecordService" />
+	</bean>
+	
+	<bean id="festivalPosterService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName">
+			<value>festivalPosterService</value>
+		</property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IFestivalPosterService" />
+	</bean>
+	
+	<bean id="shopFestivalPosterService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>hx</value>
+		</property>
+		<property name="serviceName">
+			<value>shopFestivalPosterService</value>
+		</property>
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopFestivalPosterService" />
+	</bean>
+	
+	
+</beans> 
+

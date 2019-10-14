@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+	<!-- 	区域服务 -->
+    <bean id="areaHessianService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="oms" />
+		<property name="serviceName" value="areaHessianService" />
+		<property name="serviceInterface" value="com.lj.oms.service.AreaHessianService" />
+	</bean>
+	
+	<!-- 	机构服务 -->
+	<bean id="officeHessianService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="oms" />
+		<property name="serviceName" value="officeHessianService" />
+		<property name="serviceInterface" value="com.lj.oms.service.OfficeHessianService" />
+	</bean>
+	
+	<!-- 	字典服务 -->
+	<bean id="dictHessianService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="oms" />
+		<property name="serviceName" value="dictHessianService" />
+		<property name="serviceInterface" value="com.lj.oms.service.DictHessianService" />
+	</bean>
+	
+	 <!-- 	快推对外服务 -->
+	<bean id="kuaiTuiHessianService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="oms" />
+		<property name="serviceName" value="kuaiTuiHessianService" />
+		<property name="serviceInterface" value="com.lj.oms.service.KuaiTuiHessianService" />
+	</bean>
+	<!-- 	用户服务 -->
+    <bean id="userHessianService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="oms" />
+		<property name="serviceName" value="userHessianService" />
+		<property name="serviceInterface" value="com.lj.oms.service.UserHessianService" />
+	</bean>
+	<!-- 系统服务 -->
+	<bean id="systemService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="oms" />
+		<property name="serviceName" value="systemService" />
+		<property name="serviceInterface" value="com.lj.oms.service.ISystemService" />
+	</bean>
+	
+		<!-- 	角色服务 -->
+	<bean id="roleHessianService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="oms" />
+		<property name="serviceName" value="roleHessianService" />
+		<property name="serviceInterface" value="com.lj.oms.service.RoleHessianService" />
+	</bean>
+	
+</beans> 
+

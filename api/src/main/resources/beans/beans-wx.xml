@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd          
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    
+    <!-- 聊天记录服务 -->
+	<bean id="wxChatInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxChatInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxChatInfoService" />   
+    </bean> 
+    
+    <!-- IM聊天记录服务 -->
+	<bean id="imChatInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imChatInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImChatInfoService" />   
+    </bean> 
+    
+       <!-- IM敏感词服务 -->
+	<bean id="imSensitiveWordsService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imSensitiveWordsService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImSensitiveWordsService" />   
+    </bean> 
+    
+    
+    <!-- IM表情服务 -->
+	<bean id="imEmojiService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imEmojiService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImEmojiService" />   
+    </bean> 
+    
+    <!-- IM表情包服务 -->
+	<bean id="imEmojiPackageService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imEmojiPackageService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImEmojiPackageService" />   
+    </bean> 
+    
+    <!-- 朋友圈信息服务 -->
+	<bean id="wxFriendsInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxFriendsInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxFriendsInfoService" />   
+    </bean> 
+    
+    <!-- 朋友圈评论服务 -->
+	<bean id="wxCommentInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxCommentInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxCommentInfoService" />   
+    </bean> 
+    
+    <!-- 朋友圈点赞服务 -->
+	<bean id="wxLikeInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxLikeInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxLikeInfoService" />   
+    </bean> 
+    
+     <!-- 发送朋友圈信息  ,点赞,评论 -->
+	<bean id="friendsFacade" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="friendsFacade" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImFriendsFacade" />
+	</bean>
+	
+	<!--  朋友圈信息查询服务 -->
+    <bean id="imFriendsInfoService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imFriendsInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImFriendsInfoService	" />
+	</bean>
+	<!-- <bean id="imFriendsInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianTimeoutProxyFactoryBean">   
+		<property name="serviceUrl">  
+			<value>http://192.168.7.6:8888/weixin/hessian/imFriendsInfoService</value>
+		</property>
+		<property name="serviceInterface">   
+			<value>com.lj.business.weixin.service.IImFriendsInfoService</value>  
+		</property>
+		<property name="readTimeout" value="60000"/> 
+		<property name="connectTimeout" value="60000"/>   
+	</bean>  -->
+	
+	<!--  添加朋友圈评论服务 -->
+    <bean id="imCommentInfoService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imCommentInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImCommentInfoService" />
+	</bean>
+	
+		<!--  朋友圈添加评论信息服务 -->
+    <bean id="imLikeInfoService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imLikeInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImLikeInfoService" />
+	</bean>
+	
+		<!--  发送朋友圈任务 -->
+    <bean id="sendFriendsJobService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="sendFriendsJobService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.ISendFriendsJobService" />
+	</bean>
+	 
+	  <!-- IM聊天敏感词记录信息 -->
+	  <bean id="imChatInfoSensitiveService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imChatInfoSensitiveService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImChatInfoSensitiveService" />
+	</bean> 
+	
+	<!-- 朋友圈提示周期 -->
+	<bean id="friendPointCycleService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="friendPointCycleService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IFriendPointCycleService" />
+	</bean>
+	<!--
+	<bean id="friendPointCycleService" class="com.lj.base.mvc.remote.hession.spring.HessianTimeoutProxyFactoryBean">   
+		<property name="serviceUrl">  
+			<value>http://192.168.7.6:8888/weixin/hessian/friendPointCycleService</value>
+		</property>
+		<property name="serviceInterface">   
+			<value>com.lj.business.weixin.service.IFriendPointCycleService</value>  
+		</property>
+		<property name="readTimeout" value="60000"/> 
+		<property name="connectTimeout" value="60000"/>   
+	</bean>
+	-->
+	 
+	  <!-- 群发优惠券业务接口 -->
+	  <bean id="couponMultiPushService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="couponMultiPushService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.ICouponMultiPushService" />
+	</bean> 
+	<!-- 红包记录 -->
+	<bean id="wxRedpackDetailInfoService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxRedpackDetailInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxRedpackDetailInfoService" />
+	</bean>
+	
+	<!-- 群发红包 -->
+	<bean id="wxJobInfoService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxJobInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxJobInfoService" />
+	</bean>
+	
+	<!-- 红包重发 -->
+	<bean id="wxJobHandler" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxJobHandler" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWXJobHandler" />
+	</bean> 
+    
+    <!-- 微信公众号 -->
+	<bean id="wxPublicAccountService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxPublicAccountService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxPublicAccountService" />   
+    </bean> 
+    
+    <!-- 微信小程序 -->
+	<bean id="wxSmallProgramService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxSmallProgramService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxSmallProgramService" />   
+    </bean> 
+    
+    <!-- 微信消息群发服务 -->
+	<bean id="imGroupChatInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imGroupChatInfoService" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImGroupChatInfoService" />   
+    </bean> 
+
+	<!-- 朋友圈信息上传 -->
+	<bean name="wxFriendsDataService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="wxFriendsDataService"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxFriendsDataService"></property>
+	</bean>
+	
+	<!-- 群发任务 -->
+	<bean name="imGroupChatJobService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="wx" />
+		<property name="serviceName" value="imGroupChatJobService"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImGroupChatJobService"></property>
+	</bean>
+	
+	
+</beans> 
+

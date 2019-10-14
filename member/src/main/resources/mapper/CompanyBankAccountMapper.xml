@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.ICompanyBankAccountDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.CompanyBankAccount" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="BANKCARD_NO" property="bankcardNo" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="IS_DEFAULT" property="isDefault" jdbcType="TINYINT" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindCompanyBankAccountReturnResultMap" type="com.lj.business.member.dto.company.FindCompanyBankAccountReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="BANKCARD_NO" property="bankcardNo" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="IS_DEFAULT" property="isDefault" jdbcType="TINYINT" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindCompanyBankAccountPageReturnResultMap" type="com.lj.business.member.dto.company.FindCompanyBankAccountPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="BANKCARD_NO" property="bankcardNo" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="IS_DEFAULT" property="isDefault" jdbcType="TINYINT" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, COMPANY_NO, COMPANY_NAME, BANKCARD_NO, BANK_CODE, BANK_NAME, CUST_NAME,PROVINCE_CODE,PROVINCE_NAME,CITY_CODE,CITY_NAME, BRANCH, 
+    IS_DEFAULT, MERCHANT_NO, CREATE_DATE, UPDATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from company_bank_account
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from company_bank_account
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.CompanyBankAccount" >
+    insert into company_bank_account (CODE, COMPANY_NO, COMPANY_NAME, 
+      BANKCARD_NO, BANK_CODE, BANK_NAME, 
+      CUST_NAME, PROVINCE_CODE,PROVINCE_NAME,CITY_CODE,CITY_NAME,BRANCH, IS_DEFAULT, 
+      MERCHANT_NO, CREATE_DATE, UPDATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{companyNo,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{bankcardNo,jdbcType=VARCHAR}, #{bankCode,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{custName,jdbcType=VARCHAR},#{provinceCode,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityCode,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR}, 
+      #{branch,jdbcType=VARCHAR}, #{isDefault,jdbcType=TINYINT}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.CompanyBankAccount" >
+    insert into company_bank_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="companyNo != null" >
+        COMPANY_NO,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="bankcardNo != null" >
+        BANKCARD_NO,
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME,
+      </if>
+      <if test="branch != null" >
+        BRANCH,
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNo != null" >
+        #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcardNo != null" >
+        #{bankcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.CompanyBankAccount" >
+    update company_bank_account
+    <set >
+      <if test="companyNo != null" >
+        COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcardNo != null" >
+        BANKCARD_NO = #{bankcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        BRANCH = #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT = #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByCompanyNo" parameterType="com.lj.business.member.domain.CompanyBankAccount" >
+    update company_bank_account
+    <set >
+      <if test="companyNo != null" >
+        COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcardNo != null" >
+        BANKCARD_NO = #{bankcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        BRANCH = #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT = #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.CompanyBankAccount" >
+    update company_bank_account
+    set COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      BANKCARD_NO = #{bankcardNo,jdbcType=VARCHAR},
+      BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      CUST_NAME = #{cityName,jdbcType=VARCHAR},
+      CITY_NAME = #{branch,jdbcType=VARCHAR},
+      IS_DEFAULT = #{isDefault,jdbcType=TINYINT},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询分公司已添加指定银行卡号的银行账户数量 -->
+  <select id="selectCountByCompanyAndCard" resultType="int">
+  	select count(*) 
+  	  from company_bank_account 
+  	 where COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+  	   and BANKCARD_NO = #{bankcardNo,jdbcType=VARCHAR} 
+  </select>  
+  
+  <!-- 取消分公司下默认账户 -->
+  <update id="cancelDefaultAccount" parameterType="string" >
+    update company_bank_account
+       set IS_DEFAULT = 0,
+           UPDATE_DATE = now()
+     where COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+       and IS_DEFAULT = 1
+  </update>
+
+	<!-- 分公司银行账户分页查询 - begin -->
+	<sql id="findOrderPageFromWeb_condition">
+		<where>
+			<if test="companyNo != null and companyNo != ''">
+				and COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+			</if>
+			<if test="companyName != null and companyName != ''">
+				and COMPANY_NAME like '%${companyName}%'
+			</if>
+			<if test="bankCode != null and bankCode != ''">
+				and BANK_CODE = #{bankCode,jdbcType=VARCHAR}
+			</if>
+			<if test="isDefault != null">
+				and IS_DEFAULT = #{isDefault,jdbcType=TINYINT}
+			</if>
+			<if test="merchantNo != null and merchantNo != ''">
+				and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findCompanyBankAccountPage" resultMap="FindCompanyBankAccountPageReturnResultMap" parameterType="com.lj.business.member.dto.company.FindCompanyBankAccountPage">
+		SELECT <include refid="Base_Column_List" />
+		FROM company_bank_account
+		<include refid="findOrderPageFromWeb_condition" />
+		order by UPDATE_DATE desc
+		limit ${start}, ${limit}
+	</select>
+
+	<select id="findCompanyBankAccountPageCount" resultType="int" parameterType="com.lj.business.member.dto.company.FindCompanyBankAccountPage">
+		select count(*) FROM company_bank_account
+		<include refid="findOrderPageFromWeb_condition" />
+	</select>
+	<!-- 分公司银行账户分页查询 - end -->
+  
+  	<!-- 查询分公司结算账户 -->
+  	<select id="findSettleAccountByCompany" resultMap="FindCompanyBankAccountReturnResultMap" parameterType="string">
+		SELECT <include refid="Base_Column_List" />
+		  FROM company_bank_account
+         where COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+		 order by IS_DEFAULT desc, CREATE_DATE asc
+	</select>
+</mapper>

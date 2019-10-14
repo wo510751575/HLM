@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IBillRefundDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.BillRefund">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="BILL_CODE" jdbcType="VARCHAR" property="billCode" />
+    <result column="OPERATE_CODE" jdbcType="VARCHAR" property="operateCode" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
+    <result column="PATIENT_NAME" jdbcType="VARCHAR" property="patientName" />
+    <result column="MEDICAL_NO" jdbcType="VARCHAR" property="medicalNo" />
+    <result column="MEMBER_NO_GUID" jdbcType="VARCHAR" property="memberNoGuid" />
+    <result column="MEMBER_NAME_GUID" jdbcType="VARCHAR" property="memberNameGuid" />
+    <result column="PAY_TYPE" jdbcType="VARCHAR" property="payType" />
+    <result column="PAY_TYPE_NAME" jdbcType="VARCHAR" property="payTypeName" />
+    <result column="RT_AMOUNT" jdbcType="BIGINT" property="rtAmount" />
+    <result column="REFUND_GD_NO" jdbcType="VARCHAR" property="refundGdNo" />
+    <result column="REFUND_GD_NAME" jdbcType="VARCHAR" property="refundGdName" />
+    <result column="REFUND_TIME" jdbcType="TIMESTAMP" property="refundTime" />
+    <result column="REFUND_STATUS" jdbcType="VARCHAR" property="refundStatus" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="REFUND_TYPE" jdbcType="VARCHAR" property="refundType" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK1" jdbcType="VARCHAR" property="remark1" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, BILL_CODE, OPERATE_CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, PATIENT_NO, 
+    PATIENT_NAME, MEDICAL_NO, MEMBER_NO_GUID, MEMBER_NAME_GUID, PAY_TYPE, PAY_TYPE_NAME, RT_AMOUNT, REFUND_GD_NO, REFUND_GD_NAME, 
+    REFUND_TIME, REFUND_STATUS, STATUS, REFUND_TYPE, UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+    CREATE_DATE, REMARK, REMARK1, REMARK2, REMARK3, REMARK4
+  </sql>
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.BillRefundDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.operateCode != null and param.operateCode !='' ">
+					<![CDATA[and OPERATE_CODE =#{param.operateCode}]]>
+				</if>
+				<if test="param.billCode != null and param.billCode !='' ">
+					<![CDATA[and BILL_CODE =#{param.billCode}]]>
+				</if>
+				
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findBillRefunds" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindBillRefundPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM bill_refund
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findBillRefundPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindBillRefundPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM bill_refund
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findBillRefundPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindBillRefundPage">
+		select count(*)
+		FROM bill_refund
+		<include refid="findPage_condition" />
+	</select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bill_refund
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bill_refund
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ye.business.hx.domain.BillRefund">
+    insert into bill_refund (CODE, BILL_CODE, OPERATE_CODE, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, PATIENT_NO, PATIENT_NAME, 
+      MEDICAL_NO, PAY_TYPE, MEMBER_NO_GUID, 
+      MEMBER_NAME_GUID, PAY_TYPE_NAME, RT_AMOUNT, 
+      REFUND_GD_NO, REFUND_GD_NAME, REFUND_TIME, 
+      REFUND_STATUS, STATUS, REFUND_TYPE, 
+      UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+      CREATE_DATE, REMARK, REMARK1, 
+      REMARK2, REMARK3, REMARK4
+      )
+    values (#{code,jdbcType=VARCHAR}, #{billCode,jdbcType=VARCHAR}, #{operateCode,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, #{patientName,jdbcType=VARCHAR}, 
+      #{medicalNo,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{memberNoGuid,jdbcType=VARCHAR}, 
+      #{memberNameGuid,jdbcType=VARCHAR}, #{payTypeName,jdbcType=VARCHAR}, #{rtAmount,jdbcType=BIGINT}, 
+      #{refundGdNo,jdbcType=VARCHAR}, #{refundGdName,jdbcType=VARCHAR}, #{refundTime,jdbcType=TIMESTAMP}, 
+      #{refundStatus,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{refundType,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.BillRefund">
+    insert into bill_refund
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="billCode != null">
+        BILL_CODE,
+      </if>
+      <if test="operateCode != null">
+        OPERATE_CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO,
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME,
+      </if>
+      <if test="medicalNo != null">
+        MEDICAL_NO,
+      </if>
+      <if test="payType != null">
+        PAY_TYPE,
+      </if>
+      <if test="memberNoGuid != null">
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null">
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="payTypeName != null">
+        PAY_TYPE_NAME,
+      </if>
+      <if test="rtAmount != null">
+        RT_AMOUNT,
+      </if>
+      <if test="refundGdNo != null">
+        REFUND_GD_NO,
+      </if>
+      <if test="refundGdName != null">
+        REFUND_GD_NAME,
+      </if>
+      <if test="refundTime != null">
+        REFUND_TIME,
+      </if>
+      <if test="refundStatus != null">
+        REFUND_STATUS,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="refundType != null">
+        REFUND_TYPE,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark1 != null">
+        REMARK1,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="billCode != null">
+        #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operateCode != null">
+        #{operateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null">
+        #{medicalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null">
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null">
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="rtAmount != null">
+        #{rtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="refundGdNo != null">
+        #{refundGdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundGdName != null">
+        #{refundGdName,jdbcType=VARCHAR},
+      </if>
+      <if test="refundTime != null">
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundStatus != null">
+        #{refundStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null">
+        #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.BillRefund">
+    update bill_refund
+    <set>
+      <if test="billCode != null">
+        BILL_CODE = #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operateCode != null">
+        OPERATE_CODE = #{operateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null">
+        MEDICAL_NO = #{medicalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null">
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null">
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        PAY_TYPE_NAME = #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="rtAmount != null">
+        RT_AMOUNT = #{rtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="refundGdNo != null">
+        REFUND_GD_NO = #{refundGdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundGdName != null">
+        REFUND_GD_NAME = #{refundGdName,jdbcType=VARCHAR},
+      </if>
+      <if test="refundTime != null">
+        REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundStatus != null">
+        REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null">
+        REFUND_TYPE = #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        REMARK1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.BillRefund">
+    update bill_refund
+    set BILL_CODE = #{billCode,jdbcType=VARCHAR},
+      OPERATE_CODE = #{operateCode,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      MEDICAL_NO = #{medicalNo,jdbcType=VARCHAR},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      PAY_TYPE_NAME = #{payTypeName,jdbcType=VARCHAR},
+      RT_AMOUNT = #{rtAmount,jdbcType=BIGINT},
+      REFUND_GD_NO = #{refundGdNo,jdbcType=VARCHAR},
+      REFUND_GD_NAME = #{refundGdName,jdbcType=VARCHAR},
+      REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REFUND_TYPE = #{refundType,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK1 = #{remark1,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByOperateCodeSelective" parameterType="com.ye.business.hx.domain.BillRefund">
+    update bill_refund
+    <set>
+      <if test="billCode != null">
+        BILL_CODE = #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null">
+        MEDICAL_NO = #{medicalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null">
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null">
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        PAY_TYPE_NAME = #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="rtAmount != null">
+        RT_AMOUNT = #{rtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="refundGdNo != null">
+        REFUND_GD_NO = #{refundGdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundGdName != null">
+        REFUND_GD_NAME = #{refundGdName,jdbcType=VARCHAR},
+      </if>
+      <if test="refundTime != null">
+        REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundStatus != null">
+        REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null">
+        REFUND_TYPE = #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        REMARK1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OPERATE_CODE = #{operateCode,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

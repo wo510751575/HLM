@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.ad.dao.IRwUserBeansDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.ad.domain.RwUserBeans" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="BEANS_SUM" property="beansSum" jdbcType="INTEGER" />
+    <result column="BEANS_USE" property="beansUse" jdbcType="INTEGER" />
+    <result column="BEANS_FREEZE" property="beansFreeze" jdbcType="INTEGER" />
+    <result column="BEANS_NORMAL" property="beansNormal" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" type="com.ye.business.ad.dto.RwUserBeansDto" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO, MEMBER_NAME, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, BEANS_SUM, 
+    BEANS_USE, BEANS_FREEZE, BEANS_NORMAL, CREATE_ID, CREATE_NAME, CREATE_DATE, UPDATE_ID, 
+    UPDATE_NAME, UPDATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+        <if test="param.createId != null and param.createId != '' ">
+		  <![CDATA[and CREATE_ID = #{param.createId} ]]>
+		</if>
+		<if test="param.merchantNo != null and param.merchantNo != '' ">
+		  <![CDATA[and MERCHANT_NO = #{param.merchantNo} ]]>
+		</if>
+		<if test="param.memberNo != null and param.memberNo != '' ">
+		  <![CDATA[and MEMBER_NO = #{param.memberNo} ]]>
+		</if>
+		<if test="param.memberNoList != null and param.memberNoList.size() > 0 ">		  
+		  and MEMBER_NO in <foreach collection="param.memberNoList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by UPDATE_DATE desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findRwUserBeanss" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindRwUserBeansPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM rw_user_beans
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findRwUserBeansPage" resultMap="FindResultMap" parameterType="com.ye.business.ad.dto.FindRwUserBeansPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM rw_user_beans
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findRwUserBeansPageCount" resultType="int" parameterType="com.ye.business.ad.dto.FindRwUserBeansPage">
+	select count(*)
+	FROM rw_user_beans
+	  <include refid="findPage_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rw_user_beans
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rw_user_beans
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.ad.domain.RwUserBeans" >
+    insert into rw_user_beans (CODE, MEMBER_NO, MEMBER_NAME, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, BEANS_SUM, BEANS_USE, 
+      BEANS_FREEZE, BEANS_NORMAL, CREATE_ID, 
+      CREATE_NAME, CREATE_DATE, UPDATE_ID, 
+      UPDATE_NAME, UPDATE_DATE, REMARK, 
+      REMARK2, REMARK3, REMARK4
+      )
+    values (#{code,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{beansSum,jdbcType=INTEGER}, #{beansUse,jdbcType=INTEGER}, 
+      #{beansFreeze,jdbcType=INTEGER}, #{beansNormal,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.ad.domain.RwUserBeans" >
+    insert into rw_user_beans
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="beansSum != null" >
+        BEANS_SUM,
+      </if>
+      <if test="beansUse != null" >
+        BEANS_USE,
+      </if>
+      <if test="beansFreeze != null" >
+        BEANS_FREEZE,
+      </if>
+      <if test="beansNormal != null" >
+        BEANS_NORMAL,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createName != null" >
+        CREATE_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateName != null" >
+        UPDATE_NAME,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="beansSum != null" >
+        #{beansSum,jdbcType=INTEGER},
+      </if>
+      <if test="beansUse != null" >
+        #{beansUse,jdbcType=INTEGER},
+      </if>
+      <if test="beansFreeze != null" >
+        #{beansFreeze,jdbcType=INTEGER},
+      </if>
+      <if test="beansNormal != null" >
+        #{beansNormal,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.ad.domain.RwUserBeans" >
+    update rw_user_beans
+    <set >
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="beansSum != null" >
+        BEANS_SUM = #{beansSum,jdbcType=INTEGER},
+      </if>
+      <if test="beansUse != null" >
+        BEANS_USE = #{beansUse,jdbcType=INTEGER},
+      </if>
+      <if test="beansFreeze != null" >
+        BEANS_FREEZE = #{beansFreeze,jdbcType=INTEGER},
+      </if>
+      <if test="beansNormal != null" >
+        BEANS_NORMAL = #{beansNormal,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.ad.domain.RwUserBeans" >
+    update rw_user_beans
+    set MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      BEANS_SUM = #{beansSum,jdbcType=INTEGER},
+      BEANS_USE = #{beansUse,jdbcType=INTEGER},
+      BEANS_FREEZE = #{beansFreeze,jdbcType=INTEGER},
+      BEANS_NORMAL = #{beansNormal,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByMemberNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rw_user_beans
+    where MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  
+  <update id="updateIncreaseAmountByPrimaryKey" parameterType="com.ye.business.ad.dto.RwUserBeansDto" >
+    update rw_user_beans
+    <set >
+      <if test="changeBeans != null" > <!-- 增加总金额豆子，正常金额豆子 -->
+        <!-- BEANS_SUM = (BEANS_SUM + #{changeBeans,jdbcType=INTEGER}), -->
+        BEANS_NORMAL = (BEANS_NORMAL + #{changeBeans,jdbcType=INTEGER}),
+      </if>
+      <if test="beansSum != null" > <!-- 增加总金额豆子，正常金额豆子 -->
+        BEANS_SUM = (BEANS_SUM + #{beansSum,jdbcType=INTEGER}),
+      </if>
+      <if test="changeFreeze != null"><!-- 冻结 -->
+      	BEANS_FREEZE = (BEANS_FREEZE + #{changeFreeze,jdbcType=INTEGER}),
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

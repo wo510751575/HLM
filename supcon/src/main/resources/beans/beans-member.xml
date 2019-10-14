@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+    <bean id="personMemberService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="personMemberService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IPersonMemberService" /> 
+    </bean>
+	
+    <bean id="personMemberImService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="personMemberImService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IPersonMemberImService" /> 
+    </bean>
+    
+     <bean id="personMemberBaseService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="personMemberBaseService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IPersonMemberBaseService" /> 
+    </bean>
+    
+    <bean id="guidMemberService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="guidMemberService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IGuidMemberService" /> 
+    </bean>
+    
+    <bean id="addFriendsService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="addFriendsService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IAddFriendsService" />  
+    </bean>
+    
+    <bean id="terminalImStatusService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="terminalImStatusService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.ITerminalImStatusService" />  
+    </bean>
+    
+    <bean id="shopTerminalService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="shopTerminalService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IShopTerminalService" />  
+    </bean>
+    
+    <bean id="memberLoginInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="memberLoginInfoService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IMemberLoginInfoService" />  
+    </bean>
+    
+    <!-- 群聊信息 -->
+    <bean id="chatRoomService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="chatRoomService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IChatRoomService" />   
+    </bean>
+    
+    <!-- 群聊成员信息 -->
+    <bean id="chatRoomMemberService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="chatRoomMemberService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IChatRoomMemberService" />   
+    </bean>
+    <!-- 聊天动态信息 -->
+    <bean id="pmChatBehaviorService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="pmChatBehaviorService" />
+		<property name="serviceInterface" value="com.lj.business.member.service.IPmChatBehaviorService" />   
+    </bean>
+    <!-- 导购助手管理终端表 -->
+    <bean id="gmAssistantShopService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="gmAssistantShopService" />
+		<property name="serviceInterface" value="com.lj.business.member.service.IGmAssistantShopService" />   
+    </bean> 
+    <!-- 加粉任务 -->
+    <bean id="addFriendsTaskService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="addFriendsTaskService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IAddFriendsTaskService" /> 
+    </bean>
+     <!-- 加粉详情任务 -->
+    <bean id="addFriendsTaskDetailService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="ms" />
+		<property name="serviceName" value="addFriendsTaskDetailService"	/>
+		<property name="serviceInterface" value="com.lj.business.member.service.IAddFriendsTaskDetailService" /> 
+    </bean>
+</beans> 

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IWordsTypeDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cm.domain.WordsType" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="TYPE_COUNT" property="typeCount" jdbcType="INTEGER" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindWordsTypePageResultMap" type="com.lj.business.cm.dto.wordsType.FindWordsTypePageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="TYPE_COUNT" property="typeCount" jdbcType="INTEGER" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindWordsTypeResultMap" type="com.lj.business.cm.dto.wordsType.FindWordsTypeReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="TYPE_COUNT" property="typeCount" jdbcType="INTEGER" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindWordsAppResultMap" type="com.lj.business.cm.dto.wordsInfo.FindWordsAppReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    	<collection property="wordsList" javaType="java.util.List" ofType="com.lj.business.cm.dto.wordsInfo.FindWordsInfoAppReturn">  
+			<result column="INFO_CODE" property="code"  />
+		    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+		    <result column="DEFAULT_FLAG" property="defaultFlag" jdbcType="BIGINT" />
+		</collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE,TYPE_COUNT,MEMBER_NO_GM, MERCHANT_NO, TYPE_NAME, SEQ, CREATE_ID, CREATE_DATE, REMARK, REMARK2, REMARK3, 
+    REMARK4
+  </sql>
+  <sql id="findWordsTypePage_condition" >
+  	 <where>
+	      <if test="merchantNo != null">
+			(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+		  </if>
+	      <if test="memberNoGm != null and memberNoGm != ''">
+	      	and (MEMBER_NO_GM = #{memberNoGm} or MEMBER_NO_GM = '2')
+	      </if>
+      </where>
+  </sql>
+  <!-- 分页查询 -->
+   <select id="findWordsTypePage" resultMap="FindWordsTypePageResultMap" parameterType="com.lj.business.cm.dto.wordsType.FindWordsTypePage" >
+  SELECT   
+  	<include refid="Base_Column_List" />
+  FROM words_type
+ 	 <include refid="findWordsTypePage_condition" />
+   order by SEQ asc
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findWordsTypePageCount" resultType="int" parameterType="com.lj.business.cm.dto.wordsType.FindWordsTypePage" >
+    select  count(*) FROM words_type
+     <include refid="findWordsTypePage_condition" />
+  </select>
+  
+  <select id="findWords" resultMap="FindWordsAppResultMap" parameterType="com.lj.business.cm.dto.wordsInfo.FindWordsInfoApp" >
+  SELECT   
+  	wt.CODE,wt.TYPE_NAME,wt.SEQ,wi.CODE INFO_CODE ,wi.CONTENT ,wi.DEFAULT_FLAG 
+  FROM words_type wt
+  LEFT JOIN (select * from words_info where MERCHANT_NO = #{merchantNo}) wi ON wt.CODE = wi.TYPE_CODE
+ 	 WHERE wt.MERCHANT_NO = #{merchantNo}
+   order by wt.SEQ asc,wi.DEFAULT_FLAG desc,wi.UPDATE_TIME desc
+  </select>
+  
+  <select id="findPersonWords" resultMap="FindWordsAppResultMap" parameterType="com.lj.business.cm.dto.wordsType.FindWordsTypePage">
+  	SELECT   
+  	wt.CODE,wt.TYPE_NAME,wt.SEQ,wi.CODE INFO_CODE ,wi.CONTENT ,wi.DEFAULT_FLAG 
+  	FROM words_type wt
+  	LEFT JOIN (select * from words_info where (MERCHANT_NO = #{merchantNo} or MERCHANT_NO is null)) wi ON wt.CODE = wi.TYPE_CODE
+ 	WHERE (wt.MERCHANT_NO = #{merchantNo} or wt.MERCHANT_NO is null)
+ 	AND (wt.MEMBER_NO_GM = #{memberNoGm} or wt.MEMBER_NO_GM = '2')
+   order by wt.SEQ asc,wi.DEFAULT_FLAG desc,wi.UPDATE_TIME desc
+  </select>
+  
+  <select id="findWordsTypes" resultMap="FindWordsTypeResultMap" parameterType="com.lj.business.cm.dto.wordsInfo.FindWordsInfoWeb" >
+  SELECT   CODE , TYPE_NAME ,SEQ
+  FROM words_type
+  	<where>
+  		<if test="merchantNo != null">
+  			(MERCHANT_NO = #{merchantNo} or MERCHANT_NO is null)
+  		</if>
+  		<if test="memberNoGm != null">
+  			AND (MEMBER_NO_GM = #{memberNoGm} or MEMBER_NO_GM = '2')
+  		</if> 
+  	</where>
+  	 order by SEQ asc
+  </select>
+  
+  <select id="hasTypeName" parameterType="string" resultType="java.lang.Integer"  >
+    select count(*) from words_type where  MEMBER_NO_GM = #{memberNoGm} AND TYPE_NAME=#{typeName} 
+  </select>
+  
+  <select id="hasSeq" resultType="java.lang.Integer"  >
+    select count(*) from words_type where  MEMBER_NO_GM = #{memberNoGm} AND SEQ=#{seq}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from words_type
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from words_type
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cm.domain.WordsType" >
+    insert into words_type (CODE, MERCHANT_NO, TYPE_NAME, 
+      SEQ, CREATE_ID, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, 
+      #{seq,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cm.domain.WordsType" >
+    insert into words_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="memberNoGm != null ">
+      	MEMBER_NO_GM,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null">
+      	#{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cm.domain.WordsType" >
+    update words_type
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null">
+      	MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cm.domain.WordsType" >
+    update words_type
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      SEQ = #{seq,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="incrementTypeCountByPrimaryKey">
+    update words_type
+    set TYPE_COUNT = TYPE_COUNT + #{increment}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

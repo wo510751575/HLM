@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IVrMaterialCommenDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cm.domain.VrMaterialCommen" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="BRIEF" property="brief" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="LINK_URL" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="RESPOND_NUM" property="respondNum" jdbcType="INTEGER" />
+    <result column="SHOP_TYPE" property="shopType" jdbcType="VARCHAR" />
+    <result column="SHOW_CHANNEL" property="showChannel" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="findVrMaterialCommenPageReturns" type="com.lj.business.cm.dto.vrMaterialCommen.FindVrMaterialCommenPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="BRIEF" property="brief" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="LINK_URL" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="RESPOND_NUM" property="respondNum" jdbcType="INTEGER" />
+    <result column="SHOP_TYPE" property="shopType" jdbcType="VARCHAR" />
+    <result column="SHOW_CHANNEL" property="showChannel" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, MERCHANT_NAME,  TITLE, CONTENT, BRIEF, IMG_ADDR, 
+    DIMENSION_ST, LINK_URL, RESPOND_NUM, SHOP_TYPE, SHOW_CHANNEL, CREATE_ID, CREATE_DATE, REMARK, REMARK2, 
+    REMARK3, REMARK4
+  </sql>
+  
+    <sql id="findVrMaterialCommenPage_oms">
+   <where>
+       <if test ="shopNo != null and shopNo != ''">
+         AND  #{shopNo}
+       </if>
+       <if test=" shopType != null and shopType != ''">
+        AND  SHOP_TYPE = #{shopType}
+       </if>
+       <if test=" showChannel != null and showChannel != ''">
+        AND  SHOW_CHANNEL = #{showChannel}
+       </if>
+       <if test ="dimensionSt != null and dimensionSt != '' ">
+        AND  DIMENSION_ST = #{dimensionSt}
+       </if>
+       <if test ="merchantNo != null and merchantNo !=''">
+         AND  MERCHANT_NO = #{merchantNo}
+       </if>
+       <if test="materialTypeCode != null and materialTypeCode !='' ">
+         AND   MATERIAL_TYPE_CODE = #{materialTypeCode}
+       </if>
+         <if test="title != null and title !='' ">
+         AND TITLE like CONCAT('%',#{title,jdbcType=VARCHAR},'%' )
+       </if>
+    </where>
+  </sql>
+  
+  
+  
+  <sql id="findVrMaterialCommenPage_contion">
+  	<where>
+	  	and (vmc.SHOW_CHANNEL = 'ALL' 
+			 or (vmc.SHOW_CHANNEL = 'PART' and <![CDATA[shop_no LIKE CONCAT('%',#{shopNo},'%' )]]>)
+			 <if test="shopTypes != null and shopTypes.length > 0">
+				 or ( vmc.SHOW_CHANNEL = 'CHANNEL' and 
+				<foreach item="item" index="index" collection="shopTypes" open="(" separator="or" close=")">  
+				       <![CDATA[ vmc.SHOP_TYPE like CONCAT('%',#{item},'%')]]>
+				</foreach>
+				)
+			</if>
+			 )
+      <if test ="dimensionSt != null and dimensionSt != '' ">
+       AND  vmc.DIMENSION_ST = #{dimensionSt}
+      </if>
+      <if test ="merchantNo != null and merchantNo !=''">
+        AND  vmc.MERCHANT_NO = #{merchantNo}
+      </if>
+       <if test ="shopNo != null and shopNo != ''">
+        and  (vmc.#{shopNo} or  vmc.SHOP_NO='')
+      </if>
+    </where>
+  </sql>
+  
+    <!-- 分页查询 -->
+  <select id="findVrMaterialCommenPage" resultMap="findVrMaterialCommenPageReturns" parameterType="com.lj.business.cm.dto.vrMaterialCommen.FindVrMaterialCommenPage" >
+	  <choose>
+	  	<when test="typeCodes != null and typeCodes.size() > 1">	<!-- 分类条件有多时执行 -->
+	  		SELECT vmc.CODE,vmc.BRIEF,vmc.CONTENT,vmc.DIMENSION_ST,vmc.IMG_ADDR,vmc.LINK_URL,vmc.MERCHANT_NO,vmc.vmc.SHOP_TYPE,vmc.SHOW_CHANNEL,vmc.TITLE, vmc.RESPOND_NUM
+		  	  FROM vr_material_commen vmc,
+		  	   	( select MATERIAL_CODE, count(MATERIAL_CODE) C
+  	 	              from vr_material_commen_category 
+  	 	             where TYPE_CATEGORY_CODE in 
+  	 	             <foreach item="item" index="index" collection="typeCodes"  open="(" separator="," close=")" >  
+		      	          #{item} 
+		        	 </foreach>
+	        	  	 group by MATERIAL_CODE
+				  ) cc
+			<include refid="findVrMaterialCommenPage_contion" />
+			  and vmc.code = cc.MATERIAL_CODE
+			  and cc.c = #{typeCodesSize}
+	  		ORDER BY vmc.CREATE_DATE DESC
+	  		limit ${start} , ${limit}
+	  	</when>
+	  	<when test="typeCodes != null and typeCodes.size() > 0">	<!-- 分类条件只有一个时执行 -->
+	  		SELECT vmc.CODE,vmc.BRIEF,vmc.CONTENT,vmc.DIMENSION_ST,vmc.IMG_ADDR,vmc.LINK_URL,vmc.MERCHANT_NO,vmc.vmc.SHOP_TYPE,vmc.SHOW_CHANNEL,vmc.TITLE, vmc.RESPOND_NUM
+			  FROM vr_material_commen vmc 
+			  LEFT JOIN vr_material_commen_category vmcc ON vmcc.MATERIAL_CODE = vmc.CODE
+	  			<include refid="findVrMaterialCommenPage_contion" />
+	      	   and vmcc.TYPE_CATEGORY_CODE in 
+	      	<foreach item="item" index="index" collection="typeCodes" open="(" separator="," close=")">  
+	           #{item}  
+	        </foreach>
+	  		ORDER BY  vmc.CREATE_DATE   DESC
+	  		limit ${start} , ${limit}
+	  	</when>
+	  	<otherwise>	<!-- 首次加载或没有分类条件执行 -->
+			SELECT vmc.CODE,vmc.BRIEF,vmc.CONTENT,vmc.DIMENSION_ST,vmc.IMG_ADDR,vmc.LINK_URL,vmc.MERCHANT_NO,vmc.vmc.SHOP_TYPE,vmc.SHOW_CHANNEL,vmc.TITLE, vmc.RESPOND_NUM
+			  FROM vr_material_commen vmc 
+		  		<include refid="findVrMaterialCommenPage_contion" />
+		  	 ORDER BY vmc.CREATE_DATE   DESC
+		  	 limit ${start} , ${limit}
+	  	</otherwise>
+	  </choose>
+ </select>
+  
+  <!-- 分页查询条数 -->
+  <select id="findVrMaterialCommenPageCount" resultType="int" parameterType="com.lj.business.cm.dto.vrMaterialCommen.FindVrMaterialCommenPage" >
+	  <choose>
+	  	<when test="typeCodes != null and typeCodes.size() > 1">	<!-- 分类条件有多时执行 -->
+	  		SELECT count(*)
+		  	  FROM vr_material_commen vmc,
+		  	   	( select MATERIAL_CODE, count(MATERIAL_CODE) C
+  	 	              from vr_material_commen_category 
+  	 	             where TYPE_CATEGORY_CODE in 
+  	 	             <foreach item="item" index="index" collection="typeCodes"  open="(" separator="," close=")" >  
+		      	          #{item} 
+		        	 </foreach>
+	        	  	 group by MATERIAL_CODE
+				  ) cc
+			<include refid="findVrMaterialCommenPage_contion" />
+			  and vmc.code = cc.MATERIAL_CODE
+			  and cc.c = #{typeCodesSize}
+	  	</when>
+	  	<when test="typeCodes != null and typeCodes.size() > 0">	<!-- 分类条件只有一个时执行 -->
+	  		SELECT count(*)
+			  FROM vr_material_commen vmc 
+			  LEFT JOIN vr_material_commen_category vmcc ON vmcc.MATERIAL_CODE = vmc.CODE
+	  			<include refid="findVrMaterialCommenPage_contion" />
+	      	   and vmcc.TYPE_CATEGORY_CODE in 
+	      	<foreach item="item" index="index" collection="typeCodes" open="(" separator="," close=")">  
+	           #{item}  
+	        </foreach>
+	  	</when>
+	  	<otherwise>	<!-- 首次加载或没有分类条件执行 -->
+			SELECT  count(*)
+			  FROM vr_material_commen vmc 
+		  		<include refid="findVrMaterialCommenPage_contion" />
+	  	</otherwise>
+	  </choose> 
+  </select>
+  
+      <!-- OMS分页查询 -->
+  <select id="findVrMaterialCommenOmsPage" resultMap="findVrMaterialCommenPageReturns" parameterType="com.lj.business.cm.dto.vrMaterialCommen.FindVrMaterialCommenPage" >
+  SELECT
+  <include refid="Base_Column_List" />  
+   FROM  vr_material_commen 
+    <include refid="findVrMaterialCommenPage_oms" />  
+  ORDER BY CREATE_DATE DESC
+ limit ${start} , ${limit}
+ </select>
+ 
+   <!-- 分页查询条数 -->
+  <select id="findVrMaterialCommenPageOmsCount" resultType="int" parameterType="com.lj.business.cm.dto.vrMaterialCommen.FindVrMaterialCommenPage" >
+    select  count(*)
+    FROM  vr_material_commen   
+  <include refid="findVrMaterialCommenPage_oms" />  
+  </select>
+ 
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vr_material_commen
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from vr_material_commen
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cm.domain.VrMaterialCommen" >
+    insert into vr_material_commen (CODE, MERCHANT_NO, MERCHANT_NAME, 
+       TITLE, 
+      CONTENT, BRIEF, IMG_ADDR, 
+      DIMENSION_ST, LINK_URL, RESPOND_NUM, 
+      SHOP_TYPE,SHOW_CHANNEL, CREATE_ID, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+       #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{imgAddr,jdbcType=VARCHAR}, 
+      #{dimensionSt,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, #{respondNum,jdbcType=INTEGER}, 
+      #{shopType,jdbcType=VARCHAR},#{showChannel,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cm.domain.VrMaterialCommen" >
+    insert into vr_material_commen
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="brief != null" >
+        BRIEF,
+      </if>
+      <if test="imgAddr != null" >
+        IMG_ADDR,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+      <if test="linkUrl != null" >
+        LINK_URL,
+      </if>
+      <if test="respondNum != null" >
+        RESPOND_NUM,
+      </if>
+      <if test="shopType != null" >
+        SHOP_TYPE,
+      </if>
+      <if test="showChannel != null" >
+        SHOW_CHANNEL,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="brief != null" >
+        #{brief,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAddr != null" >
+        #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="respondNum != null" >
+        #{respondNum,jdbcType=INTEGER},
+      </if>
+      <if test="shopType != null" >
+        #{shopType,jdbcType=VARCHAR},
+      </if>
+      <if test="showChannel != null" >
+        #{showChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cm.domain.VrMaterialCommen" >
+    update vr_material_commen
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="brief != null" >
+        BRIEF = #{brief,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAddr != null" >
+        IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        LINK_URL = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="respondNum != null" >
+        RESPOND_NUM = #{respondNum,jdbcType=INTEGER},
+      </if>
+      <if test="shopType != null" >
+        SHOP_TYPE = #{shopType,jdbcType=VARCHAR},
+      </if>
+      <if test="showChannel != null" >
+        SHOW_CHANNEL = #{showChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cm.domain.VrMaterialCommen" >
+    update vr_material_commen
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      
+      
+      TITLE = #{title,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      BRIEF = #{brief,jdbcType=VARCHAR},
+      IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      LINK_URL = #{linkUrl,jdbcType=VARCHAR},
+      RESPOND_NUM = #{respondNum,jdbcType=INTEGER},
+      SHOP_TYPE = #{shopType,jdbcType=VARCHAR},
+      SHOW_CHANNEL = #{showChannel,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

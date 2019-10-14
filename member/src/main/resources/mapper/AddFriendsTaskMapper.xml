@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IAddFriendsTaskDao" >
+   <resultMap id="BaseResultMap" type="com.lj.business.member.domain.AddFriendsTask" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="no_wx_arrays" property="noWxArrays" jdbcType="VARCHAR" />
+    <result column="send_message" property="sendMessage" jdbcType="VARCHAR" />
+    <result column="total_phonenum" property="totalPhonenum" jdbcType="INTEGER" />
+    <result column="complete_num" property="completeNum" jdbcType="INTEGER" />
+    <result column="success_num" property="successNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    code, name, no_wx_arrays, send_message, total_phonenum, complete_num, success_num, 
+    status, create_date, update_date, start_date, end_date, MERCHANT_NO, MERCHANT_NAME
+  </sql>
+  
+  <resultMap id="FindResultMap" type="com.lj.business.member.dto.AddFriendsTaskDto" extends="BaseResultMap">
+  	<result column="trans" property="trans" jdbcType="VARCHAR" />
+  </resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				 <if test="param.name != null and param.name !='' ">
+					and name like CONCAT('%',#{param.name,jdbcType=VARCHAR},'%' )
+	 			  </if>
+	 			  <if test="param.status != null and param.status !='' ">
+					and status =#{param.status,jdbcType=VARCHAR}
+	 			  </if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findAddFriendsTasks" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindAddFriendsTaskPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM addfriends_task
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findAddFriendsTaskPage" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindAddFriendsTaskPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		,ROUND(success_num/complete_num*100,2) trans 
+		FROM addfriends_task
+		<include refid="findPage_condition" />
+		<choose>
+			<when test="sortBy !=null and sortBy !=''">
+				order by ${sortBy} ${sortDir}  
+			</when>
+			<otherwise>
+				order by create_date desc  
+			</otherwise>
+		</choose>
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findAddFriendsTaskPageCount" resultType="int"
+		parameterType="com.lj.business.member.dto.FindAddFriendsTaskPage">
+		select count(*)
+		FROM addfriends_task
+		<include refid="findPage_condition" />
+	</select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from addfriends_task
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from addfriends_task
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.AddFriendsTask" >
+    insert into addfriends_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="noWxArrays != null" >
+        no_wx_arrays,
+      </if>
+      <if test="sendMessage != null" >
+        send_message,
+      </if>
+      <if test="totalPhonenum != null" >
+        total_phonenum,
+      </if>
+      <if test="completeNum != null" >
+        complete_num,
+      </if>
+      <if test="successNum != null" >
+        success_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxArrays != null" >
+        #{noWxArrays,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMessage != null" >
+        #{sendMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPhonenum != null" >
+        #{totalPhonenum,jdbcType=INTEGER},
+      </if>
+      <if test="completeNum != null" >
+        #{completeNum,jdbcType=INTEGER},
+      </if>
+      <if test="successNum != null" >
+        #{successNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.AddFriendsTask" >
+    update addfriends_task
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxArrays != null" >
+        no_wx_arrays = #{noWxArrays,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMessage != null" >
+        send_message = #{sendMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPhonenum != null" >
+        total_phonenum = #{totalPhonenum,jdbcType=INTEGER},
+      </if>
+      <if test="completeNum != null" >
+        complete_num = #{completeNum,jdbcType=INTEGER},
+      </if>
+      <if test="successNum != null" >
+        success_num = #{successNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAddFriendsTaskDetailCount" resultType="com.lj.business.member.dto.AddFriendsTaskCountDto" parameterType="com.lj.business.member.dto.AddFriendsTaskDto" >
+    SELECT SUM(total_phonenum) totalMobile,SUM(complete_num) totalAlreadyExcMobile,SUM(success_num) successMobile,ROUND(SUM(success_num)/SUM(complete_num)*100,2) trans    
+    FROM addfriends_task               
+    <where>
+    	<if test="merchantNo != null and merchantNo !=''">
+    		MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+  
+  <select id="selectDistinctGroupByNoWxGms" resultType="java.lang.String" parameterType="com.lj.business.member.dto.AddFriendsTaskDto" >
+    SELECT  GROUP_CONCAT(DISTINCT  no_wx_arrays) FROM addfriends_task            
+    <where>
+    	<if test="status != null and status !=''">
+    		STATUS = #{status,jdbcType=VARCHAR}
+    	</if>
+    	<if test="merchantNo != null and merchantNo !=''">
+    		MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+</mapper>

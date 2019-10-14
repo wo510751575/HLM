@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IShopFestivalPosterDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.ShopFestivalPoster">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="FP_CODE" jdbcType="VARCHAR" property="fpCode" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="SHOP_WX" jdbcType="VARCHAR" property="shopWx" />
+    <result column="TYPE_NAME" jdbcType="VARCHAR" property="typeName" />
+    <result column="TEMPLATE_IMG" jdbcType="VARCHAR" property="templateImg" />
+    <result column="QCORD_IMG" jdbcType="VARCHAR" property="qcordImg" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK1" jdbcType="VARCHAR" property="remark1" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, FP_CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, SHOP_WX, TYPE_NAME, 
+    TEMPLATE_IMG, QCORD_IMG, UPDATE_ID, UPDATE_DATE, CREATE_ID, CREATE_DATE, REMARK, 
+    REMARK1, REMARK2, REMARK3, REMARK4
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.ShopFestivalPosterDto"
+		extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.fpCode != null and param.fpCode !='' ">
+					<![CDATA[and FP_CODE =#{param.fpCode}]]>
+				</if>
+				<if test="param.shopWx != null and param.shopWx !='' ">
+					<![CDATA[and SHOP_WX =#{param.shopWx}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findShopFestivalPosters" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopFestivalPosterPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_festival_poster
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findShopFestivalPosterPage"
+		resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopFestivalPosterPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_festival_poster
+		<include refid="findPage_condition" />
+		order by CREATE_DATE desc 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findShopFestivalPosterPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindShopFestivalPosterPage">
+		select count(*)
+		FROM shop_festival_poster
+		<include refid="findPage_condition" />
+	</select>
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop_festival_poster
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from shop_festival_poster
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.ShopFestivalPoster">
+    insert into shop_festival_poster (CODE, FP_CODE, SHOP_NO, 
+      SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+      SHOP_WX, TYPE_NAME, TEMPLATE_IMG, 
+      QCORD_IMG, UPDATE_ID, UPDATE_DATE, 
+      CREATE_ID, CREATE_DATE, REMARK, 
+      REMARK1, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{fpCode,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{shopWx,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, #{templateImg,jdbcType=VARCHAR}, 
+      #{qcordImg,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.ShopFestivalPoster">
+    insert into shop_festival_poster
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="fpCode != null">
+        FP_CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="shopWx != null">
+        SHOP_WX,
+      </if>
+      <if test="typeName != null">
+        TYPE_NAME,
+      </if>
+      <if test="templateImg != null">
+        TEMPLATE_IMG,
+      </if>
+      <if test="qcordImg != null">
+        QCORD_IMG,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark1 != null">
+        REMARK1,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="fpCode != null">
+        #{fpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopWx != null">
+        #{shopWx,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateImg != null">
+        #{templateImg,jdbcType=VARCHAR},
+      </if>
+      <if test="qcordImg != null">
+        #{qcordImg,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.ShopFestivalPoster">
+    update shop_festival_poster
+    <set>
+      <if test="fpCode != null">
+        FP_CODE = #{fpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopWx != null">
+        SHOP_WX = #{shopWx,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateImg != null">
+        TEMPLATE_IMG = #{templateImg,jdbcType=VARCHAR},
+      </if>
+      <if test="qcordImg != null">
+        QCORD_IMG = #{qcordImg,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        REMARK1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.ShopFestivalPoster">
+    update shop_festival_poster
+    set FP_CODE = #{fpCode,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SHOP_WX = #{shopWx,jdbcType=VARCHAR},
+      TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      TEMPLATE_IMG = #{templateImg,jdbcType=VARCHAR},
+      QCORD_IMG = #{qcordImg,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK1 = #{remark1,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByShopFestivalPoster" parameterType="com.ye.business.hx.domain.ShopFestivalPoster">
+	delete from shop_festival_poster
+	where
+	MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} and
+	FP_CODE = #{fpCode,jdbcType=VARCHAR} and
+	TEMPLATE_IMG = #{templateImg,jdbcType=VARCHAR}
+  </delete>
+  
+  	<sql id="findPage_conditionByTemplateImg">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and t.code =#{param.code}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and t.MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.fpCode != null and param.fpCode !='' ">
+					<![CDATA[and t.FP_CODE =#{param.fpCode}]]>
+				</if>
+				<if test="param.shopWx != null and param.shopWx !='' ">
+					<![CDATA[and t.SHOP_WX =#{param.shopWx}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 只查在模板中的图片 -->
+	<select id="findShopFestivalPostersByTemplateImg" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindShopFestivalPosterPage">
+		select t.* from shop_festival_poster t JOIN
+		festival_poster t2 ON t.FP_CODE=t2.`CODE` 
+		 AND  t2.IMGS like  CONCAT('%',t.TEMPLATE_IMG,'%')  
+		<include refid="findPage_conditionByTemplateImg" />
+
+	</select>
+	
+</mapper>

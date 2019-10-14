@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.ICfCountAnalyzeDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.CfCountAnalyze" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="ST_DATE" property="stDate" jdbcType="DATE" />
+    <result column="NUM_CF" property="numCf" jdbcType="BIGINT" />
+    <result column="RATIO_CF_FIVE" property="ratioCfFive" jdbcType="DECIMAL" />
+    <result column="NUM_CF_FIVE" property="numCfFive" jdbcType="INTEGER" />
+    <result column="RATIO_CF_TEN" property="ratioCfTen" jdbcType="DECIMAL" />
+    <result column="NUM_CF_TEN" property="numCfTen" jdbcType="INTEGER" />
+    <result column="RATIO_CF_FIFTEEN" property="ratioCfFifteen" jdbcType="DECIMAL" />
+    <result column="NUM_CF_FIFTEEN" property="numCfFifteen" jdbcType="INTEGER" />
+    <result column="RATIO_CF_SIXTEEN" property="ratioCfSixteen" jdbcType="DECIMAL" />
+    <result column="NUM_CF_SIXTEEN" property="numCfSixteen" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, ST_DATE, NUM_CF, RATIO_CF_FIVE, 
+    NUM_CF_FIVE, RATIO_CF_TEN, NUM_CF_TEN, RATIO_CF_FIFTEEN, NUM_CF_FIFTEEN, RATIO_CF_SIXTEEN, 
+    NUM_CF_SIXTEEN, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cf_count_analyze
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findCfCountAnalyzeList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.CfCountAnalyze.FindCfCountAnalyze" >
+    select
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, ST_DATE,
+    sum(NUM_CF) as 'NUM_CF', RATIO_CF_FIVE,
+    sum(NUM_CF_FIVE) as 'NUM_CF_FIVE', RATIO_CF_TEN,
+    sum(NUM_CF_TEN) as 'NUM_CF_TEN', RATIO_CF_FIFTEEN,
+    sum(NUM_CF_FIFTEEN) as 'NUM_CF_FIFTEEN', RATIO_CF_SIXTEEN,
+    sum(NUM_CF_SIXTEEN) as 'NUM_CF_SIXTEEN', CREATE_DATE
+    from cf_count_analyze
+    where 1 = 1
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    <if test="beginDate != null">
+      <![CDATA[
+        and ST_DATE >= #{beginDate,jdbcType=DATE}
+     ]]>
+    </if>
+    <if test="endDate != null">
+      <![CDATA[
+        and ST_DATE <= #{endDate,jdbcType=DATE}
+       ]]>
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cf_count_analyze
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.CfCountAnalyze" >
+    insert into cf_count_analyze (CODE, MERCHANT_NO, AREA_CODE, 
+      AREA_NAME, SHOP_NO, SHOP_NAME, 
+      ST_DATE, NUM_CF, RATIO_CF_FIVE, 
+      NUM_CF_FIVE, RATIO_CF_TEN, NUM_CF_TEN, 
+      RATIO_CF_FIFTEEN, NUM_CF_FIFTEEN, RATIO_CF_SIXTEEN, 
+      NUM_CF_SIXTEEN, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{areaName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{stDate,jdbcType=DATE}, #{numCf,jdbcType=BIGINT}, #{ratioCfFive,jdbcType=DECIMAL}, 
+      #{numCfFive,jdbcType=INTEGER}, #{ratioCfTen,jdbcType=DECIMAL}, #{numCfTen,jdbcType=INTEGER}, 
+      #{ratioCfFifteen,jdbcType=DECIMAL}, #{numCfFifteen,jdbcType=INTEGER}, #{ratioCfSixteen,jdbcType=DECIMAL}, 
+      #{numCfSixteen,jdbcType=INTEGER}, NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.CfCountAnalyze" >
+    insert into cf_count_analyze
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="stDate != null" >
+        ST_DATE,
+      </if>
+      <if test="numCf != null" >
+        NUM_CF,
+      </if>
+      <if test="ratioCfFive != null" >
+        RATIO_CF_FIVE,
+      </if>
+      <if test="numCfFive != null" >
+        NUM_CF_FIVE,
+      </if>
+      <if test="ratioCfTen != null" >
+        RATIO_CF_TEN,
+      </if>
+      <if test="numCfTen != null" >
+        NUM_CF_TEN,
+      </if>
+      <if test="ratioCfFifteen != null" >
+        RATIO_CF_FIFTEEN,
+      </if>
+      <if test="numCfFifteen != null" >
+        NUM_CF_FIFTEEN,
+      </if>
+      <if test="ratioCfSixteen != null" >
+        RATIO_CF_SIXTEEN,
+      </if>
+      <if test="numCfSixteen != null" >
+        NUM_CF_SIXTEEN,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="stDate != null" >
+        #{stDate,jdbcType=DATE},
+      </if>
+      <if test="numCf != null" >
+        #{numCf,jdbcType=BIGINT},
+      </if>
+      <if test="ratioCfFive != null" >
+        #{ratioCfFive,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfFive != null" >
+        #{numCfFive,jdbcType=INTEGER},
+      </if>
+      <if test="ratioCfTen != null" >
+        #{ratioCfTen,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfTen != null" >
+        #{numCfTen,jdbcType=INTEGER},
+      </if>
+      <if test="ratioCfFifteen != null" >
+        #{ratioCfFifteen,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfFifteen != null" >
+        #{numCfFifteen,jdbcType=INTEGER},
+      </if>
+      <if test="ratioCfSixteen != null" >
+        #{ratioCfSixteen,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfSixteen != null" >
+        #{numCfSixteen,jdbcType=INTEGER},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.CfCountAnalyze" >
+    update cf_count_analyze
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="stDate != null" >
+        ST_DATE = #{stDate,jdbcType=DATE},
+      </if>
+      <if test="numCf != null" >
+        NUM_CF = #{numCf,jdbcType=BIGINT},
+      </if>
+      <if test="ratioCfFive != null" >
+        RATIO_CF_FIVE = #{ratioCfFive,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfFive != null" >
+        NUM_CF_FIVE = #{numCfFive,jdbcType=INTEGER},
+      </if>
+      <if test="ratioCfTen != null" >
+        RATIO_CF_TEN = #{ratioCfTen,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfTen != null" >
+        NUM_CF_TEN = #{numCfTen,jdbcType=INTEGER},
+      </if>
+      <if test="ratioCfFifteen != null" >
+        RATIO_CF_FIFTEEN = #{ratioCfFifteen,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfFifteen != null" >
+        NUM_CF_FIFTEEN = #{numCfFifteen,jdbcType=INTEGER},
+      </if>
+      <if test="ratioCfSixteen != null" >
+        RATIO_CF_SIXTEEN = #{ratioCfSixteen,jdbcType=DECIMAL},
+      </if>
+      <if test="numCfSixteen != null" >
+        NUM_CF_SIXTEEN = #{numCfSixteen,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.CfCountAnalyze" >
+    update cf_count_analyze
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      ST_DATE = #{stDate,jdbcType=DATE},
+      NUM_CF = #{numCf,jdbcType=BIGINT},
+      RATIO_CF_FIVE = #{ratioCfFive,jdbcType=DECIMAL},
+      NUM_CF_FIVE = #{numCfFive,jdbcType=INTEGER},
+      RATIO_CF_TEN = #{ratioCfTen,jdbcType=DECIMAL},
+      NUM_CF_TEN = #{numCfTen,jdbcType=INTEGER},
+      RATIO_CF_FIFTEEN = #{ratioCfFifteen,jdbcType=DECIMAL},
+      NUM_CF_FIFTEEN = #{numCfFifteen,jdbcType=INTEGER},
+      RATIO_CF_SIXTEEN = #{ratioCfSixteen,jdbcType=DECIMAL},
+      NUM_CF_SIXTEEN = #{numCfSixteen,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

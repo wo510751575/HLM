@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IDealerApplyShopDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.DealerApplyShop" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="DEALER_NO" property="dealerNo" jdbcType="VARCHAR" />
+    
+    <result column="SHOP_NO_MERCHANT" property="shopNoMerchant" jdbcType="VARCHAR" />
+    
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="DETAIL_ADDR" property="detailAddr" jdbcType="VARCHAR" />
+    <result column="LOGO_ADDR" property="logoAddr" jdbcType="VARCHAR" />
+    <result column="BIZ_SCOPE" property="bizScope" jdbcType="VARCHAR" />
+    <result column="SHOP_MANAGER_NAME" property="shopManagerName" jdbcType="VARCHAR" />
+    <result column="SHOP_MANAGER_MOBILE" property="shopManagerMobile" jdbcType="VARCHAR" />
+    <result column="SHOP_MANAGER_WX_NO" property="shopManagerWxNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, DEALER_NO,  SHOP_NO_MERCHANT,  PROVINCE_CODE, PROVINCE_NAME, 
+    CITY_CODE, CITY_NAME, AREA_CODE, AREA_NAME, DETAIL_ADDR, LOGO_ADDR, BIZ_SCOPE, SHOP_MANAGER_NAME, 
+    SHOP_MANAGER_MOBILE, SHOP_MANAGER_WX_NO, MERCHANT_NO, CREATE_DATE, UPDATE_DATE, REMARK, 
+    REMARK2, REMARK3, REMARK4
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dealer_apply_shop
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dealer_apply_shop
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.lj.business.member.domain.DealerApplyShop" >
+    insert into dealer_apply_shop (CODE, DEALER_NO,  
+      SHOP_NO_MERCHANT,  PROVINCE_CODE, 
+      PROVINCE_NAME, CITY_CODE, CITY_NAME, 
+      AREA_CODE, AREA_NAME, DETAIL_ADDR, 
+      LOGO_ADDR, BIZ_SCOPE, SHOP_MANAGER_NAME, 
+      SHOP_MANAGER_MOBILE, SHOP_MANAGER_WX_NO, MERCHANT_NO, 
+      CREATE_DATE, UPDATE_DATE, REMARK, 
+      REMARK2, REMARK3, REMARK4
+      )
+    values (#{code,jdbcType=VARCHAR}, #{dealerNo,jdbcType=VARCHAR},  
+      #{shopNoMerchant,jdbcType=VARCHAR},  #{provinceCode,jdbcType=VARCHAR}, 
+      #{provinceName,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{detailAddr,jdbcType=VARCHAR}, 
+      #{logoAddr,jdbcType=VARCHAR}, #{bizScope,jdbcType=VARCHAR}, #{shopManagerName,jdbcType=VARCHAR}, 
+      #{shopManagerMobile,jdbcType=VARCHAR}, #{shopManagerWxNo,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.DealerApplyShop" >
+    insert into dealer_apply_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="dealerNo != null" >
+        DEALER_NO,
+      </if>
+      <if test="shopNoMerchant != null" >
+        SHOP_NO_MERCHANT,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="detailAddr != null" >
+        DETAIL_ADDR,
+      </if>
+      <if test="logoAddr != null" >
+        LOGO_ADDR,
+      </if>
+      <if test="bizScope != null" >
+        BIZ_SCOPE,
+      </if>
+      <if test="shopManagerName != null" >
+        SHOP_MANAGER_NAME,
+      </if>
+      <if test="shopManagerMobile != null" >
+        SHOP_MANAGER_MOBILE,
+      </if>
+      <if test="shopManagerWxNo != null" >
+        SHOP_MANAGER_WX_NO,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerNo != null" >
+        #{dealerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNoMerchant != null" >
+        #{shopNoMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddr != null" >
+        #{detailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="logoAddr != null" >
+        #{logoAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="bizScope != null" >
+        #{bizScope,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagerName != null" >
+        #{shopManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagerMobile != null" >
+        #{shopManagerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagerWxNo != null" >
+        #{shopManagerWxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.DealerApplyShop" >
+    update dealer_apply_shop
+    <set >
+      <if test="dealerNo != null" >
+        DEALER_NO = #{dealerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNoMerchant != null" >
+        SHOP_NO_MERCHANT = #{shopNoMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddr != null" >
+        DETAIL_ADDR = #{detailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="logoAddr != null" >
+        LOGO_ADDR = #{logoAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="bizScope != null" >
+        BIZ_SCOPE = #{bizScope,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagerName != null" >
+        SHOP_MANAGER_NAME = #{shopManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagerMobile != null" >
+        SHOP_MANAGER_MOBILE = #{shopManagerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagerWxNo != null" >
+        SHOP_MANAGER_WX_NO = #{shopManagerWxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.DealerApplyShop" >
+    update dealer_apply_shop
+    set DEALER_NO = #{dealerNo,jdbcType=VARCHAR},
+      SHOP_NO_MERCHANT = #{shopNoMerchant,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      DETAIL_ADDR = #{detailAddr,jdbcType=VARCHAR},
+      LOGO_ADDR = #{logoAddr,jdbcType=VARCHAR},
+      BIZ_SCOPE = #{bizScope,jdbcType=VARCHAR},
+      SHOP_MANAGER_NAME = #{shopManagerName,jdbcType=VARCHAR},
+      SHOP_MANAGER_MOBILE = #{shopManagerMobile,jdbcType=VARCHAR},
+      SHOP_MANAGER_WX_NO = #{shopManagerWxNo,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

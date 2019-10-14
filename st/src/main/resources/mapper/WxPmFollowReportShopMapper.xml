@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IWxPmFollowReportShopDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.WxPmFollowReportShop" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="REPORT_DATE" property="reportDate" jdbcType="DATE" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="SHOP_CODE" property="shopCode" jdbcType="VARCHAR" />
+    <result column="NUM_PM_NEW" property="numPmNew" jdbcType="BIGINT" />
+    <result column="NUM_PM_NEW_NOT_FOLLOW" property="numPmNewNotFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_NEW_FOLLOW" property="numPmNewFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_OLD" property="numPmOld" jdbcType="BIGINT" />
+    <result column="NUM_PM_OLD_NOT_FOLLOW" property="numPmOldNotFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_OLD_FOLLOW" property="numPmOldFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_TOTAL" property="numPmTotal" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="findWxPmFollowReportShopPageResultMap" type="com.lj.business.st.dto.wxPmFollow.FindWxPmFollowReportShopPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="REPORT_DATE" property="reportDate" jdbcType="DATE" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="SHOP_CODE" property="shopCode" jdbcType="VARCHAR" />
+    <result column="NUM_PM_NEW" property="numPmNew" jdbcType="BIGINT" />
+    <result column="NUM_PM_NEW_NOT_FOLLOW" property="numPmNewNotFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_NEW_FOLLOW" property="numPmNewFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_OLD" property="numPmOld" jdbcType="BIGINT" />
+    <result column="NUM_PM_OLD_NOT_FOLLOW" property="numPmOldNotFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_OLD_FOLLOW" property="numPmOldFollow" jdbcType="BIGINT" />
+    <result column="NUM_PM_TOTAL" property="numPmTotal" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, REPORT_DATE, MERCHANT_NO, MERCHANT_NAME, COMPANY_NO, COMPANY_NAME, DEALER_CODE, 
+    SHOP_NO, SHOP_NAME, SHOP_CODE, NUM_PM_NEW, NUM_PM_NEW_NOT_FOLLOW, NUM_PM_NEW_FOLLOW, 
+    NUM_PM_OLD, NUM_PM_OLD_NOT_FOLLOW, NUM_PM_OLD_FOLLOW, NUM_PM_TOTAL, CREATE_DATE, 
+    UPDATE_DATE, REMARK
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_pm_follow_report_shop
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_pm_follow_report_shop
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.lj.business.st.domain.WxPmFollowReportShop" >
+    insert into wx_pm_follow_report_shop (CODE, REPORT_DATE, MERCHANT_NO, 
+      MERCHANT_NAME, COMPANY_NO, COMPANY_NAME, 
+      DEALER_CODE, SHOP_NO, SHOP_NAME, 
+      SHOP_CODE, NUM_PM_NEW, NUM_PM_NEW_NOT_FOLLOW, 
+      NUM_PM_NEW_FOLLOW, NUM_PM_OLD, NUM_PM_OLD_NOT_FOLLOW, 
+      NUM_PM_OLD_FOLLOW, NUM_PM_TOTAL, CREATE_DATE, 
+      UPDATE_DATE, REMARK)
+    values (#{code,jdbcType=VARCHAR}, #{reportDate,jdbcType=DATE}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{companyNo,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{dealerCode,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{shopCode,jdbcType=VARCHAR}, #{numPmNew,jdbcType=BIGINT}, #{numPmNewNotFollow,jdbcType=BIGINT}, 
+      #{numPmNewFollow,jdbcType=BIGINT}, #{numPmOld,jdbcType=BIGINT}, #{numPmOldNotFollow,jdbcType=BIGINT}, 
+      #{numPmOldFollow,jdbcType=BIGINT}, #{numPmTotal,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.WxPmFollowReportShop" >
+    insert into wx_pm_follow_report_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="reportDate != null" >
+        REPORT_DATE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="companyNo != null" >
+        COMPANY_NO,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="dealerCode != null" >
+        DEALER_CODE,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="shopCode != null" >
+        SHOP_CODE,
+      </if>
+      <if test="numPmNew != null" >
+        NUM_PM_NEW,
+      </if>
+      <if test="numPmNewNotFollow != null" >
+        NUM_PM_NEW_NOT_FOLLOW,
+      </if>
+      <if test="numPmNewFollow != null" >
+        NUM_PM_NEW_FOLLOW,
+      </if>
+      <if test="numPmOld != null" >
+        NUM_PM_OLD,
+      </if>
+      <if test="numPmOldNotFollow != null" >
+        NUM_PM_OLD_NOT_FOLLOW,
+      </if>
+      <if test="numPmOldFollow != null" >
+        NUM_PM_OLD_FOLLOW,
+      </if>
+      <if test="numPmTotal != null" >
+        NUM_PM_TOTAL,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNo != null" >
+        #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerCode != null" >
+        #{dealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null" >
+        #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="numPmNew != null" >
+        #{numPmNew,jdbcType=BIGINT},
+      </if>
+      <if test="numPmNewNotFollow != null" >
+        #{numPmNewNotFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmNewFollow != null" >
+        #{numPmNewFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOld != null" >
+        #{numPmOld,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOldNotFollow != null" >
+        #{numPmOldNotFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOldFollow != null" >
+        #{numPmOldFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmTotal != null" >
+        #{numPmTotal,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.WxPmFollowReportShop" >
+    update wx_pm_follow_report_shop
+    <set >
+      <if test="reportDate != null" >
+        REPORT_DATE = #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNo != null" >
+        COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerCode != null" >
+        DEALER_CODE = #{dealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null" >
+        SHOP_CODE = #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="numPmNew != null" >
+        NUM_PM_NEW = #{numPmNew,jdbcType=BIGINT},
+      </if>
+      <if test="numPmNewNotFollow != null" >
+        NUM_PM_NEW_NOT_FOLLOW = #{numPmNewNotFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmNewFollow != null" >
+        NUM_PM_NEW_FOLLOW = #{numPmNewFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOld != null" >
+        NUM_PM_OLD = #{numPmOld,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOldNotFollow != null" >
+        NUM_PM_OLD_NOT_FOLLOW = #{numPmOldNotFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOldFollow != null" >
+        NUM_PM_OLD_FOLLOW = #{numPmOldFollow,jdbcType=BIGINT},
+      </if>
+      <if test="numPmTotal != null" >
+        NUM_PM_TOTAL = #{numPmTotal,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.WxPmFollowReportShop" >
+    update wx_pm_follow_report_shop
+    set REPORT_DATE = #{reportDate,jdbcType=DATE},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      DEALER_CODE = #{dealerCode,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      SHOP_CODE = #{shopCode,jdbcType=VARCHAR},
+      NUM_PM_NEW = #{numPmNew,jdbcType=BIGINT},
+      NUM_PM_NEW_NOT_FOLLOW = #{numPmNewNotFollow,jdbcType=BIGINT},
+      NUM_PM_NEW_FOLLOW = #{numPmNewFollow,jdbcType=BIGINT},
+      NUM_PM_OLD = #{numPmOld,jdbcType=BIGINT},
+      NUM_PM_OLD_NOT_FOLLOW = #{numPmOldNotFollow,jdbcType=BIGINT},
+      NUM_PM_OLD_FOLLOW = #{numPmOldFollow,jdbcType=BIGINT},
+      NUM_PM_TOTAL = #{numPmTotal,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findWxPmFollowReportShopPage" resultMap="findWxPmFollowReportShopPageResultMap" parameterType="com.lj.business.st.dto.wxPmFollow.FindWxPmFollowReportShopPage">
+		select 
+    	<include refid="Base_Column_List" />
+    	from wx_pm_follow_report_shop
+		<include refid="findWxPmFollowReportShopPage_condition" />
+		order by CREATE_DATE desc
+		limit ${start}, ${limit}
+	</select>
+	
+	<select id="findWxPmFollowReportShopPageCount" resultType="int" parameterType="com.lj.business.st.dto.wxPmFollow.FindWxPmFollowReportShopPage">
+		SELECT 
+			count(*)
+		from wx_pm_follow_report_shop
+		<include refid="findWxPmFollowReportShopPage_condition" />
+	</select>
+	
+	<sql id="findWxPmFollowReportShopPage_condition">
+		<where>
+			<if test="merchantNo != null and merchantNo != ''" >
+        		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="reportDate != null" >
+        		and REPORT_DATE = #{reportDate,jdbcType=DATE}
+      		</if>
+      		<if test="dealerCode != null and dealerCode != ''" >
+        		and DEALER_CODE = #{dealerCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="companyName != null and companyName !='' ">
+				and COMPANY_NAME like CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="shopCode != null and shopCode != ''" >
+        		and SHOP_CODE = #{shopCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="shopName != null and shopName !='' ">
+				and SHOP_NAME like CONCAT('%',#{shopName,jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+	</sql>
+  
+</mapper>

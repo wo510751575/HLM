@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IHxClueOrderDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.HxClueOrder">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CLUE_CODE" jdbcType="VARCHAR" property="clueCode" />
+    <result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo" />
+    <result column="MEMBER_NAME" jdbcType="VARCHAR" property="memberName" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="SHOP_SERVER_CODE" jdbcType="VARCHAR" property="shopServerCode" />
+    <result column="SERVER_NAME" jdbcType="VARCHAR" property="serverName" />
+    <result column="SERVER_CODE" jdbcType="VARCHAR" property="serverCode" />
+    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
+    <result column="USER_PRICE" jdbcType="BIGINT" property="userPrice" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, CLUE_CODE, MEMBER_NO, MEMBER_NAME, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+    SHOP_SERVER_CODE, SERVER_NAME, SERVER_CODE, USER_TYPE, USER_PRICE, STATUS, CREATE_ID, 
+    CREATE_DATE, UPDATE_ID, UPDATE_DATE, REMARK, TYPE
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.HxClueOrderDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findHxClueOrders" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindHxClueOrderPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM hx_clue_order
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findHxClueOrderPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindHxClueOrderPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM hx_clue_order
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findHxClueOrderPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindHxClueOrderPage">
+		select count(*)
+		FROM hx_clue_order
+		<include refid="findPage_condition" />
+	</select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hx_clue_order
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hx_clue_order
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.HxClueOrder">
+    insert into hx_clue_order (CODE, CLUE_CODE, MEMBER_NO, 
+      MEMBER_NAME, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, SHOP_SERVER_CODE, 
+      SERVER_NAME, SERVER_CODE, USER_TYPE, 
+      USER_PRICE, STATUS, CREATE_ID, 
+      CREATE_DATE, UPDATE_ID, UPDATE_DATE, 
+      REMARK, TYPE)
+    values (#{code,jdbcType=VARCHAR}, #{clueCode,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{shopServerCode,jdbcType=VARCHAR}, 
+      #{serverName,jdbcType=VARCHAR}, #{serverCode,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{userPrice,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.HxClueOrder">
+    insert into hx_clue_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="clueCode != null">
+        CLUE_CODE,
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null">
+        MEMBER_NAME,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="shopServerCode != null">
+        SHOP_SERVER_CODE,
+      </if>
+      <if test="serverName != null">
+        SERVER_NAME,
+      </if>
+      <if test="serverCode != null">
+        SERVER_CODE,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="userPrice != null">
+        USER_PRICE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="clueCode != null">
+        #{clueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopServerCode != null">
+        #{shopServerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null">
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverCode != null">
+        #{serverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="userPrice != null">
+        #{userPrice,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.HxClueOrder">
+    update hx_clue_order
+    <set>
+      <if test="clueCode != null">
+        CLUE_CODE = #{clueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopServerCode != null">
+        SHOP_SERVER_CODE = #{shopServerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null">
+        SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverCode != null">
+        SERVER_CODE = #{serverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="userPrice != null">
+        USER_PRICE = #{userPrice,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.HxClueOrder">
+    update hx_clue_order
+    set CLUE_CODE = #{clueCode,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SHOP_SERVER_CODE = #{shopServerCode,jdbcType=VARCHAR},
+      SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      SERVER_CODE = #{serverCode,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      USER_PRICE = #{userPrice,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByClueCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hx_clue_order
+    where CLUE_CODE = #{code,jdbcType=VARCHAR} AND (`STATUS`='FREEZE' OR `STATUS`='OK')
+  </select>
+  <select id="queryAcceptListCount" resultType="int" parameterType="com.ye.business.hx.dto.params.ClueParams">
+		SELECT COUNT(1) FROM hx_clue_order a
+LEFT JOIN hx_clue b ON a.CLUE_CODE=b.`CODE`
+WHERE a.MERCHANT_NO=#{memberNoMerchant}
+		<if test="project != null">
+			AND b.PROJECT=#{project}
+		</if>
+		<if test="status != null">
+			AND a.`STATUS`=#{status}
+		</if>
+		<if test="addr != null">
+			AND b.ADDR_INFO LIKE CONCAT('%',#{addr},'%')
+		</if>
+		<if test="userType != null">
+			AND a.USER_TYPE=#{userType}
+		</if>
+		<if test="type != null">
+			AND a.TYPE=#{type}
+		</if>
+		<if test="date != null">
+			AND a.CREATE_DATE &gt;= #{date}
+		</if>
+	</select>
+	<select id="queryAcceptList" resultType="com.ye.business.hx.dto.vo.ClueListVo" parameterType="com.ye.business.hx.dto.params.ClueParams">
+		SELECT b.`CODE` code,p.MEMBER_NO as memberNo,p.code as patientNo,a.`NAME` name,a.PHONE phone,a.SEX sex,a.AGE age,a.PROVINCE province,a.CITY city,a.AREA area,
+a.ADDR_INFO addrInfo,a.SOURCE source,a.WECHAT_NO wechatNo,a.WECHAT_NAME wechatName,b.USER_TYPE userType,a.USER_PRICE userPrice,
+b.`STATUS` status,a.VALID_STATUS validStatus,a.CREATE_TIME createTime,a.ORDER_NO orderNo,a.PROJECT project,a.RESERVE_DATE reserveDate,a.RESERVE_TIME reserveTime,
+a.FOLLOW_NAME followName,a.WISH_LEVEL wishLevel,a.COMPLAINT complaint,a.REMARK remark,b.MERCHANT_NAME clinicName,c.LABLE_NAME userTypeName,b.TYPE orderType FROM hx_clue_order b
+LEFT JOIN hx_clue a ON b.CLUE_CODE=a.`CODE`
+LEFT JOIN hx_patient p on p.CLUE_CODE=b.CLUE_CODE AND b.MERCHANT_NO=p.MERCHANT_NO
+LEFT JOIN shop_config c ON b.USER_TYPE=c.`CODE`
+WHERE b.MERCHANT_NO=#{memberNoMerchant}
+		<if test="project != null">
+			AND a.PROJECT=#{project}
+		</if>
+		<if test="status != null">
+			AND b.`STATUS`=#{status}
+		</if>
+		<if test="addr != null">
+			AND a.ADDR_INFO LIKE CONCAT('%',#{addr},'%')
+		</if>
+		<if test="userType != null">
+			AND b.USER_TYPE=#{userType}
+		</if>
+		<if test="type != null">
+			AND b.TYPE=#{type}
+		</if>
+		<if test="date != null">
+			AND b.CREATE_DATE &gt;= #{date}
+		</if>
+		ORDER BY b.CREATE_DATE DESC LIMIT #{start},#{limit}
+	</select>
+	<select id="broadCastList" resultType="com.ye.business.hx.dto.vo.ClueListVo" parameterType="java.lang.String">
+		SELECT b.LABLE_NAME userTypeName,c.`NAME` name,a.MERCHANT_NAME clinicName FROM hx_clue_order a
+LEFT JOIN shop_config b ON a.USER_TYPE=b.`CODE`
+LEFT JOIN hx_clue c ON a.CLUE_CODE=c.`CODE`
+WHERE a.`STATUS`=#{status} ORDER BY a.CREATE_DATE LIMIT 20
+	</select>
+	<select id="queryClientCount" resultType="int" parameterType="com.ye.business.hx.dto.params.ClueParams">
+		SELECT COUNT(1) FROM hx_clue_order WHERE MERCHANT_NO=#{memberNoMerchant} AND TYPE=#{type} AND CREATE_DATE>=#{date}
+	</select>
+</mapper>

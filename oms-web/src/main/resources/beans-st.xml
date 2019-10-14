@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd          
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+      
+    
+     <!-- 区域工作统计 -->
+	<bean id="workRatioAreaService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="workRatioAreaService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWorkRatioAreaService" />   
+    </bean>     
+     <!-- 客户分类统计表  -->
+	<bean id="pmTypeTotalService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="pmTypeTotalService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IPmTypeTotalService" />   
+    </bean>  
+    
+
+        <!-- 到店客户体验-->
+	<bean id="clientExpTotalService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="clientExpTotalService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IClientExpTotalService" />   
+    </bean> 
+    
+    
+        <!-- 加粉统计 -->
+    <bean id="getCountAddFriendsService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="getCountAddFriendsService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IGetCountAddFriendsService" />   
+    </bean>  
+    
+        <!-- 门店工作统计-->
+	<bean id="workRatioShopService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="workRatioShopService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWorkRatioShopService" />   
+    </bean> 
+    
+     <!-- 客户画像统计 -->
+    <bean id="clientAnalyzeService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="clientAnalyzeService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IClientAnalyzeService" />   
+    </bean> 
+    
+         <!-- 员工画像统计 -->
+    <bean id="employeeAnalyzeService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="employeeAnalyzeService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IEmployeeAnalyzeService" />   
+    </bean> 
+    
+     <!-- 客户咨询统计-->
+	<bean id="pmTalkTotalService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="pmTalkTotalService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IPmTalkTotalService" />   
+    </bean> 
+    
+    
+     <!-- 报表项目-->
+	<bean id="stListService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="stListService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IStListService" />   
+    </bean> 
+    
+    <!-- 跟进分析 -->
+    <bean id="cfAnalyzeChooseService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="cfAnalyzeChooseService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ICfAnalyzeChooseService" />   
+    </bean> 
+    
+    <!-- 运营日报选择 -->
+    <bean id="operationDayChooseService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="operationDayChooseService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IOperationDayChooseService" />   
+    </bean> 
+    
+   <!-- 优秀导购选择表 -->
+    <bean id="bestGmChooseService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="bestGmChooseService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IBestGmChooseService" />   
+    </bean> 
+    
+       <!-- 日工作简报选择 -->
+    <bean id="operationAnalysisDayChooseService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="operationAnalysisDayChooseService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IOperationAnalysisDayChooseService" />   
+    </bean> 
+    
+      <!-- 运营分析报表选择 -->
+    <bean id="workBrDayChooseService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="workBrDayChooseService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWorkBrDayChooseService" />   
+    </bean> 
+    
+      <!-- 商户运营日报 -->
+    <bean id="merchantDayOperationService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="merchantDayOperationService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IMerchantDayOperationService" />   
+    </bean> 
+    
+      <!-- 今日客户汇总 -->
+    <bean id="todayMemberSummaryService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="todayMemberSummaryService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ITodayMemberSummaryService" />   
+    </bean> 
+    
+      <!-- 移动门店商户运营日报表 -->
+    <bean id="merchantOperationDayReportService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="merchantOperationDayReportService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IMerchantOperationDayReportService" />   
+    </bean> 
+    
+      <!-- 移动门店经销商运营日报表 -->
+    <bean id="companyOperationDayReportService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="companyOperationDayReportService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ICompanyOperationDayReportService" />   
+    </bean> 
+    
+      <!-- 移动门店门店运营日报表 -->
+    <bean id="shopOperationDayReportService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="shopOperationDayReportService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IShopOperationDayReportService" />   
+    </bean> 
+    
+     <!-- 导购微信客户跟踪日报 -->
+    <bean id="wxPmFollowReportGmService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="wxPmFollowReportGmService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWxPmFollowReportGmService" />   
+    </bean> 
+    
+    <!-- 门店微信客户跟踪日报 -->
+    <bean id="wxPmFollowReportShopService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="wxPmFollowReportShopService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWxPmFollowReportShopService" />   
+    </bean> 
+    
+    <!-- 经销商微信客户跟踪日报 -->
+    <bean id="wxPmFollowReportCompanyService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="wxPmFollowReportCompanyService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWxPmFollowReportCompanyService" />   
+    </bean>
+    
+    <!-- 用户统计 -->
+    <bean id="userCountService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="st" />
+		<property name="serviceName" value="userCountService" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IUserCountService" />   
+    </bean>
+    
+</beans>

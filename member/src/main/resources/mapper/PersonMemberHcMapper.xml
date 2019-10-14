@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IPersonMemberHcDao" >
+	
+  <resultMap id="findNewPmPageResultMap" type="com.lj.business.member.dto.FindNewPmPageReturn" >
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_WX" property="nickNameRemarkWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_LOCAL" property="nickNameRemarkLocal" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_WX" property="nickNameWx" jdbcType="VARCHAR" />
+    <result column="WX_FRIENDS" property="wxFriends" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="REMARK_COM" property="remarkCom" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UNGROUP" property="unGroup" jdbcType="VARCHAR" />
+    <result column="COMPLETE" property="complete" jdbcType="VARCHAR" />
+    <result column="RATIO_CLIENT_INFO" property="ratioClientInfo" jdbcType="DECIMAL" />
+    <result column="FIRST_INTRODUCE" property="firstIntroduce" jdbcType="VARCHAR" />
+    <collection property="labels" ofType="com.lj.business.member.dto.PmLabelDto">
+   		<id column="LABEL_CODE" property="code" />
+   		<result column="LABEL_NAME" property="labelName" />
+   	</collection>
+  </resultMap>
+	
+  <resultMap id="findPmWxBpInfoHcResultMap" type="com.lj.business.member.dto.FindPmWxBpInfoReturnHc" >
+  	<result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_WX" property="nickNameRemarkWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_LOCAL" property="nickNameRemarkLocal" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_WX" property="nickNameWx" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="BEHAVIOR_DESC" property="behaviorDesc" jdbcType="VARCHAR" />
+    <result column="BEHAVIOR_DATE" property="behaviorDate" jdbcType="TIMESTAMP" />
+    <!-- 		客户分类信息 -->
+   	<result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+   	<result column="PM_TYPE_TYPE" property="pmTypeType" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindClientPmTypeIndexReturnMap" type="com.lj.business.member.dto.FindClientPmTypeIndexReturn" >
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_WX" property="nickNameRemarkWx" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_REMARK_LOCAL" property="nickNameRemarkLocal" jdbcType="VARCHAR" />
+    <result column="NICK_NAME_WX" property="nickNameWx" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="CODE" property="codePmTypePm" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+   <result column="RATIO_CLIENT_INFO" property="ratioClientInfo" jdbcType="DECIMAL" />
+   <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CONSUME_FREQUENCY" property="consumeFrequency" jdbcType="INTEGER" />
+  </resultMap>
+  
+   <!-- 新增客户,分页查询 -->
+   <select id="findNewPmPageHc" resultMap="findNewPmPageResultMap" parameterType="com.lj.business.member.dto.FindPmTypeIndexPage" >
+	 SELECT pm.MEMBER_NO,
+	       pm.MEMBER_NAME,
+	       pmb.MOBILE,
+	       pmb.NO_WX,
+	       pmb.NICK_NAME_WX,
+	       pm.NICK_NAME_REMARK_WX,
+	       pm.NICK_NAME_REMARK_LOCAL,
+	       pmb.HEAD_ADDRESS,
+	       pm.CREATE_DATE,
+	       '客户资料完成' AS REMARK_COM,
+	       IF(pt.PM_TYPE_TYPE = 'UNGROUP', 'Y', 'N') AS UNGROUP,
+	       IF(pmb.MEMBER_NAME is NOT NULL AND pmb.NO_WX IS NOT NULL AND pmb.MEMBER_SRC IS NOT NULL AND pmb.MOBILE IS NOT NULL, 'Y', 'N' ) AS COMPLETE,
+	       pmb.RATIO_CLIENT_INFO,
+	       pm.FIRST_INTRODUCE,
+	       pm.WX_FRIENDS
+	  FROM PERSON_MEMBER pm,
+	       PERSON_MEMBER_BASE pmb,
+	       PM_TYPE pt
+		 WHERE pm.MEMBER_NO = pmb.MEMBER_NO
+	       AND pt.CODE = pm.PM_TYPE_CODE
+	       AND pm.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	       AND pm.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	       AND pm.CREATE_DATE >= CURDATE()
+	   order by UNGROUP DESC, pm.CREATE_DATE DESC, pm.MEMBER_NAME asc
+    </select>
+
+  	<!-- 微信提醒-列表查询-APP begin -->
+  	<sql id="findPmWxBpInfoHcPageCountWhere">
+		<where>
+				pmb.MEMBER_NO = bp.MEMBER_NO
+           		AND pmb.MEMBER_NO = pm.MEMBER_NO
+	       		and pm.PM_TYPE_CODE = pt.CODE
+	       		and pmb.NO_WX is not null
+	        <if test="memberNoGm != null and memberNoGm !='' " >
+	            and pm.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	        </if>
+			<if test="merchantNo != null and merchantNo !='' ">
+				and pm.MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="memberNoAr != null and memberNoAr.size() > 0">
+		      	and pm.MEMBER_NO in
+		      	<foreach item="item" index="index" collection="memberNoAr" open="(" separator="," close=")">  
+		            #{item}  
+		        </foreach>
+		    </if>
+		</where>
+    </sql>
+	<sql id="findPmWxBpInfoHcPageWhere">
+		<where>
+				pmb.MEMBER_NO = bp.MEMBER_NO
+           		AND pmb.MEMBER_NO = pm.MEMBER_NO
+	       		and pm.PM_TYPE_CODE = pt.CODE
+	       		and pmb.NO_WX is not null
+	        <if test="memberNoGm != null and memberNoGm !='' " >
+	            and pm.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	        </if>
+			<if test="merchantNo != null and merchantNo !='' ">
+				and pm.MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="memberNoAr != null and memberNoAr.size() > 0">
+		      	and pm.MEMBER_NO in
+		      	<foreach item="item" index="index" collection="memberNoAr" open="(" separator="," close=")">  
+		            #{item}  
+		        </foreach>
+		    </if>
+		</where>
+    </sql>
+
+	<select id="findPmWxBpInfoHcPageCount" resultType="int" parameterType="com.lj.business.member.dto.FindPmWxBpInfoHcPage">
+		SELECT count(*)
+          FROM PERSON_MEMBER pm, 
+          PERSON_MEMBER_BASE pmb, 
+          BEHAVIOR_PM bp, 
+          pm_type pt
+		       <include refid="findPmWxBpInfoHcPageCountWhere" />
+	</select>
+
+	<select id="findPmWxBpInfoHcPageList" resultMap="findPmWxBpInfoHcResultMap" parameterType="com.lj.business.member.dto.FindPmWxBpInfoHcPage">
+		SELECT pm.MEMBER_NO,pm.MEMBER_NAME,pm.NICK_NAME_REMARK_WX, pm.NICK_NAME_REMARK_LOCAL,  pmb.NO_WX,pmb.NICK_NAME_WX,pmb.HEAD_ADDRESS,bp.BEHAVIOR_DESC,bp.BEHAVIOR_DATE,
+    		   pt.TYPE_NAME, pt.PM_TYPE_TYPE
+          FROM PERSON_MEMBER pm, 
+          PERSON_MEMBER_BASE pmb, 
+          BEHAVIOR_PM bp, 
+          pm_type pt
+		       <include refid="findPmWxBpInfoHcPageWhere" />
+		 order by bp.BEHAVIOR_DATE desc
+		 limit ${start}, ${limit}
+	</select>
+  	<!-- 微信提醒-列表查询-APP end -->    
+    
+    <!-- 客情管理-分类客户明细查询列表  -->
+    <select id="findClientPmTypeIndex" parameterType="com.lj.business.member.dto.FindClientPmTypeIndex" resultMap="FindClientPmTypeIndexReturnMap">
+    	SELECT pm.MEMBER_NO,pm.MEMBER_NAME,pmb.NO_WX,pm.NICK_NAME_REMARK_WX,pm.NICK_NAME_REMARK_LOCAL,
+    		   pmb.NICK_NAME_WX,pmb.HEAD_ADDRESS,pm.CODE,pmb.MOBILE,pmb.RATIO_CLIENT_INFO, pm.CREATE_DATE, pm.CONSUME_FREQUENCY
+	      FROM PERSON_MEMBER_BASE pmb, PERSON_MEMBER pm
+	     WHERE pmb.MEMBER_NO = pm.MEMBER_NO
+           AND pm.CODE = ptp.CODE_PM
+	       AND pm.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+           AND pm.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	       AND pm.#{shopNo,jdbcType=VARCHAR}
+           AND ptp.PM_TYPE_CODE = #{pmTypeCode,jdbcType=VARCHAR}
+   		 order by pm.CREATE_DATE desc, pm.MEMBER_NAME asc
+    </select>
+</mapper>

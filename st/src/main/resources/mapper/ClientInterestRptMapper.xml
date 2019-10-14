@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IClientInterestRptDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.ClientInterestRpt" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="CODE_INTEREST" property="codeInterest" jdbcType="VARCHAR" />
+    <result column="INTEREST_NAME" property="interestName" jdbcType="VARCHAR" />
+    <result column="RATIO_LINE" property="ratioLine" jdbcType="DECIMAL" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="NUM_INTEREST" property="numInterest" />
+    <result column="AREA_CODE" property="areaCode" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, CODE_INTEREST, 
+    INTEREST_NAME, RATIO_LINE, DIMENSION_ST, CREATE_DATE,NUM_INTEREST,AREA_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from client_interest_rpt
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectClientInterestRptList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.FindClientAnalyzeAndOthers" >
+    select
+    <include refid="Base_Column_List" />
+    from client_interest_rpt
+    WHERE 1 = 1
+    <if test="merchantNo != null and merchantNo !='' ">
+      and MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null and shopNo !='' ">
+      and SHOP_NO = #{shopNo}
+    </if>
+    <if test="areaCode != null and areaCode !='' ">
+      and AREA_CODE = #{areaCode}
+    </if>
+    <if test="dimensionSt != null and dimensionSt !='' ">
+      and DIMENSION_ST = #{dimensionSt}
+    </if>
+    <if test="codeInterest != null and codeInterest !='' ">
+      and CODE_INTEREST = #{codeInterest}
+    </if>
+  </select>
+
+  <select id="selectAllShopData" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from client_interest_rpt
+    WHERE DIMENSION_ST = 'SHOP'
+  </select>
+  
+  <select id="selectMerchantTotalByArea"  resultMap="BaseResultMap" >
+	SELECT MERCHANT_NO, CODE_INTEREST, INTEREST_NAME, sum(NUM_INTEREST) NUM_INTEREST
+	  FROM client_interest_rpt
+	 WHERE DIMENSION_ST = 'AREA'
+	 GROUP BY MERCHANT_NO,CODE_INTEREST
+  </select>
+  
+  <select id="selectAreaTotalByShop" resultMap="BaseResultMap" >
+	SELECT MERCHANT_NO,AREA_CODE,<!-- AREA_NAME, -->CODE_INTEREST, INTEREST_NAME, sum(NUM_INTEREST) NUM_INTEREST
+	  FROM client_interest_rpt
+	 WHERE DIMENSION_ST = 'SHOP'
+	 GROUP BY MERCHANT_NO,AREA_CODE,CODE_INTEREST
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from client_interest_rpt
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.ClientInterestRpt" >
+    insert into client_interest_rpt (CODE, MERCHANT_NO, SHOP_NO, 
+      SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+      CODE_INTEREST, INTEREST_NAME, RATIO_LINE, 
+      DIMENSION_ST, CREATE_DATE,NUM_INTEREST,AREA_CODE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{codeInterest,jdbcType=VARCHAR}, #{interestName,jdbcType=VARCHAR}, #{ratioLine,jdbcType=DECIMAL}, 
+      #{dimensionSt,jdbcType=VARCHAR}, NOW(), #{numInterest}, #{areaCode})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.ClientInterestRpt" >
+    insert into client_interest_rpt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="codeInterest != null" >
+        CODE_INTEREST,
+      </if>
+      <if test="interestName != null" >
+        INTEREST_NAME,
+      </if>
+      <if test="ratioLine != null" >
+        RATIO_LINE,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="codeInterest != null" >
+        #{codeInterest,jdbcType=VARCHAR},
+      </if>
+      <if test="interestName != null" >
+        #{interestName,jdbcType=VARCHAR},
+      </if>
+      <if test="ratioLine != null" >
+        #{ratioLine,jdbcType=DECIMAL},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.ClientInterestRpt" >
+    update client_interest_rpt
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="codeInterest != null" >
+        CODE_INTEREST = #{codeInterest,jdbcType=VARCHAR},
+      </if>
+      <if test="interestName != null" >
+        INTEREST_NAME = #{interestName,jdbcType=VARCHAR},
+      </if>
+      <if test="ratioLine != null" >
+        RATIO_LINE = #{ratioLine,jdbcType=DECIMAL},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numInterest != null" >
+        NUM_INTEREST = #{numInterest},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.ClientInterestRpt" >
+    update client_interest_rpt
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      CODE_INTEREST = #{codeInterest,jdbcType=VARCHAR},
+      INTEREST_NAME = #{interestName,jdbcType=VARCHAR},
+      RATIO_LINE = #{ratioLine,jdbcType=DECIMAL},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

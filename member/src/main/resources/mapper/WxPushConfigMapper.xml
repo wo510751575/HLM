@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IWxPushConfigDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.WxPushConfig" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="SHARE_CODE" property="shareCode" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+    <result column="SHARE_ICON" property="shareIcon" jdbcType="VARCHAR" />
+    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+    <result column="PUSH_TIME" property="pushTime" jdbcType="VARCHAR" />
+    <result column="ORG_TYPE" property="orgType" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="com.lj.business.member.dto.pushconfig.FindWxPushConfigReturn" id="FindWxPushConfigReturnResultMap" extends="BaseResultMap"></resultMap>
+  <resultMap type="com.lj.business.member.dto.pushconfig.FindWxPushConfigPageReturn" id="FindWxPushConfigPageReturnResultMap" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, NO_WX, STATUS, SORT, TYPE, CONTENT, SHARE_CODE, SHARE_TITLE, SHARE_DES, SHARE_ICON, 
+    SHARE_URL, PUSH_TIME, ORG_TYPE,  MERCHANT_NO, CREATE_DATE, UPDATE_DATE, 
+    REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_push_config
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_push_config
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.WxPushConfig" >
+    insert into wx_push_config (CODE, NO_WX, STATUS, 
+      SORT, TYPE, CONTENT, 
+      SHARE_CODE, SHARE_TITLE, SHARE_DES, 
+      SHARE_ICON, SHARE_URL, PUSH_TIME, 
+      ORG_TYPE,  
+      MERCHANT_NO, CREATE_DATE, UPDATE_DATE, 
+      REMARK)
+    values (#{code,jdbcType=VARCHAR}, #{noWx,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{shareCode,jdbcType=VARCHAR}, #{shareTitle,jdbcType=VARCHAR}, #{shareDes,jdbcType=VARCHAR}, 
+      #{shareIcon,jdbcType=VARCHAR}, #{shareUrl,jdbcType=VARCHAR}, #{pushTime,jdbcType=VARCHAR}, 
+      #{orgType,jdbcType=VARCHAR},  
+      #{merchantNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.WxPushConfig" >
+    insert into wx_push_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="shareCode != null" >
+        SHARE_CODE,
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE,
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES,
+      </if>
+      <if test="shareIcon != null" >
+        SHARE_ICON,
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL,
+      </if>
+      <if test="pushTime != null" >
+        PUSH_TIME,
+      </if>
+      <if test="orgType != null" >
+        ORG_TYPE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="shareCode != null" >
+        #{shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareIcon != null" >
+        #{shareIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pushTime != null" >
+        #{pushTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null" >
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.WxPushConfig" >
+    update wx_push_config
+    <set >
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="shareCode != null" >
+        SHARE_CODE = #{shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareIcon != null" >
+        SHARE_ICON = #{shareIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pushTime != null" >
+        PUSH_TIME = #{pushTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null" >
+        ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.WxPushConfig" >
+    update wx_push_config
+    set NO_WX = #{noWx,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      SHARE_CODE = #{shareCode,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      SHARE_ICON = #{shareIcon,jdbcType=VARCHAR},
+      SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      PUSH_TIME = #{pushTime,jdbcType=VARCHAR},
+      ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  <!-- 分页查询 - begin -->
+	<sql id="findWxPushConfigPage_condition">
+		<where>
+			<if test="noWx != null and noWx !='' " >
+				and NO_WX = #{noWx,jdbcType=VARCHAR}
+	        </if>
+			<if test="status != null and status !='' " >
+				and status = #{status,jdbcType=VARCHAR}
+	        </if>
+			<if test="type != null and type !='' " >
+				and type = #{type,jdbcType=VARCHAR}
+	        </if>
+			<if test="pushTime != null and pushTime !='' " >
+				and push_time = #{pushTime,jdbcType=VARCHAR}
+	        </if>
+			<if test="orgType != null and orgType !='' " >
+	        	and org_type = #{orgType,jdbcType=VARCHAR}
+	        </if>
+			<if test="merchantNo != null and merchantNo !='' " >
+	        	and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+	        </if>
+		</where>
+	</sql>
+
+	<select id="findWxPushConfigPage" resultMap="FindWxPushConfigPageReturnResultMap" parameterType="com.lj.business.member.dto.pushconfig.FindWxPushConfigPage">
+		SELECT <include refid="Base_Column_List" />
+		FROM wx_push_config
+		<include refid="findWxPushConfigPage_condition" />
+		order by status asc, SORT asc
+		limit ${start}, ${limit}
+	</select>
+
+	<select id="findWxPushConfigPageCount" resultType="int" parameterType="com.lj.business.member.dto.pushconfig.FindWxPushConfigPage">
+		select count(*) 
+		FROM wx_push_config
+		<include refid="findWxPushConfigPage_condition" />
+	</select>
+	<!-- 分页查询 - end -->
+	
+	<!-- 查询终端待推送配置列表，以机构类型按终端、商户为次序进行排序 -->
+	<select id="findWxPushConfigToPush" resultMap="FindWxPushConfigPageReturnResultMap" parameterType="com.lj.business.member.dto.pushconfig.FindWxPushConfigPage">
+		SELECT <include refid="Base_Column_List" />
+		FROM wx_push_config
+		where status = 'USE'
+		  and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+		<if test="pushTime != null and pushTime !='' " >
+			and push_time = #{pushTime,jdbcType=VARCHAR}
+        </if>
+		  and (org_type = 'MERCHANT' or (org_type = 'SHOP' ))
+		  and  NO_WX = #{noWx,jdbcType=VARCHAR}
+		order by org_type desc, SORT asc
+	</select>
+	
+	<delete id="delete" parameterType="com.lj.business.member.dto.pushconfig.UpdateWxPushConfig">
+		delete from wx_push_config
+		where NO_WX = #{noWx,jdbcType=VARCHAR}
+		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	</delete>
+</mapper>

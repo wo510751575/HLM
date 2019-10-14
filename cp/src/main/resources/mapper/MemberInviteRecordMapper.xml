@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cp.dao.IMemberInviteRecordDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cp.domain.MemberInviteRecord" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_MOBILE" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="ADD_FRIENDS_CODE" property="addFriendsCode" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="INVITED_MOBILE" property="invitedMobile" jdbcType="VARCHAR" />
+    <result column="INVITED_DATE" property="invitedDate" jdbcType="DATE" />
+    <result column="MEMBER_NAME_INVITED" property="memberNameInvited" jdbcType="VARCHAR" />
+    <result column="MEMBER_WX_INVITED" property="memberWxInvited" jdbcType="VARCHAR" />
+    <result column="MEMBER_HEAD_WX_INVITED" property="memberHeadWxInvited" jdbcType="VARCHAR" />
+    <result column="RULE_CODE" property="ruleCode" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_MOBILE, MEMBER_NO, MEMBER_NAME,ADD_FRIENDS_CODE,NICK_NAME, INVITED_MOBILE, INVITED_DATE, MEMBER_NAME_INVITED, 
+    MEMBER_WX_INVITED, MEMBER_HEAD_WX_INVITED, RULE_CODE, UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+    CREATE_DATE
+  </sql>
+  <sql id="Base_Column_List_Entity">
+  	CODE AS code,
+	MEMBER_NO_GM AS memberNoGm,
+	MEMBER_NAME_GM AS memberNameGm,
+	MEMBER_NO AS memberNo,
+	MEMBER_NAME AS memberName,
+	ADD_FRIENDS_CODE AS addFriendsCode,
+	NICK_NAME AS nickName,
+	COUPON_NO AS couponNo,
+	COUPON_STATUS AS couponStatus,
+	USE_DATE AS useDate,
+	UPDATE_ID AS updateId,
+	UPDATE_DATE AS updateDate,
+	CREATE_ID AS createId,
+	CREATE_DATE AS createDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_invite_record
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from member_invite_record
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cp.domain.MemberInviteRecord" >
+    insert into member_invite_record (CODE, MEMBER_MOBILE, MEMBER_NO, 
+      MEMBER_NAME,ADD_FRIENDS_CODE,NICK_NAME, INVITED_MOBILE, INVITED_DATE, 
+      MEMBER_NAME_INVITED, MEMBER_WX_INVITED, MEMBER_HEAD_WX_INVITED, 
+      RULE_CODE, UPDATE_ID, UPDATE_DATE, 
+      CREATE_ID, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{memberMobile,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR},  #{addFriendsCode,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
+      #{invitedMobile,jdbcType=VARCHAR}, #{invitedDate,jdbcType=DATE}, 
+      #{memberNameInvited,jdbcType=VARCHAR}, #{memberWxInvited,jdbcType=VARCHAR}, #{memberHeadWxInvited,jdbcType=VARCHAR}, 
+      #{ruleCode,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cp.domain.MemberInviteRecord" >
+    insert into member_invite_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberMobile != null" >
+        MEMBER_MOBILE,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+       <if test="addFriendsCode != null" >
+        ADD_FRIENDS_CODE,
+      </if>
+       <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="invitedMobile != null" >
+        INVITED_MOBILE,
+      </if>
+      <if test="invitedDate != null" >
+        INVITED_DATE,
+      </if>
+      <if test="memberNameInvited != null" >
+        MEMBER_NAME_INVITED,
+      </if>
+      <if test="memberWxInvited != null" >
+        MEMBER_WX_INVITED,
+      </if>
+      <if test="memberHeadWxInvited != null" >
+        MEMBER_HEAD_WX_INVITED,
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberMobile != null" >
+        #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="addFriendsCode != null" >
+        #{addFriendsCode,jdbcType=VARCHAR},
+      </if>
+       <if test="nickName != null" >
+         #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="invitedMobile != null" >
+        #{invitedMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="invitedDate != null" >
+        #{invitedDate,jdbcType=DATE},
+      </if>
+      <if test="memberNameInvited != null" >
+        #{memberNameInvited,jdbcType=VARCHAR},
+      </if>
+      <if test="memberWxInvited != null" >
+        #{memberWxInvited,jdbcType=VARCHAR},
+      </if>
+      <if test="memberHeadWxInvited != null" >
+        #{memberHeadWxInvited,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleCode != null" >
+        #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cp.domain.MemberInviteRecord" >
+    update member_invite_record
+    <set >
+      <if test="memberMobile != null" >
+        MEMBER_MOBILE = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="addFriendsCode != null" >
+         ADD_FRIENDS_CODE = #{addFriendsCode,jdbcType=VARCHAR},
+      </if>
+       <if test="nickName != null" >
+         NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="invitedMobile != null" >
+        INVITED_MOBILE = #{invitedMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="invitedDate != null" >
+        INVITED_DATE = #{invitedDate,jdbcType=DATE},
+      </if>
+      <if test="memberNameInvited != null" >
+        MEMBER_NAME_INVITED = #{memberNameInvited,jdbcType=VARCHAR},
+      </if>
+      <if test="memberWxInvited != null" >
+        MEMBER_WX_INVITED = #{memberWxInvited,jdbcType=VARCHAR},
+      </if>
+      <if test="memberHeadWxInvited != null" >
+        MEMBER_HEAD_WX_INVITED = #{memberHeadWxInvited,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cp.domain.MemberInviteRecord" >
+    update member_invite_record
+    set MEMBER_MOBILE = #{memberMobile,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      ADD_FRIENDS_CODE = #{addFriendsCode,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      INVITED_MOBILE = #{invitedMobile,jdbcType=VARCHAR},
+      INVITED_DATE = #{invitedDate,jdbcType=DATE},
+      MEMBER_NAME_INVITED = #{memberNameInvited,jdbcType=VARCHAR},
+      MEMBER_WX_INVITED = #{memberWxInvited,jdbcType=VARCHAR},
+      MEMBER_HEAD_WX_INVITED = #{memberHeadWxInvited,jdbcType=VARCHAR},
+      RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <!-- update by 杨杰 根据导购编号获取已使用的优惠券 -->
+  <select id="findCouponMemberRelationList" parameterType="com.lj.business.cp.dto.couponMemberRelation.FindCouponMemberRelation" resultType="com.lj.business.cp.dto.couponMemberRelation.FindCouponMemberRelationReturn">
+  	select 
+  	<include refid="Base_Column_List_Entity"/>
+  	from
+  	member_invite_record
+  	where 1 = 1
+    <if test="memberNo != null" >
+    AND #{memberNo,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

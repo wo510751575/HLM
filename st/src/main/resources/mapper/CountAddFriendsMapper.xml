@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.ICountAddFriendsDao" >
+  <resultMap id="countResultMap" type="com.lj.business.st.domain.CountAddFriendsEntity" >
+    <result property="id"  column="id"  />
+    <result property="merchantNo" column="merchant_no" />
+    <result property="count"  column="count" />
+    <result property="countDate" column="count_date" />
+    <result property="createDate" column="create_date" />
+    <result property="type" column="type" />
+    <result property="noWx" column="no_wx" />
+    <result property="countDate" column="click_date" />
+  </resultMap>
+
+  <!-- 查询昨天的统计数
+  <select id="getYesterday"  resultMap="countResultMap">
+	select count, DATE_FORMAT(count_date,'%Y-%m-%d') as count_date
+		  from count_addFriends WHERE merchant_no = #{merchantNo}
+		  AND to_days(now())-to_days(count_date) = 1
+  </select> -->
+  <!-- 查询自定义某一天的统计数 -->
+  <select id="getOneDay"  resultMap="countResultMap">
+	select count, DATE_FORMAT(count_date,'%Y-%m-%d') as count_date from count_addFriends
+	 WHERE  DATE_FORMAT(count_date,'%Y-%m-%d') = #{startTime} and merchant_no = #{merchantNo} 
+	 <if test="type != null and type !='' ">
+	      and type = #{type}
+	    </if>
+	     <if test="noWx != null and noWx !='' ">
+	      and no_wx = #{noWx}
+	    </if>
+  </select>
+  
+  <!-- 查询昨天的数据有没统计出来 -->
+  <select id="getLastDay"  resultMap="countResultMap">
+  <![CDATA[
+	select count, DATE_FORMAT(count_date,'%Y-%m-%d') as count_date from count_addFriends a
+	 WHERE  TO_DAYS( NOW( ) ) - TO_DAYS( a.count_date) <= 1
+	 ]]>
+	 <if test="type != null and type !='' ">
+	      and type = #{type}
+	    </if>
+	     <if test="noWx != null and noWx !='' ">
+	      and no_wx = #{noWx}
+	    </if>
+  </select>
+  
+  <!-- 自定义时间区间 开始到结束 -->
+  <select id="getStartAndEndTime"  resultMap="countResultMap">
+	select count, DATE_FORMAT(count_date,'%Y-%m-%d') as count_date
+		  from count_addFriends WHERE  count_date BETWEEN #{startTime} AND #{endTime}
+		   AND merchant_no = #{merchantNo}
+		   <if test="type != null and type !='' ">
+	       and type = #{type}
+	    </if>
+	     <if test="noWx != null and noWx !='' ">
+	       and no_wx = #{noWx}
+	    </if> 
+  </select>
+  
+  <select id="getInterval7"  resultMap="countResultMap">
+  <![CDATA[
+    select DATE_FORMAT(a.count_date,'%Y-%m-%d') as count_date,ifnull(a.count,0) as count
+		from count_addfriends a where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(a.count_date)  and merchant_no = #{merchantNo}]]>
+		<if test="type != null and type !='' ">
+	       and type = #{type}
+	    </if>
+	     <if test="noWx != null and noWx !='' ">
+	       and no_wx = #{noWx}
+	    </if>
+  </select> 
+
+  <select id="getInterval30" resultMap="countResultMap">
+  <![CDATA[
+        select DATE_FORMAT(a.count_date,'%Y-%m-%d') as count_date,ifnull(a.count,0) as count
+		from count_addfriends a where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(a.count_date) and merchant_no = #{merchantNo}
+		
+		
+		]]>
+		 <if test="type != null and type !='' ">
+	      and type = #{type}
+	    </if>
+	     <if test="noWx != null and noWx !='' ">
+	      and no_wx = #{noWx}
+	    </if>
+  </select> 
+  
+  <!-- 批量插入数据 -->
+  <insert id ="insertList" parameterType="java.util.List" >
+       <!-- <selectKey resultType ="java.lang.Integer" keyProperty= "id"
+            order= "AFTER">
+           SELECT LAST_INSERT_ID()
+       </selectKey > -->
+      insert into count_addFriends
+      (merchant_no, count, count_date, create_date,no_wx,type)
+      values
+       <foreach collection ="list" item="item" index= "index" separator =",">
+           (
+           #{item.merchantNo}, 
+           #{item.count},
+           #{item.countDate},
+           now(),
+           #{item.noWx},
+           #{item.type}
+           )
+       </foreach>
+  </insert >
+
+
+   <select id="getAllDataCountNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+   select count(1) from count_addfriends   WHERE 1 = 1
+    <if test="type != null and type !='' ">
+      and type = #{type}
+    </if>
+   </select>
+</mapper>

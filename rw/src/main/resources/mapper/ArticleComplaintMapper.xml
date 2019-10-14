@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.rw.dao.IArticleComplaintDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.rw.domain.ArticleComplaint" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ARTICLE_CODE" property="articleCode" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="COMPLAINT_CONTENT" property="complaintContent" jdbcType="VARCHAR" />
+    <result column="COMPLAINT_EVIDENCE" property="complaintEvidence" jdbcType="VARCHAR" />
+    <result column="COMPLAINT_USERNAME" property="complaintUsername" jdbcType="VARCHAR" />
+    <result column="COMPLAINT_MOBILE" property="complaintMobile" jdbcType="VARCHAR" />
+    <result column="AUDITOR_CODE" property="auditorCode" jdbcType="VARCHAR" />
+    <result column="AUDITOR_NAME" property="auditorName" jdbcType="VARCHAR" />
+    <result column="AUDITOR_DATE" property="auditorDate" jdbcType="TIMESTAMP" />
+    <result column="AUDITOR_STATUS" property="auditorStatus" jdbcType="VARCHAR" />
+    <result column="AUDITOR_RESULT" property="auditorResult" jdbcType="VARCHAR" />
+    <result column="AUDITOR_CONTENT" property="auditorContent" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindResultMap" extends="BaseResultMap" type="com.ye.business.rw.dto.ArticleComplaintDto"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, ARTICLE_CODE, TITLE, COMPLAINT_CONTENT, COMPLAINT_EVIDENCE, COMPLAINT_USERNAME, 
+    COMPLAINT_MOBILE, AUDITOR_CODE, AUDITOR_NAME, AUDITOR_DATE, AUDITOR_STATUS, AUDITOR_RESULT, 
+    AUDITOR_CONTENT, REMARK, CREATE_ID, CREATE_DATE, UPDATE_ID
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+        <if test="param.articleCode != null and param.articleCode != '' ">
+		  <![CDATA[and ARTICLE_CODE = #{param.articleCode} ]]>
+		</if>
+        <if test="param.createId != null and param.createId != '' ">
+		  <![CDATA[and CREATE_ID = #{param.createId} ]]>
+		</if>
+		<if test="param.createDate != null and param.createDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') = #{param.createDate} ]]>
+		</if>
+		<if test="param.beginDate != null and param.beginDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') >= #{param.beginDate} ]]>
+		</if>
+		<if test="param.endDate != null and param.endDate != ''">
+		  <![CDATA[and date_format(CREATE_DATE, '%Y-%m-%d') <= #{param.endDate} ]]>
+		</if>
+        <if test="param.auditorStatus != null and param.auditorStatus != '' ">
+		  <![CDATA[and AUDITOR_STATUS = #{param.auditorStatus} ]]>
+		</if>
+        <if test="param.auditorResult != null and param.auditorResult != '' ">
+		  <![CDATA[and AUDITOR_RESULT = #{param.auditorResult} ]]>
+		</if>
+        <if test="param.title != null and param.title != '' ">
+		  <![CDATA[and TITLE like concat('%', #{param.title}, '%') ]]>
+		</if>
+        <if test="param.complaintUsername != null and param.complaintUsername != '' ">
+		  <![CDATA[and COMPLAINT_USERNAME like concat('%', #{param.complaintUsername}, '%') ]]>
+		</if>
+        <if test="param.complaintMobile != null and param.complaintMobile != '' ">
+		  <![CDATA[and COMPLAINT_MOBILE like concat('%', #{param.complaintMobile}, '%') ]]>
+		</if>
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by CREATE_DATE desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findArticleComplaints" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindArticleComplaintPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM article_complaint
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findArticleComplaintPage" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindArticleComplaintPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM article_complaint
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findArticleComplaintPageCount" resultType="int" parameterType="com.ye.business.rw.dto.FindArticleComplaintPage">
+	select count(*)
+	FROM article_complaint
+	  <include refid="findPage_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from article_complaint
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from article_complaint
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.rw.domain.ArticleComplaint" >
+    insert into article_complaint (CODE, ARTICLE_CODE, TITLE, 
+      COMPLAINT_CONTENT, COMPLAINT_EVIDENCE, COMPLAINT_USERNAME, 
+      COMPLAINT_MOBILE, AUDITOR_CODE, AUDITOR_NAME, 
+      AUDITOR_DATE, AUDITOR_STATUS, AUDITOR_RESULT, 
+      AUDITOR_CONTENT, REMARK, CREATE_ID, 
+      CREATE_DATE, UPDATE_ID)
+    values (#{code,jdbcType=VARCHAR}, #{articleCode,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{complaintContent,jdbcType=VARCHAR}, #{complaintEvidence,jdbcType=VARCHAR}, #{complaintUsername,jdbcType=VARCHAR}, 
+      #{complaintMobile,jdbcType=VARCHAR}, #{auditorCode,jdbcType=VARCHAR}, #{auditorName,jdbcType=VARCHAR}, 
+      #{auditorDate,jdbcType=TIMESTAMP}, #{auditorStatus,jdbcType=VARCHAR}, #{auditorResult,jdbcType=VARCHAR}, 
+      #{auditorContent,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.rw.domain.ArticleComplaint" >
+    insert into article_complaint
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="articleCode != null" >
+        ARTICLE_CODE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="complaintContent != null" >
+        COMPLAINT_CONTENT,
+      </if>
+      <if test="complaintEvidence != null" >
+        COMPLAINT_EVIDENCE,
+      </if>
+      <if test="complaintUsername != null" >
+        COMPLAINT_USERNAME,
+      </if>
+      <if test="complaintMobile != null" >
+        COMPLAINT_MOBILE,
+      </if>
+      <if test="auditorCode != null" >
+        AUDITOR_CODE,
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME,
+      </if>
+      <if test="auditorDate != null" >
+        AUDITOR_DATE,
+      </if>
+      <if test="auditorStatus != null" >
+        AUDITOR_STATUS,
+      </if>
+      <if test="auditorResult != null" >
+        AUDITOR_RESULT,
+      </if>
+      <if test="auditorContent != null" >
+        AUDITOR_CONTENT,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCode != null" >
+        #{articleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintContent != null" >
+        #{complaintContent,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintEvidence != null" >
+        #{complaintEvidence,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintUsername != null" >
+        #{complaintUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintMobile != null" >
+        #{complaintMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorCode != null" >
+        #{auditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorDate != null" >
+        #{auditorDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditorStatus != null" >
+        #{auditorStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorResult != null" >
+        #{auditorResult,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorContent != null" >
+        #{auditorContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.rw.domain.ArticleComplaint" >
+    update article_complaint
+    <set >
+      <if test="articleCode != null" >
+        ARTICLE_CODE = #{articleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintContent != null" >
+        COMPLAINT_CONTENT = #{complaintContent,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintEvidence != null" >
+        COMPLAINT_EVIDENCE = #{complaintEvidence,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintUsername != null" >
+        COMPLAINT_USERNAME = #{complaintUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintMobile != null" >
+        COMPLAINT_MOBILE = #{complaintMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorCode != null" >
+        AUDITOR_CODE = #{auditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorDate != null" >
+        AUDITOR_DATE = #{auditorDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditorStatus != null" >
+        AUDITOR_STATUS = #{auditorStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorResult != null" >
+        AUDITOR_RESULT = #{auditorResult,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorContent != null" >
+        AUDITOR_CONTENT = #{auditorContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.rw.domain.ArticleComplaint" >
+    update article_complaint
+    set ARTICLE_CODE = #{articleCode,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      COMPLAINT_CONTENT = #{complaintContent,jdbcType=VARCHAR},
+      COMPLAINT_EVIDENCE = #{complaintEvidence,jdbcType=VARCHAR},
+      COMPLAINT_USERNAME = #{complaintUsername,jdbcType=VARCHAR},
+      COMPLAINT_MOBILE = #{complaintMobile,jdbcType=VARCHAR},
+      AUDITOR_CODE = #{auditorCode,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDITOR_DATE = #{auditorDate,jdbcType=TIMESTAMP},
+      AUDITOR_STATUS = #{auditorStatus,jdbcType=VARCHAR},
+      AUDITOR_RESULT = #{auditorResult,jdbcType=VARCHAR},
+      AUDITOR_CONTENT = #{auditorContent,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

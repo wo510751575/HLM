@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="          
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd          
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd          
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd          
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+
+	<!-- spring thread pool executor -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 线程池维护线程的最少数量，默认为1 -->
+		<property name="corePoolSize" value="2" />
+		<!-- 线程池维护线程的最大数量，默认为Integer.MAX_VALUE -->
+		<property name="maxPoolSize" value="50" />
+		<!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE -->
+		<property name="queueCapacity" value="10000" />
+		<!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+		<property name="keepAliveSeconds" value="180" />
+		<!-- 线程池对拒绝任务（无线程可用）的处理策略，目前只支持AbortPolicy、CallerRunsPolicy；默认为后者 -->
+		<property name="rejectedExecutionHandler">
+			<!-- AbortPolicy:直接抛出java.util.concurrent.RejectedExecutionException异常
+            CallerRunsPolicy:主线程直接执行该任务，执行完之后尝试添加下一个任务到线程池中，可以有效降低向线程池内添加任务的速度
+            DiscardOldestPolicy:抛弃旧的任务、暂不支持；会导致被丢弃的任务无法再次被执行
+            DiscardPolicy:抛弃当前任务、暂不支持；会导致被丢弃的任务无法再次被执行 -->
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+
+	<!-- <bean id="hessianInvoke" class="com.lj.framework.common.hession.HessianInvoke"
+		abstract="true">
+		<property name="overloadEnabled" value="true" />
+		<property name="readTimeout" value="5000" />
+	</bean> -->
+
+
+	<!-- 客户端Hessian代理工厂Bean -->   
+<!--    <bean id="systemParamsService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">   
+         请求代理Servlet路径           
+         <property name="serviceUrl">  
+              <value>${CC_SERVER}/systemParamsService</value>   
+         </property>
+         接口定义   
+         <property name="serviceInterface">   
+             <value>com.lj.cc.service.ISystemParamsService</value>  
+         </property>
+          <property name="readTimeout">   
+             <value>5000</value>  
+         </property>
+     </bean> 
+      -->
+      
+      <bean id="systemParamsService" parent="systemHessianFactoryBean" >   
+		<property name="systemAliasName">
+			<value>cc</value>
+		</property>
+		<property name="serviceName">
+			<value>systemParamsService</value>
+		</property>
+		<property name="serviceInterface">   
+			<value>com.lj.cc.service.ISystemParamsService</value>  
+		</property>
+    </bean> 
+      
+     <bean id="ccSystemInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianTimeoutProxyFactoryBean">   
+		<!-- 请求代理Servlet路径 -->           
+		<property name="serviceUrl">  
+			<value>${cc_url}/systemInfoService</value>   
+		</property>
+		<!-- 接口定义 -->   
+		<property name="serviceInterface">   
+			<value>com.lj.cc.service.ISystemInfoService</value>  
+		</property>
+		<!-- 读超时时间设置为10秒 -->
+		<property name="readTimeout" value="180000"/> 
+		<!-- 连接超时时间设置为10秒 -->
+		<property name="connectTimeout" value="180000"/> 
+	</bean> 
+	
+	<bean id="systemHessianFactoryBean" class="com.lj.cc.clientintf.SystemHessianFactoryBean" abstract="true">
+		<property name="overloadEnabled" value="true"/>
+		<!-- 读超时时间设置为10秒 -->
+		<property name="readTimeout" value="180000"/> 
+		<!-- 连接超时时间设置为10秒 -->
+		<property name="connectTimeout" value="180000"/> 
+		<!-- 必须定义配置中心服务 -->
+		<property name="systemInfo" ref="ccSystemInfoService"/>
+	</bean>
+	
+	<!--  系统参数本地缓存 -->
+    <bean id="localCacheSystemParams" class="com.lj.cc.clientintf.LocalCacheSystemParamsFromCC">
+		<property name="systemAliasName">
+			<value>all</value>
+		</property>
+		<property name="defaultSystemAliasName">
+			<!-- 默认查询会员系统参数 -->
+			<value>ms</value>
+		</property>
+		<property name="cacheMilliseconds">
+			<!-- 每小时更新 -->
+			<value>3600000</value>
+		</property>
+		<property name="systemParamsService" ref="systemParamsService" />
+	</bean>
+	
+	<bean id="redisCache" class="com.lj.distributecache.RedisCacheConfigFromCC">
+    	 <property name="systemParamService" ref="systemParamsService" />
+    </bean>
+	 
+	 <!-- 分布式锁IDistributeCache设置 begin -->
+	 <bean id="redisLock" class="com.lj.distributelock.RedisLock" >   
+	   <property name="redisCache"  ref="redisCache" /> 
+	 </bean>
+	 <!-- 分布式锁IDistributeCache设置 end -->
+	
+	 <!-- 加密机服务 -->
+	<bean id="encryptorService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName">
+			<value>kms</value>
+		</property>
+		<property name="serviceName">
+			<value>encryptorService</value>
+		</property>
+		<property name="serviceInterface">   
+			<value>com.lj.kms.service.IEncryptor</value>  
+		</property>
+    </bean> 
+    
+      
+     <!-- 执行调度任务信息反馈 -->
+	<bean id="jobExecuteFeedbackService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>cc</value>
+		</property>
+		<property name="serviceName">
+			<value>jobExecuteFeedbackService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.cc.service.IJobExecuteFeedbackService</value>
+		</property>
+	</bean>  
+    
+</beans> 
+

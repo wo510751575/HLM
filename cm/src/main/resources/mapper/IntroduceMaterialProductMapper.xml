@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IIntroduceMaterialProductDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cm.domain.IntroduceMaterialProduct" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MATERIAL_CODE" property="materialCode" jdbcType="VARCHAR" />
+    <result column="BOM_NAME" property="bomName" jdbcType="VARCHAR" />
+    <result column="BOM_ADDRESS" property="bomAddress" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="CHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MATERIAL_CODE, BOM_NAME, BOM_ADDRESS, SORT, CREATE_ID, CREATE_DATE, REMARK, 
+    REMARK2, REMARK3, REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from introduce_material_product
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from introduce_material_product
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cm.domain.IntroduceMaterialProduct" >
+    insert into introduce_material_product (CODE, MATERIAL_CODE, BOM_NAME, 
+      BOM_ADDRESS, SORT, CREATE_ID, 
+      CREATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{materialCode,jdbcType=VARCHAR}, #{bomName,jdbcType=VARCHAR}, 
+      #{bomAddress,jdbcType=VARCHAR}, #{sort,jdbcType=CHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cm.domain.IntroduceMaterialProduct" >
+    insert into introduce_material_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="materialCode != null" >
+        MATERIAL_CODE,
+      </if>
+      <if test="bomName != null" >
+        BOM_NAME,
+      </if>
+      <if test="bomAddress != null" >
+        BOM_ADDRESS,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="materialCode != null" >
+        #{materialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bomName != null" >
+        #{bomName,jdbcType=VARCHAR},
+      </if>
+      <if test="bomAddress != null" >
+        #{bomAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=CHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cm.domain.IntroduceMaterialProduct" >
+    update introduce_material_product
+    <set >
+      <if test="materialCode != null" >
+        MATERIAL_CODE = #{materialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bomName != null" >
+        BOM_NAME = #{bomName,jdbcType=VARCHAR},
+      </if>
+      <if test="bomAddress != null" >
+        BOM_ADDRESS = #{bomAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=CHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cm.domain.IntroduceMaterialProduct" >
+    update introduce_material_product
+    set MATERIAL_CODE = #{materialCode,jdbcType=VARCHAR},
+      BOM_NAME = #{bomName,jdbcType=VARCHAR},
+      BOM_ADDRESS = #{bomAddress,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=CHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="finfindIntroduceMaterialProductByMaterCode" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from introduce_material_product
+    <where>
+    	<if test="materialCode">
+    		and MATERIAL_CODE = #{materialCode,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    order by sort asc
+  </select>
+  
+  <delete id="delIntroduceMaterialProductByMaterCode">
+  	delete from introduce_material_product
+    where MATERIAL_CODE = #{materialCode,jdbcType=VARCHAR}
+  </delete>
+</mapper>

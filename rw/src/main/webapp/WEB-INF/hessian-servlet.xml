@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- 服务注册 -->
+	<!-- 文章 -->
+	<bean name="/articleService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="articleServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IArticleService" />
+	</bean>
+	
+	<!-- 文章类型 -->
+	<bean name="/articleTypeService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="articleTypeServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IArticleTypeService" />
+	</bean>
+	
+	<!-- 广告 -->
+	<!-- <bean name="/advertiseService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="advertiseServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IAdvertiseService" />
+	</bean> -->
+	
+	<!-- 文章用户 -->
+	<bean name="/rwUserService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="rwUserServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IRwUserService" />
+	</bean>
+	
+	<!-- 文章分享记录 -->
+	<bean name="/articleShareService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="articleShareServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IArticleShareService" />
+	</bean>
+	
+	<!-- 文章分享阅读记录 -->
+	<bean name="/articleViewService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="articleViewServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IArticleViewService" />
+	</bean>
+	
+	<!-- 文章投诉记录 -->
+	<bean name="/articleComplaintService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="articleComplaintServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IArticleComplaintService" />
+	</bean>
+	
+	<!-- 我的收藏 -->
+	<bean name="/myCollectionService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="myCollectionServiceImpl" />
+		<property name="serviceInterface" value="com.ye.business.rw.service.IMyCollectionService" />
+	</bean>
+
+</beans>

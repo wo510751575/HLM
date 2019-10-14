@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IServicePersonDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.ServicePerson" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PERSON_NO" property="personNo" jdbcType="VARCHAR" />
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="SERVICE_CHOOSE_CODE" property="serviceChooseCode" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SERVICE_PRICE" property="servicePrice" jdbcType="BIGINT" />
+    <result column="HC_LABEL" property="hcLabel" jdbcType="VARCHAR" />
+    <result column="SUMMARY" property="summary" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindServicePersonAppReturnMap" type="com.lj.business.member.dto.service.person.FindServicePersonAppReturn" >
+    <result column="PERSON_NO" property="personNo" jdbcType="VARCHAR" />
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SERVICE_PRICE" property="servicePrice" jdbcType="BIGINT" />
+    <result column="HC_LABEL" property="hcLabel" jdbcType="VARCHAR" />
+    <result column="SUMMARY" property="summary" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="findServicePersonPageReturns" type="com.lj.business.member.dto.service.person.FindServicePersonPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PERSON_NO" property="personNo" jdbcType="VARCHAR" />
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SERVICE_PRICE" property="servicePrice" jdbcType="BIGINT" />
+    <result column="HC_LABEL" property="hcLabel" jdbcType="VARCHAR" />
+    <result column="SUMMARY" property="summary" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="findServicePersonPage_condition">
+     <where>
+      <if test="merchantNo != null and merchantNo !=''" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if> 
+        <if test="personName != null and personName !=''" >
+        and  PERSON_NAME like CONCAT('%',#{personName,jdbcType=VARCHAR},'%' )
+      </if> 
+       <if test="shopNos != null and shopNos.size() > 0">
+      	   and SHOP_NO in
+        <foreach item="item" index="index" collection="shopNos" open="(" separator="," close=")">  
+          #{item}  
+         </foreach>
+       </if>	
+    </where>
+   </sql>
+   <select id="findServicePersonPage" resultMap="findServicePersonPageReturns" parameterType="com.lj.business.member.dto.service.person.FindServicePersonPage" >
+  SELECT  <include refid="Base_Column_List" />   
+  FROM service_person 
+ 	 <include refid="findServicePersonPage_condition" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+   
+   <select id="findServicePersonPageCount" resultType="int" parameterType="com.lj.business.member.dto.service.person.FindServicePersonPage" >
+   SELECT count(*) 
+   FROM service_person 
+ 	<include refid="findServicePersonPage_condition" />
+  </select>
+  <sql id="Base_Column_List" >
+    CODE, PERSON_NO, PERSON_NAME,  MERCHANT_NO, MERCHANT_NAME, SERVICE_CHOOSE_CODE, 
+    HEAD_ADDRESS, TITLE, SERVICE_PRICE, HC_LABEL, SUMMARY, CREATE_ID, CREATE_DATE, REMARK, REMARK2, 
+    REMARK3, REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from service_person
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from service_person
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.ServicePerson" >
+    insert into service_person (CODE, PERSON_NO, PERSON_NAME, 
+       MERCHANT_NO, 
+      MERCHANT_NAME, SERVICE_CHOOSE_CODE, HEAD_ADDRESS, TITLE, 
+      SERVICE_PRICE, HC_LABEL, SUMMARY, 
+      CREATE_ID, CREATE_DATE, REMARK, 
+      REMARK2, REMARK3, REMARK4
+      )
+    values (#{code,jdbcType=VARCHAR}, #{personNo,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
+       #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{serviceChooseCode,jdbcType=VARCHAR}, #{headAddress,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{servicePrice,jdbcType=BIGINT}, #{hcLabel,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=VARCHAR}, now(), #{remark,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.ServicePerson" >
+    insert into service_person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="personNo != null" >
+        PERSON_NO,
+      </if>
+      <if test="personName != null" >
+        PERSON_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="serviceChooseCode != null" >
+        SERVICE_CHOOSE_CODE,
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS, 
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="servicePrice != null" >
+        SERVICE_PRICE,
+      </if>
+      <if test="hcLabel != null" >
+        HC_LABEL,
+      </if>
+      <if test="summary != null" >
+        SUMMARY,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="personNo != null" >
+        #{personNo,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null" >
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceChooseCode != null" >
+        #{serviceChooseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePrice != null" >
+        #{servicePrice,jdbcType=BIGINT},
+      </if>
+      <if test="hcLabel != null" >
+        #{hcLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.ServicePerson" >
+    update service_person
+    <set >
+      <if test="personNo != null" >
+        PERSON_NO = #{personNo,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null" >
+        PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceChooseCode != null" >
+        SERVICE_CHOOSE_CODE = #{serviceChooseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePrice != null" >
+        SERVICE_PRICE = #{servicePrice,jdbcType=BIGINT},
+      </if>
+      <if test="hcLabel != null" >
+        HC_LABEL = #{hcLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        SUMMARY = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.ServicePerson" >
+    update service_person
+    set PERSON_NO = #{personNo,jdbcType=VARCHAR},
+      PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SERVICE_CHOOSE_CODE = #{serviceChooseCode,jdbcType=VARCHAR},
+      HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      SERVICE_PRICE = #{servicePrice,jdbcType=BIGINT},
+      HC_LABEL = #{hcLabel,jdbcType=VARCHAR},
+      SUMMARY = #{summary,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- APP查询所有服务人员列表 -->
+  <select id="findServicePersonApp" parameterType="com.lj.business.member.dto.service.person.FindServicePersonApp" resultMap="FindServicePersonAppReturnMap">
+  	SELECT <include refid="Base_Column_List" />   
+      FROM service_person 
+     where #{shopNo,jdbcType=VARCHAR}
+     order by CREATE_DATE desc
+  
+  </select>
+  
+  <!-- 查询所有服务人员列表 -->
+  <select id="findServicePersons" resultType="com.lj.business.member.dto.service.person.FindServicePersonReturn" parameterType="com.lj.business.member.dto.service.person.FindServicePerson" >
+   SELECT    CODE code,PERSON_NO personNo, PERSON_NAME personName
+   FROM service_person 
+ 	 <where>
+	        <if test="merchantNo != null and merchantNo !=''" >
+	        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	      </if>
+      </where>
+  </select>
+</mapper>

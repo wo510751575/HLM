@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IProjectPropertyDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.ProjectProperty" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR" />
+    <result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    <result column="VALUE_RANGE" property="valueRange" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="findProjectPropertyPageReturns" type="com.lj.business.member.dto.service.projectproperty.FindProjectPropertyPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="PROPERTY_NAME" property="propertyName" jdbcType="VARCHAR" />
+    <result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR" />
+    <result column="SHOW_INDEX" property="showIndex" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="VALUE_RANGE" property="valueRange" jdbcType="VARCHAR" />
+    <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    CODE, PROPERTY_NAME, PROJECT_CODE, SHOW_INDEX, CREATE_ID, CREATE_DATE,VALUE_RANGE, REMARK, REMARK2, 
+    REMARK3, REMARK4
+  </sql>
+ 
+  
+     <sql id="findProjectPropertyPages">
+    <where>
+      <if test="projectCode != null and projectCode !=''" >
+        and  pp.PROJECT_CODE=#{projectCode}
+      </if>
+      <if test="propertyName != null and propertyName !=''" >
+        and  pp.PROPERTY_NAME like CONCAT('%',#{propertyName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="merchantNo != null and merchantNo !='' " >
+        and   sp.MERCHANT_NO=#{merchantNo}
+      </if>
+    </where>
+   </sql>
+    
+    
+      <!-- 分页查询 -->
+   <select id="findProjectPropertyPage" resultMap="findProjectPropertyPageReturns" parameterType="com.lj.business.member.dto.service.projectproperty.FindProjectPropertyPage" >
+   SELECT pp.PROPERTY_NAME,pp.VALUE_RANGE,pp.SHOW_INDEX,pp.CREATE_ID,pp.CREATE_DATE,sp.PROJECT_NAME,pp.CODE,pp.VALUE_RANGE
+   FROM project_property pp 
+   LEFT JOIN service_project  sp ON pp.PROJECT_CODE=sp.CODE 
+   <include refid="findProjectPropertyPages" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findProjectPropertyPageCount" resultType="int" parameterType="com.lj.business.member.dto.service.projectproperty.FindProjectPropertyPage" >
+    select  count(*)
+     FROM project_property pp
+     LEFT JOIN service_project  sp ON pp.PROJECT_CODE=sp.CODE 
+     <include refid="findProjectPropertyPages" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_property
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from project_property
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.ProjectProperty" >
+    insert into project_property (CODE, PROPERTY_NAME, PROJECT_CODE, 
+      SHOW_INDEX, CREATE_ID, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{propertyName,jdbcType=VARCHAR}, #{projectCode,jdbcType=VARCHAR}, 
+      #{showIndex,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, now(), 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.ProjectProperty" >
+    insert into project_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="propertyName != null" >
+        PROPERTY_NAME,
+      </if>
+      <if test="projectCode != null" >
+        PROJECT_CODE,
+      </if>
+       <if test="valueRange != null" >
+        VALUE_RANGE,
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyName != null" >
+        #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCode != null" >
+        #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueRange != null" >
+         #{valueRange,jdbcType=VARCHAR},
+      </if>
+      <if test="showIndex != null" >
+        #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.ProjectProperty" >
+    update project_property
+    <set >
+      <if test="propertyName != null" >
+        PROPERTY_NAME = #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCode != null" >
+        PROJECT_CODE = #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="showIndex != null" >
+        SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+        <if test="valueRange != null" >
+        VALUE_RANGE = #{valueRange,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.ProjectProperty" >
+    update project_property
+    set PROPERTY_NAME = #{propertyName,jdbcType=VARCHAR},
+      PROJECT_CODE = #{projectCode,jdbcType=VARCHAR},
+      SHOW_INDEX = #{showIndex,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

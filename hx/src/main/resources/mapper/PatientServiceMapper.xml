@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IPatientServiceDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.PatientService">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
+    <result column="PATIENT_NAME" jdbcType="VARCHAR" property="patientName" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="PATIENT_TYPE" jdbcType="VARCHAR" property="patientType" />
+    <result column="MEDICAL_NO" jdbcType="VARCHAR" property="medicalNo" />
+    <result column="ADVISORY_DATE" jdbcType="TIMESTAMP" property="advisoryDate" />
+    <result column="ADVISORY_NO" jdbcType="VARCHAR" property="advisoryNo" />
+    <result column="ADVISORY_NAME" jdbcType="VARCHAR" property="advisoryName" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="RESERVATION_DATE" jdbcType="TIMESTAMP" property="reservationDate" />
+    <result column="RESERVATION_DATE_LEN" jdbcType="INTEGER" property="reservationDateLen" />
+    <result column="RESERVATION_DOCTOR_NO" jdbcType="VARCHAR" property="reservationDoctorNo" />
+    <result column="RESERVATION_DOCTOR_NAME" jdbcType="VARCHAR" property="reservationDoctorName" />
+    <result column="RESERVATION_TYPE" jdbcType="VARCHAR" property="reservationType" />
+    <result column="REGISTERED_DATE" jdbcType="TIMESTAMP" property="registeredDate" />
+    <result column="REGISTERED_DOCTOR_NO" jdbcType="VARCHAR" property="registeredDoctorNo" />
+    <result column="REGISTERED_DOCTOR_NAME" jdbcType="VARCHAR" property="registeredDoctorName" />
+    <result column="ASSISTANT_NO" jdbcType="VARCHAR" property="assistantNo" />
+    <result column="ASSISTANT_NAME" jdbcType="VARCHAR" property="assistantName" />
+    <result column="VISTITING_STATUS" jdbcType="VARCHAR" property="vistitingStatus" />
+    <result column="VISITING_TYPE" jdbcType="VARCHAR" property="visitingType" />
+    <result column="VISITING_DATE" jdbcType="TIMESTAMP" property="visitingDate" />
+    <result column="VISTITING_ADVISORY_DATE" jdbcType="TIMESTAMP" property="visitingAdvisoryDate" />
+    <result column="TRIAGE_DATE" jdbcType="TIMESTAMP" property="triageDate" />
+    <result column="REVIEW_RESERVATION_DATE" jdbcType="TIMESTAMP" property="reviewReservationDate" />
+    <result column="FINISHED_DATE" jdbcType="TIMESTAMP" property="finishedDate" />
+    <result column="MEDICAL_DATE" jdbcType="TIMESTAMP" property="medicalDate" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_NAME" jdbcType="VARCHAR" property="updateName" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, PATIENT_NO, PATIENT_NAME, MOBILE, PATIENT_TYPE, MEDICAL_NO, ADVISORY_DATE, ADVISORY_NO, ADVISORY_NAME, 
+    SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, RESERVATION_DATE, RESERVATION_DATE_LEN, RESERVATION_DOCTOR_NO, 
+    RESERVATION_DOCTOR_NAME, RESERVATION_TYPE, REGISTERED_DATE, REGISTERED_DOCTOR_NO, REGISTERED_DOCTOR_NAME, 
+    ASSISTANT_NO, ASSISTANT_NAME, VISTITING_STATUS, VISITING_TYPE, VISITING_DATE, VISTITING_ADVISORY_DATE, TRIAGE_DATE, 
+    REVIEW_RESERVATION_DATE, FINISHED_DATE, MEDICAL_DATE, CREATE_DATE, CREATE_ID, CREATE_NAME, REMARK, 
+    REMARK2, REMARK3, REMARK4, UPDATE_ID, UPDATE_NAME, UPDATE_DATE, STATUS
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.PatientServiceDto"
+		extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+				<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.shopNo != null and param.shopNo !='' ">
+				<![CDATA[and SHOP_NO =#{param.shopNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+				<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.patientNo != null and param.patientNo !='' ">
+				<![CDATA[and PATIENT_NO =#{param.patientNo}]]>
+				</if>
+				<if test="param.reservationDateStr != null and param.reservationDateStr !='' ">
+				<![CDATA[and DATE_FORMAT(RESERVATION_DATE,'%Y-%m-%d') = #{param.reservationDateStr}]]>
+				</if>
+				<if test="param.beginDate != null and param.beginDate !='' ">
+				<![CDATA[and DATE_FORMAT(RESERVATION_DATE,'%Y-%m-%d') >= #{param.beginDate}]]>
+				</if>
+				<if test="param.endDate != null and param.endDate !='' ">
+				<![CDATA[and DATE_FORMAT(RESERVATION_DATE,'%Y-%m-%d') <= #{param.endDate}]]>
+				</if>
+				<if test="param.patientName != null and param.patientName !='' ">
+				<![CDATA[and PATIENT_NAME like concat('%', #{param.patientName}, '%')]]>
+				</if>
+				<if test="param.createId != null and param.createId !='' ">
+				<![CDATA[and CREATE_ID =#{param.createId}]]>
+				</if>
+				<if test="param.vistitingStatus != null and param.vistitingStatus !='' ">
+				<![CDATA[and VISTITING_STATUS =#{param.vistitingStatus}]]>
+				</if>
+				<if test="param.registeredDoctorNo != null and param.registeredDoctorNo !='' ">
+				<![CDATA[and RESERVATION_DOCTOR_NO =#{param.registeredDoctorNo}]]>
+				</if>
+				<if test="param.vistitingStatusNot != null and param.vistitingStatusNot !='' ">
+				<![CDATA[and VISTITING_STATUS != #{param.vistitingStatusNot}]]>
+				</if>
+				<if test="param.advisoryNo != null and param.advisoryNo !='' ">
+				<![CDATA[and ADVISORY_NO = #{param.advisoryNo}]]>
+				</if>
+				<if test="param.registeredDoctorNo != null and param.registeredDoctorNo !='' ">
+				<![CDATA[and REGISTERED_DOCTOR_NO = #{param.registeredDoctorNo}]]>
+				</if>
+				<if test="param.reservationDoctorNo != null and param.reservationDoctorNo !='' ">
+				<![CDATA[and RESERVATION_DOCTOR_NO = #{param.reservationDoctorNo}]]>
+				</if>
+				<if test="param.createName != null and param.createName !='' ">
+				<![CDATA[and CREATE_NAME like concat('%', #{param.createName}, '%')]]>
+				</if>
+				<if test="param.updateId != null and param.updateId !='' ">
+				<![CDATA[and (ADVISORY_NO = #{param.updateId} or RESERVATION_DOCTOR_NO = #{param.updateId})]]>
+				</if>
+				<if test="param.patientType != null and param.patientType !='' ">
+				<![CDATA[and PATIENT_TYPE = #{param.patientType}]]>
+				</if>
+				<if test="param.status != null and param.status !='' ">
+				<![CDATA[and STATUS = #{param.status}]]>
+				</if>
+				<if test="param.statusNot != null and param.statusNot !='' ">
+				<![CDATA[and STATUS != #{param.statusNot}]]>
+				</if>
+			</if>
+		</where>
+		<!-- 排序 -->
+		<if test="sortBy != null and sortBy != ''">
+			<if test="'dateAsc'.equals(sortBy)">
+				order by reservation_date asc
+			</if>
+			<if test="'dateDesc'.equals(sortBy)">
+				order by reservation_date desc
+			</if>
+		</if>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findPatientServices" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientServicePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_service
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findPatientServicePage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindPatientServicePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM patient_service
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findPatientServicePageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindPatientServicePage">
+		select count(*)
+		FROM patient_service
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient_service
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from patient_service
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+   <insert id="insert" parameterType="com.ye.business.hx.domain.PatientService">
+    insert into patient_service (CODE, PATIENT_NO, PATIENT_NAME, 
+      MOBILE, PATIENT_TYPE, MEDICAL_NO, 
+      ADVISORY_DATE, ADVISORY_NO, ADVISORY_NAME, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, RESERVATION_DATE, RESERVATION_DATE_LEN, 
+      RESERVATION_DOCTOR_NO, RESERVATION_DOCTOR_NAME, 
+      RESERVATION_TYPE, REGISTERED_DATE, REGISTERED_DOCTOR_NO, 
+      REGISTERED_DOCTOR_NAME, ASSISTANT_NO, ASSISTANT_NAME, 
+      VISTITING_STATUS, VISITING_TYPE, VISITING_DATE, 
+      VISTITING_ADVISORY_DATE, TRIAGE_DATE, 
+      REVIEW_RESERVATION_DATE, FINISHED_DATE, 
+      MEDICAL_DATE, CREATE_DATE, CREATE_ID, 
+      CREATE_NAME, REMARK, REMARK2, 
+      REMARK3, REMARK4, UPDATE_ID, 
+      UPDATE_NAME, UPDATE_DATE, STATUS
+      )
+    values (#{code,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, #{patientName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{patientType,jdbcType=VARCHAR}, #{medicalNo,jdbcType=VARCHAR}, 
+      #{advisoryDate,jdbcType=TIMESTAMP}, #{advisoryNo,jdbcType=VARCHAR}, #{advisoryName,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{reservationDate,jdbcType=TIMESTAMP}, #{reservationDateLen,jdbcType=INTEGER}, 
+      #{reservationDoctorNo,jdbcType=VARCHAR}, #{reservationDoctorName,jdbcType=VARCHAR}, 
+      #{reservationType,jdbcType=VARCHAR}, #{registeredDate,jdbcType=TIMESTAMP}, #{registeredDoctorNo,jdbcType=VARCHAR}, 
+      #{registeredDoctorName,jdbcType=VARCHAR}, #{assistantNo,jdbcType=VARCHAR}, #{assistantName,jdbcType=VARCHAR}, 
+      #{vistitingStatus,jdbcType=VARCHAR}, #{visitingType,jdbcType=VARCHAR}, #{visitingDate,jdbcType=TIMESTAMP}, 
+      #{visitingAdvisoryDate,jdbcType=TIMESTAMP}, #{triageDate,jdbcType=TIMESTAMP}, 
+      #{reviewReservationDate,jdbcType=TIMESTAMP}, #{finishedDate,jdbcType=TIMESTAMP}, 
+      #{medicalDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientService">
+    insert into patient_service
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO,
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="patientType != null">
+        PATIENT_TYPE,
+      </if>
+      <if test="medicalNo != null">
+        MEDICAL_NO,
+      </if>
+      <if test="advisoryDate != null">
+        ADVISORY_DATE,
+      </if>
+      <if test="advisoryNo != null">
+        ADVISORY_NO,
+      </if>
+      <if test="advisoryName != null">
+        ADVISORY_NAME,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="reservationDate != null">
+        RESERVATION_DATE,
+      </if>
+      <if test="reservationDateLen != null">
+        RESERVATION_DATE_LEN,
+      </if>
+      <if test="reservationDoctorNo != null">
+        RESERVATION_DOCTOR_NO,
+      </if>
+      <if test="reservationDoctorName != null">
+        RESERVATION_DOCTOR_NAME,
+      </if>
+      <if test="reservationType != null">
+        RESERVATION_TYPE,
+      </if>
+      <if test="registeredDate != null">
+        REGISTERED_DATE,
+      </if>
+      <if test="registeredDoctorNo != null">
+        REGISTERED_DOCTOR_NO,
+      </if>
+      <if test="registeredDoctorName != null">
+        REGISTERED_DOCTOR_NAME,
+      </if>
+      <if test="assistantNo != null">
+        ASSISTANT_NO,
+      </if>
+      <if test="assistantName != null">
+        ASSISTANT_NAME,
+      </if>
+      <if test="vistitingStatus != null">
+        VISTITING_STATUS,
+      </if>
+      <if test="visitingType != null">
+        VISITING_TYPE,
+      </if>
+      <if test="visitingDate != null">
+        VISITING_DATE,
+      </if>
+      <if test="visitingAdvisoryDate != null">
+        VISTITING_ADVISORY_DATE,
+      </if>
+      <if test="triageDate != null">
+        TRIAGE_DATE,
+      </if>
+      <if test="reviewReservationDate != null">
+        REVIEW_RESERVATION_DATE,
+      </if>
+      <if test="finishedDate != null">
+        FINISHED_DATE,
+      </if>
+      <if test="medicalDate != null">
+        MEDICAL_DATE,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createName != null">
+        CREATE_NAME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateName != null">
+        UPDATE_NAME,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="patientType != null">
+        #{patientType,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null">
+        #{medicalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="advisoryDate != null">
+        #{advisoryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advisoryNo != null">
+        #{advisoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="advisoryName != null">
+        #{advisoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationDate != null">
+        #{reservationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservationDateLen != null">
+        #{reservationDateLen,jdbcType=INTEGER},
+      </if>
+      <if test="reservationDoctorNo != null">
+        #{reservationDoctorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationDoctorName != null">
+        #{reservationDoctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationType != null">
+        #{reservationType,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredDate != null">
+        #{registeredDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registeredDoctorNo != null">
+        #{registeredDoctorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredDoctorName != null">
+        #{registeredDoctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantNo != null">
+        #{assistantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantName != null">
+        #{assistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="vistitingStatus != null">
+        #{vistitingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingType != null">
+        #{visitingType,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingDate != null">
+        #{visitingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitingAdvisoryDate != null">
+        #{visitingAdvisoryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="triageDate != null">
+        #{triageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewReservationDate != null">
+        #{reviewReservationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedDate != null">
+        #{finishedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="medicalDate != null">
+        #{medicalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.PatientService">
+    update patient_service
+    <set>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientName != null">
+        PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="patientType != null">
+        PATIENT_TYPE = #{patientType,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null">
+        MEDICAL_NO = #{medicalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="advisoryDate != null">
+        ADVISORY_DATE = #{advisoryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advisoryNo != null">
+        ADVISORY_NO = #{advisoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="advisoryName != null">
+        ADVISORY_NAME = #{advisoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationDate != null">
+        RESERVATION_DATE = #{reservationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservationDateLen != null">
+        RESERVATION_DATE_LEN = #{reservationDateLen,jdbcType=INTEGER},
+      </if>
+      <if test="reservationDoctorNo != null">
+        RESERVATION_DOCTOR_NO = #{reservationDoctorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationDoctorName != null">
+        RESERVATION_DOCTOR_NAME = #{reservationDoctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationType != null">
+        RESERVATION_TYPE = #{reservationType,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredDate != null">
+        REGISTERED_DATE = #{registeredDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registeredDoctorNo != null">
+        REGISTERED_DOCTOR_NO = #{registeredDoctorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredDoctorName != null">
+        REGISTERED_DOCTOR_NAME = #{registeredDoctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantNo != null">
+        ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantName != null">
+        ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+      </if>
+      <if test="vistitingStatus != null">
+        VISTITING_STATUS = #{vistitingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingType != null">
+        VISITING_TYPE = #{visitingType,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingDate != null">
+        VISITING_DATE = #{visitingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitingAdvisoryDate != null">
+        VISTITING_ADVISORY_DATE = #{visitingAdvisoryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="triageDate != null">
+        TRIAGE_DATE = #{triageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewReservationDate != null">
+        REVIEW_RESERVATION_DATE = #{reviewReservationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedDate != null">
+        FINISHED_DATE = #{finishedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="medicalDate != null">
+        MEDICAL_DATE = #{medicalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.PatientService">
+    update patient_service
+    set PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      PATIENT_TYPE = #{patientType,jdbcType=VARCHAR},
+      MEDICAL_NO = #{medicalNo,jdbcType=VARCHAR},
+      ADVISORY_DATE = #{advisoryDate,jdbcType=TIMESTAMP},
+      ADVISORY_NO = #{advisoryNo,jdbcType=VARCHAR},
+      ADVISORY_NAME = #{advisoryName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      RESERVATION_DATE = #{reservationDate,jdbcType=TIMESTAMP},
+      RESERVATION_DATE_LEN = #{reservationDateLen,jdbcType=INTEGER},
+      RESERVATION_DOCTOR_NO = #{reservationDoctorNo,jdbcType=VARCHAR},
+      RESERVATION_DOCTOR_NAME = #{reservationDoctorName,jdbcType=VARCHAR},
+      RESERVATION_TYPE = #{reservationType,jdbcType=VARCHAR},
+      REGISTERED_DATE = #{registeredDate,jdbcType=TIMESTAMP},
+      REGISTERED_DOCTOR_NO = #{registeredDoctorNo,jdbcType=VARCHAR},
+      REGISTERED_DOCTOR_NAME = #{registeredDoctorName,jdbcType=VARCHAR},
+      ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
+      ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+      VISTITING_STATUS = #{vistitingStatus,jdbcType=VARCHAR},
+      VISITING_TYPE = #{visitingType,jdbcType=VARCHAR},
+      VISITING_DATE = #{visitingDate,jdbcType=TIMESTAMP},
+      VISTITING_ADVISORY_DATE = #{visitingAdvisoryDate,jdbcType=TIMESTAMP},
+      TRIAGE_DATE = #{triageDate,jdbcType=TIMESTAMP},
+      REVIEW_RESERVATION_DATE = #{reviewReservationDate,jdbcType=TIMESTAMP},
+      FINISHED_DATE = #{finishedDate,jdbcType=TIMESTAMP},
+      MEDICAL_DATE = #{medicalDate,jdbcType=TIMESTAMP},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateReservationByPrimaryKey" parameterType="com.ye.business.hx.domain.PatientService">
+    update patient_service
+    set
+      PATIENT_TYPE = #{patientType,jdbcType=VARCHAR},
+      ADVISORY_NO = #{advisoryNo,jdbcType=VARCHAR},
+      ADVISORY_NAME = #{advisoryName,jdbcType=VARCHAR},
+      RESERVATION_DATE = #{reservationDate,jdbcType=TIMESTAMP},
+      RESERVATION_DATE_LEN = #{reservationDateLen,jdbcType=INTEGER},
+      RESERVATION_DOCTOR_NO = #{reservationDoctorNo,jdbcType=VARCHAR},
+      RESERVATION_DOCTOR_NAME = #{reservationDoctorName,jdbcType=VARCHAR},
+      RESERVATION_TYPE = #{reservationType,jdbcType=VARCHAR},
+      REGISTERED_DATE = #{registeredDate,jdbcType=TIMESTAMP},
+      REGISTERED_DOCTOR_NO = #{registeredDoctorNo,jdbcType=VARCHAR},
+      REGISTERED_DOCTOR_NAME = #{registeredDoctorName,jdbcType=VARCHAR},
+      ASSISTANT_NO = #{assistantNo,jdbcType=VARCHAR},
+      ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+      VISTITING_STATUS = #{vistitingStatus,jdbcType=VARCHAR},
+      VISITING_TYPE = #{visitingType,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateRegisteredByPrimaryKey" parameterType="com.ye.business.hx.domain.PatientService">
+    update patient_service
+    set
+      PATIENT_TYPE = #{patientType,jdbcType=VARCHAR},
+      ADVISORY_NO = #{advisoryNo,jdbcType=VARCHAR},
+      ADVISORY_NAME = #{advisoryName,jdbcType=VARCHAR},
+      RESERVATION_DATE = #{reservationDate,jdbcType=TIMESTAMP},
+      RESERVATION_DATE_LEN = #{reservationDateLen,jdbcType=INTEGER},
+      RESERVATION_TYPE = #{reservationType,jdbcType=VARCHAR},
+      RESERVATION_DOCTOR_NO = #{reservationDoctorNo,jdbcType=VARCHAR},
+      RESERVATION_DOCTOR_NAME = #{reservationDoctorName,jdbcType=VARCHAR},
+      REGISTERED_DATE = #{registeredDate,jdbcType=TIMESTAMP},
+      REGISTERED_DOCTOR_NO = #{registeredDoctorNo,jdbcType=VARCHAR},
+      REGISTERED_DOCTOR_NAME = #{registeredDoctorName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="queryVisitRecords" resultMap="FindResultMap" parameterType="java.lang.String">
+  	SELECT
+  	<include refid="Base_Column_List" />
+  	<!-- 2019-04-01 修改接诊记录获取字段为咨询师接诊时间， -->
+  	FROM patient_service WHERE PATIENT_NO=#{code} AND VISTITING_ADVISORY_DATE IS NOT NULL ORDER BY VISTITING_ADVISORY_DATE DESC
+  </select>
+  <!-- 不分页查询 -->
+  <select id="getPatientServiceByExample" resultMap="FindResultMap"
+	parameterType="com.ye.business.hx.dto.FindPatientServicePage">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM patient_service
+	<include refid="findPage_condition" />
+	limit 1
+  </select>
+</mapper>

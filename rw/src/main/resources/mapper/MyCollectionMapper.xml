@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.rw.dao.IMyCollectionDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.rw.domain.MyCollection" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GUID" property="memberNoGuid" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GUID" property="memberNameGuid" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="TYPE_CODE" property="typeCode" jdbcType="VARCHAR" />
+    <result column="MAIN_IMAGE" property="mainImage" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="READ_NUM" property="readNum" jdbcType="INTEGER" />
+    <result column="LIKE_NUM" property="likeNum" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="RW_STATE" property="rwState" jdbcType="VARCHAR" />
+    <result column="WEB_URL" property="webUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ye.business.rw.domain.MyCollection" extends="BaseResultMap" >
+    <result column="ARTICLE_HTML" property="articleHtml" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="FindResultMap" type="com.ye.business.rw.dto.MyCollectionDto" extends="ResultMapWithBLOBs"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, 
+    TYPE, TYPE_CODE, MAIN_IMAGE, TITLE, SOURCE, REMARK, READ_NUM, LIKE_NUM, CREATE_ID, CREATE_DATE, 
+    MEMBER_NO, RW_STATE, WEB_URL
+  </sql>
+  <sql id="Blob_Column_List" >
+    ARTICLE_HTML
+  </sql>
+  
+  <sql id="findPage_condition">
+    <where>
+      <!-- 查询条件根据业务需求自由添加 -->
+      <if test="param != null">
+        <if test="param.code != null and param.code != '' ">
+		  <![CDATA[and CODE = #{param.code} ]]>
+		</if>
+        <if test="param.type != null and param.type != '' ">
+		  <![CDATA[and TYPE = #{param.type} ]]>
+		</if>
+        <if test="param.typeCode != null and param.typeCode != '' ">
+		  <![CDATA[and TYPE_CODE = #{param.typeCode} ]]>
+		</if>
+        <if test="param.title != null and param.title != '' ">
+		  <![CDATA[and TITLE like concat('%', #{param.title}, '%') ]]>
+		</if>
+        <if test="param.createId != null and param.createId != '' ">
+		  <![CDATA[and CREATE_ID = #{param.createId} ]]>
+		</if>
+		<if test="param.rwState != null and param.rwState != '' ">
+		  <![CDATA[and RW_STATE = #{param.rwState} ]]>
+		</if>
+		<if test="param.merchantNo != null and param.merchantNo != '' ">
+		  <![CDATA[and MERCHANT_NO = #{param.merchantNo} ]]>
+		</if>
+		<if test="param.memberNoGuid != null and param.memberNoGuid != '' ">
+		  <![CDATA[and MEMBER_NO_GUID = #{param.memberNoGuid} ]]>
+		</if>
+		<if test="param.memberNameGuid != null and param.memberNameGuid != '' ">
+		  <![CDATA[and MEMBER_NAME_GUID like concat('%', #{param.memberNameGuid}, '%') ]]>
+		</if>
+		<if test="param.codeList != null and param.codeList.size() > 0">
+			and CODE in <foreach collection="param.codeList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+      </if>
+    </where>
+    <!-- 排序 -->
+    <if test="sortBy != null and sortBy != ''">
+      <if test="'dateDesc'.equals(sortBy)">
+        order by CREATE_DATE desc
+      </if>
+    </if>
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findMyCollections" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindMyCollectionPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM my_collection
+	  <include refid="findPage_condition" />
+  </select>
+  <!-- 分页查询 -->
+  <select id="findMyCollectionPage" resultMap="FindResultMap" parameterType="com.ye.business.rw.dto.FindMyCollectionPage">
+	SELECT
+	  <include refid="Base_Column_List" />
+	FROM my_collection
+	  <include refid="findPage_condition" />
+	limit ${start} , ${limit}
+  </select>
+  <!-- 查询总数 -->
+  <select id="findMyCollectionPageCount" resultType="int" parameterType="com.ye.business.rw.dto.FindMyCollectionPage">
+	select count(*)
+	FROM my_collection
+	  <include refid="findPage_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from my_collection
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from my_collection
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.rw.domain.MyCollection" >
+    insert into my_collection (CODE, MEMBER_NO_GUID, MEMBER_NAME_GUID, 
+      SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+      MERCHANT_NAME, TYPE, TYPE_CODE, MAIN_IMAGE, 
+      TITLE, SOURCE, REMARK, 
+      READ_NUM, LIKE_NUM, CREATE_ID, 
+      CREATE_DATE, MEMBER_NO, RW_STATE, 
+      WEB_URL, ARTICLE_HTML)
+    values (#{code,jdbcType=VARCHAR}, #{memberNoGuid,jdbcType=VARCHAR}, #{memberNameGuid,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{typeCode,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{readNum,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{memberNo,jdbcType=VARCHAR}, #{rwState,jdbcType=VARCHAR}, 
+      #{webUrl,jdbcType=VARCHAR}, #{articleHtml,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.rw.domain.MyCollection" >
+    insert into my_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="typeCode != null" >
+        TYPE_CODE,
+      </if>
+      <if test="mainImage != null" >
+        MAIN_IMAGE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="readNum != null" >
+        READ_NUM,
+      </if>
+      <if test="likeNum != null" >
+        LIKE_NUM,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="rwState != null" >
+        RW_STATE,
+      </if>
+      <if test="webUrl != null" >
+        WEB_URL,
+      </if>
+      <if test="articleHtml != null" >
+        ARTICLE_HTML,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null" >
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="readNum != null" >
+        #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="likeNum != null" >
+        #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rwState != null" >
+        #{rwState,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null" >
+        #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="articleHtml != null" >
+        #{articleHtml,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.rw.domain.MyCollection" >
+    update my_collection
+    <set >
+      <if test="memberNoGuid != null" >
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null" >
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        TYPE_CODE = #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="readNum != null" >
+        READ_NUM = #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="likeNum != null" >
+        LIKE_NUM = #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rwState != null" >
+        RW_STATE = #{rwState,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null" >
+        WEB_URL = #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="articleHtml != null" >
+        ARTICLE_HTML = #{articleHtml,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ye.business.rw.domain.MyCollection" >
+    update my_collection
+    set MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      TYPE_CODE = #{typeCode,jdbcType=VARCHAR},
+      MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      READ_NUM = #{readNum,jdbcType=INTEGER},
+      LIKE_NUM = #{likeNum,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      RW_STATE = #{rwState,jdbcType=VARCHAR},
+      WEB_URL = #{webUrl,jdbcType=VARCHAR},
+      ARTICLE_HTML = #{articleHtml,jdbcType=LONGVARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.rw.domain.MyCollection" >
+    update my_collection
+    set MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      TYPE_CODE = #{typeCode,jdbcType=VARCHAR},
+      MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      READ_NUM = #{readNum,jdbcType=INTEGER},
+      LIKE_NUM = #{likeNum,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      RW_STATE = #{rwState,jdbcType=VARCHAR},
+      WEB_URL = #{webUrl,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateMyCollectionForReadNum" parameterType="java.lang.String" >
+    update my_collection
+    set
+      READ_NUM = READ_NUM + 1
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByExample" parameterType="com.ye.business.rw.dto.FindMyCollectionPage">
+  	delete from my_collection
+  	<include refid="findPage_condition" />
+  </delete>
+  
+</mapper>

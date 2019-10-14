@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- 未联系客户统计信息表 -->
+	<bean name="/unContactTotalService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="unContactTotalServiceImpl" />
+		<property name="serviceInterface">
+			<value>
+				com.lj.business.st.service.IUnContactTotalService
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/workRatioGmService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="workRatioGmServiceImpl" />
+		<property name="serviceInterface">
+			<value>
+				com.lj.business.st.service.IWorkRatioGmService
+			</value>
+		</property>
+	</bean> 
+	
+	
+	<!-- 运营分析报表选择 -->
+	<bean name="/operationAnalysisDayChooseService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="operationAnalysisDayChooseServiceimpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IOperationAnalysisDayChooseService" />
+	</bean>
+	
+	<!-- 日工作简报选择 -->
+	<bean name="/workBrDayChooseService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="workBrDayChooseServiceimpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWorkBrDayChooseService" />
+	</bean>
+
+	<bean name="/pmTypeTotalService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="pmTypeTotalServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IPmTypeTotalService" />
+	</bean>
+	
+	<!-- 	区域工作统计服务 -->
+	<bean name="/workRatioAreaService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="workRatioAreaServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWorkRatioAreaService" />
+	</bean>
+
+	<bean name="/workRatioShopService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="workRatioShopServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWorkRatioShopService" />
+	</bean>
+	
+	<!-- 跟进统计 素材中心统计表 -->
+	<bean name="/materialTotalService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="materialTotalServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IMaterialTotalService" />
+	</bean>
+	
+	<!-- 客户标签 -->
+	<bean name="/pmLabelTotalService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="pmLabelTotalServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IPmLabelTotalService" />
+	</bean>
+
+	<bean name="/cfCountAnalyzeService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="cfCountAnalyzeServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ICfCountAnalyzeService" />
+	</bean>
+   
+   <!-- 到店客户体验统计 -->
+   	<bean name="/clientExpTotalService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="clientExpTotalServiceImp" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IClientExpTotalService" />
+	</bean>
+	
+	<!-- 社交分析统计 -->
+	<bean name="/socialAnalyzeService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="socialAnalyzeServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ISocialAnalyzeService" />
+	</bean>
+
+	 <bean name="/getCountAddFriendsService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="getCountAddFriendsServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IGetCountAddFriendsService" />
+	</bean>
+	
+	<bean name="/areaOrderAnalyzeService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="areaOrderAnalyzeServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IAreaOrderAnalyzeService" />
+	</bean>
+
+	<bean name="/pmTalkTotalService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="pmTalkTotalServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IPmTalkTotalService" />
+	</bean>
+	
+	<!-- 客户画像统计 -->
+	 <bean name="/clientAnalyzeService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="clientAnalyzeServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IClientAnalyzeService" />
+	</bean>
+	
+	<!-- 员工画像统计 -->
+	 <bean name="/employeeAnalyzeService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="employeeAnalyzeServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IEmployeeAnalyzeService" />
+	</bean>
+	
+	<bean name="/cfAnalyzeService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="cfAnalyzeServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ICfAnalyzeService" />
+	</bean>
+	
+	<bean name="/salesGmDayDetailService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="salesGmDayDetailServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ISalesGmDayDetailService" />
+	</bean>
+	
+	<bean name="/salesGmDayFirstService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="salesGmDayFirstServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ISalesGmDayFirstService" />
+	</bean>
+	
+	   <!-- 报表项目 -->
+		<bean name="/stListService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="stListServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IStListService" />
+	   </bean>
+	  
+	      <!-- 跟进分析 -->
+		<bean name="/cfAnalyzeChooseService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="cfAnalyzeChooseServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ICfAnalyzeChooseService" />
+	   </bean>
+	   
+	   <!-- 运营日报选择 -->
+	   <bean name="/operationDayChooseService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="operationDayChooseServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IOperationDayChooseService" />
+	   </bean>
+	   
+	      <!-- 优秀导购选择表 -->
+		<bean name="/bestGmChooseService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="bestGmChooseServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IBestGmChooseService" />
+	   </bean>
+	   
+	
+	<!-- 报表生成SERVICE  -->
+	<bean name="/reportGeneratorService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="reportGeneratorServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IReportGeneratorService" />
+	   </bean>
+	   
+	<!-- 商户运营日报报表  -->
+	<bean name="/merchantDayOperationService"
+		  class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="merchantDayOperationServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IMerchantDayOperationService" />
+	   </bean>
+	
+	<!-- 报表 调度任务信息 -->
+	<bean name="/countAddFriendsJobService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="countAddFriendsJobService"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 报表 调度任务信息 -->
+	<bean name="/reportGeneratorJobService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="reportGeneratorJobServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	
+	 <!-- 导购日冠军任务服务job服务 -->
+	<bean name="/salesGmDayFirstJobService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="salesGmDayFirstJobServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	 <!-- 商户日运营报表job服务 -->
+	<bean name="/merchantDayOperationJobService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="merchantDayOperationJobServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/readDetailService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="readDetailServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IReadDetailService" />
+	</bean>
+	
+	<!-- 今日客户汇总 -->
+	<bean name="/todayMemberSummaryService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="todayMemberSummaryServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ITodayMemberSummaryService" />
+	</bean>
+	
+	<!-- 移动门店商户运营日报表 -->
+	<bean name="/merchantOperationDayReportService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="merchantOperationDayReportServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IMerchantOperationDayReportService" />
+	</bean>
+	
+	<!-- 移动门店经销商运营日报表 -->
+	<bean name="/companyOperationDayReportService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="companyOperationDayReportServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.ICompanyOperationDayReportService" />
+	</bean>
+	
+	<!-- 移动门店门店运营日报表 -->
+	<bean name="/shopOperationDayReportService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="shopOperationDayReportServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IShopOperationDayReportService" />
+	</bean>
+	
+	 <!-- 移动门店运营日报任务 -->
+<!-- 	<bean name="/mecOperationDayReportJob" -->
+<!-- 		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter"> -->
+<!-- 		<property name="service"> -->
+<!-- 		  <bean  class="com.lj.cc.clientintf.JobService"> -->
+<!-- 		     <property name="job" ref="mecOperationDayReportJob"/> -->
+<!-- 		  </bean>		   -->
+<!-- 		</property> -->
+<!-- 		<property name="serviceInterface"> -->
+<!-- 			<value> -->
+<!-- 				 com.lj.cc.clientintf.IJob -->
+<!-- 			</value> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+	<!-- 微信客户跟踪日报生成任务 -->
+<!-- 	<bean name="/wxPmFollowReportGmJob" -->
+<!-- 		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter"> -->
+<!-- 		<property name="service"> -->
+<!-- 		  <bean  class="com.lj.cc.clientintf.JobService"> -->
+<!-- 		     <property name="job" ref="wxPmFollowReportGmJob"/> -->
+<!-- 		  </bean>		   -->
+<!-- 		</property> -->
+<!-- 		<property name="serviceInterface"> -->
+<!-- 			<value> -->
+<!-- 				 com.lj.cc.clientintf.IJob -->
+<!-- 			</value> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+	<!-- 导购微信客户跟踪日报 -->
+	<bean name="/wxPmFollowReportGmService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxPmFollowReportGmServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWxPmFollowReportGmService" />
+	</bean>
+	
+	<!-- 门店微信客户跟踪日报 -->
+	<bean name="/wxPmFollowReportShopService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxPmFollowReportShopServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWxPmFollowReportShopService" />
+	</bean>
+	
+	<!-- 经销商微信客户跟踪日报 -->
+	<bean name="/wxPmFollowReportCompanyService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxPmFollowReportCompanyServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IWxPmFollowReportCompanyService" />
+	</bean>
+	
+	<!-- 用户统计 -->
+	<bean name="/userCountService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="userCountServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.st.service.IUserCountService" />
+	</bean>
+	
+	 <!-- 员工统计job服务 -->
+	<bean name="/countUserJobService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="countUserJobServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+</beans> 

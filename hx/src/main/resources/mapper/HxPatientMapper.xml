@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IHxPatientDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.HxPatient">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="CASE_NO" jdbcType="VARCHAR" property="caseNo" />
+    <result column="BIRTH_DATE" jdbcType="DATE" property="birthDate" />
+    <result column="AGE" jdbcType="INTEGER" property="age" />
+    <result column="NATIONALITY" jdbcType="VARCHAR" property="nationality" />
+    <result column="IDNO" jdbcType="VARCHAR" property="idno" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="PHONE_REMARK" jdbcType="VARCHAR" property="phoneRemark" />
+    <result column="PHONE_NO" jdbcType="VARCHAR" property="phoneNo" />
+    <result column="PHONE_NO_REMARK" jdbcType="VARCHAR" property="phoneNoRemark" />
+    <result column="WECHAT" jdbcType="VARCHAR" property="wechat" />
+    <result column="QQ_NO" jdbcType="VARCHAR" property="qqNo" />
+    <result column="MAIL" jdbcType="VARCHAR" property="mail" />
+    <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+    <result column="CITY_CODE" jdbcType="VARCHAR" property="cityCode" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="AREA" jdbcType="VARCHAR" property="area" />
+    <result column="ADDR_DETAIL" jdbcType="VARCHAR" property="addrDetail" />
+    <result column="ADDR_INFO" jdbcType="VARCHAR" property="addrInfo" />
+    <result column="SOURCE1_CODE" jdbcType="VARCHAR" property="source1Code" />
+    <result column="SOURCE1" jdbcType="VARCHAR" property="source1" />
+    <result column="SOURCE2_CODE" jdbcType="VARCHAR" property="source2Code" />
+    <result column="SOURCE2" jdbcType="VARCHAR" property="source2" />
+    <result column="SOURCE3_CODE" jdbcType="VARCHAR" property="source3Code" />
+    <result column="SOURCE3" jdbcType="VARCHAR" property="source3" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="PAST_HISTORY" jdbcType="VARCHAR" property="pastHistory" />
+    <result column="ALLERGY_HISTORY" jdbcType="VARCHAR" property="allergyHistory" />
+    <result column="MEDICATION_HISTORY" jdbcType="VARCHAR" property="medicationHistory" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="FIRST_MEMBER_NO" jdbcType="VARCHAR" property="firstMemberNo" />
+    <result column="FIRST_MEMBER_NAME" jdbcType="VARCHAR" property="firstMemberName" />
+    <result column="DUTY_MEMBER_NO" jdbcType="VARCHAR" property="dutyMemberNo" />
+    <result column="DUTY_MEMBER_NAME" jdbcType="VARCHAR" property="dutyMemberName" />
+    <result column="CONS_MEMBER_NO" jdbcType="VARCHAR" property="consMemberNo" />
+    <result column="CONS_MEMBER_NAME" jdbcType="VARCHAR" property="consMemberName" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo" />
+    <result column="CLUE_CODE" jdbcType="VARCHAR" property="clueCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, NAME, SEX, TYPE, CASE_NO, BIRTH_DATE, 
+    AGE, NATIONALITY, IDNO, PHONE, PHONE_REMARK, PHONE_NO, PHONE_NO_REMARK, WECHAT, QQ_NO, 
+    MAIL, PROVINCE_CODE, PROVINCE, CITY_CODE, CITY, AREA_CODE, AREA, ADDR_DETAIL, ADDR_INFO, 
+    SOURCE1_CODE, SOURCE1, SOURCE2_CODE, SOURCE2, SOURCE3_CODE, SOURCE3, REMARK, PAST_HISTORY, 
+    ALLERGY_HISTORY, MEDICATION_HISTORY, CREATE_TIME, FIRST_MEMBER_NO, FIRST_MEMBER_NAME, 
+    DUTY_MEMBER_NO, DUTY_MEMBER_NAME, CONS_MEMBER_NO, CONS_MEMBER_NAME, CREATE_ID, CREATE_DATE, 
+    UPDATE_ID, UPDATE_DATE, MEMBER_NO, CLUE_CODE
+  </sql>
+
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.HxPatientDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+						<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.memberNo != null and param.memberNo !='' ">
+					<![CDATA[and MEMBER_NO =#{param.memberNo}]]>
+				</if>
+				<if test="param.phone != null and param.phone !='' ">
+					<![CDATA[and PHONE =#{param.phone}]]>
+				</if>
+				<if test="param.name != null and param.name !='' ">
+					<![CDATA[and NAME =#{param.name}]]>
+				</if>
+				<if test="param.memberNoIsNull != null and param.memberNoIsNull !='' ">
+					<if test="'yes'.equals(param.memberNoIsNull)">
+						<![CDATA[and MEMBER_NO is null ]]>
+					</if>
+					<if test="'no'.equals(param.memberNoIsNull)">
+						<![CDATA[and MEMBER_NO is not null ]]>
+					</if>
+				</if>
+				<if test="param.codes != null and param.codes.size() > 0 ">
+					and code in <foreach collection="param.codes" item="temp" open="(" separator="," close=")">#{temp}</foreach>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findHxPatients" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindHxPatientPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM hx_patient
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findHxPatientPage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindHxPatientPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM hx_patient
+		<include refid="findPage_condition" />
+
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findHxPatientPageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindHxPatientPage">
+		select count(*)
+		FROM hx_patient
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hx_patient
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hx_patient
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+   <insert id="insert" parameterType="com.ye.business.hx.domain.HxPatient">
+    insert into hx_patient (CODE, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, NAME, 
+      SEX, TYPE, CASE_NO, 
+      BIRTH_DATE, AGE, NATIONALITY, 
+      IDNO, PHONE, PHONE_REMARK, 
+      PHONE_NO, PHONE_NO_REMARK, WECHAT, 
+      QQ_NO, MAIL, PROVINCE_CODE, 
+      PROVINCE, CITY_CODE, CITY, 
+      AREA_CODE, AREA, ADDR_DETAIL, 
+      ADDR_INFO, SOURCE1_CODE, SOURCE1, 
+      SOURCE2_CODE, SOURCE2, SOURCE3_CODE, 
+      SOURCE3, REMARK, PAST_HISTORY, 
+      ALLERGY_HISTORY, MEDICATION_HISTORY, CREATE_TIME, 
+      FIRST_MEMBER_NO, FIRST_MEMBER_NAME, DUTY_MEMBER_NO, 
+      DUTY_MEMBER_NAME, CONS_MEMBER_NO, CONS_MEMBER_NAME, 
+      CREATE_ID, CREATE_DATE, UPDATE_ID, 
+      UPDATE_DATE, MEMBER_NO, CLUE_CODE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{caseNo,jdbcType=VARCHAR}, 
+      #{birthDate,jdbcType=DATE}, #{age,jdbcType=INTEGER}, #{nationality,jdbcType=VARCHAR}, 
+      #{idno,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{phoneRemark,jdbcType=VARCHAR}, 
+      #{phoneNo,jdbcType=VARCHAR}, #{phoneNoRemark,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, 
+      #{qqNo,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{addrDetail,jdbcType=VARCHAR}, 
+      #{addrInfo,jdbcType=VARCHAR}, #{source1Code,jdbcType=VARCHAR}, #{source1,jdbcType=VARCHAR}, 
+      #{source2Code,jdbcType=VARCHAR}, #{source2,jdbcType=VARCHAR}, #{source3Code,jdbcType=VARCHAR}, 
+      #{source3,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{pastHistory,jdbcType=VARCHAR}, 
+      #{allergyHistory,jdbcType=VARCHAR}, #{medicationHistory,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{firstMemberNo,jdbcType=VARCHAR}, #{firstMemberName,jdbcType=VARCHAR}, #{dutyMemberNo,jdbcType=VARCHAR}, 
+      #{dutyMemberName,jdbcType=VARCHAR}, #{consMemberNo,jdbcType=VARCHAR}, #{consMemberName,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{memberNo,jdbcType=VARCHAR}, #{clueCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.HxPatient">
+    insert into hx_patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="caseNo != null">
+        CASE_NO,
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE,
+      </if>
+      <if test="age != null">
+        AGE,
+      </if>
+      <if test="nationality != null">
+        NATIONALITY,
+      </if>
+      <if test="idno != null">
+        IDNO,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="phoneRemark != null">
+        PHONE_REMARK,
+      </if>
+      <if test="phoneNo != null">
+        PHONE_NO,
+      </if>
+      <if test="phoneNoRemark != null">
+        PHONE_NO_REMARK,
+      </if>
+      <if test="wechat != null">
+        WECHAT,
+      </if>
+      <if test="qqNo != null">
+        QQ_NO,
+      </if>
+      <if test="mail != null">
+        MAIL,
+      </if>
+      <if test="provinceCode != null">
+        PROVINCE_CODE,
+      </if>
+      <if test="province != null">
+        PROVINCE,
+      </if>
+      <if test="cityCode != null">
+        CITY_CODE,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+      <if test="area != null">
+        AREA,
+      </if>
+      <if test="addrDetail != null">
+        ADDR_DETAIL,
+      </if>
+      <if test="addrInfo != null">
+        ADDR_INFO,
+      </if>
+      <if test="source1Code != null">
+        SOURCE1_CODE,
+      </if>
+      <if test="source1 != null">
+        SOURCE1,
+      </if>
+      <if test="source2Code != null">
+        SOURCE2_CODE,
+      </if>
+      <if test="source2 != null">
+        SOURCE2,
+      </if>
+      <if test="source3Code != null">
+        SOURCE3_CODE,
+      </if>
+      <if test="source3 != null">
+        SOURCE3,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="pastHistory != null">
+        PAST_HISTORY,
+      </if>
+      <if test="allergyHistory != null">
+        ALLERGY_HISTORY,
+      </if>
+      <if test="medicationHistory != null">
+        MEDICATION_HISTORY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="firstMemberNo != null">
+        FIRST_MEMBER_NO,
+      </if>
+      <if test="firstMemberName != null">
+        FIRST_MEMBER_NAME,
+      </if>
+      <if test="dutyMemberNo != null">
+        DUTY_MEMBER_NO,
+      </if>
+      <if test="dutyMemberName != null">
+        DUTY_MEMBER_NAME,
+      </if>
+      <if test="consMemberNo != null">
+        CONS_MEMBER_NO,
+      </if>
+      <if test="consMemberName != null">
+        CONS_MEMBER_NAME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO,
+      </if>
+      <if test="clueCode != null">
+        CLUE_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null">
+        #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="idno != null">
+        #{idno,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneRemark != null">
+        #{phoneRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNoRemark != null">
+        #{phoneNoRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="qqNo != null">
+        #{qqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addrDetail != null">
+        #{addrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="addrInfo != null">
+        #{addrInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="source1Code != null">
+        #{source1Code,jdbcType=VARCHAR},
+      </if>
+      <if test="source1 != null">
+        #{source1,jdbcType=VARCHAR},
+      </if>
+      <if test="source2Code != null">
+        #{source2Code,jdbcType=VARCHAR},
+      </if>
+      <if test="source2 != null">
+        #{source2,jdbcType=VARCHAR},
+      </if>
+      <if test="source3Code != null">
+        #{source3Code,jdbcType=VARCHAR},
+      </if>
+      <if test="source3 != null">
+        #{source3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pastHistory != null">
+        #{pastHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyHistory != null">
+        #{allergyHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="medicationHistory != null">
+        #{medicationHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstMemberNo != null">
+        #{firstMemberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMemberName != null">
+        #{firstMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyMemberNo != null">
+        #{dutyMemberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyMemberName != null">
+        #{dutyMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="consMemberNo != null">
+        #{consMemberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="consMemberName != null">
+        #{consMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="clueCode != null">
+        #{clueCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.HxPatient">
+    update hx_patient
+    <set>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null">
+        CASE_NO = #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE = #{birthDate,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="nationality != null">
+        NATIONALITY = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="idno != null">
+        IDNO = #{idno,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneRemark != null">
+        PHONE_REMARK = #{phoneRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNoRemark != null">
+        PHONE_NO_REMARK = #{phoneNoRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        WECHAT = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="qqNo != null">
+        QQ_NO = #{qqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        MAIL = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addrDetail != null">
+        ADDR_DETAIL = #{addrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="addrInfo != null">
+        ADDR_INFO = #{addrInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="source1Code != null">
+        SOURCE1_CODE = #{source1Code,jdbcType=VARCHAR},
+      </if>
+      <if test="source1 != null">
+        SOURCE1 = #{source1,jdbcType=VARCHAR},
+      </if>
+      <if test="source2Code != null">
+        SOURCE2_CODE = #{source2Code,jdbcType=VARCHAR},
+      </if>
+      <if test="source2 != null">
+        SOURCE2 = #{source2,jdbcType=VARCHAR},
+      </if>
+      <if test="source3Code != null">
+        SOURCE3_CODE = #{source3Code,jdbcType=VARCHAR},
+      </if>
+      <if test="source3 != null">
+        SOURCE3 = #{source3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pastHistory != null">
+        PAST_HISTORY = #{pastHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="allergyHistory != null">
+        ALLERGY_HISTORY = #{allergyHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="medicationHistory != null">
+        MEDICATION_HISTORY = #{medicationHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstMemberNo != null">
+        FIRST_MEMBER_NO = #{firstMemberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMemberName != null">
+        FIRST_MEMBER_NAME = #{firstMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyMemberNo != null">
+        DUTY_MEMBER_NO = #{dutyMemberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyMemberName != null">
+        DUTY_MEMBER_NAME = #{dutyMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="consMemberNo != null">
+        CONS_MEMBER_NO = #{consMemberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="consMemberName != null">
+        CONS_MEMBER_NAME = #{consMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="clueCode != null">
+        CLUE_CODE = #{clueCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.HxPatient">
+    update hx_patient
+    set SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CASE_NO = #{caseNo,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=DATE},
+      AGE = #{age,jdbcType=INTEGER},
+      NATIONALITY = #{nationality,jdbcType=VARCHAR},
+      IDNO = #{idno,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      PHONE_REMARK = #{phoneRemark,jdbcType=VARCHAR},
+      PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      PHONE_NO_REMARK = #{phoneNoRemark,jdbcType=VARCHAR},
+      WECHAT = #{wechat,jdbcType=VARCHAR},
+      QQ_NO = #{qqNo,jdbcType=VARCHAR},
+      MAIL = #{mail,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR},
+      ADDR_DETAIL = #{addrDetail,jdbcType=VARCHAR},
+      ADDR_INFO = #{addrInfo,jdbcType=VARCHAR},
+      SOURCE1_CODE = #{source1Code,jdbcType=VARCHAR},
+      SOURCE1 = #{source1,jdbcType=VARCHAR},
+      SOURCE2_CODE = #{source2Code,jdbcType=VARCHAR},
+      SOURCE2 = #{source2,jdbcType=VARCHAR},
+      SOURCE3_CODE = #{source3Code,jdbcType=VARCHAR},
+      SOURCE3 = #{source3,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PAST_HISTORY = #{pastHistory,jdbcType=VARCHAR},
+      ALLERGY_HISTORY = #{allergyHistory,jdbcType=VARCHAR},
+      MEDICATION_HISTORY = #{medicationHistory,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      FIRST_MEMBER_NO = #{firstMemberNo,jdbcType=VARCHAR},
+      FIRST_MEMBER_NAME = #{firstMemberName,jdbcType=VARCHAR},
+      DUTY_MEMBER_NO = #{dutyMemberNo,jdbcType=VARCHAR},
+      DUTY_MEMBER_NAME = #{dutyMemberName,jdbcType=VARCHAR},
+      CONS_MEMBER_NO = #{consMemberNo,jdbcType=VARCHAR},
+      CONS_MEMBER_NAME = #{consMemberName,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      CLUE_CODE = #{clueCode,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="queryPatientCount" resultType="int" parameterType="com.ye.business.hx.dto.params.PatientParams">
+  	SELECT COUNT(1) FROM hx_patient WHERE MERCHANT_NO=#{memberNoMerchant} 
+  	<if test="name != null">
+  		AND `NAME` LIKE CONCAT('%',#{name},'%') 
+  	</if>
+  	<if test="source1Code != null">
+  		AND SOURCE1_CODE=#{source1Code}
+  	</if>
+  	<if test="phone != null">
+  		AND PHONE=#{phone}
+  	</if>
+  	<if test="firstMemberNo != null">
+  		AND FIRST_MEMBER_NO=#{firstMemberNo} 
+  	</if>
+  	<if test="startTime != null">
+  		AND CREATE_TIME &gt;= #{startTime}
+  	</if>
+  	<if test="endTime != null">
+  		AND CREATE_TIME &lt; DATE_ADD(#{endTime},INTERVAL 1 DAY)
+  	</if>
+  </select>
+  <select id="queryPatientList" resultMap="FindResultMap" parameterType="com.ye.business.hx.dto.params.PatientParams">
+  	SELECT
+	<include refid="Base_Column_List" />
+	FROM hx_patient WHERE MERCHANT_NO=#{memberNoMerchant} 
+  	<if test="name != null">
+  		AND `NAME` LIKE CONCAT('%',#{name},'%') 
+  	</if>
+  	<if test="source1Code != null">
+  		AND SOURCE1_CODE=#{source1Code}
+  	</if>
+  	<if test="phone != null">
+  		AND PHONE=#{phone}
+  	</if>
+  	<if test="firstMemberNo != null">
+  		AND FIRST_MEMBER_NO=#{firstMemberNo} 
+  	</if>
+  	<if test="startTime != null">
+  		AND CREATE_TIME &gt;= #{startTime}
+  	</if>
+  	<if test="endTime != null">
+  		AND CREATE_TIME &lt; DATE_ADD(#{endTime},INTERVAL 1 DAY)
+  	</if>
+  	ORDER BY CREATE_DATE DESC LIMIT ${start} , ${limit}
+  </select>
+</mapper>

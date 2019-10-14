@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IAddFriendsDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.AddFriends" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="NO_WX_GM" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="GM_ADD_FLAG" property="gmAddFlag" jdbcType="INTEGER" />
+    <result column="WX_QR_CODE" property="wxQrCode" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="NICK_REMARK" property="nickRemark" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="LONGITUDE" property="longitude" jdbcType="VARCHAR" />
+    <result column="LATITUDE" property="latitude" jdbcType="VARCHAR" />
+    <result column="VALIDATION" property="validation" jdbcType="VARCHAR" />
+    <result column="ADD_STATUS" property="addStatus" jdbcType="CHAR" />
+    <result column="WX_OPENID" property="wxOpenId" jdbcType="VARCHAR" />
+    <result column="NO_QQ" property="noQQ" jdbcType="VARCHAR" />
+    <result column="LABEL_NAME" property="labelName" jdbcType="VARCHAR" />
+    <result column="MEMBER_SRC" property="memberSrc" jdbcType="VARCHAR" />
+    <result column="REQUEST_TIME" property="requestTime" jdbcType="TIMESTAMP" />
+    <result column="ACCEPT_TIME" property="acceptTime" jdbcType="TIMESTAMP" />
+    <result column="MEMBER_TIME" property="memberTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="WX_ADD_TYPE" property="wxAddType" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap type="com.lj.business.member.dto.addfriends.FindAddFriendsPageReturn" id="findAddFriendsPageResultMap">
+  	<id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="NO_WX_GM" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="GM_ADD_FLAG" property="gmAddFlag" jdbcType="INTEGER" />
+    <result column="WX_QR_CODE" property="wxQrCode" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="NICK_REMARK" property="nickRemark" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="VALIDATION" property="validation" jdbcType="VARCHAR" />
+    <result column="ADD_STATUS" property="addStatus" jdbcType="CHAR" />
+    <result column="ACCEPT_TIME" property="acceptTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="LABEL_NAME" property="labelName" jdbcType="VARCHAR" />
+    <result column="WX_OPENID" property="wxOpenId" jdbcType="VARCHAR" />
+    <result column="NO_QQ" property="noQQ" jdbcType="VARCHAR" />
+    <result column="MEMBER_SRC" property="memberSrc" jdbcType="VARCHAR" />
+    <result column="WX_ADD_TYPE" property="wxAddType" />
+    <result column="REMARK4" property="remark4" /><!-- 此字段不为空表示不能添加好友 -->
+    <result column="ALIAS_GM" property="aliasGm" />
+    
+  </resultMap>
+  
+  <resultMap id="countResultMap" type="com.lj.business.member.dto.addfriends.CountAddFriendsEntity" >
+    <result property="id"  column="id"  />
+    <result property="merchantNo" column="merchant_no" />
+    <result property="count"  column="count" />
+    <result property="shopName"  column="shop_name" />
+    <result property="memberGmName"  column="memberGmName" />
+    <result property="countDate" column="count_date" />
+  </resultMap>
+  
+  <resultMap id="UnclaimedFriendsByShopResultMap" type="com.lj.business.member.dto.addfriends.UnclaimedFriendsByShop">
+    
+    <result column="WX_COUNT" property="wxCount" jdbcType="INTEGER" />
+    <result column="UNCLAIMED_COUNT" property="unclaimedCount" jdbcType="INTEGER" />
+  </resultMap> 
+  
+  <sql id="Page_Column_List" >
+    CODE, MEMBER_NO, MEMBER_NAME, MEMBER_NO_GM, MEMBER_NAME_GM,  MERCHANT_NO, 
+    MERCHANT_NAME, NO_WX_GM, WX_QR_CODE, NO_WX, ALIAS, HEAD_ADDRESS, NICK_NAME, NICK_REMARK, 
+    MOBILE, SEX, VALIDATION, ADD_STATUS, ACCEPT_TIME, 
+    CREATE_ID, CREATE_DATE, REMARK
+  </sql>
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO, MEMBER_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, SHOP_NO, SHOP_NAME, MERCHANT_NO, 
+    MERCHANT_NAME, NO_WX_GM, GM_ADD_FLAG, WX_QR_CODE, NO_WX, ALIAS, HEAD_ADDRESS, NICK_NAME, 
+    NICK_REMARK, MOBILE, SEX, LONGITUDE, LATITUDE, VALIDATION, ADD_STATUS, WX_OPENID, 
+    NO_QQ, LABEL_NAME, MEMBER_SRC, REQUEST_TIME, ACCEPT_TIME, MEMBER_TIME, CREATE_ID, 
+    CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4, WX_ADD_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from add_friends
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from add_friends
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.AddFriends" >
+    insert into add_friends
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="noWxGm != null" >
+        NO_WX_GM,
+      </if>
+      <if test="gmAddFlag != null" >
+        GM_ADD_FLAG,
+      </if>
+      <if test="wxQrCode != null" >
+        WX_QR_CODE,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="alias != null" >
+        ALIAS,
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS,
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="nickRemark != null" >
+        NICK_REMARK,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE,
+      </if>
+      <if test="latitude != null" >
+        LATITUDE,
+      </if>
+      <if test="validation != null" >
+        VALIDATION,
+      </if>
+      <if test="addStatus != null" >
+        ADD_STATUS,
+      </if>
+      <if test="wxOpenId != null" >
+        WX_OPENID,
+      </if>
+      <if test="noQQ != null" >
+        NO_QQ,
+      </if>
+      <if test="labelName != null" >
+        LABEL_NAME,
+      </if>
+      <if test="memberSrc != null" >
+        MEMBER_SRC,
+      </if>
+      <if test="requestTime != null" >
+        REQUEST_TIME,
+      </if>
+      <if test="acceptTime != null" >
+        ACCEPT_TIME,
+      </if>
+      <if test="memberTime != null" >
+        MEMBER_TIME,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="wxAddType != null" >
+        WX_ADD_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxGm != null" >
+        #{noWxGm,jdbcType=VARCHAR},
+      </if>
+      <if test="gmAddFlag != null" >
+        #{gmAddFlag,jdbcType=INTEGER},
+      </if>
+      <if test="wxQrCode != null" >
+        #{wxQrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickRemark != null" >
+        #{nickRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="validation != null" >
+        #{validation,jdbcType=VARCHAR},
+      </if>
+      <if test="addStatus != null" >
+        #{addStatus,jdbcType=CHAR},
+      </if>
+      <if test="wxOpenId != null" >
+        #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="noQQ != null" >
+        #{noQQ,jdbcType=VARCHAR},
+      </if>
+      <if test="labelName != null" >
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberSrc != null" >
+        #{memberSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptTime != null" >
+        #{acceptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberTime != null" >
+        #{memberTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAddType != null" >
+        #{wxAddType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.AddFriends" >
+    update add_friends
+    <set >
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxGm != null" >
+        NO_WX_GM = #{noWxGm,jdbcType=VARCHAR},
+      </if>
+      <if test="gmAddFlag != null" >
+        GM_ADD_FLAG = #{gmAddFlag,jdbcType=INTEGER},
+      </if>
+      <if test="wxQrCode != null" >
+        WX_QR_CODE = #{wxQrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        ALIAS = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickRemark != null" >
+        NICK_REMARK = #{nickRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        LATITUDE = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="validation != null" >
+        VALIDATION = #{validation,jdbcType=VARCHAR},
+      </if>
+      <if test="addStatus != null" >
+        ADD_STATUS = #{addStatus,jdbcType=CHAR},
+      </if>
+      <if test="wxOpenId != null" >
+        WX_OPENID = #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="noQQ != null" >
+        NO_QQ = #{noQQ,jdbcType=VARCHAR},
+      </if>
+      <if test="labelName != null" >
+        LABEL_NAME = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberSrc != null" >
+        MEMBER_SRC = #{memberSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptTime != null" >
+        ACCEPT_TIME = #{acceptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberTime != null" >
+        MEMBER_TIME = #{memberTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAddType != null" >
+        WX_ADD_TYPE = #{wxAddType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <sql id="selectBySelectiveSql">
+	<where >
+      <if test="code != null" >
+        and CODE = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNo != null" >
+        and MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberName != null" >
+        and MEMBER_NAME = #{memberName,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNoGm != null" >
+        and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNameGm != null" >
+        and MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null" >
+        and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantName != null" >
+        and MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR}
+      </if>
+      <if test="noWxGm != null" >
+        and NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+      </if>
+      <if test="gmAddFlag != null" >
+        and GM_ADD_FLAG = #{gmAddFlag,jdbcType=INTEGER}
+      </if>
+      <if test="wxQrCode != null" >
+        and WX_QR_CODE = #{wxQrCode,jdbcType=VARCHAR}
+      </if>
+      <if test="noWx != null" >
+        and NO_WX = #{noWx,jdbcType=VARCHAR}
+      </if>
+      <if test="noQQ != null" >
+        and NO_QQ = #{noQQ,jdbcType=VARCHAR}
+      </if>
+      <if test="nickRemark != null" >
+        and NICK_REMARK = #{nickRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null" >
+        and MOBILE = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="addStatus != null" >
+        and ADD_STATUS = #{addStatus,jdbcType=CHAR}
+      </if>
+      <if test="acceptTime != null" >
+        and ACCEPT_TIME = #{acceptTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  
+  <select id="selectBySelective" parameterType="com.lj.business.member.domain.AddFriends" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from add_friends
+       <include refid="selectBySelectiveSql" />
+    order by REQUEST_TIME desc
+    limit 1
+  </select>
+  
+  <select id="selectBySelectiveAndSync" parameterType="com.lj.business.member.domain.AddFriends" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from add_friends
+    <choose>
+    	  <when test="code != null and code != ''" >
+	        where CODE = #{code,jdbcType=VARCHAR}
+	      </when>
+	      <otherwise>
+		      <include refid="selectBySelectiveSql" />
+	      </otherwise>
+    </choose>
+     and MEMBER_NO is null
+     and ADD_STATUS in ('Y', 'N')
+    order by ADD_STATUS desc, REQUEST_TIME desc
+    limit 1
+  </select>
+  
+  <!-- 查询指定微信未分配的客户 -->
+  <select id="selectByRepeatAndClaim" parameterType="com.lj.business.member.domain.AddFriends" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from add_friends
+    where MEMBER_NO is null
+      and ADD_STATUS in ('Y', 'N')
+      
+      <choose>
+  	  	<when test="alias != null and alias !=''">
+  	  		and (NO_WX = #{noWx,jdbcType=VARCHAR} or ALIAS = #{alias,jdbcType=VARCHAR})
+  	  	</when>
+  	  	<otherwise>
+  	  		and NO_WX = #{noWx,jdbcType=VARCHAR}
+  	  	</otherwise>
+  	  </choose>
+  </select>
+  
+  <!-- 添加微信好友记录分页查询 begin -->
+	<sql id="findAddFriendsWhere">
+		<where>
+	        <if test="memberNoGm != null and memberNoGm !='' " >
+	            and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	        </if>
+			<if test="memberNo != null and memberNo !='' ">
+				and MEMBER_NO = #{memberNo}
+			</if>
+			<if test="requestTimeBegin != null and requestTimeBegin !='' ">
+				and REQUEST_TIME >= #{requestTimeBegin}
+			</if>
+			<if test="merchantNo != null and merchantNo !='' ">
+				and MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="memberName != null and memberName !='' ">
+				and MEMBER_NAME like "%"#{memberName}"%"
+			</if>
+			<if test="mobile != null and mobile !='' ">
+				and MOBILE = #{mobile}
+			</if>
+			<if test="noQQ != null and noQQ !='' ">
+				and NO_QQ = #{noQQ}
+			</if>
+			<if test="wxOpenId != null and wxOpenId !='' ">
+				and WX_OPENID = #{wxOpenId}
+			</if>
+			<if test="noWx != null and noWx !='' ">
+				and NO_WX = #{noWx}
+			</if>
+			<!-- 已添加Y，未添加非Y -->
+			<if test="addStatus != null and addStatus == 'Y'.toString() ">
+				and ADD_STATUS = #{addStatus}
+			</if>
+			<if test="addStatus != null and addStatus != '' and addStatus != 'Y'.toString() ">
+				<![CDATA[and ADD_STATUS <> 'Y']]>
+			</if>
+			<if test="labelName != null and labelName !='' ">
+				and LABEL_NAME like "%"#{labelName}"%"
+			</if>
+			<if test="addWxFriends != null and addWxFriends == 1">
+				and WX_ADD_TYPE in (5, 6, 7)
+			</if>
+			<if test="wxAddTypes != null and wxAddTypes.size() > 0">
+      	      	and WX_ADD_TYPE in
+	         	<foreach item="item" index="index" collection="wxAddTypes" open="(" separator="," close=")">  
+	              #{item}  
+	            </foreach>
+            </if>
+            <if test="gmAddFlag != null ">
+				and GM_ADD_FLAG = #{gmAddFlag}
+			</if>
+		</where>
+    </sql>
+
+	<select id="findAddFriendsPageCount" resultType="int" parameterType="com.lj.business.member.dto.addfriends.FindAddFriendsPage">
+		select count(*)
+		  from add_friends
+		       <include refid="findAddFriendsWhere" />
+	</select>
+
+	<select id="findAddFriendsPage" resultMap="findAddFriendsPageResultMap" parameterType="com.lj.business.member.dto.addfriends.FindAddFriendsPage">
+		select
+    		<include refid="Base_Column_List" />
+    		<!-- 获取终端微信别名 -->
+    		,(select st.ALIAS from shop_terminal st where st.NO_WX = NO_WX_GM limit 1) ALIAS_GM
+		  from add_friends
+		       <include refid="findAddFriendsWhere" />
+		 order by CREATE_DATE desc
+		 limit ${start}, ${limit}
+	</select>
+  	<!-- 添加微信好友记录分页查询 end -->
+  	
+  <!-- 未分配微信好友记录分页查询 begin -->
+	<sql id="findAddFriendsAllotWhere">
+		<where>
+	        <if test="merchantNo != null and merchantNo !='' " >
+	            and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	        </if>
+			<if test="memberName != null and memberName !='' ">
+				and MEMBER_NAME like '%${memberName}%'
+			</if>
+			<if test="noWx != null and noWx !='' ">
+				and ( NO_WX = #{noWx,jdbcType=VARCHAR} or ALIAS = #{noWx,jdbcType=VARCHAR} )
+			</if>
+			<if test="noWxGm != null and noWxGm !='' ">
+				and NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null and mobile !='' ">
+				and MOBILE = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="startTime != null">
+				<![CDATA[and MEMBER_TIME >= #{startTime}]]>
+			</if>
+			<if test="endTime != null"> 
+				<![CDATA[and MEMBER_TIME <= #{endTime}]]>
+			</if>
+			<if test="flag != null and flag == false">
+				and MEMBER_NO IS NULL
+			</if>
+			<if test="flag != null and flag == true">
+				and MEMBER_NO IS NOT NULL
+			</if>
+			and GM_ADD_FLAG = 0  <!-- 未指定导购,添加好友 -->
+			and ADD_STATUS ='Y'
+		</where>
+    </sql>
+
+	<select id="findAddFriendsAllotPageCount" resultType="int" parameterType="com.lj.business.member.dto.addfriends.FindAddFriendsAllotPage">
+		select count(*)
+		  from add_friends
+		       <include refid="findAddFriendsAllotWhere" />
+	</select>
+
+	<select id="findAddFriendsAllotPage" resultMap="findAddFriendsPageResultMap" parameterType="com.lj.business.member.dto.addfriends.FindAddFriendsAllotPage">
+		select
+    		<include refid="Page_Column_List" />
+		  from add_friends
+		       <include refid="findAddFriendsAllotWhere" />
+		 order by ACCEPT_TIME desc
+		 limit ${start}, ${limit}
+	</select>
+  	<!-- 未分配微信好友记录分页查询 end -->
+
+  
+  <!-- 查询导购绑定微信号及所属终端的未认领（未分配）和已认领客户 begin -->
+	<sql id="findClaimMemberPageWhere">
+		<where>
+			and ADD_STATUS ='Y'
+	        <if test="noWxGm != null and noWxGm !='' " >
+	            and NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+	        </if>
+	        <if test="param.memberNoGm != null and param.memberNoGm !=''">
+	        and MEMBER_NO_GM = #{param.memberNoGm,jdbcType=VARCHAR}
+	        </if>
+	        <if test="param.mobile != null and param.mobile !='' ">
+				and MOBILE = #{param.mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="param.flag != null">
+				<choose>
+					<when test="param.flag == true">
+<!-- 					FixBUG 289	and MEMBER_NO is not null -->
+						and MEMBER_NO_GM is not null and MEMBER_NO is not null
+					</when>
+					<otherwise>
+<!-- 					FixBUG 289	and MEMBER_NO is null -->
+						and (MEMBER_NO_GM is null or member_no_gm ='') and (MEMBER_NO is null or member_no='')
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+    </sql>
+
+	<select id="findClaimMemberPageCount" resultType="int" >
+		select count(*)
+		  from add_friends
+		       <include refid="findClaimMemberPageWhere" />
+	</select>
+
+	<select id="findClaimMemberPageList" resultType="com.lj.business.member.dto.addfriends.FindClaimMemberPageReturn" >
+		select CODE mbrCode, if(MEMBER_NO is null, 0, 1) flag,  MEMBER_NO memberNo, 
+			   MEMBER_NO_GM memberNoGm, MEMBER_NAME_GM memberNameGm, 
+			   NO_WX noWx, ALIAS alias, HEAD_ADDRESS headAddress, NICK_NAME nickNameWx, NICK_REMARK nickNameRemarkWx, 
+    		   SEX sex, UNIX_TIMESTAMP(ACCEPT_TIME)*1000 createTime, UNIX_TIMESTAMP(MEMBER_TIME)*1000 claimTime
+    		   ,(SELECT CODE FROM person_member pm WHERE pm.MEMBER_NO = a.MEMBER_NO AND pm.MEMBER_NO_GM = a.MEMBER_NO_GM AND pm.SHOP_WX =a.NO_WX_GM) pmCode
+    		   ,VALIDATION validation
+		  from add_friends a
+		       <include refid="findClaimMemberPageWhere" />
+		 <if test="param.flag != null">
+			<choose>
+				<when test="param.flag == true">
+					order by MEMBER_TIME desc
+				</when>
+				<otherwise>
+					order by ACCEPT_TIME desc
+				</otherwise>
+			</choose>
+		</if>
+		 limit ${param.start}, ${param.limit}
+	</select>
+  	<!-- 查询导购绑定微信号及所属终端的未认领（未分配）和已认领客户 end -->
+  	
+  	<!-- 查询绑定导购微信号所有未认领（未分配）客户的微信列表 -->
+  	<select id="findClaimMemberWxByNoWxGm" resultType="string">
+  		select DISTINCT(NO_WX) 
+  		  from add_friends 
+  		 where NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+           and (MEMBER_NO is null or member_no ='')
+  		   and (MEMBER_NO_GM is null or member_no_gm ='')
+           and ADD_STATUS ='Y'
+  	</select>
+  	
+  	<!-- 统计每个终端未认领客户数 -->
+  	<select id="findUnclaimedFriendsCountByAllShop" resultMap="UnclaimedFriendsByShopResultMap">
+  		select  count(DISTINCT(NO_WX_GM)) WX_COUNT, count(*) UNCLAIMED_COUNT
+  		  from add_friends 
+  		 where (MEMBER_NO is null or member_no ='')
+  		   and (MEMBER_NO_GM is null or member_no_gm ='')
+           and ADD_STATUS ='Y'
+         group by SHOP_NO
+  	</select>
+  	
+  	<!-- 电商导购5分钟内未回复客户自动推送二维码 -->
+  	<select id="findAddFriendsByMec" resultMap="findAddFriendsPageResultMap" parameterType="map">
+		SELECT <include refid="Base_Column_List" /> FROM add_friends
+		WHERE ADD_STATUS ='Y'
+		AND MERCHANT_NO = #{merchantNo}
+		<![CDATA[AND round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(ACCEPT_TIME))/60)<=#{diffNum}]]>
+		order by ACCEPT_TIME desc;
+	</select>
+	
+	<!-- 解除认领 -->
+	<update id="updateCancleAddFriendsData" parameterType="map">
+	      update add_friends set MEMBER_NO_GM=null,MEMBER_NAME_GM=null,MEMBER_NO=null,MEMBER_NAME=null 
+	      where NO_WX=#{wxNo} 
+	      and MEMBER_NO_GM=#{gmNo} 
+	      and NO_WX_GM=#{noWxGm}
+	</update>
+	
+	  	<!-- 转移客户 -->
+	<update id="updateFriendsWithTransfer" parameterType="map">
+	   update add_friends set MEMBER_NO_GM=#{rediectGmNo},MEMBER_NAME_GM=#{newGmName} 
+	   where MEMBER_NO_GM=#{sourceGmNo} 
+	   and MEMBER_NO=#{memberNo}
+	   and NO_WX_GM=#{noWxGm}
+	</update>
+	
+	<!-- 根据商户编号或日期统计 -->
+	<select id="getCountByMerchantNoWithDate" resultMap="countResultMap" >
+		select count(*) as count FROM add_friends 
+		where to_days(#{date})-to_days(CREATE_DATE) = 0
+		and MERCHANT_NO = #{merchantNo} and ADD_STATUS = 'Y' order by count desc
+	</select>
+	
+	<!-- 根据微信号或日期统计 -->
+	<select id="getCountByWxNoWithDate" resultMap="countResultMap" >
+		select count(*) as count FROM add_friends 
+		where to_days(#{date})-to_days(CREATE_DATE) = 0
+		and no_wx_gm = #{noWx} and ADD_STATUS = 'Y' order by count desc
+	</select>
+	
+		<!-- 查询当天添加少于限制的终端 -->
+	<select id="findDayWxGmByMerchantNo" resultType="java.lang.Integer">
+	 <![CDATA[ 
+	select COUNT(1) from add_friends where ADD_STATUS ='Y' and MERCHANT_NO =#{merchantNo} and no_wx_gm=#{wxNoGm}  and CREATE_DATE > str_to_date(DATE_FORMAT(NOW(),'%Y-%m-%d'),'%Y-%m-%d %H:%i:%s') and CREATE_DATE < NOW()
+    ]]> 
+	</select>
+	
+	<!-- 查询好友总数 -->
+	<select id="findTotalWxGmByMerchantNo" resultType="java.lang.Integer">
+	select COUNT(1) from add_friends  where ADD_STATUS ='Y' and MERCHANT_NO =#{merchantNo} and no_wx_gm=#{wxNoGm}
+	</select>
+	
+		<!-- 门店新增用户排行榜 -->
+	<select id="selectShopOrderByaddFriends" resultMap="countResultMap">
+	select count(1) as count,NO_WX_GM noWx FROM add_friends where  MERCHANT_NO = #{merchantNo} and ADD_STATUS = 'Y' 
+	<if test="startTime != null and startTime !='' " >
+	 <![CDATA[   and CREATE_DATE > #{startTime} and CREATE_DATE < #{endTime} ]]>
+	</if>
+	 group by NO_WX_GM order by count desc limit 0,#{limit};
+	</select>
+
+    <!-- 门店维护用户排行榜 -->
+	<select id="selectShopOrderByServiceFriends" resultMap="countResultMap">
+	<![CDATA[
+	select COUNT(MOBILE) as count,NO_WX_GM noWx from (
+	SELECT af.member_no,af.NO_WX_GM,af.shop_no,pmb.MOBILE from add_friends af 
+	LEFT JOIN person_member_base pmb on pmb.MEMBER_NO = af.MEMBER_NO   
+	where af.member_no is not null and af.MEMBER_NO !='' 
+	and af.MERCHANT_NO=#{merchantNo} and af.ADD_STATUS='Y' and pmb.MOBILE is not null and pmb.MOBILE !='' 
+	]]>
+	<if test="startTime != null and startTime !='' " >
+	  <![CDATA[  and af.CREATE_DATE > #{startTime} and af.CREATE_DATE < #{endTime} ]]>
+	</if>
+	<![CDATA[
+	) tol GROUP BY tol.NO_WX_GM order by count desc limit 0,#{limit}; 
+	]]>
+	</select>
+	
+	<!-- 导购新增用户排行榜 -->
+	<select id="selectGuidOrderByaddFriends" resultMap="countResultMap">
+	select count(1) as count,(case 
+                WHEN MEMBER_NAME_GM is null   THEN '待认领' 
+                WHEN MEMBER_NAME_GM=''   THEN '待认领' 
+         ELSE MEMBER_NAME_GM END)  as memberGmName FROM add_friends where  MERCHANT_NO = #{merchantNo} and ADD_STATUS = 'Y'
+	<if test="startTime != null and startTime !='' " >
+	   <![CDATA[ and CREATE_DATE > #{startTime} and CREATE_DATE < #{endTime} ]]>
+	</if>
+	
+	 group by MEMBER_NO_GM order by count desc limit 0,#{limit};
+	</select>
+	
+	
+	<!-- 根据导购编号查询自己认领的客户 -->
+	<select id="findClaimMemberList" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select * from add_friends where MEMBER_NO_GM = #{memberNoGm}
+	</select>
+	
+    <!-- 导购维护用户排行榜 -->
+	<select id="selectGuidOrderByServiceFriends" resultMap="countResultMap">
+	<![CDATA[
+	select COUNT(MOBILE) as count,(case 
+                WHEN MEMBER_NAME_GM is null   THEN '待认领' 
+                WHEN MEMBER_NAME_GM=''   THEN '待认领' 
+         ELSE MEMBER_NAME_GM END)  as memberGmName from (
+	SELECT af.member_no,af.MEMBER_NAME_GM,af.MEMBER_NO_GM,pmb.MOBILE from add_friends af 
+	LEFT JOIN person_member_base pmb on pmb.MEMBER_NO = af.MEMBER_NO   
+	where af.member_no is not null and af.MEMBER_NO<>'' and af.MERCHANT_NO=#{merchantNo} and af.ADD_STATUS='Y' and pmb.MOBILE is not null and pmb.MOBILE <>'' 
+	 ]]>
+	<if test="startTime != null and startTime !='' " >
+	  <![CDATA[  and af.CREATE_DATE > #{startTime} and af.CREATE_DATE < #{endTime}  ]]>
+	</if>
+	<![CDATA[
+	 
+	 ) tol GROUP BY tol.MEMBER_NO_GM order by count desc limit 0,#{limit}; 
+	]]>
+	</select>
+	
+	<delete id="delete" parameterType="com.lj.business.member.dto.addfriends.UpdateAddFriends">
+		DELETE FROM add_friends
+		WHERE MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		AND NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+	</delete>
+	
+</mapper>

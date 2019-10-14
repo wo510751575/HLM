@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lj.business.member.dao.ITerminalImStatusDao">
+	<resultMap id="BaseResultMap"
+		type="com.lj.business.member.domain.TerminalImStatus">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+
+
+		<result column="TERMINAL_TYPE" property="terminalType"
+			jdbcType="VARCHAR" />
+		<result column="TERMINAL_CODE" property="terminalCode"
+			jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="ONLINE_FLAG" property="onlineFlag"
+			jdbcType="INTEGER" />
+		<result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+		<result column="WX_NICKNAME" property="wxNickname"
+			jdbcType="VARCHAR" />
+		<result column="MEMBER_NO_GM" property="memberNoGm"
+			jdbcType="VARCHAR" />
+		<result column="MEMBER_NAME" property="memberName"
+			jdbcType="VARCHAR" />
+		<result column="LOGIN_TIME" property="loginTime"
+			jdbcType="TIMESTAMP" />
+		<result column="BATTERY_LEVEL" property="batteryLevel"
+			jdbcType="INTEGER" />
+		<result column="CREATE_ID" property="createId"
+			jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+		<result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+		<result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap
+		type="com.lj.business.member.dto.terminalimstatus.FindTerminalImStatusPageReturn"
+		id="findTerminalImStatusPageResultMap">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+
+
+		<result column="TERMINAL_TYPE" property="terminalType"
+			jdbcType="VARCHAR" />
+		<result column="ONLINE_FLAG" property="onlineFlag"
+			jdbcType="INTEGER" />
+		<result column="MEMBER_NO_GM" property="memberNoGm"
+			jdbcType="VARCHAR" />
+		<result column="MEMBER_NAME" property="memberName"
+			jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="LOGIN_TIME" property="loginTime"
+			jdbcType="TIMESTAMP" />
+		<result column="BATTERY_LEVEL" property="batteryLevel"
+			jdbcType="INTEGER" />
+		<result column="CREATE_ID" property="createId"
+			jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+		<result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+		<result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap
+		type="com.lj.business.member.dto.terminalimstatus.FindTerminalBatteryLevelPageReturn"
+		id="findTerminalBatteryLevelPageResultMap">
+		<!-- 终端IM状态表 -->
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+
+
+		<result column="TERMINAL_TYPE" property="terminalType"
+			jdbcType="VARCHAR" />
+		<result column="TERMINAL_CODE" property="terminalCode"
+			jdbcType="VARCHAR" />
+		<result column="ONLINE_FLAG" property="onlineFlag"
+			jdbcType="INTEGER" />
+		<result column="MEMBER_NO_GM" property="memberNoGm"
+			jdbcType="VARCHAR" />
+		<result column="MEMBER_NAME" property="memberName"
+			jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="LOGIN_TIME" property="loginTime"
+			jdbcType="TIMESTAMP" />
+		<result column="BATTERY_LEVEL" property="batteryLevel"
+			jdbcType="INTEGER" />
+		<result column="CREATE_ID" property="createId"
+			jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="VERSION_NAME" property="versionName"
+			jdbcType="VARCHAR" />
+		<result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+		<result column="WX_NICKNAME" property="wxNickname"
+			jdbcType="VARCHAR" />
+		<result column="ST_CODE" property="stCode" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+		<result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+		<result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+		<!-- 管理人员表 -->
+		<result column="MANAGER_MEMBER_NAME"
+			property="managerMemberName" jdbcType="VARCHAR" />
+		<result column="MANAGER_MOBILE" property="managerMemberMobile"
+			jdbcType="VARCHAR" />
+		<!-- 导购表 -->
+		<result column="GUID_MOBILE" property="guidMemberMobile"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		CODE, MERCHANT_NO, MERCHANT_NAME, TERMINAL_TYPE, TERMINAL_CODE,
+		IMEI, ONLINE_FLAG, NO_WX, WX_NICKNAME, MEMBER_NO_GM, MEMBER_NAME,
+		LOGIN_TIME, BATTERY_LEVEL,
+		CREATE_ID, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from terminal_im_status
+		where CODE = #{code,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from terminal_im_status
+		where CODE = #{code,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insertSelective"
+		parameterType="com.lj.business.member.domain.TerminalImStatus">
+		insert into terminal_im_status
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				CODE,
+			</if>
+			<if test="merchantNo != null">
+				MERCHANT_NO,
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME,
+			</if>
+			<if test="terminalType != null">
+				TERMINAL_TYPE,
+			</if>
+			<if test="terminalCode != null">
+				TERMINAL_CODE,
+			</if>
+			<if test="imei != null">
+				IMEI,
+			</if>
+			<if test="onlineFlag != null">
+				ONLINE_FLAG,
+			</if>
+			<if test="noWx != null">
+				NO_WX,
+			</if>
+			<if test="wxNickname != null">
+				WX_NICKNAME,
+			</if>
+			<if test="memberNoGm != null">
+				MEMBER_NO_GM,
+			</if>
+			<if test="memberName != null">
+				MEMBER_NAME,
+			</if>
+			<if test="loginTime != null">
+				LOGIN_TIME,
+			</if>
+			<if test="batteryLevel != null">
+				BATTERY_LEVEL,
+			</if>
+			<if test="createId != null">
+				CREATE_ID,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="remark2 != null">
+				REMARK2,
+			</if>
+			<if test="remark3 != null">
+				REMARK3,
+			</if>
+			<if test="remark4 != null">
+				REMARK4,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null">
+				#{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				#{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="terminalType != null">
+				#{terminalType,jdbcType=VARCHAR},
+			</if>
+			<if test="terminalCode != null">
+				#{terminalCode,jdbcType=VARCHAR},
+			</if>
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="onlineFlag != null">
+				#{onlineFlag,jdbcType=INTEGER},
+			</if>
+			<if test="noWx != null">
+				#{noWx,jdbcType=VARCHAR},
+			</if>
+			<if test="wxNickname != null">
+				#{wxNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="memberNoGm != null">
+				#{memberNoGm,jdbcType=VARCHAR},
+			</if>
+			<if test="memberName != null">
+				#{memberName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginTime != null">
+				#{loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="batteryLevel != null">
+				#{batteryLevel,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="remark2 != null">
+				#{remark2,jdbcType=VARCHAR},
+			</if>
+			<if test="remark3 != null">
+				#{remark3,jdbcType=VARCHAR},
+			</if>
+			<if test="remark4 != null">
+				#{remark4,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.lj.business.member.domain.TerminalImStatus">
+		update terminal_im_status
+		<set>
+			<if test="merchantNo != null">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="terminalType != null">
+				TERMINAL_TYPE = #{terminalType,jdbcType=VARCHAR},
+			</if>
+			<if test="terminalCode != null">
+				TERMINAL_CODE = #{terminalCode,jdbcType=VARCHAR},
+			</if>
+			<if test="imei != null">
+				IMEI = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="onlineFlag != null">
+				ONLINE_FLAG = #{onlineFlag,jdbcType=INTEGER},
+			</if>
+			<if test="noWx != null">
+				NO_WX = #{noWx,jdbcType=VARCHAR},
+			</if>
+			<if test="wxNickname != null">
+				WX_NICKNAME = #{wxNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="memberNoGm != null">
+				MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+			</if>
+			<if test="memberName != null">
+				MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginTime != null">
+				LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="batteryLevel != null">
+				BATTERY_LEVEL = #{batteryLevel,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="remark2 != null">
+				REMARK2 = #{remark2,jdbcType=VARCHAR},
+			</if>
+			<if test="remark3 != null">
+				REMARK3 = #{remark3,jdbcType=VARCHAR},
+			</if>
+			<if test="remark4 != null">
+				REMARK4 = #{remark4,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CODE = #{code,jdbcType=VARCHAR}
+	</update>
+
+	<sql id="findTerminalImStatusPage_condition">
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="imei != null and imei !='' ">
+				and IMEI = #{imei}
+			</if>
+			<if test="terminalType != null and terminalType != ''">
+				and TERMINAL_TYPE = #{terminalType,jdbcType=VARCHAR}
+			</if>
+			<if test="onlineFlag != null and onlineFlag != ''">
+				and ONLINE_FLAG = #{onlineFlag,jdbcType=INTEGER}
+			</if>
+			<if test="shopNos != null and shopNos.size() > 0">
+				and SHOP_NO in
+				<foreach item="item" index="index" collection="shopNos"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="findTerminalBatteryLevelPage_condition">
+		<where>
+			<if test="terminalType != null and terminalType != ''">
+				and TERMINAL_TYPE = #{terminalType}
+			</if>
+			<if test="merchantNo != null and merchantNo !=''">
+				and MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="merchantName != null and merchantName !=''">
+				and MERCHANT_NAME like CONCAT('%',#{merchantName},'%' )
+			</if>
+			<if test="imei != null and imei !='' ">
+				and IMEI = #{imei}
+			</if>
+			<if test="terminalCode != null and terminalCode != ''">
+				and TERMINAL_CODE = #{terminalCode,jdbcType=VARCHAR}
+			</if>
+			<if test="onlineFlag != null and onlineFlag != ''">
+				and ONLINE_FLAG = #{onlineFlag,jdbcType=INTEGER}
+			</if>
+			<if test="memberNameGm != null and memberNameGm !='' ">
+				and MEMBER_NAME like CONCAT('%',#{memberNameGm,jdbcType=VARCHAR},'%' )
+			</if>
+			<if test="noWx != null and noWx !='' ">
+				and noWx like CONCAT('%',#{noWx},'%' )
+			</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询 -->
+	<select id="findTerminalImStatusPage"
+		resultMap="findTerminalImStatusPageResultMap"
+		parameterType="com.lj.business.member.dto.terminalimstatus.FindTerminalImStatusPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM terminal_im_status
+		<include refid="findTerminalImStatusPage_condition" />
+		order by CREATE_DATE ${sortDir}
+		limit ${start} , ${limit}
+	</select>
+	<select id="findTerminalImStatusPageCount" resultType="int"
+		parameterType="com.lj.business.member.dto.terminalimstatus.FindTerminalImStatusPage">
+		select count(*) FROM terminal_im_status
+		<include refid="findTerminalImStatusPage_condition" />
+	</select>
+
+	<!-- 终端手机电量分页查询 -->
+	<select id="findTerminalBatteryLevelPage"
+		resultMap="findTerminalBatteryLevelPageResultMap"
+		parameterType="com.lj.business.member.dto.terminalimstatus.FindTerminalBatteryLevelPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM terminal_im_status
+		<include refid="findTerminalBatteryLevelPage_condition" />
+		order by LOGIN_TIME ${sortDir}
+		limit ${start} , ${limit}
+	</select>
+	<select id="findTerminalBatteryLevelPageCount" resultType="int"
+		parameterType="com.lj.business.member.dto.terminalimstatus.FindTerminalBatteryLevelPage">
+		select count(*)
+		FROM terminal_im_status
+		<include refid="findTerminalBatteryLevelPage_condition" />
+	</select>
+
+	<select id="selectBySelective" resultMap="BaseResultMap"
+		parameterType="com.lj.business.member.domain.TerminalImStatus">
+		select
+		<include refid="Base_Column_List" />
+		from terminal_im_status
+		<where>
+			<if test="merchantNo != null">
+				and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="terminalType != null">
+				and TERMINAL_TYPE = #{terminalType,jdbcType=VARCHAR}
+			</if>
+			<if test="onlineFlag != null">
+				and ONLINE_FLAG = #{onlineFlag,jdbcType=INTEGER}
+			</if>
+			<if test="memberNoGm != null">
+				and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+			</if>
+			<if test="noWx != null">
+				and NO_WX = #{noWx,jdbcType=VARCHAR}
+			</if>
+			<if test="terminalCode != null">
+				and TERMINAL_CODE = #{terminalCode,jdbcType=VARCHAR}
+			</if>
+		</where>
+		limit 1
+	</select>
+
+	<delete id="delete"
+		parameterType="com.lj.business.member.dto.terminalimstatus.UpdateTerminalImStatus">
+		delete from terminal_im_status
+		where NO_WX = #{noWx,jdbcType=VARCHAR}
+		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	</delete>
+</mapper>

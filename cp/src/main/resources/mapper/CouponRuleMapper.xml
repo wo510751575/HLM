@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cp.dao.ICouponRuleDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cp.domain.CouponRule" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="COUPON_NUM" property="couponNum" jdbcType="INTEGER" />
+    <result column="COUPON_NOTES" property="couponNotes" jdbcType="DECIMAL" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="COUPON_NAME" property="couponName" jdbcType="VARCHAR" />
+    <result column="COUPON_MAX" property="couponMax" jdbcType="DECIMAL" />
+    <result column="COUPON_TYPE_CODE" property="couponTypeCode" jdbcType="VARCHAR" />
+    <result column="COUPON_TYPE" property="couponType" jdbcType="VARCHAR" />
+    <result column="COUPON_REMARK" property="couponRemark" jdbcType="VARCHAR" />
+    <result column="TO_COUPON" property="toCoupon" jdbcType="VARCHAR" />
+    <result column="USE_SCOPE" property="useScope" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="RULE_STATUS" property="ruleStatus" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+     <result column="ENABLE_DATE" property="enableDate" jdbcType="TIMESTAMP" />
+    <result column="IS_WRITEOFF" property="isWriteoff" jdbcType="VARCHAR" />
+    <result column="USE_NUMS" property="useNums" jdbcType="VARCHAR" />
+    <result column="IS_PRODUCE" property="isProduce" jdbcType="VARCHAR" />
+    <result column="COUPON_AVG_NUM" property="couponAvgNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="findCouponRulePageReturns" type="com.lj.business.cp.dto.couponRule.FindCouponRulePageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="COUPON_NUM" property="couponNum" jdbcType="INTEGER" />
+    <result column="COUPON_NOTES" property="couponNotes" jdbcType="DECIMAL" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="COUPON_NAME" property="couponName" jdbcType="VARCHAR" />
+    <result column="COUPON_MAX" property="couponMax" jdbcType="DECIMAL" />
+    <result column="COUPON_TYPE_CODE" property="couponTypeCode" jdbcType="VARCHAR" />
+    <result column="COUPON_TYPE" property="couponType" jdbcType="VARCHAR" />
+    <result column="COUPON_REMARK" property="couponRemark" jdbcType="VARCHAR" />
+    <result column="TO_COUPON" property="toCoupon" jdbcType="VARCHAR" />
+    <result column="USE_SCOPE" property="useScope" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="RULE_STATUS" property="ruleStatus" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="ENABLE_DATE" property="enableDate" jdbcType="TIMESTAMP" />
+    <result column="IS_WRITEOFF" property="isWriteoff" jdbcType="VARCHAR" />
+    <result column="USE_NUMS" property="useNums" jdbcType="VARCHAR" />
+    <result column="IS_PRODUCE" property="isProduce" jdbcType="VARCHAR" />
+    <result column="COUPON_AVG_NUM" property="couponAvgNum" jdbcType="INTEGER" />
+  </resultMap>
+  
+    <resultMap id="findCouponRuleList" type="com.lj.business.cp.dto.couponRule.FindCouponRuleReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="COUPON_NUM" property="couponNum" jdbcType="INTEGER" />
+    <result column="COUPON_NOTES" property="couponNotes" jdbcType="DECIMAL" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="COUPON_NAME" property="couponName" jdbcType="VARCHAR" />
+    <result column="COUPON_MAX" property="couponMax" jdbcType="DECIMAL" />
+    <result column="COUPON_TYPE_CODE" property="couponTypeCode" jdbcType="VARCHAR" />
+    <result column="COUPON_TYPE" property="couponType" jdbcType="VARCHAR" />
+    <result column="COUPON_REMARK" property="couponRemark" jdbcType="VARCHAR" />
+    <result column="TO_COUPON" property="toCoupon" jdbcType="VARCHAR" />
+    <result column="USE_SCOPE" property="useScope" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="RULE_STATUS" property="ruleStatus" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="ENABLE_DATE" property="enableDate" jdbcType="TIMESTAMP" />
+    <result column="IS_WRITEOFF" property="isWriteoff" jdbcType="VARCHAR" />
+    <result column="USE_NUMS" property="useNums" jdbcType="VARCHAR" />
+    <result column="IS_PRODUCE" property="isProduce" jdbcType="VARCHAR" />
+    <result column="COUPON_AVG_NUM" property="couponAvgNum" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="findCouponRulePage_condition">
+     <where>
+      <if test="merchantNo != null and merchantNo !=''" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if> 
+        <if test="merchantName != null and merchantName !=''" >
+        and  MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR}
+      </if> 
+        <if test="couponName != null and couponName !=''" >
+        and COUPON_NAME like CONCAT('%', #{couponName,jdbcType=VARCHAR},'%')
+      </if> 
+        <if test="ruleStatus != null and ruleStatus !=''" >
+        and  RULE_STATUS = #{ruleStatus,jdbcType=VARCHAR}
+      </if> 
+    </where>
+   </sql>
+     
+   <select id="findCouponRulePage" resultMap="findCouponRulePageReturns" parameterType="com.lj.business.cp.dto.couponRule.FindCouponRulePage" >
+  SELECT  <include refid="Base_Column_List" />   
+  FROM coupon_rule 
+ 	 <include refid="findCouponRulePage_condition" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+   
+   <select id="findCouponRulePageCount" resultType="int" parameterType="com.lj.business.cp.dto.couponRule.FindCouponRulePage" >
+   SELECT count(*) 
+   FROM coupon_rule 
+ 	<include refid="findCouponRulePage_condition" />
+  </select>
+   
+   
+   <select id="findcouponRuleTodayEnableDate" resultMap="findCouponRuleList">
+   SELECT MERCHANT_NO,MERCHANT_NAME,CODE,COUPON_NUM,USE_NUMS,USE_SCOPE,COUPON_AVG_NUM FROM  coupon_rule  
+   WHERE DATE_FORMAT(ENABLE_DATE, '%Y-%m-%d') = (select date_sub(curdate(),interval 0 day)) 
+   AND IS_PRODUCE = 'NO' AND RULE_STATUS = 'YES'
+   AND (select date_sub(curdate(),interval 0 day)) >= BEGIN_DATE
+   AND END_DATE  >= (select date_sub(curdate(),interval 0 day))
+   </select>
+   
+   <!-- 获取过期优惠券 -->
+   <select id="queryCouponRulePast" resultMap="findCouponRuleList">
+    SELECT CODE FROM coupon_rule WHERE  (select date_sub(curdate(),interval 0 day)) > END_DATE 
+   </select>
+     
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, MERCHANT_NAME,  COUPON_NUM, COUPON_NOTES, BEGIN_DATE, 
+    END_DATE, COUPON_NAME, COUPON_MAX, COUPON_TYPE_CODE, COUPON_TYPE, COUPON_REMARK, 
+    TO_COUPON, USE_SCOPE, REAL_NAME, RULE_STATUS, UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+    CREATE_DATE, ENABLE_DATE, IS_WRITEOFF, USE_NUMS, IS_PRODUCE,COUPON_AVG_NUM
+  </sql>
+  
+  <sql id="Base_Column_List_Entity" >
+    CODE AS code,
+	MERCHANT_NO AS merchantNo,
+	MERCHANT_NAME AS merchantName,
+	SHOP_NO AS shopNo,
+	SHOP_NAME AS shopName,
+	COUPON_NUM AS couponNum,
+	COUPON_NOTES AS couponNotes,
+	BEGIN_DATE AS beginDate,
+	END_DATE AS endDate,
+	COUPON_NAME AS couponName,
+	COUPON_MAX AS couponMax,
+	COUPON_TYPE_CODE AS couponTypeCode,
+	COUPON_TYPE AS couponType,
+	COUPON_REMARK AS couponRemark,
+	TO_COUPON AS toCoupon,
+	USE_SCOPE AS useScope,
+	REAL_NAME AS realName,
+	RULE_STATUS AS ruleStatus,
+	UPDATE_ID AS updateId,
+	UPDATE_DATE AS updateDate,
+	CREATE_ID AS createId,
+	CREATE_DATE AS createDate
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.lj.business.cp.dto.couponRule.FindCouponRule" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_rule
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- create by 杨杰  -->
+  <select id="findCouponRuleList" resultType="com.lj.business.cp.dto.couponRule.FindCouponRuleReturn" parameterType="com.lj.business.cp.dto.couponRule.FindCouponRule" >
+   select cr.CODE AS code, cr.MERCHANT_NO AS merchantNo, cr.MERCHANT_NAME AS merchantName, cr.SHOP_NO AS shopNo, cr.SHOP_NAME AS shopName, cr.COUPON_NUM AS couponNum, 
+   cr.COUPON_NOTES AS couponNotes, cr.BEGIN_DATE AS beginDate, cr.END_DATE AS endDate, cr.COUPON_NAME AS couponName, cr.COUPON_MAX AS couponMax, cr.COUPON_TYPE_CODE AS couponTypeCode, 
+   cr.COUPON_TYPE AS couponType, cr.COUPON_REMARK AS couponRemark, cr.TO_COUPON AS toCoupon, cr.USE_SCOPE AS useScope, cr.REAL_NAME AS realName, cr.RULE_STATUS AS ruleStatus, cr.UPDATE_ID AS updateId, 
+   cr.UPDATE_DATE AS updateDate, cr.CREATE_ID AS createId, cr.CREATE_DATE AS createDate
+   from coupon_rule cr LEFT JOIN coupon_rule_ex cre ON cr.CODE = cre.RULE_CODE
+   <where>
+	    <!-- 优惠券数量不能少于0 -->
+	     cre.SURPLUS_NUM > 0 AND BEGIN_DATE &lt;= curdate() AND END_DATE &gt;= curdate()
+	    <if test="couponTypeCode != null and couponTypeCode !=''">
+	    AND COUPON_TYPE_CODE = #{couponTypeCode}
+	    </if>
+	    <if test="couponType != null  and couponType !=''">
+	    AND COUPON_TYPE = #{couponType}
+	    </if>
+	    <if test="toCoupon != null">
+	    AND TO_COUPON = #{toCoupon}
+	    </if>
+	    <if test="realName != null">
+	    AND REAL_NAME = #{realName}
+	    </if>
+	    <if test="ruleStatus != null">
+	    AND RULE_STATUS = #{ruleStatus}
+	    </if>
+	    <if test="useScope != null">
+	    AND USE_SCOPE = #{useScope}
+	    </if>
+	    <if test="merchantNo != null and merchantNo !=''" >
+	    AND MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	    </if> 
+	    <if test="produce != null and produce !=''" >
+	    AND IS_PRODUCE = #{produce,jdbcType=VARCHAR}
+	    </if>
+    
+    </where>
+    ORDER BY COUPON_NOTES DESC
+  </select>
+  
+    <select id="findCouponRuleListByShops" resultType="com.lj.business.cp.dto.couponRule.FindCouponRuleReturn" parameterType="com.lj.business.cp.dto.couponRule.FindCouponRule" >
+    select 
+    <include refid="Base_Column_List_Entity" />
+    from coupon_rule
+    where 1 = 1
+    <if test="couponTypeCode != null and couponTypeCode !=''">
+    AND COUPON_TYPE_CODE = #{couponTypeCode}
+    </if>
+    <if test="couponType != null  and couponType !=''">
+    AND COUPON_TYPE = #{couponType}
+    </if>
+    <if test="toCoupon != null">
+    AND TO_COUPON = #{toCoupon}
+    </if>
+    <if test="realName != null">
+    AND REAL_NAME = #{realName}
+    </if>
+    <if test="ruleStatus != null">
+    AND RULE_STATUS = #{ruleStatus}
+    </if>
+    <if test="useScope != null">
+    AND USE_SCOPE = #{useScope}
+    </if>
+    <if test="merchantNo != null and merchantNo !=''" >
+    AND MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    </if> 
+    AND BEGIN_DATE &lt;= curdate() AND END_DATE &gt;= curdate()
+    ORDER BY COUPON_NOTES DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_rule
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cp.domain.CouponRule" >
+    insert into coupon_rule (CODE, MERCHANT_NO, MERCHANT_NAME, 
+       COUPON_NUM, 
+      COUPON_NOTES, BEGIN_DATE, END_DATE, 
+      COUPON_NAME, COUPON_MAX, COUPON_TYPE_CODE, 
+      COUPON_TYPE, COUPON_REMARK, TO_COUPON, 
+      USE_SCOPE, REAL_NAME, RULE_STATUS, 
+      UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+      CREATE_DATE, ENABLE_DATE, IS_WRITEOFF, 
+      USE_NUMS, IS_PRODUCE,COUPON_AVG_NUM)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+       #{couponNum,jdbcType=INTEGER}, 
+      #{couponNotes,jdbcType=DECIMAL}, #{beginDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
+      #{couponName,jdbcType=VARCHAR}, #{couponMax,jdbcType=DECIMAL}, #{couponTypeCode,jdbcType=VARCHAR}, 
+      #{couponType,jdbcType=VARCHAR}, #{couponRemark,jdbcType=VARCHAR}, #{toCoupon,jdbcType=VARCHAR}, 
+      #{useScope,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{ruleStatus,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{enableDate,jdbcType=TIMESTAMP}, #{isWriteoff,jdbcType=VARCHAR}, 
+      #{useNums,jdbcType=VARCHAR}, #{isProduce,jdbcType=VARCHAR},#{couponAvgNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cp.domain.CouponRule" >
+    insert into coupon_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="couponNum != null" >
+        COUPON_NUM,
+      </if>
+      <if test="couponNotes != null" >
+        COUPON_NOTES,
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="couponName != null" >
+        COUPON_NAME,
+      </if>
+      <if test="couponMax != null" >
+        COUPON_MAX,
+      </if>
+      <if test="couponTypeCode != null" >
+        COUPON_TYPE_CODE,
+      </if>
+      <if test="couponType != null" >
+        COUPON_TYPE,
+      </if>
+      <if test="couponRemark != null" >
+        COUPON_REMARK,
+      </if>
+      <if test="toCoupon != null" >
+        TO_COUPON,
+      </if>
+      <if test="useScope != null" >
+        USE_SCOPE,
+      </if>
+      <if test="realName != null" >
+        REAL_NAME,
+      </if>
+      <if test="ruleStatus != null" >
+        RULE_STATUS,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+       <if test="enableDate != null" >
+        ENABLE_DATE,
+      </if>
+      <if test="isWriteoff != null" >
+        IS_WRITEOFF,
+      </if>
+      <if test="useNums != null" >
+        USE_NUMS,
+      </if>
+      <if test="isProduce != null" >
+        IS_PRODUCE,
+      </if>
+       <if test="couponAvgNum != null" >
+        COUPON_AVG_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNum != null" >
+        #{couponNum,jdbcType=INTEGER},
+      </if>
+      <if test="couponNotes != null" >
+        #{couponNotes,jdbcType=DECIMAL},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponMax != null" >
+        #{couponMax,jdbcType=DECIMAL},
+      </if>
+      <if test="couponTypeCode != null" >
+        #{couponTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null" >
+        #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponRemark != null" >
+        #{couponRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="toCoupon != null" >
+        #{toCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="useScope != null" >
+        #{useScope,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleStatus != null" >
+        #{ruleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="enableDate != null" >
+        #{enableDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isWriteoff != null" >
+        #{isWriteoff,jdbcType=VARCHAR},
+      </if>
+      <if test="useNums != null" >
+        #{useNums,jdbcType=VARCHAR},
+      </if>
+      <if test="isProduce != null" >
+        #{isProduce,jdbcType=VARCHAR},
+      </if>
+        <if test="couponAvgNum != null" >
+         #{couponAvgNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cp.domain.CouponRule" >
+    update coupon_rule
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNum != null" >
+        COUPON_NUM = #{couponNum,jdbcType=INTEGER},
+      </if>
+      <if test="couponNotes != null" >
+        COUPON_NOTES = #{couponNotes,jdbcType=DECIMAL},
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE = #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="couponName != null" >
+        COUPON_NAME = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponMax != null" >
+        COUPON_MAX = #{couponMax,jdbcType=DECIMAL},
+      </if>
+      <if test="couponTypeCode != null" >
+        COUPON_TYPE_CODE = #{couponTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null" >
+        COUPON_TYPE = #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponRemark != null" >
+        COUPON_REMARK = #{couponRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="toCoupon != null" >
+        TO_COUPON = #{toCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="useScope != null" >
+        USE_SCOPE = #{useScope,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        REAL_NAME = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleStatus != null" >
+        RULE_STATUS = #{ruleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="enableDate != null" >
+        ENABLE_DATE = #{enableDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isWriteoff != null" >
+        IS_WRITEOFF = #{isWriteoff,jdbcType=VARCHAR},
+      </if>
+      <if test="useNums != null" >
+        USE_NUMS = #{useNums,jdbcType=VARCHAR},
+      </if>
+      <if test="isProduce != null" >
+        IS_PRODUCE = #{isProduce,jdbcType=VARCHAR},
+      </if>
+       <if test="couponAvgNum != null" >
+        COUPON_AVG_NUM = #{couponAvgNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cp.domain.CouponRule" >
+    update coupon_rule
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      
+      
+      COUPON_NUM = #{couponNum,jdbcType=INTEGER},
+      COUPON_NOTES = #{couponNotes,jdbcType=DECIMAL},
+      BEGIN_DATE = #{beginDate,jdbcType=DATE},
+      END_DATE = #{endDate,jdbcType=DATE},
+      COUPON_NAME = #{couponName,jdbcType=VARCHAR},
+      COUPON_MAX = #{couponMax,jdbcType=DECIMAL},
+      COUPON_TYPE_CODE = #{couponTypeCode,jdbcType=VARCHAR},
+      COUPON_TYPE = #{couponType,jdbcType=VARCHAR},
+      COUPON_REMARK = #{couponRemark,jdbcType=VARCHAR},
+      TO_COUPON = #{toCoupon,jdbcType=VARCHAR},
+      USE_SCOPE = #{useScope,jdbcType=VARCHAR},
+      REAL_NAME = #{realName,jdbcType=VARCHAR},
+      RULE_STATUS = #{ruleStatus,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+       ENABLE_DATE = #{enableDate,jdbcType=TIMESTAMP},
+      IS_WRITEOFF = #{isWriteoff,jdbcType=VARCHAR},
+      USE_NUMS = #{useNums,jdbcType=VARCHAR},
+      IS_PRODUCE = #{isProduce,jdbcType=VARCHAR},
+      COUPON_AVG_NUM = #{couponAvgNum,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

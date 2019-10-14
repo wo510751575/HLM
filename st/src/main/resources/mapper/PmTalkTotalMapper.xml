@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IPmTalkTotalDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.PmTalkTotal" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="NUM_TALK" property="numTalk" jdbcType="INTEGER" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+    <resultMap id="FindPmTalkTotal" type="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotalAllReturnList" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="NUM_TALK" property="numTalk" jdbcType="INTEGER" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMap" type="com.lj.business.st.domain.PmTalkTotal" >
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="NUM_TALK" property="numTalk" jdbcType="INTEGER" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="ResultList" type="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotalReturn" >
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="NUM_TALK" property="numTalk" jdbcType="INTEGER" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+   	<sql id="findPmTalkTotalLists">
+		<where>
+		<if test="merchantNo != null and merchantNo !=''">
+			and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+	    <if test="memberNoGm != null and memberNoGm !=''">
+			and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+		<if test="shopNo != null and shopNo !=''">
+			and SHOP_NO = #{shopNo,jdbcType=VARCHAR}
+		</if>
+		 <if test="areaCode != null and areaCode !=''">
+			and AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+		</if>
+		 <if test="dimensionSt != null and dimensionSt !=''">
+			and DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR}
+		</if>
+		</where>	
+	</sql>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    START_DATE, END_DATE, NUM_TALK, DAY_ST, DIMENSION_ST, CREATE_DATE
+  </sql>
+  
+    <!-- 客户行为分析 -->
+    <select id="findPmTalkTotaReturnMax" resultType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotalAllReturnList">
+     SELECT START_DATE startDate,END_DATE endDate,NUM_TALK  numTalk FROM pm_talk_total WHERE DIMENSION_ST='AREA'  GROUP BY  START_DATE,END_DATE ORDER BY NUM_TALK DESC  LIMIT 1
+    </select>
+   <!-- 商户/区域/门店 维度统计 -->
+    <select id="findPmTalkTotaReturnData" resultMap="FindPmTalkTotal" parameterType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotal">
+      SELECT NUM_TALK,START_DATE,END_DATE 
+      FROM pm_talk_total  
+     <include refid="findPmTalkTotalLists"/>
+      AND NUM_TALK =(
+	SELECT
+		MAX(NUM_TALK)
+	FROM
+		pm_talk_total
+	WHERE
+		MERCHANT_NO =#{merchantNo}
+	LIMIT 1
+       )
+    </select>
+    <!-- 根据不同维度统计质询量 -->
+    <select id="findPmTalkTotaReturnList" resultType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotalAllReturnList" parameterType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotal">
+    SELECT  MERCHANT_NO merchantNo, AREA_CODE areaCode, AREA_NAME areaName, SHOP_NO shopNo, SHOP_NAME shopName, 
+    START_DATE startDate, END_DATE endDate, NUM_TALK numTalk, DAY_ST daySt,SUM(NUM_TALK)AS COUNT
+    FROM pm_talk_total 
+    <include refid="findPmTalkTotalLists" />
+    GROUP BY START_DATE,END_DATE
+    </select>
+    
+   <select id="findPmTalkTotalMax" resultMap="ResultList" parameterType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotal" >
+    select NUM_TALK,START_DATE,END_DATE,MERCHANT_NO,MEMBER_NO_GM    
+    from pm_talk_total
+    where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+          AND MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+          AND DIMENSION_ST = 'GUID'
+   order by NUM_TALK desc
+   limit 1
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_talk_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findPmTalkTotalList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotal" >
+    select
+    START_DATE, sum(NUM_TALK) as 'NUM_TALK',START_DATE,END_DATE
+    from pm_talk_total
+    where 1 = 1
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    <if test="memberNoGm != null">
+      AND MEMBER_NO_GM = #{memberNoGm}
+    </if>
+    <if test="dimensionSt != null">
+      AND DIMENSION_ST = #{dimensionSt}
+    </if>
+    <if test="beginDate != null">
+      <![CDATA[
+        and DAY_ST >= #{beginDate,jdbcType=DATE}
+     ]]>
+    </if>
+    <if test="endDate != null">
+      <![CDATA[and  DATE_FORMAT(DAY_ST, 'yyyy-MM-dd') <= #{endDate}]]>
+    </if>
+    group by START_DATE
+  </select>
+  
+  <select id="findPmTalkTotalListApp" resultMap="ResultMap" parameterType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotal" >
+    select
+    START_DATE, sum(NUM_TALK) as 'NUM_TALK',START_DATE,END_DATE
+    from pm_talk_total
+    where   DIMENSION_ST = 'GUID'
+    AND MERCHANT_NO = #{merchantNo}
+    AND MEMBER_NO_GM = #{memberNoGm}
+      <![CDATA[  and DAY_ST < CURDATE()]]>
+    group by START_DATE
+    ORDER BY sum(NUM_TALK) DESC
+  </select>
+  
+  <select id="findPmTalkTotalOrgListApp" resultMap="ResultMap" parameterType="com.lj.business.st.dto.PmTalkTotal.FindPmTalkTotal" >
+    select
+    START_DATE, sum(NUM_TALK) as 'NUM_TALK',START_DATE,END_DATE
+    from pm_talk_total
+    where   DIMENSION_ST = 'GUID'
+    AND MERCHANT_NO = #{merchantNo}
+    AND MEMBER_NO_GM = #{memberNoGm}
+      <![CDATA[
+        and DAY_ST < CURDATE()
+       ]]>
+    group by START_DATE
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pm_talk_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.PmTalkTotal" >
+    insert into pm_talk_total (CODE, MERCHANT_NO, AREA_CODE, 
+      AREA_NAME, SHOP_NO, SHOP_NAME, 
+      MEMBER_NO_GM, MEMBER_NAME_GM, START_DATE, 
+      END_DATE, NUM_TALK, DAY_ST, 
+      DIMENSION_ST, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{areaName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{numTalk,jdbcType=INTEGER}, #{daySt,jdbcType=DATE}, 
+      #{dimensionSt,jdbcType=VARCHAR}, NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.PmTalkTotal" >
+    insert into pm_talk_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="numTalk != null" >
+        NUM_TALK,
+      </if>
+      <if test="daySt != null" >
+        DAY_ST,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numTalk != null" >
+        #{numTalk,jdbcType=INTEGER},
+      </if>
+      <if test="daySt != null" >
+        #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.PmTalkTotal" >
+    update pm_talk_total
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numTalk != null" >
+        NUM_TALK = #{numTalk,jdbcType=INTEGER},
+      </if>
+      <if test="daySt != null" >
+        DAY_ST = #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.PmTalkTotal" >
+    update pm_talk_total
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      NUM_TALK = #{numTalk,jdbcType=INTEGER},
+      DAY_ST = #{daySt,jdbcType=DATE},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

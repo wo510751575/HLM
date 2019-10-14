@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IWorkRatioAreaDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.WorkRatioArea" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="memberNoMerchant" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="NUM_SHOP" property="numShop" jdbcType="INTEGER" />
+    <result column="RATIO_SHOP" property="ratioShop" jdbcType="DECIMAL" />
+    <result column="NUM_PM" property="numPm" jdbcType="BIGINT" />
+    <result column="RATIO_PM" property="ratioPm" jdbcType="DECIMAL" />
+    <result column="ST_DATE" property="stDate" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="FindWorkRatioAreas2ResultMap" type="com.lj.business.st.dto.WorkRatioAreaDto" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="memberNoMerchant" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="NUM_SHOP" property="numShop" jdbcType="INTEGER" />
+    <result column="RATIO_SHOP" property="ratioShop" jdbcType="DECIMAL" />
+    <result column="NUM_PM" property="numPm" jdbcType="BIGINT" />
+    <result column="RATIO_PM" property="ratioPm" jdbcType="DECIMAL" />
+    <result column="ST_DATE" property="stDate" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, PROVINCE_CODE, PROVINCE_NAME, NUM_SHOP,RATIO_SHOP, NUM_PM, RATIO_PM, ST_DATE, DIMENSION_ST, CREATE_DATE
+  </sql>
+  
+  <sql id="find_condition" >
+  	 <where>
+  	  	 <if test="merchantNo != null and merchantNo !=''" >
+	        and  MERCHANT_NO = #{merchantNo}
+	      </if>
+	      <if test="memberNoMerchant != null and memberNoMerchant !=''" >
+	        and  MERCHANT_NO = #{memberNoMerchant}
+	      </if>
+	      <if test="areaCode != null and areaCode !=''" >
+	        and  AREA_CODE = #{areaCode}
+	      </if>
+	      <if test="areaName != null and areaName !=''" >
+	        and AREA_NAME like CONCAT('%',#{areaName},'%' )
+	      </if>
+	      <if test="provinceCode != null and provinceCode !=''" >
+	        and  PROVINCE_CODE = #{provinceCode}
+	      </if>
+	      <if test="provinceName != null and provinceName !=''" >
+	        and PROVINCE_NAME like CONCAT('%',#{provinceName},'%' )
+	      </if>
+	      <if test="dimensionSt != null and dimensionSt !=''" >
+	        and  DIMENSION_ST = #{dimensionSt}
+	      </if>
+	      <if test="startTime != null ">
+			<![CDATA[and ST_DATE >= #{startTime,jdbcType=DATE}]]>
+			</if>
+			<if test="endTime != null "> 
+				<![CDATA[and ST_DATE <= #{endTime,jdbcType=DATE}]]>
+			</if>
+      </where>
+  </sql>
+  
+  <select id="findBroupProvince" resultType="map" parameterType="map" >
+    SELECT NUM_SHOP,PROVINCE_CODE,PROVINCE_NAME,NUM_PM 
+    FROM work_ratio_area
+    <include refid="find_condition" />
+	GROUP BY PROVINCE_CODE
+  </select>
+  
+  
+  <select id="findWorkRatioAreas" resultType="map" parameterType="map" >
+    select <include refid="Base_Column_List" />
+    from work_ratio_area
+    <include refid="find_condition" />
+	   order by CREATE_DATE DESC
+  </select>
+  
+  <select id="findWorkRatioAreas2" resultMap="FindWorkRatioAreas2ResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" />
+    from work_ratio_area
+    <include refid="find_condition" />
+	   order by CREATE_DATE DESC
+  </select>
+  
+  <select id="findWorkRatioAreaPage" resultType="map" parameterType="map" >
+    select <include refid="Base_Column_List" />
+    from work_ratio_area
+    <include refid="find_condition" />
+	   order by CREATE_DATE ${sortDir}
+	   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findWorkRatioAreaCount" resultType="int" parameterType="map" >
+    select count(*)
+    from work_ratio_area
+    <include refid="find_condition" />
+  </select>
+
+
+  <select id="findWorkRatioAreaList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.FindWorkRatioArea" >
+    select <include refid="Base_Column_List" />
+    from work_ratio_area
+    where 1 = 1
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="dimensionSt != null">
+      AND DIMENSION_ST = #{dimensionSt}
+    </if>
+    GROUP BY PROVINCE_CODE
+  </select>
+  
+  
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.WorkRatioArea" >
+    insert into work_ratio_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoMerchant != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME,
+      </if>
+      <if test="numShop != null" >
+        NUM_SHOP,
+      </if>
+      <if test="ratioShop != null" >
+        RATIO_SHOP,
+      </if>
+      <if test="numPm != null" >
+        NUM_PM,
+      </if>
+      <if test="ratioPm != null" >
+        RATIO_PM,
+      </if>
+      <if test="stDate != null" >
+        ST_DATE,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoMerchant != null" >
+        #{memberNoMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="numShop != null" >
+        #{numShop,jdbcType=INTEGER},
+      </if>
+      <if test="ratioShop != null" >
+        #{ratioShop,jdbcType=DECIMAL},
+      </if>
+      <if test="numPm != null" >
+        #{numPm,jdbcType=BIGINT},
+      </if>
+      <if test="ratioPm != null" >
+        #{ratioPm,jdbcType=DECIMAL},
+      </if>
+      <if test="stDate != null" >
+        #{stDate,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+</mapper>

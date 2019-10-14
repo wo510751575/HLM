@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IUserCountDao">
+	<resultMap type="com.lj.business.st.dto.FindUserCountPageReturn" id="BaseResultMap">
+		<id column="CODE" property="code" jdbcType="VARCHAR"/>
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="COMPANY" property="company" jdbcType="VARCHAR"/>
+		<result column="OFFICE" property="office" jdbcType="VARCHAR"/>
+		<result column="SHOP_WX" property="shopWx" jdbcType="VARCHAR"/>
+		<result column="TOTAL_MEMBER" property="totalMember" jdbcType="INTEGER"/>
+		<result column="NEW_MEMBER" property="newMember" jdbcType="INTEGER"/>
+		<result column="TOTAL_MEMBER_PHONE" property="totalMemberPhone" jdbcType="INTEGER"/>
+		<result column="NEW_MEMBER_PHONE" property="newMemberPhone" jdbcType="INTEGER"/>
+		<result column="CHAT_COUNT" property="chatCount" jdbcType="INTEGER"/>
+		<result column="UNCHAT_COUNT" property="unChatCount" jdbcType="INTEGER"/>
+		<result column="CHAT_TOTAL" property="chatTotal" jdbcType="INTEGER"/>
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+		<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="findUserCountList" parameterType="com.lj.business.st.dto.FindUserCountPage" resultMap="BaseResultMap">
+		SELECT CODE,USER_ID,NAME,COMPANY,OFFICE,SHOP_WX,
+		SUM(NEW_MEMBER) NEW_MEMBER,
+		SUM(TOTAL_MEMBER_PHONE) TOTAL_MEMBER_PHONE,
+		SUM(NEW_MEMBER_PHONE) NEW_MEMBER_PHONE,
+		SUM(CHAT_COUNT) CHAT_COUNT,
+		SUM(UNCHAT_COUNT) UNCHAT_COUNT,
+		SUM(CHAT_TOTAL) CHAT_TOTAL,CREATE_TIME,REMARK,MERCHANT_NO
+		FROM user_count
+		<where>
+			<if test="startTime != null">
+				<![CDATA[CREATE_TIME >= #{startTime}]]>
+			</if>
+			<if test="endTime != null"> 
+				<![CDATA[AND CREATE_TIME <= #{endTime}]]>
+			</if>
+		</where>
+		GROUP BY USER_ID,NAME,COMPANY,OFFICE,SHOP_WX,MERCHANT_NO
+		HAVING 
+		<if test="merchantNo != null and merchantNo != ''">
+			MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null and name != ''">
+			AND NAME = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND USER_ID = #{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="company != null and company != ''">
+			AND COMPANY = #{company,jdbcType=VARCHAR}
+		</if>
+		<if test="office != null and office != ''">
+			AND OFFICE = #{office,jdbcType=VARCHAR}
+		</if>
+		<if test="shopWx != null and shopWx != ''">
+			AND SHOP_WX = #{shopWx,jdbcType=VARCHAR}
+		</if>
+		limit ${start} , ${limit}
+	</select>
+	
+	<select id="findUserCount" parameterType="com.lj.business.st.dto.FindUserCountPage" resultType="java.lang.Integer">
+		SELECT count(temp.CODE) FROM
+		(SELECT CODE,USER_ID,NAME,COMPANY,OFFICE,SHOP_WX,
+		SUM(NEW_MEMBER) NEW_MEMBER,
+		SUM(TOTAL_MEMBER_PHONE) TOTAL_MEMBER_PHONE,
+		SUM(NEW_MEMBER_PHONE) NEW_MEMBER_PHONE,
+		SUM(CHAT_COUNT) CHAT_COUNT,
+		SUM(UNCHAT_COUNT) UNCHAT_COUNT,
+		SUM(CHAT_TOTAL) CHAT_TOTAL,
+		CREATE_TIME,REMARK,MERCHANT_NO
+		FROM user_count
+		<where>
+			<if test="startTime != null">
+				<![CDATA[CREATE_TIME >= #{startTime}]]>
+			</if>
+			<if test="endTime != null"> 
+				<![CDATA[AND CREATE_TIME <= #{endTime}]]>
+			</if>
+		</where>
+		GROUP BY USER_ID,NAME,COMPANY,OFFICE,SHOP_WX,MERCHANT_NO 
+		HAVING 
+		<if test="merchantNo != null and merchantNo != ''">
+			MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null and name != ''">
+			AND NAME = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND USER_ID = #{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="company != null and company != ''">
+			AND COMPANY = #{company,jdbcType=VARCHAR}
+		</if>
+		<if test="office != null and office != ''">
+			AND OFFICE = #{office,jdbcType=VARCHAR}
+		</if>
+		<if test="shopWx != null and shopWx != ''">
+			AND SHOP_WX = #{shopWx,jdbcType=VARCHAR}
+		</if>
+		) temp
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Integer">
+		SELECT count(*) FROM user_count
+	</select>
+	
+	<insert id="addUserCount" parameterType="com.lj.business.st.dto.UserCount">
+		INSERT INTO user_count 
+		(CODE,USER_ID,NAME,COMPANY,OFFICE,SHOP_WX,TOTAL_MEMBER,NEW_MEMBER,TOTAL_MEMBER_PHONE,
+		NEW_MEMBER_PHONE,CHAT_COUNT,UNCHAT_COUNT,CHAT_TOTAL,CREATE_TIME,REMARK,MERCHANT_NO) 
+		values
+		(#{code,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{company,jdbcType=VARCHAR},
+		#{office,jdbcType=VARCHAR},#{shopWx,jdbcType=VARCHAR},#{totalMember,jdbcType=INTEGER},
+		#{newMember,jdbcType=INTEGER},#{totalMemberPhone,jdbcType=INTEGER},#{newMemberPhone,jdbcType=INTEGER},
+		#{chatCount,jdbcType=INTEGER},#{unChatCount,jdbcType=INTEGER},#{chatTotal,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},#{remark,jdbcType=VARCHAR},#{merchantNo,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="findTotalMember" resultType="java.lang.Integer">
+		SELECT count(TOTAL_MEMBER) 
+		FROM user_count
+		<where>
+			<if test="map.endTime != null"> 
+				<![CDATA[AND CREATE_TIME <= #{map.endTime}]]>
+			</if>
+			<if test="map.userId != null">
+				AND USER_ID = #{map.userId,jdbcType=VARCHAR}
+			</if>
+			<if test="map.merchantNo != null">
+				AND MERCHANT_NO = #{map.merchantNo,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findTotalMemberPhone" resultType="java.lang.Integer">
+		SELECT count(TOTAL_MEMBER_PHONE) 
+		FROM user_count
+		<where>
+			<if test="map.endTime != null"> 
+				<![CDATA[AND CREATE_TIME <= #{map.endTime}]]>
+			</if>
+			<if test="map.userId != null">
+				AND USER_ID = #{map.userId,jdbcType=VARCHAR}
+			</if>
+			<if test="map.merchantNo != null">
+				AND MERCHANT_NO = #{map.merchantNo,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+</mapper>

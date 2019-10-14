@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IUnContactTotalDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.UnContactTotal" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="YIZHOU_YIYUE" property="yizhouYiyue" jdbcType="INTEGER" />
+    <result column="YIYUE_SANYUE" property="yiyueSanyue" jdbcType="INTEGER" />
+    <result column="SANYUE_LIUYUE" property="sanyueLiuyue" jdbcType="INTEGER" />
+    <result column="LIUYUE_END" property="liuyueEnd" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="findUnContactTotalPageResultMap" type="com.lj.business.st.dto.FindUnContactTotalPageReturn" >
+  <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="YIZHOU_YIYUE" property="yizhouYiyue" jdbcType="INTEGER" />
+    <result column="YIYUE_SANYUE" property="yiyueSanyue" jdbcType="INTEGER" />
+    <result column="SANYUE_LIUYUE" property="sanyueLiuyue" jdbcType="INTEGER" />
+    <result column="LIUYUE_END" property="liuyueEnd" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="findUnContactTotalInfoResultMap" type="com.lj.business.st.dto.FindUnContactTotalInfoReturn" >
+  <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="YIZHOU_YIYUE" property="yizhouYiyue" jdbcType="INTEGER" />
+    <result column="YIYUE_SANYUE" property="yiyueSanyue" jdbcType="INTEGER" />
+    <result column="SANYUE_LIUYUE" property="sanyueLiuyue" jdbcType="INTEGER" />
+    <result column="LIUYUE_END" property="liuyueEnd" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="findListResultMap" type="com.lj.business.st.dto.FindUnContactTotalReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="YIZHOU_YIYUE" property="yizhouYiyue" jdbcType="INTEGER" />
+    <result column="YIYUE_SANYUE" property="yiyueSanyue" jdbcType="INTEGER" />
+    <result column="SANYUE_LIUYUE" property="sanyueLiuyue" jdbcType="INTEGER" />
+    <result column="LIUYUE_END" property="liuyueEnd" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, YIZHOU_YIYUE, 
+    YIYUE_SANYUE, SANYUE_LIUYUE, LIUYUE_END, CREATE_DATE
+  </sql>
+  <sql id="findUnContactTotalPage_condition" >
+  	 <where>
+      <if test="memberNoGm != null" >
+        and  MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      </where>
+  </sql>
+  <select id="findUnContactTotalInfo" resultMap="findUnContactTotalInfoResultMap" parameterType="com.lj.business.st.dto.FindUnContactTotalInfo" >
+  SELECT    CODE, MERCHANT_NO, MEMBER_NO_GM, MEMBER_NAME_GM, YIZHOU_YIYUE, YIYUE_SANYUE, SANYUE_LIUYUE, 
+    LIUYUE_END, CREATE_DATE
+  FROM un_contact_total 
+  <where>
+      <if test="memberNoGm != null" >
+        and  MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      </where>
+   order by CREATE_DATE 
+  </select>
+  
+     <!-- 分页查询 -->
+   <select id="findUnContactTotalPage" resultMap="findUnContactTotalPageResultMap" parameterType="com.lj.business.st.dto.FindUnContactTotalPage" >
+  SELECT     CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, YIZHOU_YIYUE, 
+    YIYUE_SANYUE, SANYUE_LIUYUE, LIUYUE_END, CREATE_DATE
+  FROM un_contact_total 
+ 	 <include refid="findUnContactTotalPage_condition" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findUnContactTotalPageCount" resultType="int" parameterType="com.lj.business.st.dto.FindUnContactTotalPage" >
+    select  count(*)
+     FROM un_contact_total 
+     <include refid="findUnContactTotalPage_condition" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from un_contact_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from un_contact_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.UnContactTotal" >
+    insert into un_contact_total (CODE, MERCHANT_NO, SHOP_NO, 
+      SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+      YIZHOU_YIYUE, YIYUE_SANYUE, SANYUE_LIUYUE, 
+      LIUYUE_END, CREATE_DATE,DIMENSION_ST)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{yizhouYiyue,jdbcType=INTEGER}, #{yiyueSanyue,jdbcType=INTEGER}, #{sanyueLiuyue,jdbcType=INTEGER}, 
+      #{liuyueEnd,jdbcType=INTEGER}, NOW(),#{dimensionSt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.UnContactTotal" >
+    insert into un_contact_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="yizhouYiyue != null" >
+        YIZHOU_YIYUE,
+      </if>
+      <if test="yiyueSanyue != null" >
+        YIYUE_SANYUE,
+      </if>
+      <if test="sanyueLiuyue != null" >
+        SANYUE_LIUYUE,
+      </if>
+      <if test="liuyueEnd != null" >
+        LIUYUE_END,
+      </if>
+        CREATE_DATE,
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="yizhouYiyue != null" >
+        #{yizhouYiyue,jdbcType=INTEGER},
+      </if>
+      <if test="yiyueSanyue != null" >
+        #{yiyueSanyue,jdbcType=INTEGER},
+      </if>
+      <if test="sanyueLiuyue != null" >
+        #{sanyueLiuyue,jdbcType=INTEGER},
+      </if>
+      <if test="liuyueEnd != null" >
+        #{liuyueEnd,jdbcType=INTEGER},
+      </if>
+        NOW(),
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.UnContactTotal" >
+    update un_contact_total
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="yizhouYiyue != null" >
+        YIZHOU_YIYUE = #{yizhouYiyue,jdbcType=INTEGER},
+      </if>
+      <if test="yiyueSanyue != null" >
+        YIYUE_SANYUE = #{yiyueSanyue,jdbcType=INTEGER},
+      </if>
+      <if test="sanyueLiuyue != null" >
+        SANYUE_LIUYUE = #{sanyueLiuyue,jdbcType=INTEGER},
+      </if>
+      <if test="liuyueEnd != null" >
+        LIUYUE_END = #{liuyueEnd,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.UnContactTotal" >
+    update un_contact_total
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      YIZHOU_YIYUE = #{yizhouYiyue,jdbcType=INTEGER},
+      YIYUE_SANYUE = #{yiyueSanyue,jdbcType=INTEGER},
+      SANYUE_LIUYUE = #{sanyueLiuyue,jdbcType=INTEGER},
+      LIUYUE_END = #{liuyueEnd,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findList" resultMap="findListResultMap">
+  	 select 
+  	 <include refid="Base_Column_List" />
+  	 from un_contact_total
+  	 where DIMENSION_ST = 'GUID'
+  </select>
+  
+</mapper>

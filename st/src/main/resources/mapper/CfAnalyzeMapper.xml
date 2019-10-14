@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.ICfAnalyzeDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.CfAnalyze" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="BRIEF_CLIENT_ANALYZE" property="briefClientAnalyze" jdbcType="VARCHAR" />
+    <result column="BRIEF_CLIENT_ACTION" property="briefClientAction" jdbcType="VARCHAR" />
+    <result column="BRIEF_SOCIAL" property="briefSocial" jdbcType="VARCHAR" />
+    <result column="BRIEF_MATERIAL" property="briefMaterial" jdbcType="VARCHAR" />
+    <result column="BRIEF_CLIENT_TYPE" property="briefClientType" jdbcType="VARCHAR" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    BRIEF_CLIENT_ANALYZE, BRIEF_CLIENT_ACTION, BRIEF_SOCIAL, BRIEF_MATERIAL, BRIEF_CLIENT_TYPE, 
+    DIMENSION_ST, DAY_ST, CREATE_DATE
+  </sql>
+  <select id="selectByParamKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cf_analyze
+	 <where>
+      <if test="memberNoGm != null and memberNoGm != ''" >
+        and  MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="dimensionSt != null and dimensionSt != ''" >
+        and  DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR}
+      </if>
+       <if test="daySt != null" >
+        <![CDATA[ and  DAY_ST = #{daySt,jdbcType=DATE} ]]>
+      </if>
+     </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cf_analyze
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cf_analyze
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.CfAnalyze" >
+    insert into cf_analyze (CODE, MERCHANT_NO, AREA_CODE, 
+      AREA_NAME, SHOP_NO, SHOP_NAME, 
+      MEMBER_NO_GM, MEMBER_NAME_GM, BRIEF_CLIENT_ANALYZE, 
+      BRIEF_CLIENT_ACTION, BRIEF_SOCIAL, BRIEF_MATERIAL, 
+      BRIEF_CLIENT_TYPE, DIMENSION_ST, DAY_ST, 
+      CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{areaName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{briefClientAnalyze,jdbcType=VARCHAR}, 
+      #{briefClientAction,jdbcType=VARCHAR}, #{briefSocial,jdbcType=VARCHAR}, #{briefMaterial,jdbcType=VARCHAR}, 
+      #{briefClientType,jdbcType=VARCHAR}, #{dimensionSt,jdbcType=VARCHAR}, #{daySt,jdbcType=DATE}, 
+      NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.CfAnalyze" >
+    insert into cf_analyze
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="briefClientAnalyze != null" >
+        BRIEF_CLIENT_ANALYZE,
+      </if>
+      <if test="briefClientAction != null" >
+        BRIEF_CLIENT_ACTION,
+      </if>
+      <if test="briefSocial != null" >
+        BRIEF_SOCIAL,
+      </if>
+      <if test="briefMaterial != null" >
+        BRIEF_MATERIAL,
+      </if>
+      <if test="briefClientType != null" >
+        BRIEF_CLIENT_TYPE,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+      <if test="daySt != null" >
+        DAY_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="briefClientAnalyze != null" >
+        #{briefClientAnalyze,jdbcType=VARCHAR},
+      </if>
+      <if test="briefClientAction != null" >
+        #{briefClientAction,jdbcType=VARCHAR},
+      </if>
+      <if test="briefSocial != null" >
+        #{briefSocial,jdbcType=VARCHAR},
+      </if>
+      <if test="briefMaterial != null" >
+        #{briefMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="briefClientType != null" >
+        #{briefClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="daySt != null" >
+        #{daySt,jdbcType=DATE},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.CfAnalyze" >
+    update cf_analyze
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="briefClientAnalyze != null" >
+        BRIEF_CLIENT_ANALYZE = #{briefClientAnalyze,jdbcType=VARCHAR},
+      </if>
+      <if test="briefClientAction != null" >
+        BRIEF_CLIENT_ACTION = #{briefClientAction,jdbcType=VARCHAR},
+      </if>
+      <if test="briefSocial != null" >
+        BRIEF_SOCIAL = #{briefSocial,jdbcType=VARCHAR},
+      </if>
+      <if test="briefMaterial != null" >
+        BRIEF_MATERIAL = #{briefMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="briefClientType != null" >
+        BRIEF_CLIENT_TYPE = #{briefClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="daySt != null" >
+        DAY_ST = #{daySt,jdbcType=DATE},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.CfAnalyze" >
+    update cf_analyze
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      BRIEF_CLIENT_ANALYZE = #{briefClientAnalyze,jdbcType=VARCHAR},
+      BRIEF_CLIENT_ACTION = #{briefClientAction,jdbcType=VARCHAR},
+      BRIEF_SOCIAL = #{briefSocial,jdbcType=VARCHAR},
+      BRIEF_MATERIAL = #{briefMaterial,jdbcType=VARCHAR},
+      BRIEF_CLIENT_TYPE = #{briefClientType,jdbcType=VARCHAR},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      DAY_ST = #{daySt,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

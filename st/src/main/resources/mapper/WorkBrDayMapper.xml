@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IWorkBrDayDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.WorkBrDay" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="CODE_LIST" property="codeList" jdbcType="VARCHAR" />
+    <result column="NAME_LIST" property="nameList" jdbcType="VARCHAR" />
+    <result column="VALUE_LIST" property="valueList" jdbcType="VARCHAR" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    CODE_LIST, NAME_LIST, VALUE_LIST, DAY_ST, DIMENSION_ST, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from work_br_day
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from work_br_day
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.WorkBrDay" >
+    insert into work_br_day (CODE, MERCHANT_NO, AREA_CODE, 
+      AREA_NAME, SHOP_NO, SHOP_NAME, 
+      MEMBER_NO_GM, MEMBER_NAME_GM, CODE_LIST, 
+      NAME_LIST, VALUE_LIST, DAY_ST, 
+      DIMENSION_ST, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{areaName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{codeList,jdbcType=VARCHAR}, 
+      #{nameList,jdbcType=VARCHAR}, #{valueList,jdbcType=VARCHAR}, #{daySt,jdbcType=DATE}, 
+      #{dimensionSt,jdbcType=VARCHAR}, NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.WorkBrDay" >
+    insert into work_br_day
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="codeList != null" >
+        CODE_LIST,
+      </if>
+      <if test="nameList != null" >
+        NAME_LIST,
+      </if>
+      <if test="valueList != null" >
+        VALUE_LIST,
+      </if>
+      <if test="daySt != null" >
+        DAY_ST,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="codeList != null" >
+        #{codeList,jdbcType=VARCHAR},
+      </if>
+      <if test="nameList != null" >
+        #{nameList,jdbcType=VARCHAR},
+      </if>
+      <if test="valueList != null" >
+        #{valueList,jdbcType=VARCHAR},
+      </if>
+      <if test="daySt != null" >
+        #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.WorkBrDay" >
+    update work_br_day
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="codeList != null" >
+        CODE_LIST = #{codeList,jdbcType=VARCHAR},
+      </if>
+      <if test="nameList != null" >
+        NAME_LIST = #{nameList,jdbcType=VARCHAR},
+      </if>
+      <if test="valueList != null" >
+        VALUE_LIST = #{valueList,jdbcType=VARCHAR},
+      </if>
+      <if test="daySt != null" >
+        DAY_ST = #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.WorkBrDay" >
+    update work_br_day
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      CODE_LIST = #{codeList,jdbcType=VARCHAR},
+      NAME_LIST = #{nameList,jdbcType=VARCHAR},
+      VALUE_LIST = #{valueList,jdbcType=VARCHAR},
+      DAY_ST = #{daySt,jdbcType=DATE},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

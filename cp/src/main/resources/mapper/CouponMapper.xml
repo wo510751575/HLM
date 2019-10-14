@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cp.dao.ICouponDao">
+	<resultMap id="BaseResultMap"
+		type="com.lj.business.cp.domain.Coupon">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+
+
+		<result column="RULE_NO" property="ruleNo" jdbcType="VARCHAR" />
+		<result column="COUPON_NO" property="couponNo"
+			jdbcType="VARCHAR" />
+		<result column="COUPON_STATUS" property="couponStatus"
+			jdbcType="VARCHAR" />
+		<result column="USE_DATE" property="useDate" jdbcType="DATE" />
+		<result column="UPDATE_ID" property="updateId"
+			jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate"
+			jdbcType="TIMESTAMP" />
+		<result column="CREATE_ID" property="createId"
+			jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="findCouponPageReturns"
+		type="com.lj.business.cp.dto.coupon.FindCouponPageReturn">
+		<id column="CODE" jdbcType="VARCHAR" property="code" />
+		<result column="MERCHANT_NO" jdbcType="VARCHAR"
+			property="merchantNo" />
+		<result column="MERCHANT_NAME" jdbcType="VARCHAR"
+			property="merchantName" />
+		<result column="RULE_NO" jdbcType="VARCHAR" property="ruleNo" />
+		<result column="COUPON_NO" jdbcType="VARCHAR"
+			property="couponNo" />
+		<result column="COUPON_STATUS" jdbcType="VARCHAR"
+			property="couponStatus" />
+		<result column="USE_DATE" jdbcType="DATE" property="useDate" />
+		<result column="UPDATE_ID" jdbcType="VARCHAR"
+			property="updateId" />
+		<result column="UPDATE_DATE" jdbcType="TIMESTAMP"
+			property="updateDate" />
+		<result column="CREATE_ID" jdbcType="VARCHAR"
+			property="createId" />
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP"
+			property="createDate" />
+		<!-- 规则表 -->
+		<result column="BEGIN_DATE" jdbcType="DATE"
+			property="beginDate" />
+		<result column="END_DATE" jdbcType="DATE" property="endDate" />
+		<result column="COUPON_NUM" property="couponNum"
+			jdbcType="INTEGER" />
+		<result column="COUPON_NOTES" property="couponNotes"
+			jdbcType="DECIMAL" />
+		<result column="COUPON_NAME" property="couponName"
+			jdbcType="VARCHAR" />
+		<result column="COUPON_TYPE" property="couponType"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="findCouponPage_condition">
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="couponStatus != null and couponStatus !=''">
+				and COUPON_STATUS = #{couponStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="useDate != null">
+				<![CDATA[and USE_DATE >= #{useDate}]]>
+			</if>
+			<if test="startTime != null">
+				<![CDATA[and USE_DATE >= #{startTime}]]>
+			</if>
+			<if test="endTime != null"> 
+	  			<![CDATA[and USE_DATE <= #{endTime}]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="findCouponPage" resultMap="findCouponPageReturns"
+		parameterType="com.lj.business.cp.dto.coupon.FindCouponPage">
+		SELECT cp.RULE_NO,cp.COUPON_NO,cp.COUPON_STATUS ,cp.USE_DATE
+		,cr.BEGIN_DATE ,cr.END_DATE,cr.COUPON_NUM, cr.COUPON_NOTES,
+		cr.COUPON_NAME ,cr.COUPON_TYPE,cp.SHOP_NAME
+		FROM coupon cp LEFT JOIN
+		coupon_rule cr ON cp.RULE_NO=cr.CODE
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and cp.MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="couponStatus != null and couponStatus !=''">
+				and cp.COUPON_STATUS = #{couponStatus}
+			</if>
+			<if test="shopWx != null and shopWx !=''">
+				and cp.SHOP_WX = #{shopWx,jdbcType=VARCHAR}
+			</if>
+			<if test="couponNo != null and couponNo !=''">
+				and cp.COUPON_NO = #{couponNo,jdbcType=VARCHAR}
+			</if>
+		</where>
+		ORDER BY cp.CREATE_DATE DESC
+		limit ${start} , ${limit}
+	</select>
+
+	<select id="findCouponLimit1" resultMap="BaseResultMap" parameterType="com.lj.business.cp.dto.coupon.FindCoupon">
+		SELECT cp.CODE,cp.RULE_NO,cp.COUPON_NO,cp.COUPON_STATUS ,cp.USE_DATE
+		,cr.BEGIN_DATE ,cr.END_DATE,cr.COUPON_NUM, cr.COUPON_NOTES,
+		cr.COUPON_NAME ,cr.COUPON_TYPE,cp.cp.CREATE_DATE
+		FROM coupon cp
+		LEFT JOIN coupon_rule cr ON cp.RULE_NO=cr.CODE
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and cp.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="couponStatus != null and couponStatus !=''">
+				and cp.COUPON_STATUS = #{couponStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="couponType != null and couponType !=''">
+				and cr.COUPON_TYPE = #{couponType,jdbcType=VARCHAR}
+			</if>
+			<if test="noWxGm != null and noWxGm !=''">
+				and cp.SHOP_WX = #{noWxGm,jdbcType=VARCHAR}
+			</if>
+			<if test="couponName != null and couponName !=''">
+				and cr.COUPON_NAME = #{couponName,jdbcType=VARCHAR}
+			</if>
+			<if test="beginDate != null ">
+        		<![CDATA[and cp.BEGIN_DATE <= #{beginDate}]]>
+			</if>
+			<if test="endDate != null">
+        		<![CDATA[and cp.END_DATE <= #{endTime}]]>
+			</if>
+			<if test="useDate != null">
+				<![CDATA[and cp.USE_DATE >= #{useDate}]]>
+			</if>
+			<if test="startTime != null">
+				<![CDATA[and cp.USE_DATE >= #{startTime}]]>
+			</if>
+			<if test="endTime != null"> 
+	  			<![CDATA[and cp.USE_DATE <= #{endTime}]]>
+			</if>
+		</where>
+		limit 1
+	</select>
+
+	<select id="findCouponReturnList"
+		resultMap="findCouponPageReturns"
+		parameterType="com.lj.business.cp.dto.coupon.FindCoupon">
+		SELECT cp.RULE_NO,cp.COUPON_NO,cp.COUPON_STATUS ,cp.USE_DATE
+		,cr.BEGIN_DATE ,cr.END_DATE,cr.COUPON_NUM, cr.COUPON_NOTES,
+		cr.COUPON_NAME ,cr.COUPON_TYPE,cp.cp.CREATE_DATE
+		FROM coupon cp
+		LEFT JOIN coupon_rule cr ON cp.RULE_NO=cr.CODE
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and cp.MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="couponStatus != null and couponStatus !=''">
+				and cp.COUPON_STATUS = #{couponStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="couponType != null and couponType !=''">
+				and cr.COUPON_TYPE = #{couponType,jdbcType=VARCHAR}
+			</if>
+			<if test="noWxGm != null and noWxGm !=''">
+				and cp.SHOP_WX = #{noWxGm,jdbcType=VARCHAR}
+			</if>
+			<if test="couponName != null and couponName !=''">
+				and cr.COUPON_NAME = #{couponName,jdbcType=VARCHAR}
+			</if>
+			<if test="beginDate != null ">
+        		<![CDATA[and cp.BEGIN_DATE <= #{beginDate}]]>
+			</if>
+			<if test="endDate != null">
+        		<![CDATA[and cp.END_DATE <= #{endTime}]]>
+			</if>
+			<if test="useDate != null">
+				<![CDATA[and cp.USE_DATE >= #{useDate}]]>
+			</if>
+			<if test="startTime != null">
+				<![CDATA[and cp.USE_DATE >= #{startTime}]]>
+			</if>
+			<if test="endTime != null"> 
+	  			<![CDATA[and cp.USE_DATE <= #{endTime}]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="findCouponPageCount" resultType="int"
+		parameterType="com.lj.business.cp.dto.coupon.FindCouponPage">
+		SELECT count(CODE)
+		FROM coupon
+		<where>
+			<if test="merchantNo != null and merchantNo !=''">
+				and MERCHANT_NO = #{merchantNo}
+			</if>
+			<if test="couponStatus != null and couponStatus !=''">
+				and COUPON_STATUS = #{couponStatus}
+			</if>
+			<if test="shopWx != null and shopWx !=''">
+				and SHOP_WX = #{shopWx}
+			</if>
+		</where>
+
+	</select>
+
+	<select id="queryCouponReturnList"
+		resultType="com.lj.business.cp.dto.coupon.FindCouponReturn"
+		parameterType="com.lj.business.cp.dto.coupon.FindCoupon">
+		SELECT CODE code
+		FROM coupon
+		WHERE RULE_NO = #{ruleNo}
+		and
+		COUPON_STATUS ='UNUSED'
+	</select>
+
+	<sql id="Base_Column_List">
+		CODE, MERCHANT_NO, MERCHANT_NAME, RULE_NO, COUPON_NO,
+		COUPON_STATUS,
+		USE_DATE, UPDATE_ID, UPDATE_DATE, CREATE_ID, CREATE_DATE
+	</sql>
+	<sql id="Base_Column_List_Entity">
+		CODE AS code,
+		MERCHANT_NO AS merchantNo,
+		MERCHANT_NAME AS
+		merchantName,
+		SHOP_NO AS shopNo,
+		SHOP_NAME AS shopName,
+		RULE_NO AS
+		ruleNo,
+		COUPON_NO AS couponNo,
+		COUPON_STATUS AS couponStatus,
+		USE_DATE AS
+		useDate,
+		UPDATE_ID AS updateId,
+		UPDATE_DATE AS updateDate,
+		CREATE_ID AS
+		createId,
+		CREATE_DATE AS createDate
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from coupon
+		where CODE = #{code,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from coupon
+		where CODE = #{code,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insertSelective"
+		parameterType="com.lj.business.cp.domain.Coupon">
+		insert into coupon
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				CODE,
+			</if>
+			<if test="merchantNo != null">
+				MERCHANT_NO,
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME,
+			</if>
+			<if test="ruleNo != null">
+				RULE_NO,
+			</if>
+			<if test="couponNo != null">
+				COUPON_NO,
+			</if>
+			<if test="couponStatus != null">
+				COUPON_STATUS,
+			</if>
+			<if test="useDate != null">
+				USE_DATE,
+			</if>
+			<if test="updateId != null">
+				UPDATE_ID,
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE,
+			</if>
+			<if test="createId != null">
+				CREATE_ID,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="shopWx != null">
+				SHOP_WX,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null">
+				#{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				#{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleNo != null">
+				#{ruleNo,jdbcType=VARCHAR},
+			</if>
+			<if test="couponNo != null">
+				#{couponNo,jdbcType=VARCHAR},
+			</if>
+			<if test="couponStatus != null">
+				#{couponStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="useDate != null">
+				#{useDate,jdbcType=DATE},
+			</if>
+			<if test="updateId != null">
+				#{updateId,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shopWx != null">
+				#{shopWx,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.lj.business.cp.domain.Coupon">
+		update coupon
+		<set>
+			<if test="merchantNo != null">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleNo != null">
+				RULE_NO = #{ruleNo,jdbcType=VARCHAR},
+			</if>
+			<if test="couponNo != null">
+				COUPON_NO = #{couponNo,jdbcType=VARCHAR},
+			</if>
+			<if test="couponStatus != null">
+				COUPON_STATUS = #{couponStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="useDate != null">
+				USE_DATE = #{useDate,jdbcType=DATE},
+			</if>
+			<if test="updateId != null">
+				UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shopWx != null">
+				SHOP_WX = #{shopWx,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CODE = #{code,jdbcType=VARCHAR}
+	</update>
+	<!-- update by 杨杰 根据优惠券编号修改优惠券状态 -->
+	<update id="updateCouponByCouponNo"
+		parameterType="com.lj.business.cp.dto.coupon.UpdateCoupon">
+		update coupon
+		<set>
+			<if test="merchantNo != null">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleNo != null">
+				RULE_NO = #{ruleNo,jdbcType=VARCHAR},
+			</if>
+			<if test="couponNo != null">
+				COUPON_NO = #{couponNo,jdbcType=VARCHAR},
+			</if>
+			<if test="couponStatus != null">
+				COUPON_STATUS = #{couponStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="useDate != null">
+				USE_DATE = #{useDate,jdbcType=DATE},
+			</if>
+			<if test="updateId != null">
+				UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where COUPON_NO = #{couponNo,jdbcType=VARCHAR}
+	</update>
+	<!-- update by 杨杰 根据优惠券编号获取优惠券 -->
+	<select id="findCouponByCouponNo"
+		parameterType="com.lj.business.cp.dto.coupon.FindCoupon"
+		resultType="com.lj.business.cp.dto.coupon.FindCouponReturn">
+		select
+		<include refid="Base_Column_List_Entity" />
+		from coupon
+		where 1 = 1
+		<if test="couponNo != null">
+			AND COUPON_NO = #{couponNo,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<!-- 获取优惠券 -->
+	<select id="findCouponByRuleNo"
+		parameterType="com.lj.business.cp.dto.coupon.FindCoupon"
+		resultType="com.lj.business.cp.dto.coupon.FindCouponReturn">
+		SELECT CODE code, COUPON_NO couponNo,COUPON_STATUS couponStatus FROM
+		coupon
+		WHERE MERCHANT_NO = #{merchantNo}
+		<if test="shopWx !=null and shopWx !=''">
+			AND SHOP_WX =#{shopWx}
+		</if>
+		AND COUPON_STATUS ='UNUSED'
+		AND RULE_NO = #{ruleNo}
+		LIMIT 1
+	</select>
+</mapper>

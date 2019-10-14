@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- 会员 -->
+	<bean name="/guidScheduleLogService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="guidScheduleLogServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IGuidScheduleLogService" />
+	</bean>
+	
+	<bean name="/guidScheduleService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="guidScheduleServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IGuidScheduleService" />
+	</bean>
+		 
+	<bean name="/hxClueOrderService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="hxClueOrderServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IHxClueOrderService" />
+	</bean>
+		 
+	<bean name="/hxClueService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="hxClueServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IHxClueService" />
+	</bean>
+		 
+	<bean name="/hxPatientService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="hxPatientServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IHxPatientService" />
+	</bean>
+		 
+	<bean name="/patientMedicalService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientMedicalServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientMedicalService" />
+	</bean>
+		 
+	<bean name="/patientServiceAdvisoryService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientServiceAdvisoryServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientServiceAdvisoryService" />
+	</bean>
+	
+		 
+	<bean name="/patientServiceChooseService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientServiceChooseServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientServiceChooseService" />
+	</bean>
+		 
+	<bean name="/patientServiceService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientServiceServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientServiceService" />
+	</bean>
+	
+		 
+	<bean name="/serverDetailService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="serverDetailServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IServerDetailService" />
+	</bean>
+	
+		 
+	<bean name="/serverInfoService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="serverInfoServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IServerInfoService" />
+	</bean>
+	
+		 
+	<bean name="/shopConfigService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="shopConfigServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopConfigService" />
+	</bean>
+	
+		 
+	<bean name="/shopOrderService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="shopOrderServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopOrderService" />
+	</bean>
+	
+		 
+	<bean name="/shopScheduleService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="shopScheduleServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopScheduleService" />
+	</bean>
+		 
+	<bean name="/shopServerDetailService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="shopServerDetailServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopServerDetailService" />
+	</bean>
+	
+	<bean name="/shopServerService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="shopServerServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopServerService" />
+	</bean>
+	
+	<!-- 员工排班定时任务 -->
+	<bean name="/guidScheduleJob"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="guidScheduleJobServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	
+	<bean name="/projectPriceService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="projectPriceServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IProjectPriceService" />
+	</bean>
+	
+	 
+	
+	<bean name="/billDetailService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="billDetailServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillDetailService" />
+	</bean>
+	
+	<bean name="/billOperateService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="billOperateServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillOperateService" />
+	</bean>
+	
+	<bean name="/billPaymentService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="billPaymentServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillPaymentService" />
+	</bean>
+	
+	<bean name="/billRefundDetailService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="billRefundDetailServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillRefundDetailService" />
+	</bean>
+	
+	<bean name="/billRefundService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="billRefundServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillRefundService" />
+	</bean>
+	
+	<bean name="/billService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="billServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IBillService" />
+	</bean>
+
+	<bean name="/payDetailService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="payDetailServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPayDetailService" />
+	</bean>
+
+	<bean name="/payTypeDetailService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="payTypeDetailServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPayTypeDetailService" />
+	</bean>
+
+	<bean name="/stDailyPayService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="stDailyPayServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IStDailyPayService" />
+	</bean>
+	
+	<!-- 支付方式每日收支统计定时任务 -->
+	<bean name="/stDailyPayJob"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="stDailyPayJobServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/ptTreatmentRecordService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="ptTreatmentRecordServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPtTreatmentRecordService" />
+	</bean>
+	
+	<bean name="/festivalPosterService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="festivalPosterServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IFestivalPosterService" />
+	</bean>
+	
+	<bean name="/shopFestivalPosterService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="shopFestivalPosterServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IShopFestivalPosterService" />
+	</bean>
+	
+</beans>

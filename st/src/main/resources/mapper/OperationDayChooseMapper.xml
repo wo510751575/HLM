@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IOperationDayChooseDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.OperationDayChoose" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="CODE_LIST" property="codeList" jdbcType="VARCHAR" />
+    <result column="NAME_LIST" property="nameList" jdbcType="VARCHAR" />
+    <result column="TYPE_LIST" property="typeList" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+    <resultMap id="findOperationDayChooseMap" type="com.lj.business.st.dto.OperationDayChooseDto" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="CODE_LIST" property="codeList" jdbcType="VARCHAR" />
+    <result column="NAME_LIST" property="nameList" jdbcType="VARCHAR" />
+    <result column="TYPE_LIST" property="typeList" jdbcType="VARCHAR" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="findOperateDayReportResultMap" type="com.lj.business.st.dto.FindOperateDayReportReturn" >
+    <result column="CODE_LIST" property="codeList" jdbcType="VARCHAR" />
+    <result column="NAME_LIST" property="nameList" jdbcType="VARCHAR" />
+    <result column="TYPE_LIST" property="typeList" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="IMG_ADDR" property="imgAddr" jdbcType="VARCHAR" />
+    <result column="UNIT_LIST" property="unitList" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, CODE_LIST, NAME_LIST, IMG_ADDR,
+    TYPE_LIST, SEQ, CREATE_DATE
+  </sql>
+    <sql id="findOperationDayChooses">
+     <where>
+     <if test="merchantNo != null and merchantNo !='' ">
+		and MERCHANT_NO = #{merchantNo}
+	  </if>			  
+     </where>   
+   </sql>
+  
+    <select id="findOperationDayChoose" resultMap="findOperationDayChooseMap" parameterType="com.lj.business.st.dto.FindOperationDayChoose" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation_day_choose
+    <include refid="findOperationDayChooses" />
+  </select>
+   
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation_day_choose
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from operation_day_choose
+    where MERCHANT_NO = #{merchantNo}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.OperationDayChoose" >
+    insert into operation_day_choose (CODE, MERCHANT_NO, SHOP_NO, 
+      SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM,
+      CODE_LIST, NAME_LIST, TYPE_LIST, 
+      SEQ, IMG_ADDR,CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{codeList,jdbcType=VARCHAR}, #{nameList,jdbcType=VARCHAR}, #{typeList,jdbcType=VARCHAR}, 
+      #{seq,jdbcType=INTEGER}, #{imgAddr,jdbcType=VARCHAR}),NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.OperationDayChoose" >
+    insert into operation_day_choose
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="codeList != null" >
+        CODE_LIST,
+      </if>
+      <if test="nameList != null" >
+        NAME_LIST,
+      </if>
+      <if test="typeList != null" >
+        TYPE_LIST,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+       <if test="imgAddr != null" >
+        IMG_ADDR,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="codeList != null" >
+        #{codeList,jdbcType=VARCHAR},
+      </if>
+      <if test="nameList != null" >
+        #{nameList,jdbcType=VARCHAR},
+      </if>
+      <if test="typeList != null" >
+        #{typeList,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="imgAddr != null" >
+       #{imgAddr,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.OperationDayChoose" >
+    update operation_day_choose
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="codeList != null" >
+        CODE_LIST = #{codeList,jdbcType=VARCHAR},
+      </if>
+      <if test="nameList != null" >
+        NAME_LIST = #{nameList,jdbcType=VARCHAR},
+      </if>
+      <if test="typeList != null" >
+        TYPE_LIST = #{typeList,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+        <if test="imgAddr != null" >
+        IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.OperationDayChoose" >
+    update operation_day_choose
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      CODE_LIST = #{codeList,jdbcType=VARCHAR},
+      NAME_LIST = #{nameList,jdbcType=VARCHAR},
+      TYPE_LIST = #{typeList,jdbcType=VARCHAR},
+      SEQ = #{seq,jdbcType=INTEGER},
+      IMG_ADDR = #{imgAddr,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findOperationDayChooseList" resultMap="findOperateDayReportResultMap" parameterType="com.lj.business.st.dto.FindOperateDayReport">
+    SELECT odc.CODE_LIST, odc.NAME_LIST,odc.TYPE_LIST,odc.SEQ,odc.IMG_ADDR,sl.UNIT_LIST
+    FROM OPERATION_DAY_CHOOSE odc LEFT JOIN st_list sl ON odc.CODE_LIST = sl.CODE
+    WHERE odc.MERCHANT_NO = #{merchantNo} and sl.TABLE_LIST = 'OPERATION_DAY_CHOOSE'
+    ORDER BY odc.seq ASC
+  </select>
+
+</mapper>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IImChatInfoTempDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.ImChatInfoTemp" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NO_WX_SHOP" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+    <result column="RESOURCES_PATH" property="resourcesPath" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, NO_WX_SHOP, NO_WX,  MERCHANT_NO, MERCHANT_NAME, TYPE, CHAT_TIME, 
+    RESOURCES_PATH, SHARE_TITLE, SHARE_DES, SHARE_URL, IMEI, CREATE_DATE, REMARK, REMARK2, 
+    REMARK3, REMARK4, CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from im_chat_info_temp
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from im_chat_info_temp
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.ImChatInfoTemp" >
+    insert into im_chat_info_temp (CODE, NO_WX_SHOP, NO_WX, 
+       MERCHANT_NO, 
+      MERCHANT_NAME, TYPE, CHAT_TIME, 
+      RESOURCES_PATH, SHARE_TITLE, SHARE_DES, 
+      SHARE_URL, IMEI, CREATE_DATE, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4, CONTENT)
+    values (#{code,jdbcType=VARCHAR}, #{noWxShop,jdbcType=VARCHAR}, #{noWx,jdbcType=VARCHAR}, 
+       #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{chatTime,jdbcType=TIMESTAMP}, 
+      #{resourcesPath,jdbcType=VARCHAR}, #{shareTitle,jdbcType=VARCHAR}, #{shareDes,jdbcType=VARCHAR}, 
+      #{shareUrl,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.ImChatInfoTemp" >
+    insert into im_chat_info_temp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="noWxShop != null" >
+        NO_WX_SHOP,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="chatTime != null" >
+        CHAT_TIME,
+      </if>
+      <if test="resourcesPath != null" >
+        RESOURCES_PATH,
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE,
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES,
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL,
+      </if>
+      <if test="imei != null" >
+        IMEI,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="chatTime != null" >
+        #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourcesPath != null" >
+        #{resourcesPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.ImChatInfoTemp" >
+    update im_chat_info_temp
+    <set >
+      <if test="noWxShop != null" >
+        NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="chatTime != null" >
+        CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourcesPath != null" >
+        RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lj.business.weixin.domain.ImChatInfoTemp" >
+    update im_chat_info_temp
+    set NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.ImChatInfoTemp" >
+    update im_chat_info_temp
+    set NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询终端微信新增客户所有临时聊天记录(按聊天时间顺序排序) -->
+  <select id="findImChatInfoTempByNewPerson" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+      from im_chat_info_temp
+     where #{shopNo,jdbcType=VARCHAR}
+       and NO_WX_SHOP = #{noWxShop,jdbcType=VARCHAR}
+       and NO_WX = #{noWx,jdbcType=VARCHAR}
+     order by CHAT_TIME asc
+  </select>
+  
+  <delete id="delete" >
+  	delete from im_chat_info_temp
+  	where NO_WX_SHOP = #{noWx,jdbcType=VARCHAR}
+  	and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  </delete>
+</mapper>

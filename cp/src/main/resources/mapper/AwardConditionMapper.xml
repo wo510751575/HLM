@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cp.dao.IAwardConditionDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cp.domain.AwardCondition" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="VEIDOO_NO" property="veidooNo" jdbcType="VARCHAR" />
+    <result column="VEIDOO_UP" property="veidooUp" jdbcType="DECIMAL" />
+    <result column="VEIDOO_DOWN" property="veidooDown" jdbcType="DECIMAL" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="ACTIVITY_DESC" property="activityDesc" jdbcType="VARCHAR" />
+    <result column="RULE_CODE" property="ruleCode" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+    <resultMap id="findAwardConditionPageReturns" type="com.lj.business.cp.dto.awardCondition.FindAwardConditionPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    
+    
+    <result column="VEIDOO_NO" property="veidooNo" jdbcType="VARCHAR" />
+    <result column="VEIDOO_UP" property="veidooUp" jdbcType="DECIMAL" />
+    <result column="VEIDOO_DOWN" property="veidooDown" jdbcType="DECIMAL" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="ACTIVITY_DESC" property="activityDesc" jdbcType="VARCHAR" />
+    <result column="RULE_CODE" property="ruleCode" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, MERCHANT_NAME,  VEIDOO_NO, VEIDOO_UP, VEIDOO_DOWN, 
+    BEGIN_DATE, END_DATE, ACTIVITY_DESC, RULE_CODE, UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+    CREATE_DATE
+  </sql>
+  
+  <sql id="findAwardConditionPages">
+  <where>
+      <if test="merchantNo != null and merchantNo !=''" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if>   
+      <if test="shopNos != null and shopNos.size() > 0">
+      	  and MEMBER_NO_SHOP in
+      <foreach item="item" index="index" collection="shopNos" open="(" separator="," close=")">  
+          #{item}  
+      </foreach>
+      </if>
+      <if test="beginDate != null"> 
+	  <![CDATA[and BEGIN_DATE <= #{beginDate}]]>
+	  </if>
+	   <if test="endDate != null"> 
+	  <![CDATA[and END_DATE <= #{endDate}]]>
+	  </if>
+  </where>
+  </sql>
+  
+    <select id="findAwardConditionPage" resultMap="findAwardConditionPageReturns" parameterType="com.lj.business.cp.dto.awardCondition.FindAwardConditionPage" >
+   SELECT 
+   <include refid="Base_Column_List" />
+   FROM award_condition
+   <include refid="findAwardConditionPages" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+    <select id="findAwardConditionPageCount" resultType="int" parameterType="com.lj.business.cp.dto.awardCondition.FindAwardConditionPage" >
+   SELECT  count(*)
+   FROM award_condition
+   <include refid="findAwardConditionPages" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from award_condition
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from award_condition
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cp.domain.AwardCondition" >
+    insert into award_condition (CODE, MERCHANT_NO, MERCHANT_NAME, 
+       VEIDOO_NO, 
+      VEIDOO_UP, VEIDOO_DOWN, BEGIN_DATE, 
+      END_DATE, ACTIVITY_DESC, RULE_CODE, 
+      UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+      CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+       #{veidooNo,jdbcType=VARCHAR}, 
+      #{veidooUp,jdbcType=DECIMAL}, #{veidooDown,jdbcType=DECIMAL}, #{beginDate,jdbcType=DATE}, 
+      #{endDate,jdbcType=DATE}, #{activityDesc,jdbcType=VARCHAR}, #{ruleCode,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cp.domain.AwardCondition" >
+    insert into award_condition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="veidooNo != null" >
+        VEIDOO_NO,
+      </if>
+      <if test="veidooUp != null" >
+        VEIDOO_UP,
+      </if>
+      <if test="veidooDown != null" >
+        VEIDOO_DOWN,
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="activityDesc != null" >
+        ACTIVITY_DESC,
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="veidooNo != null" >
+        #{veidooNo,jdbcType=VARCHAR},
+      </if>
+      <if test="veidooUp != null" >
+        #{veidooUp,jdbcType=DECIMAL},
+      </if>
+      <if test="veidooDown != null" >
+        #{veidooDown,jdbcType=DECIMAL},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="activityDesc != null" >
+        #{activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleCode != null" >
+        #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cp.domain.AwardCondition" >
+    update award_condition
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="veidooNo != null" >
+        VEIDOO_NO = #{veidooNo,jdbcType=VARCHAR},
+      </if>
+      <if test="veidooUp != null" >
+        VEIDOO_UP = #{veidooUp,jdbcType=DECIMAL},
+      </if>
+      <if test="veidooDown != null" >
+        VEIDOO_DOWN = #{veidooDown,jdbcType=DECIMAL},
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE = #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="activityDesc != null" >
+        ACTIVITY_DESC = #{activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cp.domain.AwardCondition" >
+    update award_condition
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      
+      
+      VEIDOO_NO = #{veidooNo,jdbcType=VARCHAR},
+      VEIDOO_UP = #{veidooUp,jdbcType=DECIMAL},
+      VEIDOO_DOWN = #{veidooDown,jdbcType=DECIMAL},
+      BEGIN_DATE = #{beginDate,jdbcType=DATE},
+      END_DATE = #{endDate,jdbcType=DATE},
+      ACTIVITY_DESC = #{activityDesc,jdbcType=VARCHAR},
+      RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

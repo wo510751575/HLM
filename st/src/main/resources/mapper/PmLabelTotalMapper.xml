@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IPmLabelTotalDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.PmLabelTotal" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="LABEL_ID" property="labelId" jdbcType="VARCHAR" />
+    <result column="LABEL_NAME" property="labelName" jdbcType="VARCHAR" />
+    <result column="PM_NUM" property="pmNum" jdbcType="INTEGER" />
+    <result column="RATIO_PM" property="ratioPm" jdbcType="DECIMAL" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMap" type="com.lj.business.st.dto.PmLabelTotal.FindPmLabelTotalReturnDto" >
+    <result column="LABEL_ID" property="labelId" jdbcType="VARCHAR" />
+    <result column="LABEL_NAME" property="labelName" jdbcType="VARCHAR" />
+    <result column="PM_NUM" property="pmNum" jdbcType="INTEGER" />
+    <result column="RATIO_PM" property="ratioPm" jdbcType="DECIMAL" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, LABEL_ID, LABEL_NAME, 
+    PM_NUM, RATIO_PM, DIMENSION_ST, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_label_total
+    where CODE = #{code,jdbcType=VARCHAR}    
+  </select>
+  
+  	<sql id="findPmLabelTotalMap">
+		<where>
+		<if test="merchantNo != null and merchantNo !=''">
+			and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+	    <if test="memberNoGm != null and memberNoGm !=''">
+			and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+		</where>	
+	</sql>	
+    
+    <!-- 查询最大数量与对应信息 -->
+    <select id="findPmLabelTotalMax" resultMap="ResultMap" parameterType="com.lj.business.st.dto.PmLabelTotal.FindPmLabelTotal" >
+    select PM_NUM,LABEL_ID,LABEL_NAME,RATIO_PM,MEMBER_NO_GM,MERCHANT_NO
+    from pm_label_total
+    where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+          AND MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+          AND DIMENSION_ST = 'GUID'
+    ORDER BY PM_NUM DESC
+    limit 1
+  </select>
+  
+  
+   <select id="findPmLabelTotalList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.PmLabelTotal.FindPmLabelTotal">
+    select
+    <include refid="Base_Column_List" />
+    from pm_label_total
+    where 1 = 1
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    <if test="dimensionSt != null">
+        AND DIMENSION_ST = #{dimensionSt}
+    </if>
+  </select>
+   <select id="findPmLabelTotalListApp" resultMap="ResultMap" parameterType="com.lj.business.st.dto.PmLabelTotal.FindPmLabelTotal">
+    select
+    <include refid="Base_Column_List" />
+    from pm_label_total
+    where DIMENSION_ST = 'GUID' AND MEMBER_NO_GM = #{memberNoGm}
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    order by PM_NUM desc 
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pm_label_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.PmLabelTotal" >
+    insert into pm_label_total (CODE, MERCHANT_NO, SHOP_NO, 
+      SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+      LABEL_ID, LABEL_NAME, PM_NUM, 
+      RATIO_PM, DIMENSION_ST, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{labelId,jdbcType=VARCHAR}, #{labelName,jdbcType=VARCHAR}, #{pmNum,jdbcType=INTEGER}, 
+      #{ratioPm,jdbcType=DECIMAL}, #{dimensionSt,jdbcType=VARCHAR}, NOW()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.PmLabelTotal" >
+    insert into pm_label_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="labelId != null" >
+        LABEL_ID,
+      </if>
+      <if test="labelName != null" >
+        LABEL_NAME,
+      </if>
+      <if test="pmNum != null" >
+        PM_NUM,
+      </if>
+      <if test="ratioPm != null" >
+        RATIO_PM,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="labelId != null" >
+        #{labelId,jdbcType=BIGINT},
+      </if>
+      <if test="labelName != null" >
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="pmNum != null" >
+        #{pmNum,jdbcType=INTEGER},
+      </if>
+      <if test="ratioPm != null" >
+        #{ratioPm,jdbcType=DECIMAL},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.PmLabelTotal" >
+    update pm_label_total
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="labelId != null" >
+        LABEL_ID = #{labelId,jdbcType=VARCHAR},
+      </if>
+      <if test="labelName != null" >
+        LABEL_NAME = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="pmNum != null" >
+        PM_NUM = #{pmNum,jdbcType=INTEGER},
+      </if>
+      <if test="ratioPm != null" >
+        RATIO_PM = #{ratioPm,jdbcType=DECIMAL},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.PmLabelTotal" >
+    update pm_label_total
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      LABEL_ID = #{labelId,jdbcType=VARCHAR},
+      LABEL_NAME = #{labelName,jdbcType=VARCHAR},
+      PM_NUM = #{pmNum,jdbcType=INTEGER},
+      RATIO_PM = #{ratioPm,jdbcType=DECIMAL},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

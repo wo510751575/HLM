@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.business.st.dao.IWorkRatioGmDao">
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.WorkRatioGm" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="RATIO_WORK" property="ratioWork" jdbcType="DECIMAL" />
+    <result column="NUM_BEAT_GM" property="numBeatGm" jdbcType="INTEGER" />
+    <result column="NUM_PM" property="numPm" jdbcType="BIGINT" />
+    <result column="NUM_PM_ADD" property="numPmAdd" jdbcType="BIGINT" />
+    <result column="NUM_PM_INTENTION" property="numPmIntention" jdbcType="BIGINT" />
+    <result column="NUM_PM_ABANDON" property="numPmAbandon" jdbcType="BIGINT" />
+    <result column="NUM_SALE" property="numSale" jdbcType="BIGINT" />
+    <result column="NUM_ORDER" property="numOrder" jdbcType="BIGINT" />
+    <result column="NUM_PM_ORDER" property="numPmOrder" jdbcType="BIGINT" />
+    <result column="NUM_READ" property="numRead" jdbcType="BIGINT" />
+    <result column="NUM_SOCIAL" property="numSocial" jdbcType="BIGINT" />
+    <result column="NUM_VISIT" property="numVisit" jdbcType="BIGINT" />
+    <result column="NUM_PM_CF" property="numPmCf" jdbcType="BIGINT" />
+    <result column="NUM_PM_CF_DAY" property="numPmCfDay" jdbcType="BIGINT" />
+    <result column="NUM_CF_DAY" property="numCfDay" jdbcType="BIGINT" />
+    <result column="NUM_PM_KEEP" property="numPmKeep" jdbcType="BIGINT" />
+    <result column="RATIO_WORK_RANK" property="ratioWorkRank" jdbcType="INTEGER" />
+    <result column="NUM_PM_RANK" property="numPmRank" jdbcType="INTEGER" />
+    <result column="NUM_PM_ADD_RANK" property="numPmAddRank" jdbcType="INTEGER" />
+    <result column="NUM_SALE_RANK" property="numSaleRank" jdbcType="INTEGER" />
+    <result column="NUM_ORDER_RANK" property="numOrderRank" jdbcType="INTEGER" />
+    <result column="NUM_READ_RANK" property="numReadRank" jdbcType="INTEGER" />
+    <result column="NUM_VISIT_RANK" property="numVisitRank" jdbcType="INTEGER" />
+    <result column="RATIO_WORK_RANK_YTD" property="ratioWorkRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_PM_RANK_YTD" property="numPmRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_PM_ADD_RANK_YTD" property="numPmAddRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_SALE_RANK_YTD" property="numSaleRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_ORDER_RANK_YTD" property="numOrderRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_READ_RANK_YTD" property="numReadRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_VISIT_RANK_YTD" property="numVisitRankYtd" jdbcType="INTEGER" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="findWorkRatioGmPageResultMap" type="com.lj.business.st.dto.FindWorkRatioGmPageReturn" >
+	<id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="RATIO_WORK" property="ratioWork" jdbcType="DECIMAL" />
+    <result column="NUM_BEAT_GM" property="numBeatGm" jdbcType="INTEGER" />
+    <result column="NUM_PM" property="numPm" jdbcType="BIGINT" />
+    <result column="NUM_PM_ADD" property="numPmAdd" jdbcType="BIGINT" />
+    <result column="NUM_SALE" property="numSale" jdbcType="BIGINT" />
+    <result column="NUM_ORDER" property="numOrder" jdbcType="BIGINT" />
+    <result column="NUM_PM_ORDER" property="numPmOrder" jdbcType="BIGINT" />
+    <result column="NUM_READ" property="numRead" jdbcType="BIGINT" />
+    <result column="RATIO_WORK_RANK" property="ratioWorkRank" jdbcType="INTEGER" />
+    <result column="NUM_PM_RANK" property="numPmRank" jdbcType="INTEGER" />
+    <result column="NUM_PM_ADD_RANK" property="numPmAddRank" jdbcType="INTEGER" />
+    <result column="NUM_SALE_RANK" property="numSaleRank" jdbcType="INTEGER" />
+    <result column="NUM_ORDER_RANK" property="numOrderRank" jdbcType="INTEGER" />
+    <result column="NUM_READ_RANK" property="numReadRank" jdbcType="INTEGER" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="findWrgTotalResultMap" type="com.lj.business.st.dto.FindWrgTotalReturn">
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="RATIO_WORK" property="ratioWork" jdbcType="DECIMAL" />
+    <result column="NUM_BEAT_GM" property="numBeatGm" jdbcType="INTEGER" />
+    <result column="NUM_PM" property="numPm" jdbcType="BIGINT" />
+    <result column="NUM_PM_ADD" property="numPmAdd" jdbcType="BIGINT" />
+    <result column="NUM_PM_INTENTION" property="numPmIntention" jdbcType="BIGINT" />
+    <result column="NUM_PM_ABANDON" property="numPmAbandon" jdbcType="BIGINT" />
+    <result column="NUM_SALE" property="numSale" jdbcType="BIGINT" />
+    <result column="NUM_ORDER" property="numOrder" jdbcType="BIGINT" />
+    <result column="NUM_PM_ORDER" property="numPmOrder" jdbcType="BIGINT" />
+    <result column="NUM_READ" property="numRead" jdbcType="BIGINT" />
+    <result column="NUM_SOCIAL" property="numSocial" jdbcType="BIGINT" />
+    <result column="RATIO_WORK_RANK" property="ratioWorkRank" jdbcType="INTEGER" />
+    <result column="NUM_PM_RANK" property="numPmRank" jdbcType="INTEGER" />
+    <result column="NUM_PM_ADD_RANK" property="numPmAddRank" jdbcType="INTEGER" />
+    <result column="NUM_SALE_RANK" property="numSaleRank" jdbcType="INTEGER" />
+    <result column="NUM_ORDER_RANK" property="numOrderRank" jdbcType="INTEGER" />
+    <result column="NUM_READ_RANK" property="numReadRank" jdbcType="INTEGER" />
+    <result column="RATIO_WORK_RANK_YTD" property="ratioWorkRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_PM_RANK_YTD" property="numPmRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_PM_ADD_RANK_YTD" property="numPmAddRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_SALE_RANK_YTD" property="numSaleRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_ORDER_RANK_YTD" property="numOrderRankYtd" jdbcType="INTEGER" />
+    <result column="NUM_READ_RANK_YTD" property="numReadRankYtd" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    HEAD_ADDRESS, RATIO_WORK, NUM_BEAT_GM, NUM_PM, NUM_PM_ADD, NUM_PM_INTENTION, NUM_PM_ABANDON, 
+    NUM_SALE, NUM_ORDER, NUM_PM_ORDER, NUM_READ, NUM_SOCIAL, NUM_VISIT, NUM_PM_CF, NUM_PM_CF_DAY, NUM_CF_DAY, NUM_PM_KEEP, RATIO_WORK_RANK, 
+    NUM_PM_RANK, NUM_PM_ADD_RANK, NUM_SALE_RANK, NUM_ORDER_RANK, NUM_READ_RANK, NUM_VISIT_RANK, 
+    RATIO_WORK_RANK_YTD, NUM_PM_RANK_YTD, NUM_PM_ADD_RANK_YTD, NUM_SALE_RANK_YTD, NUM_ORDER_RANK_YTD, 
+    NUM_READ_RANK_YTD, NUM_VISIT_RANK_YTD, DAY_ST, DIMENSION_ST, CREATE_DATE,NUM_PM_CF_DAY,NUM_CF_DAY
+  </sql>
+ <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from work_ratio_gm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from work_ratio_gm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.WorkRatioGm" >
+    insert into work_ratio_gm (CODE, MERCHANT_NO, AREA_CODE, 
+      AREA_NAME, SHOP_NO, SHOP_NAME, 
+      MEMBER_NO_GM, MEMBER_NAME_GM, HEAD_ADDRESS, 
+      RATIO_WORK, NUM_BEAT_GM, NUM_PM, 
+      NUM_PM_ADD, NUM_PM_INTENTION, NUM_PM_ABANDON, 
+      NUM_SALE, NUM_ORDER, NUM_PM_ORDER, NUM_READ, 
+      NUM_SOCIAL, NUM_VISIT, NUM_PM_CF, NUM_PM_CF_DAY, NUM_CF_DAY,
+      NUM_PM_KEEP, RATIO_WORK_RANK, NUM_PM_RANK, 
+      NUM_PM_ADD_RANK, NUM_SALE_RANK, NUM_ORDER_RANK, 
+      NUM_READ_RANK, NUM_VISIT_RANK, RATIO_WORK_RANK_YTD, 
+      NUM_PM_RANK_YTD, NUM_PM_ADD_RANK_YTD, NUM_SALE_RANK_YTD, 
+      NUM_ORDER_RANK_YTD, NUM_READ_RANK_YTD, NUM_VISIT_RANK_YTD, 
+      DAY_ST, DIMENSION_ST, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{areaName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{headAddress,jdbcType=VARCHAR}, 
+      #{ratioWork,jdbcType=DECIMAL}, #{numBeatGm,jdbcType=INTEGER}, #{numPm,jdbcType=BIGINT}, 
+      #{numPmAdd,jdbcType=BIGINT}, #{numPmIntention,jdbcType=BIGINT}, #{numPmAbandon,jdbcType=BIGINT}, 
+      #{numSale,jdbcType=BIGINT}, #{numOrder,jdbcType=BIGINT}, #{numPmOrder,jdbcType=BIGINT}, #{numRead,jdbcType=BIGINT}, 
+      #{numSocial,jdbcType=BIGINT}, #{numVisit,jdbcType=BIGINT}, #{numPmCf,jdbcType=BIGINT}, #{numPmCfDay,jdbcType=BIGINT}, #{numCfDay,jdbcType=BIGINT},
+      #{numPmKeep,jdbcType=BIGINT}, #{ratioWorkRank,jdbcType=INTEGER}, #{numPmRank,jdbcType=INTEGER}, 
+      #{numPmAddRank,jdbcType=INTEGER}, #{numSaleRank,jdbcType=INTEGER}, #{numOrderRank,jdbcType=INTEGER}, 
+      #{numReadRank,jdbcType=INTEGER}, #{numVisitRank,jdbcType=INTEGER}, #{ratioWorkRankYtd,jdbcType=INTEGER}, 
+      #{numPmRankYtd,jdbcType=INTEGER}, #{numPmAddRankYtd,jdbcType=INTEGER}, #{numSaleRankYtd,jdbcType=INTEGER}, 
+      #{numOrderRankYtd,jdbcType=INTEGER}, #{numReadRankYtd,jdbcType=INTEGER}, #{numVisitRankYtd,jdbcType=INTEGER}, 
+      #{daySt,jdbcType=DATE}, #{dimensionSt,jdbcType=VARCHAR}, NOW()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.WorkRatioGm" >
+    insert into work_ratio_gm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS,
+      </if>
+      <if test="ratioWork != null" >
+        RATIO_WORK,
+      </if>
+      <if test="numBeatGm != null" >
+        NUM_BEAT_GM,
+      </if>
+      <if test="numPm != null" >
+        NUM_PM,
+      </if>
+      <if test="numPmAdd != null" >
+        NUM_PM_ADD,
+      </if>
+      <if test="numPmIntention != null" >
+        NUM_PM_INTENTION,
+      </if>
+      <if test="numPmAbandon != null" >
+        NUM_PM_ABANDON,
+      </if>
+      <if test="numSale != null" >
+        NUM_SALE,
+      </if>
+      <if test="numOrder != null" >
+        NUM_ORDER,
+      </if>
+      <if test="numPmOrder != null" >
+        NUM_PM_ORDER,
+      </if>
+      <if test="numRead != null" >
+        NUM_READ,
+      </if>
+      <if test="numSocial != null" >
+        NUM_SOCIAL,
+      </if>
+      <if test="numVisit != null" >
+        NUM_VISIT,
+      </if>
+      <if test="numPmCf != null" >
+        NUM_PM_CF,
+      </if>
+      <if test="numPmKeep != null" >
+        NUM_PM_KEEP,
+      </if>
+      <if test="ratioWorkRank != null" >
+        RATIO_WORK_RANK,
+      </if>
+      <if test="numPmRank != null" >
+        NUM_PM_RANK,
+      </if>
+      <if test="numPmAddRank != null" >
+        NUM_PM_ADD_RANK,
+      </if>
+      <if test="numSaleRank != null" >
+        NUM_SALE_RANK,
+      </if>
+      <if test="numOrderRank != null" >
+        NUM_ORDER_RANK,
+      </if>
+      <if test="numReadRank != null" >
+        NUM_READ_RANK,
+      </if>
+      <if test="numVisitRank != null" >
+        NUM_VISIT_RANK,
+      </if>
+      <if test="ratioWorkRankYtd != null" >
+        RATIO_WORK_RANK_YTD,
+      </if>
+      <if test="numPmRankYtd != null" >
+        NUM_PM_RANK_YTD,
+      </if>
+      <if test="numPmAddRankYtd != null" >
+        NUM_PM_ADD_RANK_YTD,
+      </if>
+      <if test="numSaleRankYtd != null" >
+        NUM_SALE_RANK_YTD,
+      </if>
+      <if test="numOrderRankYtd != null" >
+        NUM_ORDER_RANK_YTD,
+      </if>
+      <if test="numReadRankYtd != null" >
+        NUM_READ_RANK_YTD,
+      </if>
+      <if test="numVisitRankYtd != null" >
+        NUM_VISIT_RANK_YTD,
+      </if>
+      <if test="daySt != null" >
+        DAY_ST,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ratioWork != null" >
+        #{ratioWork,jdbcType=DECIMAL},
+      </if>
+      <if test="numBeatGm != null" >
+        #{numBeatGm,jdbcType=INTEGER},
+      </if>
+      <if test="numPm != null" >
+        #{numPm,jdbcType=BIGINT},
+      </if>
+      <if test="numPmAdd != null" >
+        #{numPmAdd,jdbcType=BIGINT},
+      </if>
+      <if test="numPmIntention != null" >
+        #{numPmIntention,jdbcType=BIGINT},
+      </if>
+      <if test="numPmAbandon != null" >
+        #{numPmAbandon,jdbcType=BIGINT},
+      </if>
+      <if test="numSale != null" >
+        #{numSale,jdbcType=BIGINT},
+      </if>
+      <if test="numOrder != null" >
+        #{numOrder,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOrder != null" >
+        #{numPmOrder,jdbcType=BIGINT},
+      </if>
+      <if test="numRead != null" >
+        #{numRead,jdbcType=BIGINT},
+      </if>
+      <if test="numSocial != null" >
+        #{numSocial,jdbcType=BIGINT},
+      </if>
+      <if test="numVisit != null" >
+        #{numVisit,jdbcType=BIGINT},
+      </if>
+      <if test="numPmCf != null" >
+        #{numPmCf,jdbcType=BIGINT},
+      </if>
+      <if test="numPmKeep != null" >
+        #{numPmKeep,jdbcType=BIGINT},
+      </if>
+      <if test="ratioWorkRank != null" >
+        #{ratioWorkRank,jdbcType=INTEGER},
+      </if>
+      <if test="numPmRank != null" >
+        #{numPmRank,jdbcType=INTEGER},
+      </if>
+      <if test="numPmAddRank != null" >
+        #{numPmAddRank,jdbcType=INTEGER},
+      </if>
+      <if test="numSaleRank != null" >
+        #{numSaleRank,jdbcType=INTEGER},
+      </if>
+      <if test="numOrderRank != null" >
+        #{numOrderRank,jdbcType=INTEGER},
+      </if>
+      <if test="numReadRank != null" >
+        #{numReadRank,jdbcType=INTEGER},
+      </if>
+      <if test="numVisitRank != null" >
+        #{numVisitRank,jdbcType=INTEGER},
+      </if>
+      <if test="ratioWorkRankYtd != null" >
+        #{ratioWorkRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numPmRankYtd != null" >
+        #{numPmRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numPmAddRankYtd != null" >
+        #{numPmAddRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numSaleRankYtd != null" >
+        #{numSaleRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numOrderRankYtd != null" >
+        #{numOrderRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numReadRankYtd != null" >
+        #{numReadRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numVisitRankYtd != null" >
+        #{numVisitRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="daySt != null" >
+        #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.WorkRatioGm" >
+    update work_ratio_gm
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ratioWork != null" >
+        RATIO_WORK = #{ratioWork,jdbcType=DECIMAL},
+      </if>
+      <if test="numBeatGm != null" >
+        NUM_BEAT_GM = #{numBeatGm,jdbcType=INTEGER},
+      </if>
+      <if test="numPm != null" >
+        NUM_PM = #{numPm,jdbcType=BIGINT},
+      </if>
+      <if test="numPmAdd != null" >
+        NUM_PM_ADD = #{numPmAdd,jdbcType=BIGINT},
+      </if>
+      <if test="numPmIntention != null" >
+        NUM_PM_INTENTION = #{numPmIntention,jdbcType=BIGINT},
+      </if>
+      <if test="numPmAbandon != null" >
+        NUM_PM_ABANDON = #{numPmAbandon,jdbcType=BIGINT},
+      </if>
+      <if test="numSale != null" >
+        NUM_SALE = #{numSale,jdbcType=BIGINT},
+      </if>
+      <if test="numOrder != null" >
+        NUM_ORDER = #{numOrder,jdbcType=BIGINT},
+      </if>
+      <if test="numPmOrder != null" >
+        NUM_PM_ORDER = #{numPmOrder,jdbcType=BIGINT},
+      </if>
+      <if test="numRead != null" >
+        NUM_READ = #{numRead,jdbcType=BIGINT},
+      </if>
+      <if test="numSocial != null" >
+        NUM_SOCIAL = #{numSocial,jdbcType=BIGINT},
+      </if>
+      <if test="numVisit != null" >
+        NUM_VISIT = #{numVisit,jdbcType=BIGINT},
+      </if>
+      <if test="numPmCf != null" >
+        NUM_PM_CF = #{numPmCf,jdbcType=BIGINT},
+      </if>
+      <if test="numPmKeep != null" >
+        NUM_PM_KEEP = #{numPmKeep,jdbcType=BIGINT},
+      </if>
+      <if test="ratioWorkRank != null" >
+        RATIO_WORK_RANK = #{ratioWorkRank,jdbcType=INTEGER},
+      </if>
+      <if test="numPmRank != null" >
+        NUM_PM_RANK = #{numPmRank,jdbcType=INTEGER},
+      </if>
+      <if test="numPmAddRank != null" >
+        NUM_PM_ADD_RANK = #{numPmAddRank,jdbcType=INTEGER},
+      </if>
+      <if test="numSaleRank != null" >
+        NUM_SALE_RANK = #{numSaleRank,jdbcType=INTEGER},
+      </if>
+      <if test="numOrderRank != null" >
+        NUM_ORDER_RANK = #{numOrderRank,jdbcType=INTEGER},
+      </if>
+      <if test="numReadRank != null" >
+        NUM_READ_RANK = #{numReadRank,jdbcType=INTEGER},
+      </if>
+      <if test="numVisitRank != null" >
+        NUM_VISIT_RANK = #{numVisitRank,jdbcType=INTEGER},
+      </if>
+      <if test="ratioWorkRankYtd != null" >
+        RATIO_WORK_RANK_YTD = #{ratioWorkRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numPmRankYtd != null" >
+        NUM_PM_RANK_YTD = #{numPmRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numPmAddRankYtd != null" >
+        NUM_PM_ADD_RANK_YTD = #{numPmAddRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numSaleRankYtd != null" >
+        NUM_SALE_RANK_YTD = #{numSaleRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numOrderRankYtd != null" >
+        NUM_ORDER_RANK_YTD = #{numOrderRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numReadRankYtd != null" >
+        NUM_READ_RANK_YTD = #{numReadRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="numVisitRankYtd != null" >
+        NUM_VISIT_RANK_YTD = #{numVisitRankYtd,jdbcType=INTEGER},
+      </if>
+      <if test="daySt != null" >
+        DAY_ST = #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.WorkRatioGm" >
+    update work_ratio_gm
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      RATIO_WORK = #{ratioWork,jdbcType=DECIMAL},
+      NUM_BEAT_GM = #{numBeatGm,jdbcType=INTEGER},
+      NUM_PM = #{numPm,jdbcType=BIGINT},
+      NUM_PM_ADD = #{numPmAdd,jdbcType=BIGINT},
+      NUM_PM_INTENTION = #{numPmIntention,jdbcType=BIGINT},
+      NUM_PM_ABANDON = #{numPmAbandon,jdbcType=BIGINT},
+      NUM_SALE = #{numSale,jdbcType=BIGINT},
+      NUM_ORDER = #{numOrder,jdbcType=BIGINT},
+      NUM_PM_ORDER = #{numPmOrder,jdbcType=BIGINT},
+      NUM_READ = #{numRead,jdbcType=BIGINT},
+      NUM_SOCIAL = #{numSocial,jdbcType=BIGINT},
+      NUM_VISIT = #{numVisit,jdbcType=BIGINT},
+      NUM_PM_CF = #{numPmCf,jdbcType=BIGINT},
+      NUM_PM_KEEP = #{numPmKeep,jdbcType=BIGINT},
+      RATIO_WORK_RANK = #{ratioWorkRank,jdbcType=INTEGER},
+      NUM_PM_RANK = #{numPmRank,jdbcType=INTEGER},
+      NUM_PM_ADD_RANK = #{numPmAddRank,jdbcType=INTEGER},
+      NUM_SALE_RANK = #{numSaleRank,jdbcType=INTEGER},
+      NUM_ORDER_RANK = #{numOrderRank,jdbcType=INTEGER},
+      NUM_READ_RANK = #{numReadRank,jdbcType=INTEGER},
+      NUM_VISIT_RANK = #{numVisitRank,jdbcType=INTEGER},
+      RATIO_WORK_RANK_YTD = #{ratioWorkRankYtd,jdbcType=INTEGER},
+      NUM_PM_RANK_YTD = #{numPmRankYtd,jdbcType=INTEGER},
+      NUM_PM_ADD_RANK_YTD = #{numPmAddRankYtd,jdbcType=INTEGER},
+      NUM_SALE_RANK_YTD = #{numSaleRankYtd,jdbcType=INTEGER},
+      NUM_ORDER_RANK_YTD = #{numOrderRankYtd,jdbcType=INTEGER},
+      NUM_READ_RANK_YTD = #{numReadRankYtd,jdbcType=INTEGER},
+      NUM_VISIT_RANK_YTD = #{numVisitRankYtd,jdbcType=INTEGER},
+      DAY_ST = #{daySt,jdbcType=DATE},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findWorkRatioGmList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.FindFollowClientTotalIndex">
+    select 
+    <include refid="Base_Column_List"/>
+    from work_ratio_gm
+    where 1 = 1 AND DIMENSION_ST = 'GUID'
+      AND MERCHANT_NO = #{merchantNo}
+      AND MEMBER_NO_GM = #{memberNoGm}
+    <if test="beginDate != null ">
+      <![CDATA[
+        AND DAY_ST >= #{beginDate,jdbcType=DATE}
+     ]]>
+    </if>
+    <if test="endDate != null">
+      <![CDATA[
+        AND DAY_ST <= #{endDate,jdbcType=DATE}
+       ]]>
+    </if>
+  </select>
+  
+  <select id="findGmIndex" resultType="java.lang.Integer" parameterType="com.lj.business.st.dto.FindFollowClientTotalIndex">
+    <![CDATA[
+     SELECT a.rownum
+   FROM
+   (
+      SELECT @rownum:=@rownum+1 AS rownum,MEMBER_NO_GM,sum(RATIO_WORK) rw
+      FROM work_ratio_gm,(SELECT @rownum := 0) r     ]]>
+   
+	    WHERE DIMENSION_ST = 'GUID'
+	         AND MERCHANT_NO = #{merchantNo}
+	    <if test="beginDate != null ">
+	      <![CDATA[
+	        AND DAY_ST >= #{beginDate,jdbcType=DATE}
+	     ]]>
+	    </if>
+	    <if test="endDate != null">
+	      <![CDATA[
+	        AND DAY_ST <= #{endDate,jdbcType=DATE}
+	       ]]>
+	    </if>
+	    
+	    GROUP BY MEMBER_NO_GM 
+        ORDER BY rw,NUM_SALE
+     ) a
+     WHERE a.MEMBER_NO_GM = #{memberNoGm}
+	    
+  </select>
+  
+  <select id="findWorkRatioGmByGmStDate" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.FindWorkDayGmIndex">
+  	select 
+   <include refid="Base_Column_List"/>
+    from work_ratio_gm
+    where 1 = 1 AND DIMENSION_ST = 'GUID'
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    <if test="memberNoGm != null">
+      AND MEMBER_NO_GM = #{memberNoGm}
+    </if>
+    <if test="stDate != null ">
+      <![CDATA[
+        AND DAY_ST = #{stDate,jdbcType=DATE}
+     ]]>
+    </if>
+  </select>
+
+  <select id="findWorkRatioGmParams" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.FindOperateDayReport">
+    select
+    <include refid="Base_Column_List"/>
+    from work_ratio_gm
+    where 1 = 1
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    <if test="areaCode != null and areaCode != ''" >
+      and  AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+    </if>
+    <if test="memberNoGm != null">
+      AND MEMBER_NO_GM = #{memberNoGm}
+    </if>
+    <if test="dimensionSt != null">
+      AND DIMENSION_ST = #{dimensionSt}
+    </if>
+    <if test="beginDate != null ">
+      <![CDATA[
+        AND DAY_ST >= #{beginDate,jdbcType=DATE}
+     ]]>
+    </if>
+    <if test="endDate != null">
+      <![CDATA[
+        AND DAY_ST <= #{endDate,jdbcType=DATE}
+       ]]>
+    </if>
+  </select>
+  
+    <sql id="findWorkRatioGmPage_condition" >
+  	 <where>
+      <if test="merchantNo != null" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="shopNo != null" >
+        and  SHOP_NO = #{shopNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNoGm != null" >
+        and  MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+       <if test="memberNameGm != null and memberNameGm != ''" >
+        and MEMBER_NAME_GM like '%${memberNameGm}%'
+      </if>
+      <if test="shopName != null and shopName != ''" >
+        and SHOP_NAME like '%${shopName}%'
+      </if>
+       <if test="daySt != null" >
+        and  DAY_ST = #{daySt,jdbcType=DATE}
+      </if>
+      </where>
+  </sql>
+  
+   <!-- 分页查询 -->
+   <select id="findWorkRatioGmPage" resultMap="findWorkRatioGmPageResultMap" parameterType="com.lj.business.st.dto.FindWorkRatioGmPage" >
+  SELECT     CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    HEAD_ADDRESS, RATIO_WORK, NUM_BEAT_GM, NUM_PM, NUM_PM_ADD, NUM_SALE, NUM_ORDER, NUM_PM_ORDER, NUM_READ, 
+    RATIO_WORK_RANK, NUM_PM_RANK, NUM_PM_ADD_RANK, NUM_SALE_RANK, NUM_ORDER_RANK, NUM_READ_RANK, 
+    DAY_ST, DIMENSION_ST, CREATE_DATE
+  FROM work_ratio_gm 
+ 	 <include refid="findWorkRatioGmPage_condition" />
+   order by CREATE_DATE ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findWorkRatioGmPageCount" resultType="int" parameterType="com.lj.business.st.dto.FindWorkRatioGmPage" >
+    select  count(*)
+     FROM work_ratio_gm 
+     <include refid="findWorkRatioGmPage_condition" />
+  </select>
+  
+   <select id="selectByParams" parameterType="com.lj.business.st.domain.WorkRatioGm" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from work_ratio_gm
+    <where>
+      <if test="memberNoGm != null" >
+        and  MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="code != null" >
+       CODE = #{code,jdbcType=VARCHAR}
+      </if>
+       <if test="daySt != null" >
+        and  DAY_ST = #{daySt,jdbcType=DATE}
+      </if>
+      </where>
+  </select>
+  
+   <select id="findWrgTotal" parameterType="com.lj.business.st.dto.FindWrgTotal" resultMap="findWrgTotalResultMap">
+    select  SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    HEAD_ADDRESS, RATIO_WORK, NUM_BEAT_GM, NUM_PM, NUM_PM_ADD, NUM_PM_INTENTION, NUM_PM_ABANDON, 
+    NUM_SALE, NUM_ORDER, NUM_PM_ORDER, NUM_READ, NUM_SOCIAL, RATIO_WORK_RANK, NUM_PM_RANK, NUM_PM_ADD_RANK, 
+    NUM_SALE_RANK, NUM_ORDER_RANK, NUM_READ_RANK ,RATIO_WORK_RANK_YTD, NUM_PM_RANK_YTD, 
+    NUM_PM_ADD_RANK_YTD, NUM_SALE_RANK_YTD, NUM_ORDER_RANK_YTD, NUM_READ_RANK_YTD
+    from work_ratio_gm
+    <where>
+      <if test="memberNoGm != null and memberNoGm != ''" >
+        and  MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="areaCode != null and areaCode != ''" >
+        and  AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+      </if>
+      <if test="shopNo != null and shopNo != ''" >
+        and  SHOP_NO = #{shopNo,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="dimensionSt != null and dimensionSt != ''" >
+        and  DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR}
+      </if>
+       <if test="beginDate != null" >
+        <![CDATA[ and  DAY_ST >= #{beginDate,jdbcType=DATE} ]]>
+      </if>
+       <if test="endDate != null" >
+       <![CDATA[ and  DAY_ST <= #{endDate,jdbcType=DATE} ]]>
+      </if>
+      </where>
+      order by ${orderBy} desc
+      limit 0 , 10
+  </select>
+  
+  <select id="findWorkRatioShopByDay" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from work_ratio_gm
+  	where SHOP_NO IS NOT NULL AND SHOP_NO != '' AND (ISNULL(MEMBER_NO_GM) OR MEMBER_NO_GM = '')
+  		AND DAY_ST = #{preday,jdbcType=DATE}
+  </select>
+  
+  <select id="findWorkRatioByDimDay" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from work_ratio_gm
+  	<where>
+      <if test="merchantNo != null and merchantNo != ''" >
+        and  MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="dimensionSt != null and dimensionSt != ''" >
+        and  DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR}
+      </if>
+  		AND DAY_ST = #{date,jdbcType=DATE}
+   </where>
+  </select>
+
+</mapper>

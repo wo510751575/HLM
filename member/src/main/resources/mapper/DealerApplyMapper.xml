@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IDealerApplyDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.DealerApply" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="DEALER_NO" property="dealerNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="DEALER_NAME" property="dealerName" jdbcType="VARCHAR" />
+    <result column="APPLY_STATUS" property="applyStatus" jdbcType="TINYINT" />
+    <result column="APPLY_TIME" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_NAME" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_ID" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_FRONT" property="legalPersonCardFront" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_REVERSE" property="legalPersonCardReverse" jdbcType="VARCHAR" />
+    <result column="BUSINESS_PERSON" property="businessPerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_PERSON" property="dealerResponsiblePerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_MOBILE" property="dealerResponsibleMobile" jdbcType="VARCHAR" />
+    <result column="BANKCARD_NO" property="bankcardNo" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="BANK_PROVINCE_CODE" property="bankProvinceCode" jdbcType="VARCHAR" />
+    <result column="BANK_PROVINCE_NAME" property="bankProvinceName" jdbcType="VARCHAR" />
+    <result column="BANK_CITY_CODE" property="bankCityCode" jdbcType="VARCHAR" />
+    <result column="BANK_CITY_NAME" property="bankCityName" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="ATTACHMENT" property="attachment" jdbcType="VARCHAR" />
+    <result column="AUDIT_NO" property="auditNo" jdbcType="VARCHAR" />
+    <result column="AUDIT_NAME" property="auditName" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, DEALER_NO, DEALER_CODE, DEALER_NAME, APPLY_STATUS, APPLY_TIME, PROVINCE_CODE, 
+    PROVINCE_NAME, CITY_CODE, CITY_NAME, BUSINESS_LICENSE, LEGAL_PERSON_NAME, LEGAL_PERSON_ID, 
+    LEGAL_PERSON_CARD_FRONT, LEGAL_PERSON_CARD_REVERSE, BUSINESS_PERSON, DEALER_RESPONSIBLE_PERSON, 
+    DEALER_RESPONSIBLE_MOBILE, BANKCARD_NO, BANK_CODE, BANK_NAME, CUST_NAME,
+    BANK_PROVINCE_CODE,BANK_PROVINCE_NAME,BANK_CITY_CODE,BANK_CITY_NAME,BRANCH, 
+    ATTACHMENT, AUDIT_NO, AUDIT_NAME, AUDIT_TIME, MERCHANT_NO, CREATE_DATE, UPDATE_DATE, 
+    REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dealer_apply
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dealer_apply
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.lj.business.member.domain.DealerApply" >
+    insert into dealer_apply (CODE, DEALER_NO, DEALER_CODE, 
+      DEALER_NAME, APPLY_STATUS, APPLY_TIME, 
+      PROVINCE_CODE, PROVINCE_NAME, CITY_CODE, 
+      CITY_NAME, BUSINESS_LICENSE, LEGAL_PERSON_NAME, 
+      LEGAL_PERSON_ID, LEGAL_PERSON_CARD_FRONT, LEGAL_PERSON_CARD_REVERSE, 
+      BUSINESS_PERSON, DEALER_RESPONSIBLE_PERSON, 
+      DEALER_RESPONSIBLE_MOBILE, BANKCARD_NO, BANK_CODE, 
+      BANK_NAME, CUST_NAME,BANK_PROVINCE_CODE,BANK_PROVINCE_NAME,BANK_CITY_CODE,BANK_CITY_NAME, BRANCH, 
+      ATTACHMENT, AUDIT_NO, AUDIT_NAME, 
+      AUDIT_TIME, MERCHANT_NO, CREATE_DATE, 
+      UPDATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{dealerNo,jdbcType=VARCHAR}, #{dealerCode,jdbcType=VARCHAR}, 
+      #{dealerName,jdbcType=VARCHAR}, #{applyStatus,jdbcType=TINYINT}, #{applyTime,jdbcType=TIMESTAMP}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{businessLicense,jdbcType=VARCHAR}, #{legalPersonName,jdbcType=VARCHAR}, 
+      #{legalPersonId,jdbcType=VARCHAR}, #{legalPersonCardFront,jdbcType=VARCHAR}, #{legalPersonCardReverse,jdbcType=VARCHAR}, 
+      #{businessPerson,jdbcType=VARCHAR}, #{dealerResponsiblePerson,jdbcType=VARCHAR}, 
+      #{dealerResponsibleMobile,jdbcType=VARCHAR}, #{bankcardNo,jdbcType=VARCHAR}, #{bankCode,jdbcType=VARCHAR}, 
+      #{bankName,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR},#{bankProvinceCode,jdbcType=VARCHAR},#{bankProvinceName,jdbcType=VARCHAR}, 
+      #{bankCityCode,jdbcType=VARCHAR},#{bankCityName,jdbcType=VARCHAR},#{branch,jdbcType=VARCHAR}, 
+      #{attachment,jdbcType=VARCHAR}, #{auditNo,jdbcType=VARCHAR}, #{auditName,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{merchantNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.DealerApply" >
+    insert into dealer_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="dealerNo != null" >
+        DEALER_NO,
+      </if>
+      <if test="dealerCode != null" >
+        DEALER_CODE,
+      </if>
+      <if test="dealerName != null" >
+        DEALER_NAME,
+      </if>
+      <if test="applyStatus != null" >
+        APPLY_STATUS,
+      </if>
+      <if test="applyTime != null" >
+        APPLY_TIME,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME,
+      </if>
+      <if test="businessLicense != null" >
+        BUSINESS_LICENSE,
+      </if>
+      <if test="legalPersonName != null" >
+        LEGAL_PERSON_NAME,
+      </if>
+      <if test="legalPersonId != null" >
+        LEGAL_PERSON_ID,
+      </if>
+      <if test="legalPersonCardFront != null" >
+        LEGAL_PERSON_CARD_FRONT,
+      </if>
+      <if test="legalPersonCardReverse != null" >
+        LEGAL_PERSON_CARD_REVERSE,
+      </if>
+      <if test="businessPerson != null" >
+        BUSINESS_PERSON,
+      </if>
+      <if test="dealerResponsiblePerson != null" >
+        DEALER_RESPONSIBLE_PERSON,
+      </if>
+      <if test="dealerResponsibleMobile != null" >
+        DEALER_RESPONSIBLE_MOBILE,
+      </if>
+      <if test="bankcardNo != null" >
+        BANKCARD_NO,
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="bankProvinceCode != null" >
+        BANK_PROVINCE_CODE,
+      </if>
+      <if test="bankProvinceName != null" >
+        BANK_PROVINCE_NAME,
+      </if>
+      <if test="bankCityCode != null" >
+        BANK_CITY_CODE,
+      </if>
+      <if test="bankCityName != null" >
+        BANK_CITY_NAME,
+      </if>
+      <if test="branch != null" >
+        BRANCH,
+      </if>
+      <if test="attachment != null" >
+        ATTACHMENT,
+      </if>
+      <if test="auditNo != null" >
+        AUDIT_NO,
+      </if>
+      <if test="auditName != null" >
+        AUDIT_NAME,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerNo != null" >
+        #{dealerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerCode != null" >
+        #{dealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerName != null" >
+        #{dealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null" >
+        #{applyStatus,jdbcType=TINYINT},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null" >
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardFront != null" >
+        #{legalPersonCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardReverse != null" >
+        #{legalPersonCardReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="businessPerson != null" >
+        #{businessPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsiblePerson != null" >
+        #{dealerResponsiblePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsibleMobile != null" >
+        #{dealerResponsibleMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcardNo != null" >
+        #{bankcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvinceCode != null" >
+        #{bankProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvinceName != null" >
+        #{bankProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCityCode != null" >
+        #{bankCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCityName != null" >
+        #{bankCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment != null" >
+        #{attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="auditNo != null" >
+        #{auditNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditName != null" >
+        #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.DealerApply" >
+    update dealer_apply
+    <set >
+      <if test="dealerNo != null" >
+        DEALER_NO = #{dealerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerCode != null" >
+        DEALER_CODE = #{dealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerName != null" >
+        DEALER_NAME = #{dealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null" >
+        APPLY_STATUS = #{applyStatus,jdbcType=TINYINT},
+      </if>
+      <if test="applyTime != null" >
+        APPLY_TIME = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null" >
+        BUSINESS_LICENSE = #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        LEGAL_PERSON_NAME = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        LEGAL_PERSON_ID = #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardFront != null" >
+        LEGAL_PERSON_CARD_FRONT = #{legalPersonCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardReverse != null" >
+        LEGAL_PERSON_CARD_REVERSE = #{legalPersonCardReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="businessPerson != null" >
+        BUSINESS_PERSON = #{businessPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsiblePerson != null" >
+        DEALER_RESPONSIBLE_PERSON = #{dealerResponsiblePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsibleMobile != null" >
+        DEALER_RESPONSIBLE_MOBILE = #{dealerResponsibleMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcardNo != null" >
+        BANKCARD_NO = #{bankcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvinceCode != null" >
+        BANK_PROVINCE_CODE = #{bankProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvinceName != null" >
+        BANK_PROVINCE_NAME = #{bankProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCityCode != null" >
+        BANK_CITY_CODE = #{bankCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCityName != null" >
+        BANK_CITY_NAME = #{bankCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        BRANCH = #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment != null" >
+        ATTACHMENT = #{attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="auditNo != null" >
+        AUDIT_NO = #{auditNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditName != null" >
+        AUDIT_NAME = #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.DealerApply" >
+    update dealer_apply
+    set DEALER_NO = #{dealerNo,jdbcType=VARCHAR},
+      DEALER_CODE = #{dealerCode,jdbcType=VARCHAR},
+      DEALER_NAME = #{dealerName,jdbcType=VARCHAR},
+      APPLY_STATUS = #{applyStatus,jdbcType=TINYINT},
+      APPLY_TIME = #{applyTime,jdbcType=TIMESTAMP},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      BUSINESS_LICENSE = #{businessLicense,jdbcType=VARCHAR},
+      LEGAL_PERSON_NAME = #{legalPersonName,jdbcType=VARCHAR},
+      LEGAL_PERSON_ID = #{legalPersonId,jdbcType=VARCHAR},
+      LEGAL_PERSON_CARD_FRONT = #{legalPersonCardFront,jdbcType=VARCHAR},
+      LEGAL_PERSON_CARD_REVERSE = #{legalPersonCardReverse,jdbcType=VARCHAR},
+      BUSINESS_PERSON = #{businessPerson,jdbcType=VARCHAR},
+      DEALER_RESPONSIBLE_PERSON = #{dealerResponsiblePerson,jdbcType=VARCHAR},
+      DEALER_RESPONSIBLE_MOBILE = #{dealerResponsibleMobile,jdbcType=VARCHAR},
+      BANKCARD_NO = #{bankcardNo,jdbcType=VARCHAR},
+      BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      BANK_PROVINCE_CODE = #{bankProvinceCode,jdbcType=VARCHAR},
+      BANK_PROVINCE_NAME = #{bankProvinceName,jdbcType=VARCHAR},
+      BANK_CITY_CODE = #{bankCityCode,jdbcType=VARCHAR},
+      BANK_CITY_NAME = #{bankCityName,jdbcType=VARCHAR},
+      BRANCH = #{branch,jdbcType=VARCHAR},
+      ATTACHMENT = #{attachment,jdbcType=VARCHAR},
+      AUDIT_NO = #{auditNo,jdbcType=VARCHAR},
+      AUDIT_NAME = #{auditName,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <resultMap id="FindDealerApplyPageResultMap" type="com.lj.business.member.dto.company.FindDealerApplyPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="DEALER_NO" property="dealerNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="DEALER_NAME" property="dealerName" jdbcType="VARCHAR" />
+    <result column="APPLY_STATUS" property="applyStatus" jdbcType="TINYINT" />
+    <result column="APPLY_TIME" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_NAME" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_ID" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_FRONT" property="legalPersonCardFront" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_REVERSE" property="legalPersonCardReverse" jdbcType="VARCHAR" />
+    <result column="BUSINESS_PERSON" property="businessPerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_PERSON" property="dealerResponsiblePerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_MOBILE" property="dealerResponsibleMobile" jdbcType="VARCHAR" />
+    <result column="BANKCARD_NO" property="bankcardNo" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="ATTACHMENT" property="attachment" jdbcType="VARCHAR" />
+    <result column="AUDIT_NO" property="auditNo" jdbcType="VARCHAR" />
+    <result column="AUDIT_NAME" property="auditName" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindDealerApplyDetailResultMap" type="com.lj.business.member.dto.company.FindDealerApplyDetailReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="DEALER_NO" property="dealerNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="DEALER_NAME" property="dealerName" jdbcType="VARCHAR" />
+    <result column="APPLY_STATUS" property="applyStatus" jdbcType="TINYINT" />
+    <result column="APPLY_TIME" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_NAME" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_ID" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_FRONT" property="legalPersonCardFront" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_REVERSE" property="legalPersonCardReverse" jdbcType="VARCHAR" />
+    <result column="BUSINESS_PERSON" property="businessPerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_PERSON" property="dealerResponsiblePerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_MOBILE" property="dealerResponsibleMobile" jdbcType="VARCHAR" />
+    <result column="BANKCARD_NO" property="bankcardNo" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="BANK_PROVINCE_CODE" property="bankProvinceCode" jdbcType="VARCHAR" />
+    <result column="BANK_PROVINCE_NAME" property="bankProvinceName" jdbcType="VARCHAR" />
+    <result column="BANK_CITY_CODE" property="bankCityCode" jdbcType="VARCHAR" />
+    <result column="BANK_CITY_NAME" property="bankCityName" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="ATTACHMENT" property="attachment" jdbcType="VARCHAR" />
+    <result column="AUDIT_NO" property="auditNo" jdbcType="VARCHAR" />
+    <result column="AUDIT_NAME" property="auditName" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    
+    <collection property="shopList" ofType="com.lj.business.member.dto.company.DealerApplyShopDto">
+	    
+	    <result column="SHOP_NO_MERCHANT" property="shopNoMerchant" jdbcType="VARCHAR" />
+	    
+	    <result column="SHOP_PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+	    <result column="SHOP_PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+	    <result column="SHOP_CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+	    <result column="SHOP_CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+	    <result column="SHOP_AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+	    <result column="SHOP_AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+	    <result column="DETAIL_ADDR" property="detailAddr" jdbcType="VARCHAR" />
+	    <result column="LOGO_ADDR" property="logoAddr" jdbcType="VARCHAR" />
+	    <result column="BIZ_SCOPE" property="bizScope" jdbcType="VARCHAR" />
+	    <result column="SHOP_MANAGER_NAME" property="shopManagerName" jdbcType="VARCHAR" />
+	    <result column="SHOP_MANAGER_MOBILE" property="shopManagerMobile" jdbcType="VARCHAR" />
+	    <result column="SHOP_MANAGER_WX_NO" property="shopManagerWxNo" jdbcType="VARCHAR" />
+   	</collection>
+  </resultMap>
+  
+  <select id="findDealerApplyPage" resultMap="FindDealerApplyPageResultMap" parameterType="com.lj.business.member.dto.company.FindDealerApplyPage" >
+  SELECT   
+  	<include refid="Base_Column_List" />
+  FROM dealer_apply da
+ 	 <include refid="findDealerApplyPage_condition" />
+   order by da.APPLY_STATUS asc, da.APPLY_TIME ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findDealerApplyPageCount" resultType="int" parameterType="com.lj.business.member.dto.company.FindDealerApplyPage" >
+    select  count(*) FROM dealer_apply da
+     <include refid="findDealerApplyPage_condition" />
+  </select>
+  
+  <sql id="findDealerApplyPage_condition" >
+  	 <where>
+  	 	<if test="merchantNo != null and merchantNo !=''" >
+	        and  da.MERCHANT_NO = #{merchantNo}
+	      </if>
+	      <if test="dealerCode != null and dealerCode !=''" >
+	        and  da.DEALER_CODE = #{dealerCode}
+	      </if>
+	      <if test="dealerName != null and dealerName !='' ">
+			and da.DEALER_NAME like CONCAT('%',#{dealerName,jdbcType=VARCHAR},'%')
+	  	  </if>
+	  	  <if test="dealerResponsiblePerson != null and dealerResponsiblePerson !='' ">
+			and da.DEALER_RESPONSIBLE_PERSON like CONCAT('%',#{dealerResponsiblePerson,jdbcType=VARCHAR},'%')
+	  	  </if>
+	      <if test="dealerResponsibleMobile != null and dealerResponsibleMobile !=''" >
+	        and  da.DEALER_RESPONSIBLE_MOBILE = #{dealerResponsibleMobile}
+	      </if>
+	      <if test="applyStatus != null" >
+	        and  da.APPLY_STATUS = #{applyStatus}
+	      </if>
+	      <if test="startTime != null">
+			<![CDATA[and da.APPLY_TIME >= #{startTime}]]>
+		  </if>
+		  <if test="endTime != null"> 
+			<![CDATA[and da.APPLY_TIME <= #{endTime}]]>
+		  </if>
+      </where>
+  </sql>
+  
+  <sql id="FindDealerApplyDetail_Column_List" >
+    da.CODE, da.DEALER_NO, da.DEALER_CODE, da.DEALER_NAME, da.APPLY_STATUS, da.APPLY_TIME, da.PROVINCE_CODE, 
+    da.PROVINCE_NAME, da.CITY_CODE, da.CITY_NAME, da.BUSINESS_LICENSE, da.LEGAL_PERSON_NAME, da.LEGAL_PERSON_ID, 
+    da.LEGAL_PERSON_CARD_FRONT, da.LEGAL_PERSON_CARD_REVERSE, da.BUSINESS_PERSON, da.DEALER_RESPONSIBLE_PERSON, 
+    da.DEALER_RESPONSIBLE_MOBILE, da.BANKCARD_NO, da.BANK_CODE, da.BANK_NAME, da.CUST_NAME, 
+    da.BANK_PROVINCE_CODE,da.BANK_PROVINCE_NAME,da.BANK_CITY_CODE,da.BANK_CITY_NAME,da.BRANCH, 
+    da.ATTACHMENT, da.AUDIT_NO, da.AUDIT_NAME, da.AUDIT_TIME, da.MERCHANT_NO, da.CREATE_DATE, da.UPDATE_DATE, 
+    da.REMARK, da.REMARK2, da.REMARK3, da.REMARK4,
+    das. das.SHOP_NO_MERCHANT, das. das.PROVINCE_CODE SHOP_PROVINCE_CODE, das.PROVINCE_NAME SHOP_PROVINCE_NAME, 
+    das.CITY_CODE SHOP_CITY_CODE, das.CITY_NAME SHOP_CITY_NAME, das.AREA_CODE SHOP_AREA_CODE, das.AREA_NAME SHOP_AREA_NAME, 
+    das.DETAIL_ADDR, das.LOGO_ADDR, das.BIZ_SCOPE, das.SHOP_MANAGER_NAME, 
+    das.SHOP_MANAGER_MOBILE, das.SHOP_MANAGER_WX_NO, das.MERCHANT_NO, das.CREATE_DATE, das.UPDATE_DATE
+  </sql>
+  
+  <select id="findDealerApplyDetail" resultMap="FindDealerApplyDetailResultMap" >
+	  SELECT   
+	  	<include refid="FindDealerApplyDetail_Column_List" />
+	  FROM dealer_apply da
+	  left join dealer_apply_shop das on da.DEALER_NO = das.DEALER_NO
+	  where da.code = #{code}
+  </select>
+  
+</mapper>

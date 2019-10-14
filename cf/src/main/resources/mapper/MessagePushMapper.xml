@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cf.dao.IMessagePushDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cf.domain.MessagePush" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MSG_TITLE" property="msgTitle" jdbcType="VARCHAR" />
+    <result column="MSG_CONTENT" property="msgContent" jdbcType="VARCHAR" />
+    <result column="MSG_TYPE" property="msgType" jdbcType="CHAR" />
+    <result column="PUSH_DATE" property="pushDate" jdbcType="TIMESTAMP" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_MSG" property="memberNoMsg" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAMES_MSG" property="memberNamesMsg" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BaseResultPageMap" type="com.lj.business.cf.dto.messagePush.FindMessagePushPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MSG_TITLE" property="msgTitle" jdbcType="VARCHAR" />
+    <result column="MSG_CONTENT" property="msgContent" jdbcType="VARCHAR" />
+    <result column="MSG_TYPE" property="msgType" jdbcType="CHAR" />
+    <result column="PUSH_DATE" property="pushDate" jdbcType="TIMESTAMP" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_MSG" property="memberNoMsg" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAMES_MSG" property="memberNamesMsg" jdbcType="VARCHAR" />
+    <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MSG_TITLE, MSG_CONTENT, MSG_TYPE, PUSH_DATE, MERCHANT_NO, MERCHANT_NAME, SHOP_NO, SHOP_NAME, 
+    MEMBER_NO_GM, MEMBER_NAME_GM, MEMBER_NO_MSG, MEMBER_NAMES_MSG, UPDATE_ID, UPDATE_DATE, 
+    CREATE_ID, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from message_push
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from message_push
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cf.domain.MessagePush" >
+    insert into message_push (CODE, MSG_TITLE, MSG_CONTENT, MSG_TYPE,
+      PUSH_DATE, MERCHANT_NO, MERCHANT_NAME, 
+      SHOP_NO, SHOP_NAME, MEMBER_NO_GM, 
+      MEMBER_NAME_GM, MEMBER_NO_MSG, MEMBER_NAMES_MSG, 
+      UPDATE_ID, UPDATE_DATE, CREATE_ID, 
+      CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{msgTitle,jdbcType=VARCHAR}, #{msgContent,jdbcType=VARCHAR}, #{msgType,jdbcType=CHAR},
+      #{pushDate,jdbcType=TIMESTAMP}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, 
+      #{memberNameGm,jdbcType=VARCHAR}, #{memberNoMsg,jdbcType=VARCHAR}, #{memberNamesMsg,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cf.domain.MessagePush" >
+    insert into message_push
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="msgTitle != null" >
+        MSG_TITLE,
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT,
+      </if>
+      <if test="msgType != null" >
+        MSG_TYPE,
+      </if>
+      <if test="pushDate != null" >
+        PUSH_DATE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="memberNoMsg != null" >
+        MEMBER_NO_MSG,
+      </if>
+      <if test="memberNamesMsg != null" >
+        MEMBER_NAMES_MSG,
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTitle != null" >
+        #{msgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null" >
+        #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=CHAR},
+      </if>
+      <if test="pushDate != null" >
+        #{pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoMsg != null" >
+        #{memberNoMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNamesMsg != null" >
+        #{memberNamesMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cf.domain.MessagePush" >
+    update message_push
+    <set >
+      <if test="msgTitle != null" >
+        MSG_TITLE = #{msgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        MSG_TYPE = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="pushDate != null" >
+        PUSH_DATE = #{pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoMsg != null" >
+        MEMBER_NO_MSG = #{memberNoMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNamesMsg != null" >
+        MEMBER_NAMES_MSG = #{memberNamesMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cf.domain.MessagePush" >
+    update message_push
+    set MSG_TITLE = #{msgTitle,jdbcType=VARCHAR},
+      MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      MSG_TYPE = #{msgType,jdbcType=CHAR},
+      PUSH_DATE = #{pushDate,jdbcType=TIMESTAMP},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      MEMBER_NO_MSG = #{memberNoMsg,jdbcType=VARCHAR},
+      MEMBER_NAMES_MSG = #{memberNamesMsg,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findMessagePushPage" resultMap="BaseResultPageMap">
+	SELECT <include refid="Base_Column_List" />
+	FROM message_push
+	WHERE MEMBER_NO_GM = #{memberNoGm}
+	<if test="beginDate != null and beginDate != '' ">
+		<![CDATA[AND PUSH_DATE >= #{beginDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="endDate != null and endDate != '' ">
+		<![CDATA[AND PUSH_DATE <= #{endDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	order by PUSH_DATE ASC
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findMessagePushPageCount" resultType="integer">
+   SELECT COUNT(1)
+	FROM message_push
+	WHERE MEMBER_NO_GM = #{memberNoGm}
+	<if test="beginDate != null and beginDate != '' ">
+		<![CDATA[AND PUSH_DATE >= #{beginDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="endDate != null and endDate != '' ">
+		<![CDATA[AND PUSH_DATE <= #{endDate,jdbcType=TIMESTAMP}]]>
+	</if>
+  </select>
+  
+  <select id="findMessagePushByPm" resultMap="BaseResultPageMap">
+  	SELECT
+	<include refid="Base_Column_List" />
+	FROM message_push WHERE code IN
+  	(SELECT DISTINCT MSG_NO FROM member_message_relation
+  	<where>
+  		<if test="merchantNo != null and merchantNo != ''">
+  			and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  		</if>
+  		<if test="memberNoGm != null and memberNoGm != ''">
+  			and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+  		</if>
+  		<if test="memberNo != null and memberNo != ''">
+  			and MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+  		</if>
+  		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[AND PUSH_DATE >= #{beginDate,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[AND PUSH_DATE <= #{endDate,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="msgStatus != null and msgStatus != ''">
+			and MSG_STATUS = #{msgStatus,jdbcType=VARCHAR}
+		</if>
+  	</where>
+  	) ORDER BY CREATE_DATE DESC
+  	limit ${start} , ${limit}
+  </select>
+  
+  <select id="findMessagePushByGm" resultMap="BaseResultPageMap">
+  	SELECT
+	<include refid="Base_Column_List" />
+	FROM message_push WHERE code IN
+  	(SELECT DISTINCT MSG_NO FROM member_message_relation
+  	<where>
+  		<if test="merchantNo != null and merchantNo != ''">
+  			and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  		</if>
+  		<if test="memberNo != null and memberNo != ''">
+  			and MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+  		</if>
+  		<if test="memberNoGm != null and memberNoGm != ''">
+  			and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+  		</if>
+  		<if test="msgStatus != null and msgStatus != ''">
+  			and MSG_STATUS = #{msgStatus,jdbcType=VARCHAR}
+  		</if>
+  		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[AND PUSH_DATE >= #{beginDate,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[AND PUSH_DATE <= #{endDate,jdbcType=TIMESTAMP}]]>
+		</if>
+  	</where>
+  	) ORDER BY PUSH_DATE ${sortDir}
+  	<!-- 当状态为无效时不需要分页 -->
+  	<if test="isPage">
+  		limit ${start} , ${limit}
+  	</if>
+  </select>
+  
+</mapper>

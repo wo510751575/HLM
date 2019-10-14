@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IMerchantOperationDayReportDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.MerchantOperationDayReport" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="report_date" property="reportDate" jdbcType="DATE" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+    <result column="mbr_total_count" property="mbrTotalCount" jdbcType="INTEGER" />
+    <result column="mbr_today_count" property="mbrTodayCount" jdbcType="INTEGER" />
+    <result column="ord_good_count" property="ordGoodCount" jdbcType="INTEGER" />
+    <result column="ord_order_count" property="ordOrderCount" jdbcType="INTEGER" />
+    <result column="ord_order_amount" property="ordOrderAmount" jdbcType="BIGINT" />
+    <result column="ord_customer_price" property="ordCustomerPrice" jdbcType="BIGINT" />
+    <result column="ord_activitie_amount" property="ordActivitieAmount" jdbcType="BIGINT" />
+    <result column="ord_pay_amount" property="ordPayAmount" jdbcType="BIGINT" />
+    <result column="succ_good_count" property="succGoodCount" jdbcType="INTEGER" />
+    <result column="succ_order_count" property="succOrderCount" jdbcType="INTEGER" />
+    <result column="succ_order_amount" property="succOrderAmount" jdbcType="BIGINT" />
+    <result column="succ_customer_price" property="succCustomerPrice" jdbcType="BIGINT" />
+    <result column="succ_activitie_amount" property="succActivitieAmount" jdbcType="BIGINT" />
+    <result column="succ_pay_amount" property="succPayAmount" jdbcType="BIGINT" />
+    <result column="pv_index_total_count" property="pvIndexTotalCount" jdbcType="INTEGER" />
+    <result column="pv_index_member_count" property="pvIndexMemberCount" jdbcType="INTEGER" />
+    <result column="pv_detail_total_count" property="pvDetailTotalCount" jdbcType="INTEGER" />
+    <result column="pv_detail_member_count" property="pvDetailMemberCount" jdbcType="INTEGER" />
+    <result column="sms_count" property="smsCount" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="FindMerchantOperationDayReportPageResultMap" type="com.lj.business.st.dto.mec.FindMerchantOperationDayReportPageReturn" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="report_date" property="reportDate" jdbcType="DATE" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+    <result column="mbr_total_count" property="mbrTotalCount" jdbcType="INTEGER" />
+    <result column="mbr_today_count" property="mbrTodayCount" jdbcType="INTEGER" />
+    <result column="ord_good_count" property="ordGoodCount" jdbcType="INTEGER" />
+    <result column="ord_order_count" property="ordOrderCount" jdbcType="INTEGER" />
+    <result column="ord_order_amount" property="ordOrderAmount" jdbcType="BIGINT" />
+    <result column="ord_customer_price" property="ordCustomerPrice" jdbcType="BIGINT" />
+    <result column="ord_activitie_amount" property="ordActivitieAmount" jdbcType="BIGINT" />
+    <result column="ord_pay_amount" property="ordPayAmount" jdbcType="BIGINT" />
+    <result column="succ_good_count" property="succGoodCount" jdbcType="INTEGER" />
+    <result column="succ_order_count" property="succOrderCount" jdbcType="INTEGER" />
+    <result column="succ_order_amount" property="succOrderAmount" jdbcType="BIGINT" />
+    <result column="succ_customer_price" property="succCustomerPrice" jdbcType="BIGINT" />
+    <result column="succ_activitie_amount" property="succActivitieAmount" jdbcType="BIGINT" />
+    <result column="succ_pay_amount" property="succPayAmount" jdbcType="BIGINT" />
+    <result column="pv_index_total_count" property="pvIndexTotalCount" jdbcType="INTEGER" />
+    <result column="pv_index_member_count" property="pvIndexMemberCount" jdbcType="INTEGER" />
+    <result column="pv_detail_total_count" property="pvDetailTotalCount" jdbcType="INTEGER" />
+    <result column="pv_detail_member_count" property="pvDetailMemberCount" jdbcType="INTEGER" />
+    <result column="sms_count" property="smsCount" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    code, report_date, merchant_no, merchant_name, mbr_total_count, mbr_today_count, 
+    ord_good_count, ord_order_count, ord_order_amount, ord_customer_price, ord_activitie_amount, 
+    ord_pay_amount, succ_good_count, succ_order_count, succ_order_amount, succ_customer_price, 
+    succ_activitie_amount, succ_pay_amount, pv_index_total_count, pv_index_member_count, 
+    pv_detail_total_count, pv_detail_member_count, sms_count, remark, create_time
+  </sql>
+  <sql id="Page_Column_List" >
+    code, report_date, merchant_no, merchant_name, mbr_total_count, mbr_today_count, 
+    ord_good_count, ord_order_count, ord_order_amount, ord_customer_price, ord_activitie_amount, 
+    ord_pay_amount, succ_good_count, succ_order_count, succ_order_amount, succ_customer_price, 
+    succ_activitie_amount, succ_pay_amount, pv_index_total_count, pv_index_member_count, 
+    pv_detail_total_count, pv_detail_member_count, sms_count, remark, create_time
+  </sql>
+  
+  <!-- 商城运营日报分页查询 - begin -->
+	<sql id="findMerchantOperationDayReportPage_condition">
+		<where>
+			<if test="merchantNo != null and merchantNo !='' " >
+	        	and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+	        </if>
+			<if test="reportDateBegin != null">
+				<![CDATA[and report_date >= #{reportDateBegin,jdbcType=DATE}]]>
+			</if>
+			<if test="reportDateEnd != null">
+				<![CDATA[and report_date <= #{reportDateEnd,jdbcType=DATE}]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="findMerchantOperationDayReportPage" resultMap="FindMerchantOperationDayReportPageResultMap" parameterType="com.lj.business.st.dto.mec.FindMerchantOperationDayReportPage">
+		SELECT <include refid="Page_Column_List" />
+		FROM merchant_operation_day_report
+		<include refid="findMerchantOperationDayReportPage_condition" />
+		order by report_date desc,succ_order_count desc,succ_order_amount desc
+		limit ${start}, ${limit}
+	</select>
+
+	<select id="findMerchantOperationDayReportPageCount" resultType="int" parameterType="com.lj.business.st.dto.mec.FindMerchantOperationDayReportPage">
+		select count(*) 
+		FROM merchant_operation_day_report
+		<include refid="findMerchantOperationDayReportPage_condition" />
+	</select>
+	<!-- 商城运营日报分页查询 - end -->
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_operation_day_report
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from merchant_operation_day_report
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.MerchantOperationDayReport" >
+    insert into merchant_operation_day_report (code, report_date, merchant_no, 
+      merchant_name, mbr_total_count, mbr_today_count, 
+      ord_good_count, ord_order_count, ord_order_amount, 
+      ord_customer_price, ord_activitie_amount, ord_pay_amount, 
+      succ_good_count, succ_order_count, succ_order_amount, 
+      succ_customer_price, succ_activitie_amount, succ_pay_amount, 
+      pv_index_total_count, pv_index_member_count, 
+      pv_detail_total_count, pv_detail_member_count, 
+      sms_count, remark, create_time)
+    values (#{code,jdbcType=VARCHAR}, #{reportDate,jdbcType=DATE}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{mbrTotalCount,jdbcType=INTEGER}, #{mbrTodayCount,jdbcType=INTEGER}, 
+      #{ordGoodCount,jdbcType=INTEGER}, #{ordOrderCount,jdbcType=INTEGER}, #{ordOrderAmount,jdbcType=BIGINT}, 
+      #{ordCustomerPrice,jdbcType=BIGINT}, #{ordActivitieAmount,jdbcType=BIGINT}, #{ordPayAmount,jdbcType=BIGINT}, 
+      #{succGoodCount,jdbcType=INTEGER}, #{succOrderCount,jdbcType=INTEGER}, #{succOrderAmount,jdbcType=BIGINT}, 
+      #{succCustomerPrice,jdbcType=BIGINT}, #{succActivitieAmount,jdbcType=BIGINT}, #{succPayAmount,jdbcType=BIGINT}, 
+      #{pvIndexTotalCount,jdbcType=INTEGER}, #{pvIndexMemberCount,jdbcType=INTEGER}, 
+      #{pvDetailTotalCount,jdbcType=INTEGER}, #{pvDetailMemberCount,jdbcType=INTEGER}, 
+      #{smsCount,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.MerchantOperationDayReport" >
+    insert into merchant_operation_day_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="reportDate != null" >
+        report_date,
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no,
+      </if>
+      <if test="merchantName != null" >
+        merchant_name,
+      </if>
+      <if test="mbrTotalCount != null" >
+        mbr_total_count,
+      </if>
+      <if test="mbrTodayCount != null" >
+        mbr_today_count,
+      </if>
+      <if test="ordGoodCount != null" >
+        ord_good_count,
+      </if>
+      <if test="ordOrderCount != null" >
+        ord_order_count,
+      </if>
+      <if test="ordOrderAmount != null" >
+        ord_order_amount,
+      </if>
+      <if test="ordCustomerPrice != null" >
+        ord_customer_price,
+      </if>
+      <if test="ordActivitieAmount != null" >
+        ord_activitie_amount,
+      </if>
+      <if test="ordPayAmount != null" >
+        ord_pay_amount,
+      </if>
+      <if test="succGoodCount != null" >
+        succ_good_count,
+      </if>
+      <if test="succOrderCount != null" >
+        succ_order_count,
+      </if>
+      <if test="succOrderAmount != null" >
+        succ_order_amount,
+      </if>
+      <if test="succCustomerPrice != null" >
+        succ_customer_price,
+      </if>
+      <if test="succActivitieAmount != null" >
+        succ_activitie_amount,
+      </if>
+      <if test="succPayAmount != null" >
+        succ_pay_amount,
+      </if>
+      <if test="pvIndexTotalCount != null" >
+        pv_index_total_count,
+      </if>
+      <if test="pvIndexMemberCount != null" >
+        pv_index_member_count,
+      </if>
+      <if test="pvDetailTotalCount != null" >
+        pv_detail_total_count,
+      </if>
+      <if test="pvDetailMemberCount != null" >
+        pv_detail_member_count,
+      </if>
+      <if test="smsCount != null" >
+        sms_count,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="mbrTotalCount != null" >
+        #{mbrTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="mbrTodayCount != null" >
+        #{mbrTodayCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordGoodCount != null" >
+        #{ordGoodCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordOrderCount != null" >
+        #{ordOrderCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordOrderAmount != null" >
+        #{ordOrderAmount,jdbcType=BIGINT},
+      </if>
+      <if test="ordCustomerPrice != null" >
+        #{ordCustomerPrice,jdbcType=BIGINT},
+      </if>
+      <if test="ordActivitieAmount != null" >
+        #{ordActivitieAmount,jdbcType=BIGINT},
+      </if>
+      <if test="ordPayAmount != null" >
+        #{ordPayAmount,jdbcType=BIGINT},
+      </if>
+      <if test="succGoodCount != null" >
+        #{succGoodCount,jdbcType=INTEGER},
+      </if>
+      <if test="succOrderCount != null" >
+        #{succOrderCount,jdbcType=INTEGER},
+      </if>
+      <if test="succOrderAmount != null" >
+        #{succOrderAmount,jdbcType=BIGINT},
+      </if>
+      <if test="succCustomerPrice != null" >
+        #{succCustomerPrice,jdbcType=BIGINT},
+      </if>
+      <if test="succActivitieAmount != null" >
+        #{succActivitieAmount,jdbcType=BIGINT},
+      </if>
+      <if test="succPayAmount != null" >
+        #{succPayAmount,jdbcType=BIGINT},
+      </if>
+      <if test="pvIndexTotalCount != null" >
+        #{pvIndexTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="pvIndexMemberCount != null" >
+        #{pvIndexMemberCount,jdbcType=INTEGER},
+      </if>
+      <if test="pvDetailTotalCount != null" >
+        #{pvDetailTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="pvDetailMemberCount != null" >
+        #{pvDetailMemberCount,jdbcType=INTEGER},
+      </if>
+      <if test="smsCount != null" >
+        #{smsCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.MerchantOperationDayReport" >
+    update merchant_operation_day_report
+    <set >
+      <if test="reportDate != null" >
+        report_date = #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="mbrTotalCount != null" >
+        mbr_total_count = #{mbrTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="mbrTodayCount != null" >
+        mbr_today_count = #{mbrTodayCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordGoodCount != null" >
+        ord_good_count = #{ordGoodCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordOrderCount != null" >
+        ord_order_count = #{ordOrderCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordOrderAmount != null" >
+        ord_order_amount = #{ordOrderAmount,jdbcType=BIGINT},
+      </if>
+      <if test="ordCustomerPrice != null" >
+        ord_customer_price = #{ordCustomerPrice,jdbcType=BIGINT},
+      </if>
+      <if test="ordActivitieAmount != null" >
+        ord_activitie_amount = #{ordActivitieAmount,jdbcType=BIGINT},
+      </if>
+      <if test="ordPayAmount != null" >
+        ord_pay_amount = #{ordPayAmount,jdbcType=BIGINT},
+      </if>
+      <if test="succGoodCount != null" >
+        succ_good_count = #{succGoodCount,jdbcType=INTEGER},
+      </if>
+      <if test="succOrderCount != null" >
+        succ_order_count = #{succOrderCount,jdbcType=INTEGER},
+      </if>
+      <if test="succOrderAmount != null" >
+        succ_order_amount = #{succOrderAmount,jdbcType=BIGINT},
+      </if>
+      <if test="succCustomerPrice != null" >
+        succ_customer_price = #{succCustomerPrice,jdbcType=BIGINT},
+      </if>
+      <if test="succActivitieAmount != null" >
+        succ_activitie_amount = #{succActivitieAmount,jdbcType=BIGINT},
+      </if>
+      <if test="succPayAmount != null" >
+        succ_pay_amount = #{succPayAmount,jdbcType=BIGINT},
+      </if>
+      <if test="pvIndexTotalCount != null" >
+        pv_index_total_count = #{pvIndexTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="pvIndexMemberCount != null" >
+        pv_index_member_count = #{pvIndexMemberCount,jdbcType=INTEGER},
+      </if>
+      <if test="pvDetailTotalCount != null" >
+        pv_detail_total_count = #{pvDetailTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="pvDetailMemberCount != null" >
+        pv_detail_member_count = #{pvDetailMemberCount,jdbcType=INTEGER},
+      </if>
+      <if test="smsCount != null" >
+        sms_count = #{smsCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.MerchantOperationDayReport" >
+    update merchant_operation_day_report
+    set report_date = #{reportDate,jdbcType=DATE},
+      merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      mbr_total_count = #{mbrTotalCount,jdbcType=INTEGER},
+      mbr_today_count = #{mbrTodayCount,jdbcType=INTEGER},
+      ord_good_count = #{ordGoodCount,jdbcType=INTEGER},
+      ord_order_count = #{ordOrderCount,jdbcType=INTEGER},
+      ord_order_amount = #{ordOrderAmount,jdbcType=BIGINT},
+      ord_customer_price = #{ordCustomerPrice,jdbcType=BIGINT},
+      ord_activitie_amount = #{ordActivitieAmount,jdbcType=BIGINT},
+      ord_pay_amount = #{ordPayAmount,jdbcType=BIGINT},
+      succ_good_count = #{succGoodCount,jdbcType=INTEGER},
+      succ_order_count = #{succOrderCount,jdbcType=INTEGER},
+      succ_order_amount = #{succOrderAmount,jdbcType=BIGINT},
+      succ_customer_price = #{succCustomerPrice,jdbcType=BIGINT},
+      succ_activitie_amount = #{succActivitieAmount,jdbcType=BIGINT},
+      succ_pay_amount = #{succPayAmount,jdbcType=BIGINT},
+      pv_index_total_count = #{pvIndexTotalCount,jdbcType=INTEGER},
+      pv_index_member_count = #{pvIndexMemberCount,jdbcType=INTEGER},
+      pv_detail_total_count = #{pvDetailTotalCount,jdbcType=INTEGER},
+      pv_detail_member_count = #{pvDetailMemberCount,jdbcType=INTEGER},
+      sms_count = #{smsCount,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

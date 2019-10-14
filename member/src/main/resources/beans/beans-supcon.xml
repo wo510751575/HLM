@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="          
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd          
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd          
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd          
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	
+	<!-- IM通讯录服务 
+	<bean id="contactsService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>zk</value>
+		</property>
+		<property name="serviceName">
+			<value>contactsService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.supcon.service.IContactsService</value>
+		</property>
+	</bean>-->
+	
+	<!-- IM通讯录服务-->
+	<bean id="commonService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>zk</value>
+		</property>
+		<property name="serviceName">
+			<value>commonService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.supcon.service.ICommonService</value>
+		</property>
+	</bean> 
+	
+	<!-- 微信账户相关服务
+	<bean id="wxAccountService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>zk</value>
+		</property>
+		<property name="serviceName">
+			<value>wxAccountService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.supcon.service.IWxAccountService</value>
+		</property>
+	</bean> -->
+	
+	<!-- 微信红包服务 
+	<bean id="redPacketService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="zk" />
+		<property name="serviceName" value="redPacketService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IRedPacketService" />
+	</bean>-->
+
+	<!-- 微信群服务
+	<bean id="wxChatRoomService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="zk" />
+		<property name="serviceName" value="wxChatRoomService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IWxChatRoomService" />
+	</bean> -->
+</beans> 
+

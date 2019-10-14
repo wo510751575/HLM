@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lj.business.member.dao.IAddFriendsTaskDetailDao">
+	<resultMap id="BaseResultMap"
+		type="com.lj.business.member.domain.AddFriendsTaskDetail">
+		<id column="code" property="code" jdbcType="VARCHAR" />
+		<result column="task_code" property="taskCode"
+			jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="username" property="username"
+			jdbcType="VARCHAR" />
+		<result column="send_message" property="sendMessage"
+			jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="execute_date" property="executeDate"
+			jdbcType="TIMESTAMP" />
+		<result column="addFriends_date" property="addfriendsDate"
+			jdbcType="TIMESTAMP" />
+		<result column="callback_date" property="callbackDate"
+			jdbcType="TIMESTAMP" />
+		<result column="no_wx" property="noWx" jdbcType="VARCHAR" />
+		<result column="no_wx_gm" property="noWxGm" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="detail" property="detail" jdbcType="VARCHAR" />
+		<result column="MERCHANT_NO" property="merchantNo"
+			jdbcType="VARCHAR" />
+		<result column="MERCHANT_NAME" property="merchantName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		code, task_code, phone, username, send_message, create_date, execute_date,
+		addFriends_date,
+		callback_date, no_wx, no_wx_gm, status, detail, MERCHANT_NO, MERCHANT_NAME
+	</sql>
+	
+	<resultMap id="FindResultMap"
+		type="com.lj.business.member.dto.AddFriendsTaskDetailDto"
+		extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.taskCode != null and param.taskCode !='' ">
+					<![CDATA[and task_code =#{param.taskCode}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				 <if test="param.username != null and param.username !='' ">
+					and username like CONCAT('%',#{param.username,jdbcType=VARCHAR},'%' )
+	 			  </if>
+	 			  <if test="param.phone != null and param.phone !='' ">
+					and phone like CONCAT('%',#{param.phone,jdbcType=VARCHAR},'%' )
+	 			  </if>
+	 			  <if test="param.noWxGm != null and param.noWxGm !='' ">
+					and no_wx_gm =#{param.noWxGm,jdbcType=VARCHAR}
+	 			  </if>
+	 			  <if test="param.status != null and param.status !='' ">
+					and status =#{param.status,jdbcType=VARCHAR}
+	 			  </if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findAddFriendsTaskDetails" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindAddFriendsTaskDetailPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM addfriends_task_detail
+		<include refid="findPage_condition" />
+
+	</select>
+	<!-- 分页查询 -->
+	<select id="findAddFriendsTaskDetailPage" resultMap="FindResultMap"
+		parameterType="com.lj.business.member.dto.FindAddFriendsTaskDetailPage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM addfriends_task_detail
+		<include refid="findPage_condition" />
+		order by create_date desc  
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findAddFriendsTaskDetailPageCount" resultType="int"
+		parameterType="com.lj.business.member.dto.FindAddFriendsTaskDetailPage">
+		select count(*)
+		FROM addfriends_task_detail
+		<include refid="findPage_condition" />
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from addfriends_task_detail
+		where code = #{code,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByCond" resultMap="BaseResultMap" parameterType="com.lj.business.member.dto.AddFriendsTaskDetailDto">
+		select
+		<include refid="Base_Column_List" />
+		from addfriends_task_detail
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="taskCode != null and taskCode !='' ">
+				<![CDATA[and task_code =#{taskCode}]]>
+			</if>
+			<if test="merchantNo != null and merchantNo !='' ">
+				<![CDATA[and MERCHANT_NO =#{merchantNo}]]>
+			</if>
+ 			  <if test="phone != null and phone !='' ">
+				and phone =#{phone,jdbcType=VARCHAR}
+ 			  </if>
+ 			  <if test="noWxGm != null and noWxGm !='' ">
+				and no_wx_gm =#{noWxGm,jdbcType=VARCHAR}
+ 			  </if>
+ 			  <if test="status != null and status !='' ">
+				and status =#{status,jdbcType=VARCHAR}
+ 			  </if>
+		</where>
+		limit 1
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from addfriends_task_detail
+		where code = #{code,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective"
+		parameterType="com.lj.business.member.domain.AddFriendsTaskDetail">
+		insert into addfriends_task_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="taskCode != null">
+				task_code,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="sendMessage != null">
+				send_message,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="executeDate != null">
+				execute_date,
+			</if>
+			<if test="addfriendsDate != null">
+				addFriends_date,
+			</if>
+			<if test="callbackDate != null">
+				callback_date,
+			</if>
+			<if test="noWx != null">
+				no_wx,
+			</if>
+			<if test="noWxGm != null">
+				no_wx_gm,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="detail != null">
+				detail,
+			</if>
+			<if test="merchantNo != null">
+				MERCHANT_NO,
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="taskCode != null">
+				#{taskCode,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="sendMessage != null">
+				#{sendMessage,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="executeDate != null">
+				#{executeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addfriendsDate != null">
+				#{addfriendsDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="callbackDate != null">
+				#{callbackDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="noWx != null">
+				#{noWx,jdbcType=VARCHAR},
+			</if>
+			<if test="noWxGm != null">
+				#{noWxGm,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="detail != null">
+				#{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null">
+				#{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				#{merchantName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.lj.business.member.domain.AddFriendsTaskDetail">
+		update addfriends_task_detail
+		<set>
+			<if test="taskCode != null">
+				task_code = #{taskCode,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="sendMessage != null">
+				send_message = #{sendMessage,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="executeDate != null">
+				execute_date = #{executeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addfriendsDate != null">
+				addFriends_date = #{addfriendsDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="callbackDate != null">
+				callback_date = #{callbackDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="noWx != null">
+				no_wx = #{noWx,jdbcType=VARCHAR},
+			</if>
+			<if test="noWxGm != null">
+				no_wx_gm = #{noWxGm,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="detail != null">
+				detail = #{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where code = #{code,jdbcType=VARCHAR}
+	</update>
+
+	<insert id="insertForeach" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into addfriends_task_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			code,
+			task_code,
+			phone,
+			username,
+			send_message,
+			create_date,
+			execute_date,
+			addFriends_date,
+			callback_date,
+			no_wx,
+			no_wx_gm,
+			status,
+			detail,
+			MERCHANT_NO,
+			MERCHANT_NAME
+		</trim>
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+				#{item.code,jdbcType=VARCHAR}, 
+				#{item.taskCode,jdbcType=VARCHAR},
+				#{item.phone,jdbcType=VARCHAR},
+				#{item.username,jdbcType=VARCHAR}, 
+				#{item.sendMessage,jdbcType=VARCHAR}, 
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.executeDate,jdbcType=TIMESTAMP},
+				#{item.addfriendsDate,jdbcType=TIMESTAMP},
+				#{item.callbackDate,jdbcType=TIMESTAMP},
+				#{item.noWx,jdbcType=VARCHAR}, 
+				#{item.noWxGm,jdbcType=VARCHAR}, 
+				#{item.status,jdbcType=VARCHAR},
+				#{item.detail,jdbcType=VARCHAR}, 
+				#{item.merchantNo,jdbcType=VARCHAR},
+				#{item.merchantName,jdbcType=VARCHAR}
+			)
+	     </foreach>	
+	</insert>
+	
+	
+	<update id="updateStatus" parameterType="com.lj.business.member.domain.AddFriendsTaskDetail">
+		update addfriends_task_detail
+		<set>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="executeDate != null">
+				execute_date = #{executeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addfriendsDate != null">
+				addFriends_date = #{addfriendsDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="callbackDate != null">
+				callback_date = #{callbackDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="detail != null">
+				detail = #{detail,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<where>
+			<if test="status != null and status !='' ">
+				<!-- 修改状态为已启动，前置状态要为已暂停 -->
+				<if test='status eq "1"'>
+					and status = '2'
+				</if>
+				<!-- 修改状态为已暂停，前置状态要为已启动 -->
+				<if test='status eq "2"'>
+					and status = '1'
+				</if>
+				<!-- 修改状态为执行中，前置状态要为已启动 -->
+				<if test='status eq "3"'>
+					and status = '1'
+				</if>
+				<!-- 修改状态为已完成，前置状态要为执行中 -->
+				<if test='status eq "4"'>
+					and status = '3'
+				</if>
+ 			</if>
+			<choose>
+				<when test="codes != null and codes.size()>0">
+					and code in <foreach collection="codes" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>	
+				</when>
+				<otherwise>
+					<if test="taskCode != null and taskCode !='' ">
+						<![CDATA[and task_code =#{taskCode}]]>
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+	</update>
+	
+	<!-- 定时每日推送的任务集合，num取配置，默认20 -->
+	<select id="findJobResult" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT
+				w.code, w.task_code, w.phone, w.username, w.send_message, w.no_wx_gm
+			FROM
+				addfriends_task_detail w
+			WHERE
+				#{num} > (
+					SELECT
+						count(1)
+					FROM
+						addfriends_task_detail a
+					WHERE
+					a.no_wx_gm = w.no_wx_gm
+					AND a.`status` = '1'
+					AND a.CODE < w.CODE
+				)
+			AND w.`status` = '1'
+			ORDER BY w.no_wx_gm,w.create_date
+		]]>
+	</select>
+</mapper>

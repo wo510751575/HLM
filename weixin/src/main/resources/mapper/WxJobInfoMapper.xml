@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IWxJobInfoDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.WxJobInfo" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="job_level" property="jobLevel" jdbcType="VARCHAR" />
+    <result column="job_status" property="jobStatus" jdbcType="VARCHAR" />
+    <result column="job_delay_time" property="jobDelayTime" jdbcType="VARCHAR" />
+    <result column="execute_time" property="executeTime" jdbcType="TIMESTAMP" />
+    <result column="execute_type" property="executeType" jdbcType="VARCHAR" />
+    <result column="job_type" property="jobType" jdbcType="VARCHAR" />
+    <result column="job_service" property="jobService" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, job_name, job_level, job_status, job_delay_time, job_type, job_service, create_date, 
+    update_date, create_user,execute_time,execute_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_job_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_job_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.WxJobInfo" >
+    insert into wx_job_info (CODE, job_name, job_level, 
+      job_status, job_delay_time, job_type, 
+      job_service, create_date, update_date, 
+      create_user,execute_time,execute_type)
+    values (#{code,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{jobLevel,jdbcType=VARCHAR}, 
+      #{jobStatus,jdbcType=VARCHAR}, #{jobDelayTime,jdbcType=VARCHAR}, #{jobType,jdbcType=VARCHAR}, 
+      #{jobService,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR},#{executeTime,jdbcType=VARCHAR},#{executeType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.WxJobInfo" >
+    insert into wx_job_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="jobLevel != null" >
+        job_level,
+      </if>
+      <if test="jobStatus != null" >
+        job_status,
+      </if>
+      <if test="jobDelayTime != null" >
+        job_delay_time,
+      </if>
+      <if test="jobType != null" >
+        job_type,
+      </if>
+      <if test="jobService != null" >
+        job_service,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobLevel != null" >
+        #{jobLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="jobStatus != null" >
+        #{jobStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDelayTime != null" >
+        #{jobDelayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null" >
+        #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobService != null" >
+        #{jobService,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.WxJobInfo" >
+    update wx_job_info
+    <set >
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobLevel != null" >
+        job_level = #{jobLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="jobStatus != null" >
+        job_status = #{jobStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDelayTime != null" >
+        job_delay_time = #{jobDelayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null" >
+        job_type = #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobService != null" >
+        job_service = #{jobService,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.WxJobInfo" >
+    update wx_job_info
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      job_level = #{jobLevel,jdbcType=VARCHAR},
+      job_status = #{jobStatus,jdbcType=VARCHAR},
+      job_delay_time = #{jobDelayTime,jdbcType=VARCHAR},
+      job_type = #{jobType,jdbcType=VARCHAR},
+      job_service = #{jobService,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

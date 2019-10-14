@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IBillOperateDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.BillOperate">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="BILL_CODE" jdbcType="VARCHAR" property="billCode" />
+    <result column="OPERATE_TYPE" jdbcType="VARCHAR" property="operateType" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="PROCESS" jdbcType="VARCHAR" property="process" />
+    <result column="CHECK_STATUS" jdbcType="VARCHAR" property="checkStatus" />
+    <result column="MEMBER_NO_GUID" jdbcType="VARCHAR" property="memberNoGuid" />
+    <result column="MEMBER_NAME_GUID" jdbcType="VARCHAR" property="memberNameGuid" />
+    <result column="CHECKER_NO_GUID" jdbcType="VARCHAR" property="checkerNoGuid" />
+    <result column="CHECKER_NAME_GUID" jdbcType="VARCHAR" property="checkerNameGuid" />
+    <result column="APPLY_TIME" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="CHECK_TIME" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="PAY_TYPE" jdbcType="VARCHAR" property="payType" />
+    <result column="PAY_TYPE_NAME" jdbcType="VARCHAR" property="payTypeName" />
+    <result column="PAY_REMARK" jdbcType="VARCHAR" property="payRemark" />
+    <result column="PAY_AMOUNT" jdbcType="BIGINT" property="payAmount" />
+    <result column="PAY_TIME" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="RECIEVER_NO" jdbcType="VARCHAR" property="recieverNo" />
+    <result column="RECIEVER_NAME" jdbcType="VARCHAR" property="recieverName" />
+    <result column="ORIGINAL_AMOUNT" jdbcType="BIGINT" property="originalAmount" />
+    <result column="REALLY_AMOUNT" jdbcType="BIGINT" property="reallyAmount" />
+    <result column="DISCOUNT_NUM" jdbcType="INTEGER" property="discountNum" />
+    <result column="DEBT_AMOUNT" jdbcType="BIGINT" property="debtAmount" />
+    <result column="BILL_PAY_AMOUNT" jdbcType="BIGINT" property="billPayAmount" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK1" jdbcType="VARCHAR" property="remark1" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+    <result column="REFUND_TYPE" jdbcType="VARCHAR" property="refundType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, BILL_CODE, OPERATE_TYPE, STATUS, PROCESS, CHECK_STATUS, MEMBER_NO_GUID, MEMBER_NAME_GUID, 
+    CHECKER_NO_GUID, CHECKER_NAME_GUID, APPLY_TIME, CHECK_TIME, PAY_TYPE, PAY_TYPE_NAME, 
+    PAY_REMARK, PAY_AMOUNT, PAY_TIME, RECIEVER_NO, RECIEVER_NAME, ORIGINAL_AMOUNT, REALLY_AMOUNT, 
+    DISCOUNT_NUM, DEBT_AMOUNT,BILL_PAY_AMOUNT, UPDATE_ID, UPDATE_DATE, CREATE_ID, CREATE_DATE, REMARK, 
+    REMARK1, REMARK2, REMARK3, REMARK4, REFUND_TYPE
+  </sql>
+  
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.BillOperateDto" extends="BaseResultMap">
+		 <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+		 <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    	 <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+		 <result column="CLINIC_TIME" jdbcType="TIMESTAMP" property="clinicTime" />
+		 <result column="DOCTOR_NAME" jdbcType="VARCHAR" property="doctorName" />
+	</resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.status != null and param.status !='' ">
+					<![CDATA[and STATUS =#{param.status}]]>
+				</if>
+				<if test="param.notStatus != null and param.notStatus !='' ">
+						<![CDATA[and STATUS !=#{param.notStatus}]]>
+				</if>
+				<if test="param.checkStatus != null and param.checkStatus !='' ">
+					<![CDATA[and CHECK_STATUS =#{param.checkStatus}]]>
+				</if>
+				<if test="param.operateType != null and param.operateType !='' ">
+					<![CDATA[and OPERATE_TYPE =#{param.operateType}]]>
+				</if>
+				<if test="param.billCode != null and param.billCode !='' ">
+					<![CDATA[and BILL_CODE =#{param.billCode}]]>
+				</if>
+				 <if test="param.startDate != null">
+					<![CDATA[and CREATE_DATE >= #{param.startDate}]]>
+				</if>
+				<if test="param.endDate != null"> 
+					<![CDATA[and CREATE_DATE <= #{param.endDate}]]>
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findBillOperates" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindBillOperatePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM bill_operate
+		<include refid="findPage_condition" />
+		ORDER BY CREATE_DATE desc 
+	</select>
+	<!-- 分页查询 -->
+	<select id="findBillOperatePage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindBillOperatePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM bill_operate
+		<include refid="findPage_condition" />
+		ORDER BY CREATE_DATE desc 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findBillOperatePageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindBillOperatePage">
+		select count(*)
+		FROM bill_operate
+		<include refid="findPage_condition" />
+	</select>  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bill_operate
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bill_operate
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+   <insert id="insert" parameterType="com.ye.business.hx.domain.BillOperate">
+    insert into bill_operate (CODE, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, BILL_CODE, 
+      OPERATE_TYPE, STATUS, PROCESS, 
+      CHECK_STATUS, MEMBER_NO_GUID, MEMBER_NAME_GUID, 
+      CHECKER_NO_GUID, CHECKER_NAME_GUID, APPLY_TIME, 
+      CHECK_TIME, PAY_TYPE, PAY_TYPE_NAME, 
+      PAY_REMARK, PAY_AMOUNT, PAY_TIME, 
+      RECIEVER_NO, RECIEVER_NAME, ORIGINAL_AMOUNT, 
+      REALLY_AMOUNT, DISCOUNT_NUM, DEBT_AMOUNT, 
+      BILL_PAY_AMOUNT, UPDATE_ID, UPDATE_DATE, 
+      CREATE_ID, CREATE_DATE, REMARK, 
+      REMARK1, REMARK2, REMARK3, 
+      REMARK4, REFUND_TYPE)
+    values (#{code,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{billCode,jdbcType=VARCHAR}, 
+      #{operateType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{process,jdbcType=VARCHAR}, 
+      #{checkStatus,jdbcType=VARCHAR}, #{memberNoGuid,jdbcType=VARCHAR}, #{memberNameGuid,jdbcType=VARCHAR}, 
+      #{checkerNoGuid,jdbcType=VARCHAR}, #{checkerNameGuid,jdbcType=VARCHAR}, #{applyTime,jdbcType=TIMESTAMP}, 
+      #{checkTime,jdbcType=TIMESTAMP}, #{payType,jdbcType=VARCHAR}, #{payTypeName,jdbcType=VARCHAR}, 
+      #{payRemark,jdbcType=VARCHAR}, #{payAmount,jdbcType=BIGINT}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{recieverNo,jdbcType=VARCHAR}, #{recieverName,jdbcType=VARCHAR}, #{originalAmount,jdbcType=BIGINT}, 
+      #{reallyAmount,jdbcType=BIGINT}, #{discountNum,jdbcType=INTEGER}, #{debtAmount,jdbcType=BIGINT}, 
+      #{billPayAmount,jdbcType=BIGINT}, #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR}, #{refundType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.BillOperate">
+    insert into bill_operate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="billCode != null">
+        BILL_CODE,
+      </if>
+      <if test="operateType != null">
+        OPERATE_TYPE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="process != null">
+        PROCESS,
+      </if>
+      <if test="checkStatus != null">
+        CHECK_STATUS,
+      </if>
+      <if test="memberNoGuid != null">
+        MEMBER_NO_GUID,
+      </if>
+      <if test="memberNameGuid != null">
+        MEMBER_NAME_GUID,
+      </if>
+      <if test="checkerNoGuid != null">
+        CHECKER_NO_GUID,
+      </if>
+      <if test="checkerNameGuid != null">
+        CHECKER_NAME_GUID,
+      </if>
+      <if test="applyTime != null">
+        APPLY_TIME,
+      </if>
+      <if test="checkTime != null">
+        CHECK_TIME,
+      </if>
+      <if test="payType != null">
+        PAY_TYPE,
+      </if>
+      <if test="payTypeName != null">
+        PAY_TYPE_NAME,
+      </if>
+      <if test="payRemark != null">
+        PAY_REMARK,
+      </if>
+      <if test="payAmount != null">
+        PAY_AMOUNT,
+      </if>
+      <if test="payTime != null">
+        PAY_TIME,
+      </if>
+      <if test="recieverNo != null">
+        RECIEVER_NO,
+      </if>
+      <if test="recieverName != null">
+        RECIEVER_NAME,
+      </if>
+      <if test="originalAmount != null">
+        ORIGINAL_AMOUNT,
+      </if>
+      <if test="reallyAmount != null">
+        REALLY_AMOUNT,
+      </if>
+      <if test="discountNum != null">
+        DISCOUNT_NUM,
+      </if>
+      <if test="debtAmount != null">
+        DEBT_AMOUNT,
+      </if>
+      <if test="billPayAmount != null">
+        BILL_PAY_AMOUNT,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark1 != null">
+        REMARK1,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+      <if test="refundType != null">
+        REFUND_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="billCode != null">
+        #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="process != null">
+        #{process,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null">
+        #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null">
+        #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerNoGuid != null">
+        #{checkerNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerNameGuid != null">
+        #{checkerNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payRemark != null">
+        #{payRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recieverNo != null">
+        #{recieverNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recieverName != null">
+        #{recieverName,jdbcType=VARCHAR},
+      </if>
+      <if test="originalAmount != null">
+        #{originalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="reallyAmount != null">
+        #{reallyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="discountNum != null">
+        #{discountNum,jdbcType=INTEGER},
+      </if>
+      <if test="debtAmount != null">
+        #{debtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="billPayAmount != null">
+        #{billPayAmount,jdbcType=BIGINT},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null">
+        #{refundType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.BillOperate">
+    update bill_operate
+    <set>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="billCode != null">
+        BILL_CODE = #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        OPERATE_TYPE = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="process != null">
+        PROCESS = #{process,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null">
+        CHECK_STATUS = #{checkStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGuid != null">
+        MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGuid != null">
+        MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerNoGuid != null">
+        CHECKER_NO_GUID = #{checkerNoGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerNameGuid != null">
+        CHECKER_NAME_GUID = #{checkerNameGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null">
+        APPLY_TIME = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null">
+        CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null">
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeName != null">
+        PAY_TYPE_NAME = #{payTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payRemark != null">
+        PAY_REMARK = #{payRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        PAY_AMOUNT = #{payAmount,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recieverNo != null">
+        RECIEVER_NO = #{recieverNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recieverName != null">
+        RECIEVER_NAME = #{recieverName,jdbcType=VARCHAR},
+      </if>
+      <if test="originalAmount != null">
+        ORIGINAL_AMOUNT = #{originalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="reallyAmount != null">
+        REALLY_AMOUNT = #{reallyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="discountNum != null">
+        DISCOUNT_NUM = #{discountNum,jdbcType=INTEGER},
+      </if>
+      <if test="debtAmount != null">
+        DEBT_AMOUNT = #{debtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="billPayAmount != null">
+        BILL_PAY_AMOUNT = #{billPayAmount,jdbcType=BIGINT},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        REMARK1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null">
+        REFUND_TYPE = #{refundType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.BillOperate">
+    update bill_operate
+    set SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      BILL_CODE = #{billCode,jdbcType=VARCHAR},
+      OPERATE_TYPE = #{operateType,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      PROCESS = #{process,jdbcType=VARCHAR},
+      CHECK_STATUS = #{checkStatus,jdbcType=VARCHAR},
+      MEMBER_NO_GUID = #{memberNoGuid,jdbcType=VARCHAR},
+      MEMBER_NAME_GUID = #{memberNameGuid,jdbcType=VARCHAR},
+      CHECKER_NO_GUID = #{checkerNoGuid,jdbcType=VARCHAR},
+      CHECKER_NAME_GUID = #{checkerNameGuid,jdbcType=VARCHAR},
+      APPLY_TIME = #{applyTime,jdbcType=TIMESTAMP},
+      CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      PAY_TYPE_NAME = #{payTypeName,jdbcType=VARCHAR},
+      PAY_REMARK = #{payRemark,jdbcType=VARCHAR},
+      PAY_AMOUNT = #{payAmount,jdbcType=BIGINT},
+      PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      RECIEVER_NO = #{recieverNo,jdbcType=VARCHAR},
+      RECIEVER_NAME = #{recieverName,jdbcType=VARCHAR},
+      ORIGINAL_AMOUNT = #{originalAmount,jdbcType=BIGINT},
+      REALLY_AMOUNT = #{reallyAmount,jdbcType=BIGINT},
+      DISCOUNT_NUM = #{discountNum,jdbcType=INTEGER},
+      DEBT_AMOUNT = #{debtAmount,jdbcType=BIGINT},
+      BILL_PAY_AMOUNT = #{billPayAmount,jdbcType=BIGINT},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK1 = #{remark1,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      REFUND_TYPE = #{refundType,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 分页查询 待处理账单 查询条件 -->
+  <sql id="findPage_condition_Untreated">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and o.code =#{param.code}]]>
+				</if>
+				<if test="param.patientNo != null and param.patientNo !='' ">
+					<![CDATA[and b.PATIENT_NO =#{param.patientNo}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and b.MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.status != null and param.status !='' ">
+					<![CDATA[and o.STATUS =#{param.status}]]>
+				</if>
+				<if test="param.operateType != null and param.operateType !='' ">
+					<![CDATA[and o.OPERATE_TYPE =#{param.operateType}]]>
+				</if>
+			</if>
+		</where>
+  </sql>
+  <!-- 分页查询 待处理账单 -->
+	<select id="findUntreatedBillOperatePage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindBillOperatePage">
+		SELECT b.BILL_NO, b.MERCHANT_NO,b.MERCHANT_NAME,b.CLINIC_TIME,b.REMARK1 AS DOCTOR_NAME ,o.`CODE`,o.BILL_CODE,o.OPERATE_TYPE,o.PROCESS,o.MEMBER_NO_GUID,o.MEMBER_NAME_GUID,o.CREATE_DATE,o.ORIGINAL_AMOUNT,o.REALLY_AMOUNT,o.PAY_AMOUNT,o.DISCOUNT_NUM,o.DEBT_AMOUNT,o.REMARK  
+		from bill_operate o
+		JOIN  bill b on b.`CODE`=o.BILL_CODE 
+		<include refid="findPage_condition_Untreated" />
+		ORDER BY o.CREATE_DATE desc 
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数  待处理账单 -->
+	<select id="findUntreatedBillOperatePageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindBillOperatePage">
+		select count(*)
+		from bill_operate o
+		JOIN  bill b on b.`CODE`=o.BILL_CODE 
+		<include refid="findPage_condition_Untreated" />
+	</select>  
+	
+</mapper>

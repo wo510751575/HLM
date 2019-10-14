@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.ImaterialTextDao">
+	<resultMap type="com.lj.business.cm.dto.FindMaterialTextPageReturn" id="baseResultMap">
+		<id column="CODE" property="code" jdbcType="VARCHAR"/>
+		<result column="CONTENT" property="content" jdbcType="VARCHAR"/>
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		CODE,CONTENT,UPDATE_TIME,MERCHANT_NO
+	</sql>
+	
+	<select id="findMaterialTextPage" parameterType="com.lj.business.cm.dto.FindMaterialTextPage" resultMap="baseResultMap">
+		 SELECT  
+	    <include refid="Base_Column_List" />
+	    FROM material_text
+	    <where>
+	    	<if test="merchantNo != null">
+			(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+			</if>
+	    	<if test="content != null">
+	    	AND CONTENT like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+	    	</if>
+	    	<if test="begainTime != null and endTime != null">
+	    	AND UPDATE_TIME BETWEEN #{begainTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+	    	</if>
+	    </where> 
+	</select>
+	
+	<select id="findMaterialTextPageCount" parameterType="com.lj.business.cm.dto.FindMaterialTextPage" resultType="java.lang.Integer">
+		SELECT  
+	    count(*)
+	    FROM material_text
+	    <where>
+	    	<if test="merchantNo != null">
+			(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+			</if>
+	    	<if test="content != null">
+	    	AND CONTENT like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+	    	</if>
+	    	<if test="begainTime != null and endTime != null">
+	    	AND UPDATE_TIME BETWEEN #{begainTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+	    	</if>
+	    </where> 
+	</select>
+	
+	<insert id="addText" parameterType="com.lj.business.cm.dto.FindMaterialTextPage">
+		INSERT INTO material_text (
+		CODE,CONTENT,UPDATE_TIME,MERCHANT_NO
+		) values(
+		#{code,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},#{merchantNo,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="updateText" parameterType="com.lj.business.cm.dto.FindMaterialTextPage">
+		UPDATE material_text
+		<set>
+			<if test="content != null and content != ''">
+				CONTENT = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+			</if>
+		</set>
+		<where>
+			<if test="code != null">
+				CODE = #{code,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</update>
+	
+	<delete id="deleteText" parameterType="com.lj.business.cm.dto.FindMaterialTextPage">
+		DELETE FROM material_text
+		WHERE CODE = #{code,jdbcType=VARCHAR}
+	</delete>
+</mapper>

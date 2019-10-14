@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.ITodayMemberSummaryDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.TodayMemberSummary" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="SUMMARY_DATE" property="summaryDate" jdbcType="DATE" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="SHOP_COUNT" property="shopCount" jdbcType="INTEGER" />
+    <result column="INTENTION_COUNT" property="intentionCount" jdbcType="INTEGER" />
+    <result column="SCAN_COUNT" property="scanCount" jdbcType="INTEGER" />
+    <result column="UNSCAN_REASON" property="unscanReason" jdbcType="VARCHAR" />
+    <result column="INFO_COUNT" property="infoCount" jdbcType="INTEGER" />
+    <result column="UNINFO_REASON" property="uninfoReason" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="FindTodayMemberSummaryPageReturnResultMap" type="com.lj.business.st.dto.tms.FindTodayMemberSummaryPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="SUMMARY_DATE" property="summaryDate" jdbcType="DATE" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="SHOP_COUNT" property="shopCount" jdbcType="INTEGER" />
+    <result column="INTENTION_COUNT" property="intentionCount" jdbcType="INTEGER" />
+    <result column="SCAN_COUNT" property="scanCount" jdbcType="INTEGER" />
+    <result column="UNSCAN_REASON" property="unscanReason" jdbcType="VARCHAR" />
+    <result column="INFO_COUNT" property="infoCount" jdbcType="INTEGER" />
+    <result column="UNINFO_REASON" property="uninfoReason" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, SUMMARY_DATE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    SHOP_COUNT, INTENTION_COUNT, SCAN_COUNT, UNSCAN_REASON, INFO_COUNT, UNINFO_REASON, 
+    CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from today_member_summary
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from today_member_summary
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.TodayMemberSummary" >
+    insert into today_member_summary (CODE, SUMMARY_DATE, MERCHANT_NO, 
+      SHOP_NO, SHOP_NAME, MEMBER_NO_GM, 
+      MEMBER_NAME_GM, SHOP_COUNT, INTENTION_COUNT, 
+      SCAN_COUNT, UNSCAN_REASON, INFO_COUNT, 
+      UNINFO_REASON, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{summaryDate,jdbcType=DATE}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, 
+      #{memberNameGm,jdbcType=VARCHAR}, #{shopCount,jdbcType=INTEGER}, #{intentionCount,jdbcType=INTEGER}, 
+      #{scanCount,jdbcType=INTEGER}, #{unscanReason,jdbcType=VARCHAR}, #{infoCount,jdbcType=INTEGER}, 
+      #{uninfoReason,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.TodayMemberSummary" >
+    insert into today_member_summary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="summaryDate != null" >
+        SUMMARY_DATE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="shopCount != null" >
+        SHOP_COUNT,
+      </if>
+      <if test="intentionCount != null" >
+        INTENTION_COUNT,
+      </if>
+      <if test="scanCount != null" >
+        SCAN_COUNT,
+      </if>
+      <if test="unscanReason != null" >
+        UNSCAN_REASON,
+      </if>
+      <if test="infoCount != null" >
+        INFO_COUNT,
+      </if>
+      <if test="uninfoReason != null" >
+        UNINFO_REASON,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryDate != null" >
+        #{summaryDate,jdbcType=DATE},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCount != null" >
+        #{shopCount,jdbcType=INTEGER},
+      </if>
+      <if test="intentionCount != null" >
+        #{intentionCount,jdbcType=INTEGER},
+      </if>
+      <if test="scanCount != null" >
+        #{scanCount,jdbcType=INTEGER},
+      </if>
+      <if test="unscanReason != null" >
+        #{unscanReason,jdbcType=VARCHAR},
+      </if>
+      <if test="infoCount != null" >
+        #{infoCount,jdbcType=INTEGER},
+      </if>
+      <if test="uninfoReason != null" >
+        #{uninfoReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.TodayMemberSummary" >
+    update today_member_summary
+    <set >
+      <if test="summaryDate != null" >
+        SUMMARY_DATE = #{summaryDate,jdbcType=DATE},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCount != null" >
+        SHOP_COUNT = #{shopCount,jdbcType=INTEGER},
+      </if>
+      <if test="intentionCount != null" >
+        INTENTION_COUNT = #{intentionCount,jdbcType=INTEGER},
+      </if>
+      <if test="scanCount != null" >
+        SCAN_COUNT = #{scanCount,jdbcType=INTEGER},
+      </if>
+      <if test="unscanReason != null" >
+        UNSCAN_REASON = #{unscanReason,jdbcType=VARCHAR},
+      </if>
+      <if test="infoCount != null" >
+        INFO_COUNT = #{infoCount,jdbcType=INTEGER},
+      </if>
+      <if test="uninfoReason != null" >
+        UNINFO_REASON = #{uninfoReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.TodayMemberSummary" >
+    update today_member_summary
+    set SUMMARY_DATE = #{summaryDate,jdbcType=DATE},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      SHOP_COUNT = #{shopCount,jdbcType=INTEGER},
+      INTENTION_COUNT = #{intentionCount,jdbcType=INTEGER},
+      SCAN_COUNT = #{scanCount,jdbcType=INTEGER},
+      UNSCAN_REASON = #{unscanReason,jdbcType=VARCHAR},
+      INFO_COUNT = #{infoCount,jdbcType=INTEGER},
+      UNINFO_REASON = #{uninfoReason,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+
+	<select id="selectByMemberAndSummaryDate" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from today_member_summary
+		where MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		  and SUMMARY_DATE = #{summaryDate,jdbcType=DATE}
+		limit 1
+	</select>
+  
+	<!-- 今日客户汇总 - begin -->
+	<sql id="findTodayMemberSummaryPage_condition">
+		<where>
+		  <if test="summaryDate != null" >
+	        and SUMMARY_DATE = #{summaryDate,jdbcType=DATE}
+	      </if>
+	      <if test="merchantNo != null and merchantNo != ''" >
+	        and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="shopNo != null and shopNo != ''" >
+	        and SHOP_NO = #{shopNo,jdbcType=VARCHAR}
+	      </if>
+		</where>
+	</sql>
+
+	<select id="findTodayMemberSummaryPage" resultMap="FindTodayMemberSummaryPageReturnResultMap" parameterType="com.lj.business.st.dto.tms.FindTodayMemberSummaryPage">
+		SELECT <include refid="Base_Column_List" />
+		FROM today_member_summary
+		<include refid="findTodayMemberSummaryPage_condition" />
+		order by SUMMARY_DATE desc
+		limit ${start}, ${limit}
+	</select>
+
+	<select id="findTodayMemberSummaryPageCount" resultType="int" parameterType="com.lj.business.st.dto.tms.FindTodayMemberSummaryPage">
+		select count(*) FROM today_member_summary
+		<include refid="findTodayMemberSummaryPage_condition" />
+	</select>
+	<!-- 今日客户汇总 - end -->
+</mapper>

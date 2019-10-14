@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cp.dao.ICouponRuleExDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.cp.domain.CouponRuleEx" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="RULE_CODE" property="ruleCode" jdbcType="VARCHAR" />
+    <result column="USE_NUM" property="useNum" jdbcType="INTEGER" />
+    <result column="SURPLUS_NUM" property="surplusNum" jdbcType="INTEGER" />
+    <result column="PV" property="pv" jdbcType="INTEGER" />
+    <result column="UV" property="uv" jdbcType="INTEGER" />
+    <result column="CV" property="cv" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, RULE_CODE, USE_NUM, SURPLUS_NUM, PV, UV, CV, CREATE_ID, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_rule_ex
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="findCouponRuleExByRuleCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_rule_ex
+    where RULE_CODE = #{ruleCode,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_rule_ex
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.cp.domain.CouponRuleEx" >
+    insert into coupon_rule_ex (CODE, RULE_CODE, USE_NUM, 
+      SURPLUS_NUM, PV, UV, 
+      CV, CREATE_ID, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{ruleCode,jdbcType=VARCHAR}, #{useNum,jdbcType=INTEGER}, 
+      #{surplusNum,jdbcType=INTEGER}, #{pv,jdbcType=INTEGER}, #{uv,jdbcType=INTEGER}, 
+      #{cv,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.cp.domain.CouponRuleEx" >
+    insert into coupon_rule_ex
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE,
+      </if>
+      <if test="useNum != null" >
+        USE_NUM,
+      </if>
+      <if test="surplusNum != null" >
+        SURPLUS_NUM,
+      </if>
+      <if test="pv != null" >
+        PV,
+      </if>
+      <if test="uv != null" >
+        UV,
+      </if>
+      <if test="cv != null" >
+        CV,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleCode != null" >
+        #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="useNum != null" >
+        #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="surplusNum != null" >
+        #{surplusNum,jdbcType=INTEGER},
+      </if>
+      <if test="pv != null" >
+        #{pv,jdbcType=INTEGER},
+      </if>
+      <if test="uv != null" >
+        #{uv,jdbcType=INTEGER},
+      </if>
+      <if test="cv != null" >
+        #{cv,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.cp.domain.CouponRuleEx" >
+    update coupon_rule_ex
+    <set >
+      <if test="ruleCode != null" >
+        RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="useNum != null" >
+        USE_NUM = #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="surplusNum != null" >
+        SURPLUS_NUM = #{surplusNum,jdbcType=INTEGER},
+      </if>
+      <if test="pv != null" >
+        PV = #{pv,jdbcType=INTEGER},
+      </if>
+      <if test="uv != null" >
+        UV = #{uv,jdbcType=INTEGER},
+      </if>
+      <if test="cv != null" >
+        CV = #{cv,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+    <update id="updateCouponUseNum" parameterType="com.lj.business.cp.domain.CouponRuleEx" >
+    update coupon_rule_ex
+    set
+        SURPLUS_NUM = SURPLUS_NUM - 1,
+        UV = UV + 1
+    where RULE_CODE = #{ruleCode,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateCouponRuleExData" parameterType="com.lj.business.cp.dto.couponRuleEx.UpdateCouponRuleEx" >
+    update coupon_rule_ex
+    set
+      PV = PV + 1
+    where RULE_CODE = #{ruleCode,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateCouponCv" parameterType="com.lj.business.cp.dto.couponRuleEx.UpdateCouponRuleEx" >
+    update coupon_rule_ex
+    set
+        CV = CV + 1
+    where RULE_CODE = #{ruleCode,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.cp.domain.CouponRuleEx" >
+    update coupon_rule_ex
+    set RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      USE_NUM = #{useNum,jdbcType=INTEGER},
+      SURPLUS_NUM = #{surplusNum,jdbcType=INTEGER},
+      PV = #{pv,jdbcType=INTEGER},
+      UV = #{uv,jdbcType=INTEGER},
+      CV = #{cv,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

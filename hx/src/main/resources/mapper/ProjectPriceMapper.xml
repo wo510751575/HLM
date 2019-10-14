@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IProjectPriceDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.ProjectPrice">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="SHOP_NO" jdbcType="VARCHAR" property="shopNo" />
+    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="TYPE1_NAME" jdbcType="VARCHAR" property="type1Name" />
+    <result column="TYPE1_CODE" jdbcType="VARCHAR" property="type1Code" />
+    <result column="TYPE2_NAME" jdbcType="VARCHAR" property="type2Name" />
+    <result column="TYPE2_CODE" jdbcType="VARCHAR" property="type2Code" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo" />
+    <result column="PINYIN" jdbcType="VARCHAR" property="pinyin" />
+    <result column="PROJECT_UNIT" jdbcType="VARCHAR" property="projectUnit" />
+    <result column="PRICE" jdbcType="BIGINT" property="price" />
+    <result column="ALLOW_ITEM_DISCOUNT" jdbcType="VARCHAR" property="allowItemDiscount" />
+    <result column="ALLOW_ORDER_DISCOUNT" jdbcType="VARCHAR" property="allowOrderDiscount" />
+    <result column="INDEX_NO" jdbcType="INTEGER" property="indexNo" />
+    <result column="ENNAME" jdbcType="VARCHAR" property="enname" />
+    <result column="MIN_PRICE" jdbcType="BIGINT" property="minPrice" />
+    <result column="MAX_PRICE" jdbcType="BIGINT" property="maxPrice" />
+    <result column="MIN_DISCOUNT" jdbcType="INTEGER" property="minDiscount" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="ALLOW_DEAL" jdbcType="VARCHAR" property="allowDeal" />
+    <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, SHOP_NO, SHOP_NAME, MERCHANT_NO, MERCHANT_NAME, TYPE1_NAME, TYPE1_CODE, TYPE2_NAME, 
+    TYPE2_CODE, PROJECT_NAME,PROJECT_NO, PINYIN, PROJECT_UNIT, PRICE, ALLOW_ITEM_DISCOUNT, ALLOW_ORDER_DISCOUNT, 
+    INDEX_NO, ENNAME, MIN_PRICE, MAX_PRICE, MIN_DISCOUNT, STATUS, ALLOW_DEAL, UPDATE_ID, 
+    UPDATE_DATE, CREATE_ID, CREATE_DATE
+  </sql>
+	<resultMap id="FindResultMap"
+		type="com.ye.business.hx.dto.ProjectPriceDto" extends="BaseResultMap"></resultMap>
+	<sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and code =#{param.code}]]>
+				</if>
+				<if test="param.merchantNo != null and param.merchantNo !='' ">
+					<![CDATA[and MERCHANT_NO =#{param.merchantNo}]]>
+				</if>
+				<if test="param.type1Code != null and param.type1Code !='' ">
+					<![CDATA[and TYPE1_CODE =#{param.type1Code}]]>
+				</if>
+				<if test="param.type2Code != null and param.type2Code !='' ">
+					<![CDATA[and TYPE2_CODE =#{param.type2Code}]]>
+				</if>
+				<if test="param.status != null and param.status !='' ">
+					<![CDATA[and STATUS =#{param.status}]]>
+				</if>
+				<if test="param.projectName != null and param.projectName !='' " >
+	        		and PROJECT_NAME like CONCAT('%',#{param.projectName,jdbcType=VARCHAR},'%' )
+	      		</if>
+	      		<if test="param.projectNo != null and param.projectNo !='' " >
+	        		and PROJECT_NO like CONCAT('%',#{param.projectNo,jdbcType=VARCHAR},'%' )
+	      		</if>
+	      		<if test="param.pinyin != null and param.pinyin !='' " >
+	        		and PINYIN like CONCAT('%',#{param.pinyin,jdbcType=VARCHAR},'%' )
+	      		</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 不分页查询 -->
+	<select id="findProjectPrices" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindProjectPricePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM project_price
+		<include refid="findPage_condition" />
+		order by INDEX_NO,CREATE_DATE desc
+	</select>
+	<!-- 分页查询 -->
+	<select id="findProjectPricePage" resultMap="FindResultMap"
+		parameterType="com.ye.business.hx.dto.FindProjectPricePage">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM project_price
+		<include refid="findPage_condition" />
+		order by INDEX_NO ,CREATE_DATE desc
+		limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findProjectPricePageCount" resultType="int"
+		parameterType="com.ye.business.hx.dto.FindProjectPricePage">
+		select count(*)
+		FROM project_price
+		<include refid="findPage_condition" />
+	</select>
+
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from project_price
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from project_price
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ye.business.hx.domain.ProjectPrice">
+    insert into project_price (CODE, SHOP_NO, SHOP_NAME, 
+      MERCHANT_NO, MERCHANT_NAME, TYPE1_NAME, 
+      TYPE1_CODE, TYPE2_NAME, TYPE2_CODE, 
+      PROJECT_NAME, PROJECT_NO, PINYIN, 
+      PROJECT_UNIT, PRICE, ALLOW_ITEM_DISCOUNT, 
+      ALLOW_ORDER_DISCOUNT, INDEX_NO, ENNAME, 
+      MIN_PRICE, MAX_PRICE, MIN_DISCOUNT, 
+      STATUS, ALLOW_DEAL, UPDATE_ID, 
+      UPDATE_DATE, CREATE_ID, CREATE_DATE
+      )
+    values (#{code,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{type1Name,jdbcType=VARCHAR}, 
+      #{type1Code,jdbcType=VARCHAR}, #{type2Name,jdbcType=VARCHAR}, #{type2Code,jdbcType=VARCHAR}, 
+      #{projectName,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{pinyin,jdbcType=VARCHAR}, 
+      #{projectUnit,jdbcType=VARCHAR}, #{price,jdbcType=BIGINT}, #{allowItemDiscount,jdbcType=VARCHAR}, 
+      #{allowOrderDiscount,jdbcType=VARCHAR}, #{indexNo,jdbcType=INTEGER}, #{enname,jdbcType=VARCHAR}, 
+      #{minPrice,jdbcType=BIGINT}, #{maxPrice,jdbcType=BIGINT}, #{minDiscount,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{allowDeal,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.ProjectPrice">
+    insert into project_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="shopNo != null">
+        SHOP_NO,
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="type1Name != null">
+        TYPE1_NAME,
+      </if>
+      <if test="type1Code != null">
+        TYPE1_CODE,
+      </if>
+      <if test="type2Name != null">
+        TYPE2_NAME,
+      </if>
+      <if test="type2Code != null">
+        TYPE2_CODE,
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME,
+      </if>
+      <if test="projectNo != null">
+        PROJECT_NO,
+      </if>
+      <if test="pinyin != null">
+        PINYIN,
+      </if>
+      <if test="projectUnit != null">
+        PROJECT_UNIT,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="allowItemDiscount != null">
+        ALLOW_ITEM_DISCOUNT,
+      </if>
+      <if test="allowOrderDiscount != null">
+        ALLOW_ORDER_DISCOUNT,
+      </if>
+      <if test="indexNo != null">
+        INDEX_NO,
+      </if>
+      <if test="enname != null">
+        ENNAME,
+      </if>
+      <if test="minPrice != null">
+        MIN_PRICE,
+      </if>
+      <if test="maxPrice != null">
+        MAX_PRICE,
+      </if>
+      <if test="minDiscount != null">
+        MIN_DISCOUNT,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="allowDeal != null">
+        ALLOW_DEAL,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null">
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Name != null">
+        #{type1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Code != null">
+        #{type1Code,jdbcType=VARCHAR},
+      </if>
+      <if test="type2Name != null">
+        #{type2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type2Code != null">
+        #{type2Code,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectNo != null">
+        #{projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null">
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="projectUnit != null">
+        #{projectUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=BIGINT},
+      </if>
+      <if test="allowItemDiscount != null">
+        #{allowItemDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="allowOrderDiscount != null">
+        #{allowOrderDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="indexNo != null">
+        #{indexNo,jdbcType=INTEGER},
+      </if>
+      <if test="enname != null">
+        #{enname,jdbcType=VARCHAR},
+      </if>
+      <if test="minPrice != null">
+        #{minPrice,jdbcType=BIGINT},
+      </if>
+      <if test="maxPrice != null">
+        #{maxPrice,jdbcType=BIGINT},
+      </if>
+      <if test="minDiscount != null">
+        #{minDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="allowDeal != null">
+        #{allowDeal,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.ProjectPrice">
+    update project_price
+    <set>
+      <if test="shopNo != null">
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Name != null">
+        TYPE1_NAME = #{type1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Code != null">
+        TYPE1_CODE = #{type1Code,jdbcType=VARCHAR},
+      </if>
+      <if test="type2Name != null">
+        TYPE2_NAME = #{type2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type2Code != null">
+        TYPE2_CODE = #{type2Code,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectNo != null">
+        PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null">
+        PINYIN = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="projectUnit != null">
+        PROJECT_UNIT = #{projectUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=BIGINT},
+      </if>
+      <if test="allowItemDiscount != null">
+        ALLOW_ITEM_DISCOUNT = #{allowItemDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="allowOrderDiscount != null">
+        ALLOW_ORDER_DISCOUNT = #{allowOrderDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="indexNo != null">
+        INDEX_NO = #{indexNo,jdbcType=INTEGER},
+      </if>
+      <if test="enname != null">
+        ENNAME = #{enname,jdbcType=VARCHAR},
+      </if>
+      <if test="minPrice != null">
+        MIN_PRICE = #{minPrice,jdbcType=BIGINT},
+      </if>
+      <if test="maxPrice != null">
+        MAX_PRICE = #{maxPrice,jdbcType=BIGINT},
+      </if>
+      <if test="minDiscount != null">
+        MIN_DISCOUNT = #{minDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="allowDeal != null">
+        ALLOW_DEAL = #{allowDeal,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.ProjectPrice">
+    update project_price
+    set SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      TYPE1_NAME = #{type1Name,jdbcType=VARCHAR},
+      TYPE1_CODE = #{type1Code,jdbcType=VARCHAR},
+      TYPE2_NAME = #{type2Name,jdbcType=VARCHAR},
+      TYPE2_CODE = #{type2Code,jdbcType=VARCHAR},
+      PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
+      PINYIN = #{pinyin,jdbcType=VARCHAR},
+      PROJECT_UNIT = #{projectUnit,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=BIGINT},
+      ALLOW_ITEM_DISCOUNT = #{allowItemDiscount,jdbcType=VARCHAR},
+      ALLOW_ORDER_DISCOUNT = #{allowOrderDiscount,jdbcType=VARCHAR},
+      INDEX_NO = #{indexNo,jdbcType=INTEGER},
+      ENNAME = #{enname,jdbcType=VARCHAR},
+      MIN_PRICE = #{minPrice,jdbcType=BIGINT},
+      MAX_PRICE = #{maxPrice,jdbcType=BIGINT},
+      MIN_DISCOUNT = #{minDiscount,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR},
+      ALLOW_DEAL = #{allowDeal,jdbcType=VARCHAR},
+      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 删除项目单价 -->
+  <delete id="deleteProjectPrice" parameterType="com.ye.business.hx.dto.ProjectPriceDto">
+    delete from project_price
+    where CODE = #{code,jdbcType=VARCHAR}
+    <if test="merchantNo != null and merchantNo !='' ">
+		<![CDATA[and MERCHANT_NO =#{merchantNo}]]>
+	</if>
+  </delete>
+  
+</mapper>

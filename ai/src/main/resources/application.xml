@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/*.properties</value>
+				<value>classpath*:META-INF/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	<import resource="classpath:bean/beans-*.xml" />
+
+
+
+	<!-- <import resource="classpath:beans/beans-hessian.xml"/> <import resource="classpath:beans/beans-member.xml"/> 
+		<import resource="classpath:beans/beans-cm.xml"/> <import resource="classpath:beans/beans-msg.xml"/> 
+		<import resource="classpath:beans/beans-cf.xml"/> <import resource="classpath:beans/beans-st.xml"/> 
+		<import resource="classpath:beans/beans-wx.xml"/> -->
+
+	<!-- 激活annotation功能 -->
+	<context:annotation-config />
+	<!-- 激活annotation功能 -->
+	<context:spring-configured />
+
+	<!-- 扫描指定package下所有带有如@controller,@services,@resource,并把所注释的注册为Spring Beans -->
+	<context:component-scan base-package="com.lj.business" />
+	<!-- 激活AOP功能 -->
+	<aop:aspectj-autoproxy />
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<property name="maxUploadSize" value="204800000" /><!-- 200m -->
+	</bean>
+	<bean id="aiConfig" class="com.lj.business.config.AiConfig">
+		<property name="sessionTimeiout" value="${session.time}"></property>
+		<property name="matchParam">
+			<props>
+				<prop key="0">${ai.first.count}</prop>
+				<prop key="1">${ai.second.count}</prop>
+				<prop key="2">${ai.three.count}</prop>
+			</props>
+		</property>
+		<property name="matchCount" value="${ai.match.count}"></property>
+	</bean>
+</beans> 
+

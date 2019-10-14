@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+	<!-- 用于微信发送消息 
+	<bean id="supconChatService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName">
+			<value>zk</value>
+		</property>
+		<property name="serviceName">
+			<value>chatService</value>
+		</property>
+		<property name="serviceInterface">   
+			<value>com.lj.business.supcon.service.IChatService</value>
+		</property>
+    </bean>-->
+    
+    <!-- IM通讯录服务 
+	<bean id="contactsService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName">
+			<value>zk</value>
+		</property>
+		<property name="serviceName">
+			<value>contactsService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.lj.business.supcon.service.IContactsService</value>
+		</property>
+	</bean>-->
+	
+	<!-- 中控-公共服务 -->
+    <bean name="commonService" parent="systemHessianFactoryBean">
+    	<property name="systemAliasName" value="zk" />
+		<property name="serviceName" value="commonService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.ICommonService" />
+	</bean>
+	
+	<!-- 请求微信余额 
+	<bean name="wxAccountService" parent="systemHessianFactoryBean">
+    	<property name="systemAliasName" value="zk" />
+		<property name="serviceName" value="wxAccountService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IWxAccountService" />
+	</bean>-->
+    <!-- 微信群服务
+    <bean name="wxChatRoomService" parent="systemHessianFactoryBean">
+    	<property name="systemAliasName" value="zk" />
+		<property name="serviceName" value="wxChatRoomService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IWxChatRoomService" />
+	</bean> -->
+	
+	<!-- Token服务-->
+	 <bean name="tokenService" parent="systemHessianFactoryBean">
+    	<property name="systemAliasName" value="zk" />
+		<property name="serviceName" value="tokenService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.ITokenService" />
+	</bean>
+	
+	<!-- 获取群二维码,修改群昵称服务-->
+	 <bean name="chatRoomMessageService" parent="systemHessianFactoryBean">
+    	<property name="systemAliasName" value="zk" />
+		<property name="serviceName" value="chatRoomMessageService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IChatRoomMessageService" />
+	</bean>
+</beans> 

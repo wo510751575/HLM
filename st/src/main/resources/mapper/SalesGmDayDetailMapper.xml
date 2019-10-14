@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.ISalesGmDayDetailDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.SalesGmDayDetail" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="NUM_SALE" property="numSale" jdbcType="BIGINT" />
+    <result column="NUM_SALE_TARGET" property="numSaleTarget" jdbcType="BIGINT" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="FindSalesGmDayDetailFirstResultMap" type="com.lj.business.st.dto.salesGmDayDetail.FindSalesGmDayDetailReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="HEAD_ADDRESS" property="headAddress" jdbcType="VARCHAR" />
+    <result column="NUM_SALE" property="numSale" jdbcType="BIGINT" />
+    <result column="NUM_SALE_TARGET" property="numSaleTarget" jdbcType="BIGINT" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, AREA_CODE, AREA_NAME, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+    HEAD_ADDRESS, NUM_SALE, NUM_SALE_TARGET, DAY_ST, UPDATE_DATE, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sales_gm_day_detail
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sales_gm_day_detail
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.SalesGmDayDetail" >
+    insert into sales_gm_day_detail (CODE, MERCHANT_NO, AREA_CODE, 
+      AREA_NAME, SHOP_NO, SHOP_NAME, 
+      MEMBER_NO_GM, MEMBER_NAME_GM, HEAD_ADDRESS, 
+      NUM_SALE, NUM_SALE_TARGET, DAY_ST, 
+      UPDATE_DATE, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{areaName,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{headAddress,jdbcType=VARCHAR}, 
+      #{numSale,jdbcType=BIGINT}, #{numSaleTarget,jdbcType=BIGINT}, #{daySt,jdbcType=DATE}, 
+      #{updateDate,jdbcType=TIMESTAMP}, NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.SalesGmDayDetail" >
+    insert into sales_gm_day_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS,
+      </if>
+      <if test="numSale != null" >
+        NUM_SALE,
+      </if>
+      <if test="numSaleTarget != null" >
+        NUM_SALE_TARGET,
+      </if>
+      <if test="daySt != null" >
+        DAY_ST,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="numSale != null" >
+        #{numSale,jdbcType=BIGINT},
+      </if>
+      <if test="numSaleTarget != null" >
+        #{numSaleTarget,jdbcType=BIGINT},
+      </if>
+      <if test="daySt != null" >
+        #{daySt,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.SalesGmDayDetail" >
+    update sales_gm_day_detail
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="headAddress != null" >
+        HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="numSale != null" >
+        NUM_SALE = #{numSale,jdbcType=BIGINT},
+      </if>
+      <if test="numSaleTarget != null" >
+        NUM_SALE_TARGET = #{numSaleTarget,jdbcType=BIGINT},
+      </if>
+      <if test="daySt != null" >
+        DAY_ST = #{daySt,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.SalesGmDayDetail" >
+    update sales_gm_day_detail
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      HEAD_ADDRESS = #{headAddress,jdbcType=VARCHAR},
+      NUM_SALE = #{numSale,jdbcType=BIGINT},
+      NUM_SALE_TARGET = #{numSaleTarget,jdbcType=BIGINT},
+      DAY_ST = #{daySt,jdbcType=DATE},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="findSalesGmDayDetailFirst" resultMap="FindSalesGmDayDetailFirstResultMap" parameterType="com.lj.business.st.dto.FindSalesGmDayFirstIndex">
+	SELECT c.*
+	FROM 
+	(
+		SELECT a.`CODE`,a.DAY_ST,MAX(a.M) 
+		FROM
+		(
+			SELECT CODE,MERCHANT_NO,DAY_ST,AREA_CODE,IF(NUM_SALE_TARGET IS NULL OR NUM_SALE_TARGET = 0,0.0,NUM_SALE/NUM_SALE_TARGET) as M
+			FROM sales_gm_day_detail
+			WHERE AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+			      AND DAY_ST = #{now,jdbcType=DATE}
+			      AND MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+			      AND NUM_SALE_TARGET != 0
+				ORDER BY M DESC,UPDATE_DATE
+		) a
+		 GROUP BY a.MERCHANT_NO,a.AREA_CODE,a.DAY_ST
+	) b LEFT JOIN sales_gm_day_detail c ON b.CODE = c.CODE
+	limit 1
+  </select>
+  
+  <select id="findSalesGmDayDetailFirstByDetail" resultMap="FindSalesGmDayDetailFirstResultMap" parameterType="com.lj.business.st.dto.salesGmDayDetail.AddSalesGmDayDetail">
+  	select 
+  	<include refid="Base_Column_List" />
+  	FROM sales_gm_day_detail
+  	WHERE AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+		  AND DAY_ST = #{daySt,jdbcType=DATE}
+	      AND MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  		  AND SHOP_NO = #{shopNo,jdbcType=VARCHAR}
+  		  AND MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findSalesGmDayDetailFirstList" resultMap="FindSalesGmDayDetailFirstResultMap" parameterType="com.lj.business.st.dto.salesGmDayDetail.FindSalesGmDayDetailFirstList">
+    SELECT c.*
+	FROM 
+	(
+		SELECT a.`CODE`,a.DAY_ST,MAX(a.M) 
+		FROM
+		(
+			SELECT CODE,MERCHANT_NO,DAY_ST,AREA_CODE,IF(NUM_SALE_TARGET IS NULL OR NUM_SALE_TARGET = 0,0.0,NUM_SALE/NUM_SALE_TARGET) as M
+			FROM sales_gm_day_detail
+			WHERE DAY_ST = #{dateSt,jdbcType=DATE}
+			      AND NUM_SALE_TARGET != 0
+				  ORDER BY M DESC, UPDATE_DATE
+		) a
+		 GROUP BY a.MERCHANT_NO,a.AREA_CODE,a.DAY_ST
+	) b LEFT JOIN sales_gm_day_detail c ON b.CODE = c.CODE
+  </select>
+  
+</mapper>

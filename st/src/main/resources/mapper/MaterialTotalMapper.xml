@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IMaterialTotalDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.MaterialTotal" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="RESPOND_NUM" property="respondNum" jdbcType="INTEGER" />
+    <result column="RATIO_RESPOND" property="ratioRespond" jdbcType="DECIMAL" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="MATERIAL_TYPE_CODE" property="materialTypeCode" jdbcType="VARCHAR" />
+    <result column="MATERIAL_TYPE_NAME" property="materialTypeName" jdbcType="VARCHAR" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="FindMaterialTotalReturnMap" type="com.lj.business.st.dto.MaterialTotal.FindMaterialTotalReturn" >
+    <result column="RESPOND_NUM" property="respondNum" jdbcType="INTEGER" />
+    <result column="RATIO_RESPOND" property="ratioRespond" jdbcType="DECIMAL" />
+    <result column="MATERIAL_TYPE_CODE" property="materialTypeCode" jdbcType="VARCHAR" />
+    <result column="MATERIAL_TYPE_NAME" property="materialTypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="FindMaterialTotalMap" type="com.lj.business.st.dto.MaterialTotal.FindMaterialTotalReturn" >
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="RESPOND_NUM" property="respondNum" jdbcType="INTEGER" />
+    <result column="RATIO_RESPOND" property="ratioRespond" jdbcType="DECIMAL" />
+    <result column="MATERIAL_TYPE_CODE" property="materialTypeCode" jdbcType="VARCHAR" />
+    <result column="MATERIAL_TYPE_NAME" property="materialTypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, RESPOND_NUM, 
+    RATIO_RESPOND, DAY_ST, MATERIAL_TYPE_CODE, MATERIAL_TYPE_NAME, DIMENSION_ST, CREATE_DATE
+  </sql>
+  
+  
+ 	<sql id="findMaterialTotal">
+		<where>
+		<if test="merchantNo != null and merchantNo !=''">
+			and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+	    <if test="memberNoGm != null and memberNoGm !=''">
+			and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+		 <if test="beginDate != null ">
+      <![CDATA[ AND DAY_ST >= #{beginDate,jdbcType=DATE}]]>
+        </if>
+      <if test="endDate != null">
+       <![CDATA[AND DAY_ST <= #{endDate,jdbcType=DATE} ]]>
+      </if>
+		</where>	
+	</sql>	
+	<!-- 统计 -->
+    <select id="findMaterialTotalCount" resultMap="FindMaterialTotalMap" parameterType="com.lj.business.st.dto.MaterialTotal.FindMaterialTotal" >
+    select RESPOND_NUM ,MERCHANT_NO,MEMBER_NO_GM,MATERIAL_TYPE_NAME,RATIO_RESPOND
+    from material_total
+    where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+          AND MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+    ORDER BY RESPOND_NUM DESC
+    limit 1
+   </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from material_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findMaterialTotal" resultMap="FindMaterialTotalReturnMap" parameterType="com.lj.business.st.dto.MaterialTotal.FindMaterialTotal">
+  	select sum(RESPOND_NUM) RESPOND_NUM,RATIO_RESPOND,MATERIAL_TYPE_CODE,MATERIAL_TYPE_NAME
+    from material_total
+    where 1 = 1
+    <if test="merchantNo != null AND merchantNo != '' ">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null AND shopNo != '' ">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    <if test="dimensionSt != null AND dimensionSt != ''">
+        AND DIMENSION_ST = #{dimensionSt}
+    </if>
+    <if test="beginDate != null ">
+      <![CDATA[
+        AND DAY_ST >= #{beginDate,jdbcType=DATE}
+     ]]>
+    </if>
+    <if test="endDate != null">
+      <![CDATA[
+        AND DAY_ST <= #{endDate,jdbcType=DATE}
+       ]]>
+    </if>
+    group by MATERIAL_TYPE_CODE
+    order by RESPOND_NUM desc
+  </select>
+  
+  <select id="findMaterialTotalApp" resultMap="FindMaterialTotalReturnMap" parameterType="com.lj.business.st.dto.MaterialTotal.FindMaterialTotal">
+  	select sum(RESPOND_NUM) RESPOND_NUM,RATIO_RESPOND,MATERIAL_TYPE_CODE,MATERIAL_TYPE_NAME
+    from material_total
+    where  DIMENSION_ST = 'GUID' 
+    and MERCHANT_NO = #{merchantNo} 
+    and MEMBER_NO_GM = #{memberNoGm}
+       <!--  AND DAY_ST < CURDATE() -->
+     <![CDATA[
+        AND DAY_ST = ADDDATE(CURDATE(),-1)
+     ]]>
+    group by MATERIAL_TYPE_CODE
+    order by RESPOND_NUM desc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from material_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.lj.business.st.domain.MaterialTotal" >
+    insert into material_total (CODE, MERCHANT_NO, SHOP_NO, 
+      SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+      RESPOND_NUM, RATIO_RESPOND, DAY_ST, 
+      MATERIAL_TYPE_CODE, MATERIAL_TYPE_NAME, DIMENSION_ST, 
+      CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{respondNum,jdbcType=INTEGER}, #{ratioRespond,jdbcType=DECIMAL}, #{daySt,jdbcType=DATE}, 
+      #{materialTypeCode,jdbcType=VARCHAR}, #{materialTypeName,jdbcType=VARCHAR}, #{dimensionSt,jdbcType=VARCHAR}, 
+      NOW())
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.MaterialTotal" >
+    insert into material_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="respondNum != null" >
+        RESPOND_NUM,
+      </if>
+      <if test="ratioRespond != null" >
+        RATIO_RESPOND,
+      </if>
+      <if test="daySt != null" >
+        DAY_ST,
+      </if>
+      <if test="materialTypeCode != null" >
+        MATERIAL_TYPE_CODE,
+      </if>
+      <if test="materialTypeName != null" >
+        MATERIAL_TYPE_NAME,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="respondNum != null" >
+        #{respondNum,jdbcType=INTEGER},
+      </if>
+      <if test="ratioRespond != null" >
+        #{ratioRespond,jdbcType=DECIMAL},
+      </if>
+      <if test="daySt != null" >
+        #{daySt,jdbcType=DATE},
+      </if>
+      <if test="materialTypeCode != null" >
+        #{materialTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="materialTypeName != null" >
+        #{materialTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.MaterialTotal" >
+    update material_total
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="respondNum != null" >
+        RESPOND_NUM = #{respondNum,jdbcType=INTEGER},
+      </if>
+      <if test="ratioRespond != null" >
+        RATIO_RESPOND = #{ratioRespond,jdbcType=DECIMAL},
+      </if>
+      <if test="daySt != null" >
+        DAY_ST = #{daySt,jdbcType=DATE},
+      </if>
+      <if test="materialTypeCode != null" >
+        MATERIAL_TYPE_CODE = #{materialTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="materialTypeName != null" >
+        MATERIAL_TYPE_NAME = #{materialTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.MaterialTotal" >
+    update material_total
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      RESPOND_NUM = #{respondNum,jdbcType=INTEGER},
+      RATIO_RESPOND = #{ratioRespond,jdbcType=DECIMAL},
+      DAY_ST = #{daySt,jdbcType=DATE},
+      MATERIAL_TYPE_CODE = #{materialTypeCode,jdbcType=VARCHAR},
+      MATERIAL_TYPE_NAME = #{materialTypeName,jdbcType=VARCHAR},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

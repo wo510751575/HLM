@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- 通讯录 -->
+	<bean name="/contactsService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="contactsServiceImpl" />
+		<property name="serviceInterface"
+			value="com.lj.business.supcon.service.IContactsService" />
+	</bean>
+
+	<!-- 聊天 -->
+	<bean name="/chatService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="chatServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IChatService" />
+	</bean>
+
+	<bean name="/chatFriendsFacade"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="chatFriendsFacadeImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IChatFriendsFacade" />
+	</bean>
+	<bean name="/redPackFacade"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="redPackFacadeImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IRedPackFacade" />
+	</bean>
+
+	<!-- 公共服务 -->
+	<bean name="/commonService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="commonServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.ICommonService" />
+	</bean>
+
+	<!-- 微信账户相关服务 -->
+	<bean name="/wxAccountService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxAccountServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IWxAccountService" />
+	</bean>
+
+	<!-- 微信红包服务 -->
+	<bean name="/redPacketService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="redPacketServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IRedPacketService" />
+	</bean>
+
+	<!-- 微信群服务 -->
+	<bean name="/wxChatRoomService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxChatRoomServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IWxChatRoomService" />
+	</bean>
+	
+	
+	<!-- token服务 -->
+	<bean name="/tokenService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="tokenService" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.ITokenService" />
+	</bean>
+	
+	<!-- 获取群二维码,修改群昵称服务 -->
+	<bean name="/chatRoomMessageService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="chatRoomMessageServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.supcon.service.IChatRoomMessageService" />
+	</bean>
+
+</beans> 

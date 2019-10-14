@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.dao.MerchantPreProblemDao">
+	<resultMap id="problemResultMap" type="com.lj.business.ai.dto.MerchantPreProblemDto">
+		<result property="code" column="code"></result>
+		<result property="merchantNo" column="merchant_no"></result>
+		<result property="memberNo" column="member_no"></result>
+		<result property="memberName" column="member_name"></result>
+		<result property="problemType" column="problem_type"></result>
+		<result property="problemContent" column="problem_content" />
+		<result property="answerContent" column="answer_content" />
+		<result property="problemWord" column="problem_word" />
+		<result property="status" column="status"></result>
+		<result property="remark" column="remark"></result>
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="targetCount" column="target_count" />
+		<result property="isAll" column="is_all" />
+	</resultMap>
+
+	<sql id="merchantPreColumn">
+		code,merchant_no,member_no,member_name , problem_type , problem_content
+		, problem_word , target_count ,
+		status , remark , create_date ,
+		update_date,answer_content
+	</sql>
+    
+    <sql id="findMerchantPreProblemPage_condition" >
+  	 <where>
+	      <if test="merchantNo != null and merchantNo !=''" >
+	        and  MERCHANT_NO = #{merchantNo}
+	      </if>
+	      <if test="problemContent != null and problemContent !=''" >
+	        and  PROBLEM_CONTENT  like CONCAT('%',#{problemContent},'%' )
+	      </if>
+      </where>
+  </sql>
+    
+    <!-- 分页查询 -->
+   <select id="findMerchantPreProblemPage" resultMap="problemResultMap" parameterType="com.lj.business.ai.dto.MerchantPreProblemDto" >
+  SELECT   
+  	*
+  FROM merchant_pre_problem
+ 	 <include refid="findMerchantPreProblemPage_condition" />
+   order by CREATE_DATE desc
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findMerchantPreProblemPageCount" resultType="int" parameterType="com.lj.business.ai.dto.MerchantPreProblemDto" >
+    select  count(*) FROM merchant_pre_problem
+     <include refid="findMerchantPreProblemPage_condition" />
+  </select>
+    
+    
+  
+  <select id="selectByPrimaryKey" resultMap="problemResultMap" parameterType="java.lang.String" >
+    select 
+    *
+    from merchant_pre_problem
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+    
+   
+
+	<insert id="addMerchantPreProblem">
+		INSERT INTO merchant_pre_problem
+		(code,merchant_no,member_no,member_name,problem_type,problem_content,problem_word,target_count,status,remark,create_date,update_date,is_all,answer_content)
+		values
+		(#{code},#{merchantNo},#{memberNo},#{memberName},#{problemType},#{problemContent},#{problemWord},#{targetCount},#{status},#{remark},#{createDate},#{updateDate},#{isAll},#{answerContent})
+	</insert>
+
+	<select id="matchMerchantPreProblem" resultMap="problemResultMap">
+		select
+		<include refid="merchantPreColumn" />
+
+		from merchant_pre_problem
+
+		where merchant_no = #{merchantNo}
+		<if test="problemCodes!=null">
+			and code in
+			<foreach collection="problemCodes" item="code" open="("
+				close=")" separator=",">
+
+				#{code}
+
+			</foreach>
+
+		</if>
+
+		order by target_count desc limit #{page.start},#{page.limit}
+	</select>
+	<update id="updateMerchantPreProblem">
+		update merchant_pre_problem
+		<set >
+	      <if test="problemContent != null" >
+	        problem_content = #{problemContent},
+	      </if>
+	      <if test="problemWord != null" >
+	        problem_word = #{problemWord},
+	      </if>
+	      <if test="problemType != null" >
+	        problem_type = #{problemType},
+	      </if>
+	      <if test="status != null" >
+	        status = #{status},
+	      </if>
+	      <if test="targetCount != null" >
+	        target_count = #{targetCount},
+	      </if>
+	      <if test="isAll != null " >
+	        is_all = #{isAll},
+	      </if>
+	      <if test="answerContent != null " >
+	        answer_content = #{answerContent},
+	      </if>
+			update_date = now()
+	    </set>
+		where code = #{code}
+	</update>
+	<select id="getMerchantPreProblem" resultMap="problemResultMap">
+
+		select
+		<include refid="merchantPreColumn" />
+		from merchant_pre_problem where code = #{code}
+	</select>
+	
+		<select id="findMerchantPreProblemList" resultMap="problemResultMap" parameterType="com.lj.business.ai.dto.MerchantPreProblemDto">
+
+		select
+		<include refid="merchantPreColumn" />
+		<![CDATA[ from merchant_pre_problem where merchant_no = #{merchantNo}  and status < 2 order by create_date desc]]>
+	</select>
+	
+	
+	<!--查询全局回答 -->
+	<select id="findIsAllMerchantPreProblemList" resultMap="problemResultMap" parameterType="com.lj.business.ai.dto.MerchantPreProblemDto">
+
+		select 
+		<include refid="merchantPreColumn" />
+		<![CDATA[ from merchant_pre_problem where merchant_no = #{merchantNo} and is_all=2 and status < 2  order by create_date desc]]>
+	</select>
+</mapper>

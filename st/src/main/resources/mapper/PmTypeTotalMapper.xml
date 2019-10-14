@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.st.dao.IPmTypeTotalDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.st.domain.PmTypeTotal" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_AREA_CODE" property="cityAreaCode" jdbcType="VARCHAR" />
+    <result column="PM_TYPE_CODE" property="pmTypeCode" jdbcType="VARCHAR" />
+    <result column="PM_TYPE_TYPE" property="pmTypeType" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="NUM_PM" property="numPm" jdbcType="INTEGER" />
+    <result column="NUM_ADD" property="numAdd" jdbcType="INTEGER" />
+    <result column="RATIO_PM" property="ratioPm" jdbcType="DECIMAL" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="PM_TYPE_TYPE" property="pmTypeType" />
+  </resultMap>
+  <resultMap id="ResultMap" type="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotalReturn" >
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="SHOP_NO" property="shopNo" jdbcType="VARCHAR" />
+    <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR" />
+    <result column="PM_TYPE_CODE" property="pmTypeCode" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="NUM_PM" property="numPm" jdbcType="INTEGER" />
+    <result column="RATIO_PM" property="ratioPm" jdbcType="DECIMAL" />
+    <result column="DAY_ST" property="daySt" jdbcType="DATE" />
+    <result column="DIMENSION_ST" property="dimensionSt" jdbcType="VARCHAR" />
+    <result column="PM_TYPE_TYPE" property="pmTypeType" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    CODE, MERCHANT_NO, SHOP_NO, SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, AREA_CODE,
+     PM_TYPE_CODE, TYPE_NAME, NUM_PM, NUM_ADD,RATIO_PM, DAY_ST, DIMENSION_ST,
+    CREATE_DATE,PM_TYPE_TYPE
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_type_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+	
+  
+	<!--   OMS 按统计日期分组客户数据图表	段志鹏  2017-07-28 start -->
+	<sql id="find_condition" >
+	  	 <where>
+		      <if test="merchantNo != null and merchantNo !=''" >
+		        and  MERCHANT_NO = #{merchantNo}
+		      </if>
+		      <if test="areaCode != null and areaCode !=''" >
+		        and  AREA_CODE = #{areaCode}
+		      </if>
+		      <if test="areaName != null and areaName !=''" >
+		        and AREA_NAME like CONCAT('%',#{areaName},'%' )
+		      </if>
+		      <if test="pmTypeType != null and pmTypeType !=''" >
+		        and  PM_TYPE_TYPE = #{pmTypeType}
+		      </if>
+		      <if test="dimensionSt != null and dimensionSt !=''" >
+		        and  DIMENSION_ST = #{dimensionSt}
+		      </if>
+		      <if test="daySt != null" >
+		        and  DAY_ST = #{daySt}
+		      </if>
+	      </where>
+	  </sql>
+	  
+   <!-- 内部接口统计 -->
+  	<sql id="findPmTypeMaxList">
+		<where>
+		<if test="merchantNo != null and merchantNo !=''">
+			and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+		</if>
+	    <if test="memberNoGm != null and memberNoGm !=''">
+			and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+		</where>	
+	</sql>
+
+   <select id="findPmTypeMaxList" resultMap="ResultMap" parameterType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotal" >
+    select NUM_PM,MERCHANT_NO,MEMBER_NO_GM,TYPE_NAME,PM_TYPE_CODE,RATIO_PM
+     from pm_type_total
+    where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+          AND MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+          AND DIMENSION_ST = 'GUID'
+    order by NUM_PM desc
+    limit 1
+  </select>
+	  
+	<select id="findIntentionPmList" resultType="map" parameterType="map" >
+    SELECT DAY_ST,NUM_ADD,PM_TYPE_TYPE FROM pm_type_total
+    <include refid="find_condition" />
+	GROUP BY DAY_ST
+	ORDER BY DAY_ST
+  </select>
+   <!-- 查询统计时间 ，按时间分组 -->
+   <select id="findPmTypeDaySt" resultType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotalReturn" parameterType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotal" >
+     SELECT DAY_ST daySt FROM pm_type_total
+	 WHERE MERCHANT_NO = #{merchantNo}
+      and  DIMENSION_ST = #{dimensionSt}
+	 GROUP BY DAY_ST
+	 </select>
+	 
+
+   <select id="queryPmType" resultType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotalReturn" parameterType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotal" >
+	  SELECT PM_TYPE_TYPE pmTypeType,TYPE_NAME typeName,NUM_PM numPm,DAY_ST  daySt FROM pm_type_total
+      WHERE MERCHANT_NO = #{merchantNo}
+      AND DIMENSION_ST = #{dimensionSt}
+      AND DAY_ST = #{daySt}
+      GROUP BY PM_TYPE_TYPE,DAY_ST
+      ORDER BY DAY_ST
+	 </select>
+    
+ 
+ 
+      <!-- 统计分析 -->
+   <select id="findPmTypeListSum" resultType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotalReturn" parameterType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotal" >
+		    SELECT PM_TYPE_TYPE pmTypeType,TYPE_NAME typeName,NUM_PM AS numPm,DAY_ST daySt
+	    FROM pm_type_total
+	    <include refid="find_condition" />
+	    GROUP BY PM_TYPE_TYPE
+	 </select>
+  
+	<!--   运营概览客户数据图表 -->
+	  <select id="findPmTypeList" resultType="map" parameterType="map">
+	    SELECT PM_TYPE_TYPE,TYPE_NAME,NUM_PM,DAY_ST FROM pm_type_total
+	    <include refid="find_condition" />
+	    GROUP BY PM_TYPE_TYPE,DAY_ST
+		ORDER BY DAY_ST
+	  </select>
+<!--  OMS 按统计日期分组客户数据图表	段志鹏  2017-07-28 end -->
+  
+
+  <select id="findPmTypeTotalList" resultMap="BaseResultMap" parameterType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotal">
+    select
+    MERCHANT_NO,SHOP_NO,SHOP_NAME,MEMBER_NO_GM,MEMBER_NAME_GM,AREA_CODE,AREA_NAME,TYPE_NAME,PM_TYPE_TYPE,sum(NUM_PM) as 'NUM_PM'
+    from pm_type_total
+    where 1 = 1
+    <if test="merchantNo != null">
+      AND MERCHANT_NO = #{merchantNo}
+    </if>
+    <if test="shopNo != null">
+      AND SHOP_NO = #{shopNo}
+    </if>
+    <if test="dimensionSt != null">
+        AND DIMENSION_ST = #{dimensionSt}
+    </if>
+    <if test="pmTypeType != null and pmTypeType !=''">
+        AND PM_TYPE_TYPE = #{pmTypeType}
+    </if>
+    <if test="areaCode != null and areaCode !=''">
+        AND AREA_CODE = #{areaCode}
+    </if>
+    <if test="beginDate != null">
+      <![CDATA[
+        and DAY_ST >= #{beginDate,jdbcType=DATE}
+     ]]>
+    </if>
+    <if test="endDate != null">
+      <![CDATA[
+        and DAY_ST <= #{endDate,jdbcType=DATE}
+       ]]>
+    </if>
+    AND PM_TYPE_TYPE != 'URGENCY'
+    AND PM_TYPE_TYPE != 'REPEAT'
+    group by PM_TYPE_TYPE
+  </select>
+  <select id="findPmTypeTotalListApp" resultMap="ResultMap" parameterType="com.lj.business.st.dto.PmTypeTotal.FindPmTypeTotal">
+    select
+    MERCHANT_NO,SHOP_NO,SHOP_NAME,PM_TYPE_CODE,TYPE_NAME,RATIO_PM,PM_TYPE_TYPE,sum(NUM_PM) as 'NUM_PM'
+    from pm_type_total
+    where DIMENSION_ST = 'GUID'
+    AND MERCHANT_NO = #{merchantNo}
+    AND MEMBER_NO_GM = #{memberNoGm}
+    AND PM_TYPE_TYPE !='REPEAT'
+    AND PM_TYPE_TYPE !='URGENCY'
+    <if test="beginDate != null">
+      <![CDATA[
+        and DAY_ST >= #{beginDate,jdbcType=DATE}
+     ]]>
+    </if>
+    <if test="endDate != null">
+      <![CDATA[
+        and DAY_ST <= #{endDate,jdbcType=DATE}
+       ]]>
+    </if>
+    group by PM_TYPE_TYPE
+    ORDER BY NUM_PM DESC
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pm_type_total
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.st.domain.PmTypeTotal" >
+    insert into pm_type_total (CODE, MERCHANT_NO, SHOP_NO, 
+      SHOP_NAME, MEMBER_NO_GM, MEMBER_NAME_GM, 
+      AREA_CODE, PROVINCE_CODE, CITY_CODE, 
+      CITY_AREA_CODE, PM_TYPE_CODE, TYPE_NAME, 
+      NUM_PM, RATIO_PM, DAY_ST, 
+      DIMENSION_ST, CREATE_DATE)
+    values (#{code,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, #{shopNo,jdbcType=VARCHAR}, 
+      #{shopName,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{cityAreaCode,jdbcType=VARCHAR}, #{pmTypeCode,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, 
+      #{numPm,jdbcType=INTEGER}, #{ratioPm,jdbcType=DECIMAL}, #{daySt,jdbcType=DATE}, 
+      #{dimensionSt,jdbcType=VARCHAR}, NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.st.domain.PmTypeTotal" >
+    insert into pm_type_total
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO,
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+        <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="cityAreaCode != null" >
+        CITY_AREA_CODE,
+      </if>
+      <if test="pmTypeCode != null" >
+        PM_TYPE_CODE,
+      </if>
+       <if test="pmTypeType != null" >
+        PM_TYPE_TYPE,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="numPm != null" >
+        NUM_PM,
+      </if>
+        <if test="numAdd != null" >
+        NUM_ADD,
+      </if>
+      <if test="ratioPm != null" >
+        RATIO_PM,
+      </if>
+      <if test="daySt != null" >
+        DAY_ST,
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST,
+      </if>
+        CREATE_DATE,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+        <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAreaCode != null" >
+        #{cityAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pmTypeCode != null" >
+        #{pmTypeCode,jdbcType=VARCHAR},
+      </if>
+       <if test="pmTypeType != null" >
+        #{pmTypeType,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="numPm != null" >
+        #{numPm,jdbcType=INTEGER},
+      </if>
+         <if test="numAdd != null" >
+        #{numAdd,jdbcType=INTEGER},
+      </if>
+      <if test="ratioPm != null" >
+        #{ratioPm,jdbcType=DECIMAL},
+      </if>
+      <if test="daySt != null" >
+        #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.st.domain.PmTypeTotal" >
+    update pm_type_total
+    <set >
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNo != null" >
+        SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAreaCode != null" >
+        CITY_AREA_CODE = #{cityAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pmTypeCode != null" >
+        PM_TYPE_CODE = #{pmTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="numPm != null" >
+        NUM_PM = #{numPm,jdbcType=INTEGER},
+      </if>
+      <if test="ratioPm != null" >
+        RATIO_PM = #{ratioPm,jdbcType=DECIMAL},
+      </if>
+      <if test="daySt != null" >
+        DAY_ST = #{daySt,jdbcType=DATE},
+      </if>
+      <if test="dimensionSt != null" >
+        DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.st.domain.PmTypeTotal" >
+    update pm_type_total
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      SHOP_NO = #{shopNo,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopName,jdbcType=VARCHAR},
+      MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      CITY_AREA_CODE = #{cityAreaCode,jdbcType=VARCHAR},
+      PM_TYPE_CODE = #{pmTypeCode,jdbcType=VARCHAR},
+      TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      NUM_PM = #{numPm,jdbcType=INTEGER},
+      RATIO_PM = #{ratioPm,jdbcType=DECIMAL},
+      DAY_ST = #{daySt,jdbcType=DATE},
+      DIMENSION_ST = #{dimensionSt,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.cm.dao.IMaterialVideoDao">
+<resultMap id="baseResultMap" type="com.lj.business.cm.domain.MaterialVideo">
+	<id column="CODE" property="code" jdbcType="VARCHAR" />
+	<result column="VIDEO_NAME" property="videoName" jdbcType="VARCHAR" />
+	<result column="FOLDER_NAME" property="folderName" jdbcType="VARCHAR" />
+	<result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+	<result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+	<result column="SIZE" property="size" jdbcType="DOUBLE" />
+	<result column="VIDEO_LOCATION" property="videoLocation" jdbcType="VARCHAR" />
+	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+	<result column="VIDEO_LENGTH" property="videoLength" jdbcType="VARCHAR" />
+	<result column="FIRST_VIEW" property="firstView" jdbcType="VARCHAR" />
+	<result column="COUNT" property="count" jdbcType="INTEGER" />
+	<result column="LENGTH" property="length" jdbcType="INTEGER" />
+	<result column="WIDTH" property="width" jdbcType="INTEGER" />
+</resultMap>
+
+<resultMap id="findMaterialVideoPageReturnMap" type="com.lj.business.cm.dto.wordsType.FindMaterialVideoPageReturn" >
+	<id column="CODE" property="code" jdbcType="VARCHAR" />
+	<result column="VIDEO_NAME" property="videoName" jdbcType="VARCHAR" />
+	<result column="FOLDER_NAME" property="folderName" jdbcType="VARCHAR" />
+	<result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+	<result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+	<result column="SIZE" property="size" jdbcType="DOUBLE" />
+	<result column="VIDEO_LOCATION" property="videoLocation" jdbcType="VARCHAR" />
+	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+	<result column="VIDEO_LENGTH" property="videoLength" jdbcType="VARCHAR" />
+	<result column="FIRST_VIEW" property="firstView" jdbcType="VARCHAR" />
+	<result column="COUNT" property="count" jdbcType="INTEGER" />
+	<result column="LENGTH" property="length" jdbcType="INTEGER" />
+	<result column="WIDTH" property="width" jdbcType="INTEGER" />
+</resultMap>
+
+<sql id="Base_Column_List">
+	CODE,VIDEO_NAME,FOLDER_NAME,PARENT_ID,PARENT_IDS,SIZE,
+	VIDEO_LOCATION,UPDATE_TIME,MERCHANT_NO,VIDEO_LENGTH,FIRST_VIEW,
+	COUNT,LENGTH,WIDTH
+</sql>
+
+<insert id="addMaterialVideo" parameterType="com.lj.business.cm.dto.AddMaterial">
+	INSERT INTO material_video
+	(CODE,VIDEO_NAME,FOLDER_NAME,PARENT_ID,
+	PARENT_IDS,SIZE,VIDEO_LOCATION,UPDATE_TIME,
+	MERCHANT_NO,VIDEO_LENGTH,FIRST_VIEW,COUNT,LENGTH,WIDTH)
+	values(#{code,jdbcType=VARCHAR},#{videoName,jdbcType=VARCHAR},
+	#{folderName,jdbcType=VARCHAR},#{parentId,jdbcType=VARCHAR},
+	#{parentIds,jdbcType=VARCHAR},#{size,jdbcType=DOUBLE},
+	#{videoLocation,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP},
+	#{merchantNo,jdbcType=VARCHAR},#{videoLength,jdbcType=VARCHAR},
+	#{firstView,jdbcType=VARCHAR},#{count,jdbcType=INTEGER},
+	#{length,jdbcType=INTEGER},#{width,jdbcType=INTEGER})
+</insert>
+
+<select id="findMaterialVideoPage" parameterType="com.lj.business.cm.dto.wordsType.FindMaterialVideoPage" resultMap="findMaterialVideoPageReturnMap">
+	SELECT 
+	<include refid="Base_Column_List" />
+	FROM material_video
+	<where>
+	<if test="merchantNo != null">
+	(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+	</if>
+	<if test="videoName != null and videoName != ''">
+	AND (VIDEO_NAME like CONCAT('%',#{videoName,jdbcType=VARCHAR},'%' ) or FOLDER_NAME like CONCAT('%',#{videoName,jdbcType=VARCHAR},'%' ))
+	</if>
+	<if test="parentId != null">
+	AND PARENT_ID = #{parentId,jdbcType=VARCHAR}
+	</if>
+	</where>
+	order by FOLDER_NAME DESC
+	limit ${start},${limit}
+</select>
+
+<select id="findMaterialVideoCount" parameterType="com.lj.business.cm.dto.wordsType.FindMaterialVideoPage" resultType="java.lang.Integer">
+	SELECT 
+	count(*)
+	FROM material_video
+	<where>
+	<if test="merchantNo != null">
+	(MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} or MERCHANT_NO is null)
+	</if>
+	<if test="videoName != null and videoName != ''">
+	AND (VIDEO_NAME like CONCAT('%',#{videoName,jdbcType=VARCHAR},'%' ) or FOLDER_NAME like CONCAT('%',#{videoName,jdbcType=VARCHAR},'%' ))
+	</if>
+	<if test="parentId != null">
+	AND PARENT_ID = #{parentId,jdbcType=VARCHAR}
+	</if>
+	</where>
+</select>
+
+<delete id="delete" parameterType="com.lj.business.cm.dto.AddMaterialVideo">
+	DELETE FROM material_video
+	WHERE (
+	CODE like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+	OR PARENT_IDS like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+	)
+	
+</delete>
+
+<select id="selectParentIds" parameterType="java.lang.String" resultType="java.lang.String">
+	SELECT PARENT_IDS 
+	FROM material_video
+	WHERE CODE = #{parentId,jdbcType=VARCHAR}
+</select>
+
+<select id="getCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT count(*) 
+	from material_video
+	WHERE PARENT_ID = #{parentId,jdbcType=VARCHAR}
+</select>
+
+<update id="updateCount" parameterType="com.lj.business.cm.dto.AddMaterialVideo">
+	UPDATE material_video
+	SET COUNT = #{count,jdbcType=INTEGER}
+	WHERE CODE = #{code,jdbcType=VARCHAR}
+</update>
+</mapper>

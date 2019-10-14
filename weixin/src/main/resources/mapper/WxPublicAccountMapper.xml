@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IWxPublicAccountDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.WxPublicAccount" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NO_WX_ZK" property="noWxZk" jdbcType="VARCHAR" />
+    <result column="PA_USERNAME" property="paUsername" jdbcType="VARCHAR" />
+    <result column="PA_ALIAS" property="paAlias" jdbcType="VARCHAR" />
+    <result column="PA_NAME" property="paName" jdbcType="VARCHAR" />
+    <result column="PA_LOGO" property="paLogo" jdbcType="VARCHAR" />
+    <result column="PA_DESC" property="paDesc" jdbcType="VARCHAR" />
+    <result column="PA_DESC" property="paDesc" jdbcType="VARCHAR" />
+    <result column="PA_CERTFLAG" property="paCertflag" jdbcType="VARCHAR" />
+    <result column="WX_PARAM" property="wxParam" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="TINYINT" />
+    
+    
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="FindWxPublicAccountResultMap" type="com.lj.business.weixin.dto.publicaccount.FindWxPublicAccountReturn" extends="BaseResultMap"></resultMap>
+  <resultMap id="FindWxPublicAccountPageResultMap" type="com.lj.business.weixin.dto.publicaccount.FindWxPublicAccountPageReturn" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, NO_WX_ZK, PA_USERNAME, PA_ALIAS, PA_NAME, PA_LOGO, PA_DESC, PA_CERTFLAG, WX_PARAM, STATUS, 
+     MERCHANT_NO, MERCHANT_NAME, CREATE_DATE, REMARK, REMARK2, REMARK3, 
+    REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_public_account
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_public_account
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.WxPublicAccount" >
+    insert into wx_public_account (CODE, NO_WX_ZK, PA_USERNAME, 
+      PA_ALIAS, PA_NAME, PA_LOGO, 
+      PA_DESC, PA_CERTFLAG, STATUS, 
+       MERCHANT_NO, 
+      MERCHANT_NAME, CREATE_DATE, REMARK, 
+      REMARK2, REMARK3, REMARK4, 
+      WX_PARAM)
+    values (#{code,jdbcType=VARCHAR}, #{noWxZk,jdbcType=VARCHAR}, #{paUsername,jdbcType=VARCHAR}, 
+      #{paAlias,jdbcType=VARCHAR}, #{paName,jdbcType=VARCHAR}, #{paLogo,jdbcType=VARCHAR}, 
+      #{paDesc,jdbcType=VARCHAR}, #{paCertflag,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+       #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
+      #{wxParam,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.WxPublicAccount" >
+    insert into wx_public_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="noWxZk != null" >
+        NO_WX_ZK,
+      </if>
+      <if test="paUsername != null" >
+        PA_USERNAME,
+      </if>
+      <if test="paAlias != null" >
+        PA_ALIAS,
+      </if>
+      <if test="paName != null" >
+        PA_NAME,
+      </if>
+      <if test="paLogo != null" >
+        PA_LOGO,
+      </if>
+      <if test="paDesc != null" >
+        PA_DESC,
+      </if>
+      <if test="paCertflag != null" >
+        PA_CERTFLAG,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="wxParam != null" >
+        WX_PARAM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxZk != null" >
+        #{noWxZk,jdbcType=VARCHAR},
+      </if>
+      <if test="paUsername != null" >
+        #{paUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="paAlias != null" >
+        #{paAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="paName != null" >
+        #{paName,jdbcType=VARCHAR},
+      </if>
+      <if test="paLogo != null" >
+        #{paLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="paDesc != null" >
+        #{paDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paCertflag != null" >
+        #{paCertflag,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="wxParam != null" >
+        #{wxParam,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.WxPublicAccount" >
+    update wx_public_account
+    <set >
+      <if test="noWxZk != null" >
+        NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR},
+      </if>
+      <if test="paUsername != null" >
+        PA_USERNAME = #{paUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="paAlias != null" >
+        PA_ALIAS = #{paAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="paName != null" >
+        PA_NAME = #{paName,jdbcType=VARCHAR},
+      </if>
+      <if test="paLogo != null" >
+        PA_LOGO = #{paLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="paDesc != null" >
+        PA_DESC = #{paDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paCertflag != null" >
+        PA_CERTFLAG = #{paCertflag,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="wxParam != null" >
+        WX_PARAM = #{wxParam,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.WxPublicAccount" >
+    update wx_public_account
+    set NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR},
+      PA_USERNAME = #{paUsername,jdbcType=VARCHAR},
+      PA_ALIAS = #{paAlias,jdbcType=VARCHAR},
+      PA_NAME = #{paName,jdbcType=VARCHAR},
+      PA_LOGO = #{paLogo,jdbcType=VARCHAR},
+      PA_DESC = #{paDesc,jdbcType=VARCHAR},
+      PA_CERTFLAG = #{paCertflag,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=TINYINT},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      WX_PARAM = #{wxParam,jdbcType=LONGVARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findByUsernameAndNoWxZk" resultMap="FindWxPublicAccountResultMap" parameterType="com.lj.business.weixin.dto.publicaccount.FindWxPublicAccount">
+  	select <include refid="Base_Column_List" />
+      from wx_public_account
+     where NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+       and PA_USERNAME = #{paUsername,jdbcType=VARCHAR}
+       and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <!-- 分页查询 - begin -->
+	<sql id="findWxPublicAccountPage_condition">
+		<where>
+			<if test="noWxZk != null and noWxZk !='' " >
+				and NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+	        </if>
+			<if test="paName != null and paName !='' " >
+
+				and  pa_name like concat(concat('%',#{paName}),'%')
+	        </if>
+			<if test="status != null" >
+				and status = #{status,jdbcType=TINYINT}
+	        </if>
+			<if test="merchantNo != null and merchantNo !='' " >
+	        	and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+	        </if>
+			<if test="shopNos != null and shopNos.size() > 0">
+      	     and shop_no in
+	           <foreach item="item" index="index" collection="shopNos" open="(" separator="," close=")">  
+	              #{item}  
+	             </foreach>
+	        </if>
+		</where>
+	</sql>
+
+	<select id="findWxPublicAccountPage" resultMap="FindWxPublicAccountPageResultMap" parameterType="com.lj.business.weixin.dto.publicaccount.FindWxPublicAccountPage">
+		SELECT <include refid="Base_Column_List" />
+		FROM wx_public_account
+		<include refid="findWxPublicAccountPage_condition" />
+		order by CREATE_DATE desc
+		limit ${start}, ${limit}
+	</select>
+
+	<select id="findWxPublicAccountPageCount" resultType="int" parameterType="com.lj.business.weixin.dto.publicaccount.FindWxPublicAccountPage">
+		select count(*) 
+		FROM wx_public_account
+		<include refid="findWxPublicAccountPage_condition" />
+	</select>
+	<!-- 分页查询 - end -->
+	
+	<delete id="delete" parameterType="com.lj.business.weixin.dto.publicaccount.UpdateWxPublicAccount">
+		delete from wx_public_account
+		where NO_WX_ZK = #{noWxZk,jdbcType=VARCHAR}
+		and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	</delete>
+</mapper>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd          
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+      
+    
+    <!-- 公用素材 -->
+	<bean id="materialCommenService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialCommenService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialCommenService" />   
+    </bean> 
+    
+    <!-- 商户素材 -->
+	<bean id="materialService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialService" />   
+    </bean> 
+    
+    <!-- 素材类型 -->
+	<bean id="materialTypeService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialTypeService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialTypeService" />   
+    </bean>
+    
+    <!-- 公用素材类型 -->
+	<bean id="commonMaterialtypeService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="commonMaterialtypeService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.ICommonMaterialTypeService" />   
+    </bean> 
+
+ 	<!-- 产品服务 -->
+	<bean id="bomService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="bomService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IBomService" />   
+    </bean>
+    
+    <!-- 话术服务 -->
+	<bean id="textInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="textInfoService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.ITextInfoService" />   
+    </bean>
+    
+      <!-- 问候信息 -->
+	<bean id="greetClientService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="greetClientService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IGreetClientService" />   
+    </bean>
+	
+	 <!-- 活动服务 -->
+	<bean id="activityService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="activityService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IActivityService" />   
+    </bean>
+    
+	 <!-- 商户配置 -->
+	<bean id="merchantParamsService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="merchantParamsService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMerchantParamsService" />    
+    </bean>
+    
+     <!-- 问候信息 -->
+	<bean id="guidIntroduceMaterialService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="guidIntroduceMaterialService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IGuidIntroduceMaterialService" />   
+    </bean>
+    
+<!--         VR素材类型 -->
+	<bean id="vrMaterialTypeService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="vrMaterialTypeService"/>
+		<property name="serviceInterface" value="com.lj.business.cm.service.IVrMaterialTypeService" />   
+    </bean>
+    
+<!--             vr素材中心 -->
+	<bean id="vrMaterialCommenService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="vrMaterialCommenService"/>
+		<property name="serviceInterface" value="com.lj.business.cm.service.IVrMaterialCommenService" />   
+    </bean>
+	
+<!--            VR类型分类 -->
+	<bean id="vrMaterialTypeCategoryService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="vrMaterialTypeCategoryService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IVrMaterialTypeCategoryService" />   
+    </bean>
+    
+    <!-- 			VR类型分类关联表 -->
+    	<bean id="vrMaterialCommenCategoryService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="vrMaterialCommenCategoryService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IVrMaterialCommenCategoryService" />   
+    </bean>
+    
+    <!-- 朋友圈图片素材 -->
+	<bean id="friendsImageMaterialService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="friendsImageMaterialService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IFriendsImageMaterialService" />   
+    </bean>
+    <!-- <bean id="friendsImageMaterialService" class="com.lj.base.mvc.remote.hession.spring.HessianTimeoutProxyFactoryBean">   
+		请求代理Servlet路径           
+		<property name="serviceUrl">  
+			<value>http://127.0.0.1:8080/cm/hessian/friendsImageMaterialService</value>   
+		</property>
+		接口定义   
+		<property name="serviceInterface">   
+			<value>com.lj.business.cm.service.IFriendsImageMaterialService</value>  
+		</property>
+		读超时时间设置为10秒
+		<property name="readTimeout" value="60000"/> 
+		连接超时时间设置为10秒
+		<property name="connectTimeout" value="60000"/>   
+	</bean> -->
+	
+	<!-- 朋友圈素材变量 -->
+	<bean id="materialVariableService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialVariableService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialVariableService" />   
+    </bean>
+    <!-- <bean id="materialVariableService" class="com.lj.base.mvc.remote.hession.spring.HessianTimeoutProxyFactoryBean">   
+		请求代理Servlet路径           
+		<property name="serviceUrl">  
+			<value>http://127.0.0.1:8080/cm/hessian/materialVariableService</value>   
+		</property>
+		接口定义   
+		<property name="serviceInterface">   
+			<value>com.lj.business.cm.service.IMaterialVariableService</value>  
+		</property>
+		读超时时间设置为10秒
+		<property name="readTimeout" value="60000"/> 
+		连接超时时间设置为10秒
+		<property name="connectTimeout" value="60000"/>   
+	</bean> -->
+	
+	<!-- 朋友圈链接素材  -->
+	<bean id="friendsLinkMaterialService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="friendsLinkMaterialService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IFriendsLinkMaterialService" />   
+    </bean>
+	
+	<!-- 朋友圈视频素材  -->
+	<bean id="friendsVideoMaterialService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="friendsVideoMaterialService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IFriendsVideoMaterialService" />   
+    </bean>
+	
+	<!-- 话术信息  -->
+	<bean id="wordsInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="wordsInfoService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IWordsInfoService" />   
+    </bean>
+    
+    <!-- 公司话术信息  -->
+	<bean id="commonWordsInfoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="commonWordsInfoService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.ICommonWordsInfoService" />   
+    </bean>
+	
+	<!-- 话术类型  -->
+	<bean id="wordsTypeService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="wordsTypeService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IWordsTypeService" />   
+    </bean>
+    
+    <!-- 公司话术类型  -->
+	<bean id="commonWordsTypeService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="commonWordsTypeService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.ICommonWordsTypeService" />   
+    </bean>
+    
+    <!-- 视频库  -->
+	<bean id="materialVideoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialVideoService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialVideoService" />   
+    </bean>
+    
+    <!-- 图片库  -->
+	<bean id="materialPhotoService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialPhotoService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialPhotoService" />   
+    </bean>
+    
+    <!-- 文本库  -->
+	<bean id="materialTextService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialTextService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialTextService" />   
+    </bean>
+    
+    <!-- 链接库  -->
+	<bean id="materialLinkService" parent="systemHessianFactoryBean">   
+		<property name="systemAliasName" value="cm" />
+		<property name="serviceName" value="materialLinkService" />
+		<property name="serviceInterface" value="com.lj.business.cm.service.IMaterialLinkService" />   
+    </bean>
+    
+</beans> 
+

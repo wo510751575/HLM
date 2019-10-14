@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	<import resource="classpath*:monitor/monitor-server.xml" ></import>
+	<!-- 聊天记录 -->
+	<bean name="/wxChatInfoService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxChatInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxChatInfoService" />
+	</bean>
+	
+		<!-- IM敏感词 -->
+	<bean name="/imSensitiveWordsService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imSensitiveWordsServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImSensitiveWordsService" />
+	</bean>
+	
+	<!-- IM聊天记录 -->
+	<bean name="/imChatInfoService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imChatInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImChatInfoService" />
+	</bean>
+	
+	<!-- IM表情 -->
+	<bean name="/imEmojiService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imEmojiServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImEmojiService" />
+	</bean>
+	
+	<!-- IM表情包 -->
+	<bean name="/imEmojiPackageService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imEmojiPackageServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImEmojiPackageService" />
+	</bean>
+	
+	<!-- 朋友圈评论服务 -->
+	<bean name="/wxCommentInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxCommentInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxCommentInfoService" />
+	</bean>
+	
+	<!-- 朋友圈点赞服务 -->
+	<bean name="/wxLikeInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxLikeInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxLikeInfoService" />
+	</bean>
+	
+	<!-- 统计微信聊天跟进job服务 -->
+	<bean name="/wxChatFollowJobService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="wxChatFollowJobServiceImpl"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	<!--朋友圈发送任务调度  -->
+	<bean name="/sendFriendsJobTask"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean class="com.lj.cc.clientintf.JobService">
+		     <property name="paramJob" ref="sendFriendsJobTask"/>
+		     <property name="taskExecutor" ref="taskExecutor"/>	<!-- 线程池管理, 查看配置beans/beans-service.xml-->
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IParamJob
+			</value>
+		</property>
+	</bean>
+	  
+	<!--  朋友圈信息上传 -->
+	<bean name="/wxFriendsDataService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxFriendsInfoDataServiceImpl"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxFriendsDataService"></property>
+	</bean>
+    <!-- 发送朋友圈信息  ,点赞,评论 -->
+	
+	<bean name="/friendsFacade" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imWxFriendsFacadeImpl"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImFriendsFacade"></property>
+	</bean>
+	
+	<!--  朋友圈发送信息回调 -->
+	<bean name="/friendsCallBackFacade" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imWxFriendsCallBackFacadeImpl"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImFriendsCallBackFacade"></property>
+	</bean>
+	<!--  朋友圈信息查询服务 -->
+	<bean name="/imFriendsInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imFriendsInfoServiceImpl"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImFriendsInfoService"></property>
+	</bean>
+	
+	<!--  发送朋友圈任务服务 -->
+	<bean name="/sendFriendsJobService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="sendFriendsJobServiceImpl"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.ISendFriendsJobService"></property>
+	</bean>
+	<bean name="/imCommentInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		 <property name="service" ref="imCommentInfoServiceImpl"></property>
+		 <property name="serviceInterface" value="com.lj.business.weixin.service.IImCommentInfoService"></property>
+	</bean>
+	<bean name="/imLikeInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		 <property name="service" ref="imLikeInfoServiceImpl"></property>
+		 <property name="serviceInterface" value="com.lj.business.weixin.service.IImLikeInfoService"></property>
+	</bean>
+	
+	
+	<bean name="/imChatInfoSensitiveService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		 <property name="service" ref="imChatInfoSensitiveServiceImpl"></property>
+		 <property name="serviceInterface" value="com.lj.business.weixin.service.IImChatInfoSensitiveService"></property>
+	</bean>
+	<!-- 朋友圈提示 -->
+	<bean name="/friendPointCycleService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		 <property name="service" ref="friendPointCycleServiceImpl"/>
+		 <property name="serviceInterface" value="com.lj.business.weixin.service.IFriendPointCycleService"/>
+	</bean>
+	
+	
+	<!--  群发优惠券服务 -->
+	<bean name="/couponMultiPushService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="couponMultiPushServiceImpl"></property>
+		<property name="serviceInterface" value="com.lj.business.weixin.service.ICouponMultiPushService"></property>
+	</bean>
+	
+	<!--群发优惠券任务调度  -->
+	<bean name="/couponMultiPushJobTask"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean class="com.lj.cc.clientintf.JobService">
+		     <property name="paramJob" ref="couponMultiPushJobTask"/>
+		     <property name="taskExecutor" ref="taskExecutor"/>	<!-- 线程池管理, 查看配置beans/beans-service.xml-->
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IParamJob
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/weixinJobTask"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean class="com.lj.cc.clientintf.JobService">
+		     <property name="paramJob" ref="weixinJobTask"/>
+		     <property name="taskExecutor" ref="taskExecutor"/>	<!-- 线程池管理, 查看配置beans/beans-service.xml-->
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IParamJob
+			</value>
+		</property>
+	</bean>
+	
+	<!-- 红包详细 -->
+	<bean name="/wxRedpackDetailInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxRedpackDetailInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxRedpackDetailInfoService" />
+	</bean>
+	 
+	<bean name="/wxJobHandler" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="redPackJobHandler" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWXJobHandler" />
+	</bean>
+	
+	<!-- 群发红包 -->
+	<bean name="/wxJobInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxJobInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxJobInfoService" />
+	</bean>
+	
+	<!-- 微信红包轮询任务 -->
+	<bean name="/redPackagePollJob"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="redPackagePollJob"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface">
+			<value>
+				 com.lj.cc.clientintf.IJob
+			</value>
+		</property>
+	</bean>
+	
+	<!-- 微信公众号 -->
+	<bean name="/wxPublicAccountService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxPublicAccountServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxPublicAccountService" />
+	</bean>
+	
+	<!-- 微信小程序 -->
+	<bean name="/wxSmallProgramService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxSmallProgramServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxSmallProgramService" />
+	</bean>
+	
+	<!-- 微信消息群发服务 -->
+	<bean name="/imGroupChatInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imGroupChatInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImGroupChatInfoService" />
+	</bean>
+	
+	<!-- 定时同步微信群聊job服务 -->
+	<bean name="/syncChatRoomJobTask" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service">
+		  <bean  class="com.lj.cc.clientintf.JobService">
+		     <property name="job" ref="syncChatRoomJobTask"/>
+		  </bean>		  
+		</property>
+		<property name="serviceInterface" value="com.lj.cc.clientintf.IJob" />
+	</bean>
+	
+	<!--微信消息群发任务调度  -->
+<!-- 	<bean name="/chatMultiPushJob" -->
+<!-- 		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter"> -->
+<!-- 		<property name="service"> -->
+<!-- 		  <bean class="com.lj.cc.clientintf.JobService"> -->
+<!-- 		     <property name="paramJob" ref="chatMultiPushJob"/> -->
+<!-- 		     <property name="taskExecutor" ref="taskExecutor"/>	线程池管理, 查看配置beans/beans-service.xml -->
+<!-- 		  </bean>		   -->
+<!-- 		</property> -->
+<!-- 		<property name="serviceInterface"> -->
+<!-- 			<value> -->
+<!-- 				 com.lj.cc.clientintf.IParamJob -->
+<!-- 			</value> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+	<!-- 添加微信红包任务 -->
+	<bean name="/wxJobRedPackInfoService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="wxJobRedPackInfoServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IWxJobRedPackInfoService" />
+	</bean>
+	
+	<!-- 商户发朋友圈任务 -->
+	<bean name="/merchantSendFriendsJobService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="merchantSendFriendsJobServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IMerchantSendFriendsJobService" />
+	</bean>
+	
+	<!-- 群发消息任务 -->
+	<bean name="/imGroupChatJobService" class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="imGroupChatJobServiceImpl" />
+		<property name="serviceInterface" value="com.lj.business.weixin.service.IImGroupChatJobService" />
+	</bean>
+</beans> 

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IWxRedpackDetailInfoDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.WxRedpackDetailInfo" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="red_pack_id" property="redPackId" jdbcType="VARCHAR" />
+    <result column="batch_code" property="batchCode" jdbcType="VARCHAR" />
+    <result column="no_wx_shop" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="member_name_gm" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="member_no_gm" property="memberNoGm" jdbcType="VARCHAR" />
+    
+    <result column="member_no" property="memberNo" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="no_wx" property="noWx" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="send_date" property="sendDate" jdbcType="TIMESTAMP" />
+    <result column="receive_date" property="receiveDate" jdbcType="TIMESTAMP" />
+    <result column="error_msg" property="errorMsg" jdbcType="VARCHAR" />
+    <result column="no_wx_shop" property="noWxShop" jdbcType="VARCHAR" />
+    <result column="msg_id" property="msgId" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="poll_count" property="pollCount" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap type="com.lj.business.weixin.dto.WxRedpackDetailInfoDto" id="BaseResultMapDto" extends="BaseResultMap"></resultMap>
+  <sql id="Base_Column_List" >
+    CODE, red_pack_id, batch_code, no_wx_shop, member_name_gm, member_no_gm,  
+    member_no, member_name, no_wx, content, amount, status, create_date, send_date, 
+    receive_date,error_msg, type, poll_count,msg_id,source
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_redpack_detail_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="findRedPackCountByNoWxAndType" resultType="long" >
+    select count(*)
+    from wx_redpack_detail_info
+    <where>
+     <if test="noWx != null" >
+      	and no_wx = #{noWx,jdbcType=VARCHAR}
+     </if>
+     <if test="type != null" >
+      and type = #{type,jdbcType=INTEGER}
+     </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_redpack_detail_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.WxRedpackDetailInfo" >
+    insert into wx_redpack_detail_info (CODE, red_pack_id, batch_code, 
+      no_wx_shop, member_name_gm, member_no_gm, 
+       member_no, member_name, 
+      no_wx, content, amount, 
+      status, create_date, send_date, 
+      receive_date, error_msg, type, 
+      poll_count,merchant_no,msg_id,source)
+    values (#{code,jdbcType=VARCHAR}, #{redPackId,jdbcType=VARCHAR}, #{batchCode,jdbcType=VARCHAR}, 
+      #{noWxShop,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, 
+       #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{noWx,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, 
+      #{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{sendDate,jdbcType=TIMESTAMP}, 
+      #{receiveDate,jdbcType=TIMESTAMP}, #{errorMsg,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{pollCount,jdbcType=TINYINT},#{merchantNo,jdbcType=VARCHAR},#{msgId,jdbcType=VARCHAR},#{source,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.WxRedpackDetailInfo" >
+    insert into wx_redpack_detail_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="redPackId != null" >
+        red_pack_id,
+      </if>
+      <if test="batchCode != null" >
+        batch_code,
+      </if>
+      <if test="noWxShop != null" >
+        no_wx_shop,
+      </if>
+      <if test="memberNameGm != null" >
+        member_name_gm,
+      </if>
+      <if test="memberNoGm != null" >
+        member_no_gm,
+      </if>
+      <if test="memberNo != null" >
+        member_no,
+      </if>
+      <if test="memberName != null" >
+        member_name,
+      </if>
+      <if test="noWx != null" >
+        no_wx,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="sendDate != null" >
+        send_date,
+      </if>
+      <if test="receiveDate != null" >
+        receive_date,
+      </if>
+      <if test="errorMsg != null" >
+        error_msg,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="pollCount != null" >
+        poll_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="redPackId != null" >
+        #{redPackId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchCode != null" >
+        #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveDate != null" >
+        #{receiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="errorMsg != null" >
+        #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pollCount != null" >
+        #{pollCount,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.WxRedpackDetailInfo" >
+    update wx_redpack_detail_info
+    <set >
+      <if test="redPackId != null and redPackId != ''" >
+        red_pack_id = #{redPackId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchCode != null" >
+        batch_code = #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxShop != null" >
+        no_wx_shop = #{noWxShop,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        member_name_gm = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        member_no_gm = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        member_no = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        no_wx = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="status != null and status != ''" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendDate != null" >
+        send_date = #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveDate != null" >
+        receive_date = #{receiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="errorMsg != null" >
+        error_msg = #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pollCount != null" >
+        poll_count = #{pollCount,jdbcType=TINYINT},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.WxRedpackDetailInfo" >
+    update wx_redpack_detail_info
+    set red_pack_id = #{redPackId,jdbcType=VARCHAR},
+      batch_code = #{batchCode,jdbcType=VARCHAR},
+      no_wx_shop = #{noWxShop,jdbcType=VARCHAR},
+      member_name_gm = #{memberNameGm,jdbcType=VARCHAR},
+      member_no_gm = #{memberNoGm,jdbcType=VARCHAR},
+      
+      member_no = #{memberNo,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      no_wx = #{noWx,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      send_date = #{sendDate,jdbcType=TIMESTAMP},
+      receive_date = #{receiveDate,jdbcType=TIMESTAMP},
+      error_msg = #{errorMsg,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      poll_count = #{pollCount,jdbcType=TINYINT}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <select id="findWxRedpackDetailInfos"  parameterType="com.lj.business.weixin.dto.FindWxRedpackDetailInfoPage" resultMap="BaseResultMapDto" >
+     select 
+    <include refid="Base_Column_List" />
+    from wx_redpack_detail_info
+    where batch_code = #{batchCode,jdbcType=VARCHAR}
+         <if test="status!=null and ''!=status ">
+           and status = #{status} 
+         </if>
+  
+  </select>
+  <select id="findWxRedpackDetailInfoPage" parameterType="com.lj.business.weixin.dto.FindWxRedpackDetailInfoPage" resultMap="BaseResultMapDto">
+  select 
+    <include refid="Base_Column_List" />
+   	 from wx_redpack_detail_info
+     <where>
+     <if test="redPackId != null" >
+        and red_pack_id = #{redPackId,jdbcType=VARCHAR}
+      </if>
+      <if test="batchCode != null" >
+        and  batch_code = #{batchCode,jdbcType=VARCHAR}
+      </if>
+      <if test="noWxShop != null and noWxShop !=''" >
+      and   no_wx_shop = #{noWxShop,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNameGm != null" >
+       and  member_name_gm = #{memberNameGm,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNoGm != null" >
+       and  member_no_gm = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNo != null" >
+        and  member_no = #{memberNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberName != null" >
+       and  member_name = #{memberName,jdbcType=VARCHAR}
+      </if>
+      <if test="noWx != null" >
+       and  no_wx = #{noWx,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''" >
+       and  merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="content != null" >
+       and  content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="amount != null" >
+       and  amount = #{amount,jdbcType=BIGINT}
+      </if>
+      <if test="status != null" >
+       and  status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="createDate != null" >
+       and  create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="sendDate != null" >
+      and   send_date = #{sendDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="startTime != null and endTime !=null" >
+      and   send_date between #{startTime,jdbcType=VARCHAR} and #{endTime,jdbcType=VARCHAR}
+      </if>
+      <if test="year != null and ''!=year" >
+	       and  date_format(create_date,'%Y') = #{year,jdbcType=VARCHAR}
+      </if>
+      <if test="receiveDate != null" >
+       and  receive_date = #{receiveDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="errorMsg != null" >
+       and  error_msg = #{errorMsg,jdbcType=VARCHAR}
+      </if>
+      </where>
+       order by CREATE_DATE DESC limit #{start} , #{limit}
+  </select>
+  
+  <select id="findWxRedpackDetailInfoPageCount" parameterType="com.lj.business.weixin.dto.FindWxRedpackDetailInfoPage" resultType="java.lang.Integer">
+  select 
+   	count(1)
+   	 from wx_redpack_detail_info
+   	 <where>
+     <if test="redPackId != null" >
+      and   red_pack_id = #{redPackId,jdbcType=VARCHAR}
+      </if>
+      <if test="batchCode != null" >
+      and   batch_code = #{batchCode,jdbcType=VARCHAR}
+      </if>
+      <if test="noWxShop != null" >
+      and   no_wx_shop = #{noWxShop,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''" >
+       and  merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNameGm != null" >
+      and   member_name_gm = #{memberNameGm,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNoGm != null" >
+     and    member_no_gm = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNo != null" >
+       and  member_no = #{memberNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberName != null" >
+      and   member_name = #{memberName,jdbcType=VARCHAR}
+      </if>
+      <if test="noWx != null" >
+     and    no_wx = #{noWx,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null" >
+     and    content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="amount != null" >
+       and  amount = #{amount,jdbcType=BIGINT}
+      </if>
+      <if test="status != null" >
+      and   status = #{status,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="createDate != null" >
+      and   create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="sendDate != null" >
+     and    send_date = #{sendDate,jdbcType=TIMESTAMP}
+      </if>
+       <if test="startTime != null and endTime !=null" >
+      and   send_date between #{startTime,jdbcType=VARCHAR} and #{endTime,jdbcType=VARCHAR}
+      </if>
+      <if test="receiveDate != null" >
+      and   receive_date = #{receiveDate,jdbcType=TIMESTAMP}
+      </if>
+       <if test="errorMsg != null" >
+      and   error_msg = #{errorMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="year != null and ''!=year" >
+      and   date_format(create_date,'%Y') = #{year,jdbcType=VARCHAR}
+      </if>
+      </where>
+       
+  </select>
+  
+  <select id="findWxRedpackDetailTotalSendCount" parameterType="com.lj.business.weixin.dto.FindWxRedpackDetailInfoPage" resultType="java.lang.Integer">
+  select 
+   	count(1)
+   	 from wx_redpack_detail_info
+   	 <where>
+     <if test="redPackId != null" >
+      and   red_pack_id = #{redPackId,jdbcType=VARCHAR}
+      </if>
+      <if test="batchCode != null" >
+      and   batch_code = #{batchCode,jdbcType=VARCHAR}
+      </if>
+      <if test="noWxShop != null" >
+      and   no_wx_shop = #{noWxShop,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''" >
+       and  merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNameGm != null" >
+      and   member_name_gm = #{memberNameGm,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNoGm != null" >
+     and    member_no_gm = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNo != null" >
+       and  member_no = #{memberNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberName != null" >
+      and   member_name = #{memberName,jdbcType=VARCHAR}
+      </if>
+      <if test="noWx != null" >
+     and    no_wx = #{noWx,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null" >
+     and    content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="amount != null" >
+       and  amount = #{amount,jdbcType=BIGINT}
+      </if>
+      <if test="status != null" >
+      and   status != 0 and status != 2
+      </if>
+      
+      <if test="createDate != null" >
+      and   create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="sendDate != null" >
+     and    send_date = #{sendDate,jdbcType=TIMESTAMP}
+      </if>
+       <if test="startTime != null and endTime !=null" >
+      and   send_date between #{startTime,jdbcType=VARCHAR} and #{endTime,jdbcType=VARCHAR}
+      </if>
+      <if test="receiveDate != null" >
+      and   receive_date = #{receiveDate,jdbcType=TIMESTAMP}
+      </if>
+       <if test="errorMsg != null" >
+      and   error_msg = #{errorMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="year != null and ''!=year" >
+      and   date_format(create_date,'%Y') = #{year,jdbcType=VARCHAR}
+      </if>
+      </where>
+       
+  </select>
+  
+  <!-- 已发红包的年份 -->
+  <select id="findWxRedpackDetailYears" resultType="java.lang.String">
+  	SELECT DATE_FORMAT(send_date,'%Y') YEAR 
+	FROM wx_redpack_detail_info 
+	WHERE send_date IS NOT NULL
+	GROUP BY DATE_FORMAT(send_date,'%Y')
+  </select>
+  
+  <select id="getSumAmtByNoWxToDay"   resultType="java.lang.Long">
+  		 		SELECT ifnull(sum(amount),0)  from wx_redpack_detail_info where no_wx_shop = #{noWx}
+  		and date_format(create_date,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')
+  </select>
+  <!-- 已发红包总金额 -->
+  <select id="findWxRedpackDetailTotalMoney" resultType="java.lang.Long" parameterType="com.lj.business.weixin.dto.FindWxRedpackDetailInfoPage">
+  	SELECT SUM(amount) FROM wx_redpack_detail_info
+  	<where>
+      <choose>
+      	<when test=" status==9 ">  
+           and status IN (4)
+        </when>
+        <otherwise>  
+            <if test="status != null" >
+      			and status = #{status,jdbcType=VARCHAR}
+      		</if>  
+        </otherwise>
+      </choose>
+      <if test="year != null and ''!=year" >
+      	and date_format(send_date,'%Y') = #{year,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null" >
+      	and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="noWxShop != null" >
+      	and no_wx_shop = #{noWxShop,jdbcType=VARCHAR}
+      </if>
+      </where>
+  </select>
+  
+  <select id="findWxRedpackDetailinfoByOrderNo" resultMap="BaseResultMapDto">
+       select <include refid="Base_Column_List" /> FROM wx_redpack_detail_info 
+       where   red_pack_id = #{orderNo,jdbcType=VARCHAR}
+  
+  </select>
+  
+  <!-- 查询待轮询的所有红包明细（发送中） -->
+  <select id="findRedpackDetailByPoll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+      from wx_redpack_detail_info
+     where status = 1 
+     <![CDATA[
+       and ifnull(poll_count, 0) < #{maxPollCount}
+       and send_date >= #{sendDateBegin}
+       and send_date <= #{sendDateEnd}
+     ]]>
+  </select>
+  
+
+    <!-- 查询微信一天发的红包数 -->
+  <select id="findWxRedpackInDayCount" resultType="java.lang.Integer">
+  select count(1) from wx_redpack_detail_info 
+  where to_days(create_date) = to_days(now()) 
+  <if test="batchCode != null">
+  	and batch_code=#{batchCode} 
+  </if>
+  and  no_wx_shop = #{noWxShop,jdbcType=VARCHAR};  
+  </select>
+  
+  
+    <!-- 根据电话号码查询是否已经发过红包 -->
+  <select id="findWxRedpackDetailinfoByPhoneNumber" resultMap="BaseResultMap">
+  select * from wx_redpack_detail_info where  phone_number=#{phoneNumber} and batch_code=#{batchCode} ;  
+  </select>
+  
+  
+  <!-- 根据用户微信查询是否已经发过红包 -->
+  <select id="findWxRedpackDetailinfoByWX" resultMap="BaseResultMap">
+  select * from wx_redpack_detail_info where  no_wx = #{noWx,jdbcType=VARCHAR} and batch_code=#{batchCode} ;  
+  </select>
+  
+</mapper>

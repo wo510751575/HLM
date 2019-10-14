@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+			<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+ 			<META HTTP-EQUIV="Expires" CONTENT="-1">
+	    <title>用户信息</title>
+	    <link rel="stylesheet" href="css/layout.css?v=1" />
+			<link rel="stylesheet" type="text/css" href="css/iosSelect.css?v=2" />
+			<!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+			<!-- <link rel="stylesheet" type="text/css" href="LCalendar/css/LCalendar.css" /> -->
+	   	<script src="js/jquery-1.7.2.min.js?v=2" type="text/javascript" charset="utf-8"></script>
+	   	<script src="js/wail.js?v=2" type="text/javascript" charset="utf-8"></script>
+			<script src="js/data.js?v=2" type="text/javascript" charset="utf-8"></script>
+			<script src="js/iosSelect.js?v=2" type="text/javascript" charset="utf-8"></script>
+			<!-- <script src="LCalendar/js/LCalendar.js" type="text/javascript" charset="utf-8"></script> -->
+	</head>
+	<style>
+	body{background-color: #ededed;}
+	.head_title{width: 100%;text-align: center;height: 1rem;line-height: 1rem;}
+	.head_title span{font-size: 0.4rem;color: #333;font-weight: bold;}
+	.content{width: 6.9rem;margin: 0 auto;overflow: hidden;box-sizing: border-box;padding-top: 0.5rem;}
+	 .content p{font-size: 0;display: flex;justify-content: space-between;margin-bottom: 0.3rem;}
+	.content label{font-size: 0.36rem;height: 0.75rem;line-height: 0.75rem;font-weight: bold;color: #3e3e3e;text-align: right;width: 2rem}
+	.content input,#showGeneral{width: 5.4rem;height: 0.75rem;line-height: 0.75rem;border: 1px solid #ccc;border-radius: 5px;text-indent: 0.15rem;font-size: 0.24rem;color: #000;}
+	.submitBtn{display: block;width: 3rem;height: 0.75rem;line-height: 0.75rem;text-align: center;border:none;
+		color: #fff;background-color: #67c23a;border-radius: 5px;font-size: 0.36rem;margin: 0 auto;letter-spacing: 0.2rem;}
+	#showGeneral{background-color: #fff;}
+	</style>
+	<body>
+		<div class="head_title">
+			<span></span>
+		</div>
+	<div class="content">
+			<p>
+				<label for="">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 名：</label>
+				<input type="text" name="realName" id="userName"  placeholder="请输入姓名" onfocus="this.placeholder=''" onblur="this.placeholder='请输入姓名 '">
+			</p>
+			<p>
+				<label for="">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 机：</label>
+				<input type="text" name="mobile" maxlength=11 id="phone" placeholder="请输入手机号" onfocus="this.placeholder=''" onblur="this.placeholder='请输入手机号 '">
+			</p>
+			<p>
+				<label for="">毕业年份：</label>
+				<!-- <input type="text" name="start_date" id="remark1" placeholder="选择开始日期" readonly="readonly" /> -->
+
+      	<input type="hidden" name="bank_id" id="bankId" value="">
+        <span id="showGeneral"></span>
+			</p>
+			<!-- <p>
+				<label for="">XX：</label>
+				<input type="text" name="remark2" id="remark2" value="">
+			</p>
+			<p>
+				<label for="">XX：</label>
+				<input type="text" name="remark3" id="remark3" value="">
+			</p> -->
+			<div style="margin-top:0.6rem;">
+				<button class="submitBtn" onclick="login()" >提交</button>
+			</div>
+	</div>
+	<script type="text/javascript">
+	// var calendar = new LCalendar();
+	// 	calendar.init({
+	// 		'trigger': '#remark1', //标签id
+	// 		'type': 'date' //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
+	// 		//'minDate': (new Date().getFullYear()-3) + '-' + 1 + '-' + 1, //最小日期
+	// 	//	'maxDate': (new Date().getFullYear()+3) + '-' + 12 + '-' + 31 //最大日期
+	// 	});
+
+	//获取当前url中参数
+	function getQueryString(name) {
+	    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) {
+	        return unescape(r[2]);
+	    }
+	    return null;
+	}
+			function login(){
+				var name = $.trim($("#userName").val());
+				var phone = $.trim($("#phone").val());
+				var remark1 = $.trim($("#showGeneral").html());
+				var remark2 = $.trim($("#remark2").val());
+				var remark3 = $.trim($("#remark3").val());
+
+				if(phone && (!phone.match(/^1[3456789]\d{9}$/))){
+					alert("请输入正确的11位数手机号码");
+					return false;
+				}
+				if(name == '' && phone == '' && remark1 == '' && remark2 == '' && remark3 == ''){
+					alert("请填写信息")
+					return false
+				}
+				var params = {};
+				var aa = getQueryString('memberNo');
+				var memberNoGm = getQueryString('memberNoGm');
+				params.memberNo = aa
+				params.memberNoGm = memberNoGm
+				if(name){params.realName = name};
+				if(phone){params.mobile = phone};
+				if(remark1){params.remark1 = remark1};
+				if(remark2){params.remark2 = remark2};
+				if(remark3){params.remark3 = remark3};
+				console.log(params);
+				$.ajax({
+		    			type:"post",
+		    			url:"/api/member/h5SupplyMemberInfo",
+		    			data:params,
+		    			datatype:"json",
+		    			error:function(){
+		    				alert("网络错误！")
+		    			},
+		    			success:function(data){
+								if(data.result == true){
+									alert("提交成功");
+									 WeixinJSBridge.call('closeWindow');
+									// setTimeout(function(){
+									//   //这个可以关闭安卓系统的手机
+									//   document.addEventListener('WeixinJSBridgeReady', function(){ WeixinJSBridge.call('closeWindow'); }, false);
+									//   //这个可以关闭ios系统的手机
+									//   WeixinJSBridge.call('closeWindow');
+									// }, 500)
+
+								}else{
+									alert(data.errorMessage);
+								}
+
+		    			}
+		    		})
+
+			}
+
+	</script>
+	<script type="text/javascript">
+	var showBankDom = document.querySelector('#showGeneral');
+    var bankIdDom = document.querySelector('#bankId');
+    showBankDom.addEventListener('click', function () {
+        var bankId = showBankDom.dataset['id'];
+        var bankName = showBankDom.dataset['value'];
+
+        var bankSelect = new IosSelect(1,
+            [data],
+            {
+                container: '.container',
+                title: '请选择年份',
+                itemHeight: 50,
+                itemShowCount: 3,
+                oneLevelId: bankId,
+                callback: function (selectOneObj) {
+                    bankIdDom.value = selectOneObj.id;
+                    showBankDom.innerHTML = selectOneObj.value;
+                    showBankDom.dataset['id'] = selectOneObj.id;
+                    showBankDom.dataset['value'] = selectOneObj.value;
+                }
+        });
+    });
+</script>
+	</body>
+</html>

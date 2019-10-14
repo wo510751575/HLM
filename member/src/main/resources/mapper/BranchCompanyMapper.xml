@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.member.dao.IBranchCompanyDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.member.domain.BranchCompany" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="COMPANY_TYPE" property="companyType" jdbcType="TINYINT" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_NAME" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_ID" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_FRONT" property="legalPersonCardFront" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_REVERSE" property="legalPersonCardReverse" jdbcType="VARCHAR" />
+    <result column="BUSINESS_PERSON" property="businessPerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_PERSON" property="dealerResponsiblePerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_MOBILE" property="dealerResponsibleMobile" jdbcType="VARCHAR" />
+    <result column="ATTACHMENT" property="attachment" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="REGISTER_TIME" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindResultMap" type="com.lj.business.member.domain.BranchCompany" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="COMPANY_TYPE" property="companyType" jdbcType="TINYINT" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="REGISTER_TIME" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_PERSON" property="businessPerson" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_NAME" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_ID" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_PERSON" property="dealerResponsiblePerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_MOBILE" property="dealerResponsibleMobile" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindBranchCompanyPageResultMap" type="com.lj.business.member.dto.company.FindBranchCompanyPageReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="COMPANY_TYPE" property="companyType" jdbcType="TINYINT" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_NAME" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_ID" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_FRONT" property="legalPersonCardFront" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_REVERSE" property="legalPersonCardReverse" jdbcType="VARCHAR" />
+    <result column="BUSINESS_PERSON" property="businessPerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_PERSON" property="dealerResponsiblePerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_MOBILE" property="dealerResponsibleMobile" jdbcType="VARCHAR" />
+    <result column="ATTACHMENT" property="attachment" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="REGISTER_TIME" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindBranchCompanyReturnResultMap" type="com.lj.business.member.dto.company.FindBranchCompanyReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="COMPANY_TYPE" property="companyType" jdbcType="TINYINT" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="REGISTER_TIME" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="FindBranchCompanyDetailResultMap" type="com.lj.business.member.dto.company.FindBranchCompanyDetailReturn" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="COMPANY_TYPE" property="companyType" jdbcType="TINYINT" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENSE" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_NAME" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_ID" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_FRONT" property="legalPersonCardFront" jdbcType="VARCHAR" />
+    <result column="LEGAL_PERSON_CARD_REVERSE" property="legalPersonCardReverse" jdbcType="VARCHAR" />
+    <result column="BUSINESS_PERSON" property="businessPerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_PERSON" property="dealerResponsiblePerson" jdbcType="VARCHAR" />
+    <result column="DEALER_RESPONSIBLE_MOBILE" property="dealerResponsibleMobile" jdbcType="VARCHAR" />
+    <result column="ATTACHMENT" property="attachment" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="REGISTER_TIME" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    
+    <collection property="accountList" ofType="com.lj.business.member.dto.company.FindCompanyBankAccountReturn">
+	    <result column="COMPANY_NO" property="companyNo" jdbcType="VARCHAR" />
+	    <result column="DEALER_CODE" property="dealerCode" jdbcType="VARCHAR" />
+	    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+	    <result column="BANKCARD_NO" property="bankcardNo" jdbcType="VARCHAR" />
+	    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+	    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+	    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+	    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+	    <result column="IS_DEFAULT" property="isDefault" jdbcType="TINYINT" />
+	    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+   	</collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, COMPANY_NO, DEALER_CODE, COMPANY_NAME, STATUS, COMPANY_TYPE, 
+    PROVINCE_CODE, PROVINCE_NAME, 
+    CITY_CODE, CITY_NAME, BUSINESS_LICENSE, LEGAL_PERSON_NAME, LEGAL_PERSON_ID, LEGAL_PERSON_CARD_FRONT, 
+    LEGAL_PERSON_CARD_REVERSE, BUSINESS_PERSON, DEALER_RESPONSIBLE_PERSON, DEALER_RESPONSIBLE_MOBILE, 
+    ATTACHMENT, MERCHANT_NO, MERCHANT_NAME, REGISTER_TIME, CREATE_DATE, UPDATE_DATE, 
+    REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  <sql id="Find_Column_List" >
+    CODE, COMPANY_NO, DEALER_CODE, COMPANY_NAME, STATUS, COMPANY_TYPE, 
+    MERCHANT_NO, MERCHANT_NAME, 
+    REGISTER_TIME, CREATE_DATE, UPDATE_DATE, REMARK, REMARK2, REMARK3, REMARK4,
+    PROVINCE_CODE,PROVINCE_NAME,CITY_CODE,CITY_NAME,BUSINESS_PERSON,BUSINESS_LICENSE,
+    LEGAL_PERSON_NAME,LEGAL_PERSON_ID,DEALER_RESPONSIBLE_PERSON,DEALER_RESPONSIBLE_MOBILE
+  </sql>
+  <sql id="Page_Column_List" >
+    CODE, COMPANY_NO, DEALER_CODE, COMPANY_NAME, STATUS, COMPANY_TYPE, 
+    PROVINCE_CODE, PROVINCE_NAME, 
+    CITY_CODE, CITY_NAME, BUSINESS_LICENSE, LEGAL_PERSON_NAME, LEGAL_PERSON_ID, LEGAL_PERSON_CARD_FRONT, 
+    LEGAL_PERSON_CARD_REVERSE, BUSINESS_PERSON, DEALER_RESPONSIBLE_PERSON, DEALER_RESPONSIBLE_MOBILE, 
+    ATTACHMENT, MERCHANT_NO, MERCHANT_NAME, REGISTER_TIME, CREATE_DATE, UPDATE_DATE, 
+    REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="FindResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Find_Column_List" />
+    from branch_company
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from branch_company
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.member.domain.BranchCompany" >
+    insert into branch_company (CODE, COMPANY_NO, DEALER_CODE, COMPANY_NAME, 
+      STATUS, COMPANY_TYPE, PROVINCE_CODE, 
+      PROVINCE_NAME, CITY_CODE, CITY_NAME, 
+      BUSINESS_LICENSE, LEGAL_PERSON_NAME, LEGAL_PERSON_ID, 
+      LEGAL_PERSON_CARD_FRONT, LEGAL_PERSON_CARD_REVERSE, 
+      BUSINESS_PERSON, DEALER_RESPONSIBLE_PERSON, 
+      DEALER_RESPONSIBLE_MOBILE, ATTACHMENT, MERCHANT_NO, 
+      MERCHANT_NAME, REGISTER_TIME, CREATE_DATE, 
+      UPDATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{companyNo,jdbcType=VARCHAR}, #{dealerCode,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{companyType,jdbcType=TINYINT}, #{provinceCode,jdbcType=VARCHAR}, 
+      #{provinceName,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{businessLicense,jdbcType=VARCHAR}, #{legalPersonName,jdbcType=VARCHAR}, #{legalPersonId,jdbcType=VARCHAR}, 
+      #{legalPersonCardFront,jdbcType=VARCHAR}, #{legalPersonCardReverse,jdbcType=VARCHAR}, 
+      #{businessPerson,jdbcType=VARCHAR}, #{dealerResponsiblePerson,jdbcType=VARCHAR}, 
+      #{dealerResponsibleMobile,jdbcType=VARCHAR}, #{attachment,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.member.domain.BranchCompany" >
+    insert into branch_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="companyNo != null" >
+        COMPANY_NO,
+      </if>
+      <if test="dealerCode != null" >
+        DEALER_CODE,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="companyType != null" >
+        COMPANY_TYPE,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME,
+      </if>
+      <if test="businessLicense != null" >
+        BUSINESS_LICENSE,
+      </if>
+      <if test="legalPersonName != null" >
+        LEGAL_PERSON_NAME,
+      </if>
+      <if test="legalPersonId != null" >
+        LEGAL_PERSON_ID,
+      </if>
+      <if test="legalPersonCardFront != null" >
+        LEGAL_PERSON_CARD_FRONT,
+      </if>
+      <if test="legalPersonCardReverse != null" >
+        LEGAL_PERSON_CARD_REVERSE,
+      </if>
+      <if test="businessPerson != null" >
+        BUSINESS_PERSON,
+      </if>
+      <if test="dealerResponsiblePerson != null" >
+        DEALER_RESPONSIBLE_PERSON,
+      </if>
+      <if test="dealerResponsibleMobile != null" >
+        DEALER_RESPONSIBLE_MOBILE,
+      </if>
+      <if test="attachment != null" >
+        ATTACHMENT,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="registerTime != null" >
+        REGISTER_TIME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNo != null" >
+        #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerCode != null" >
+        #{dealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null" >
+        #{companyType,jdbcType=TINYINT},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null" >
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardFront != null" >
+        #{legalPersonCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardReverse != null" >
+        #{legalPersonCardReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="businessPerson != null" >
+        #{businessPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsiblePerson != null" >
+        #{dealerResponsiblePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsibleMobile != null" >
+        #{dealerResponsibleMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment != null" >
+        #{attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.member.domain.BranchCompany" >
+    update branch_company
+    <set >
+      <if test="companyNo != null" >
+        COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerCode != null" >
+        DEALER_CODE = #{dealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null" >
+        COMPANY_TYPE = #{companyType,jdbcType=TINYINT},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null" >
+        BUSINESS_LICENSE = #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        LEGAL_PERSON_NAME = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        LEGAL_PERSON_ID = #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardFront != null" >
+        LEGAL_PERSON_CARD_FRONT = #{legalPersonCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardReverse != null" >
+        LEGAL_PERSON_CARD_REVERSE = #{legalPersonCardReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="businessPerson != null" >
+        BUSINESS_PERSON = #{businessPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsiblePerson != null" >
+        DEALER_RESPONSIBLE_PERSON = #{dealerResponsiblePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerResponsibleMobile != null" >
+        DEALER_RESPONSIBLE_MOBILE = #{dealerResponsibleMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment != null" >
+        ATTACHMENT = #{attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        REGISTER_TIME = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <choose>
+    	<when test="code != null and code != ''">
+		    where CODE = #{code,jdbcType=VARCHAR}
+    	</when>
+    	<otherwise>
+		    where COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+    	</otherwise>
+    </choose>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.member.domain.BranchCompany" >
+    update branch_company
+    set COMPANY_NO = #{companyNo,jdbcType=VARCHAR},
+    	DEALER_CODE = #{dealerCode,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      COMPANY_TYPE = #{companyType,jdbcType=TINYINT},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      BUSINESS_LICENSE = #{businessLicense,jdbcType=VARCHAR},
+      LEGAL_PERSON_NAME = #{legalPersonName,jdbcType=VARCHAR},
+      LEGAL_PERSON_ID = #{legalPersonId,jdbcType=VARCHAR},
+      LEGAL_PERSON_CARD_FRONT = #{legalPersonCardFront,jdbcType=VARCHAR},
+      LEGAL_PERSON_CARD_REVERSE = #{legalPersonCardReverse,jdbcType=VARCHAR},
+      BUSINESS_PERSON = #{businessPerson,jdbcType=VARCHAR},
+      DEALER_RESPONSIBLE_PERSON = #{dealerResponsiblePerson,jdbcType=VARCHAR},
+      DEALER_RESPONSIBLE_MOBILE = #{dealerResponsibleMobile,jdbcType=VARCHAR},
+      ATTACHMENT = #{attachment,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      REGISTER_TIME = #{registerTime,jdbcType=TIMESTAMP},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询商户下所有分公司 -->
+  <select id="findBranchCompanyByMerchantNo" parameterType="string" resultMap="FindBranchCompanyReturnResultMap">
+  	select <include refid="Base_Column_List" />
+      from branch_company
+     where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByCompanyNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from branch_company
+    where COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  
+  <!-- 分公司分页查询 - begin -->
+	<sql id="findBranchCompanyPage_condition">
+		<where>
+			<if test="companyName != null and companyName !='' ">
+				<![CDATA[and COMPANY_NAME like CONCAT('%',#{companyName,jdbcType=VARCHAR},'%' )]]>
+			</if>
+			<if test="dealerCode != null and dealerCode !='' " >
+	        	and DEALER_CODE = #{dealerCode,jdbcType=VARCHAR}
+	        </if>
+			<if test="businessPerson != null and businessPerson !='' ">
+				<![CDATA[and BUSINESS_PERSON like CONCAT('%',#{businessPerson,jdbcType=VARCHAR},'%' )]]>
+			</if>
+			<if test="registerTimeBegin != null">
+				<![CDATA[and REGISTER_TIME >= #{registerTimeBegin,jdbcType=TIMESTAMP}]]>
+			</if>
+			<if test="registerTimeEnd != null">
+				<![CDATA[and REGISTER_TIME <= #{registerTimeEnd,jdbcType=TIMESTAMP}]]>
+			</if>
+			<if test="status != null and status !=''">
+				and STATUS = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="companyType != null">
+				and COMPANY_TYPE = #{companyType,jdbcType=TINYINT}
+			</if>
+			<if test="merchantNo != null and merchantNo != ''">
+				and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="companyNo != null and companyNo != ''">
+				and COMPANY_NO = #{companyNo,jdbcType=VARCHAR}
+			</if>
+			<if test="province != null and province !='' ">
+				and PROVINCE_CODE = #{province}
+			</if>
+			<if test="city != null and city !='' ">
+				and CITY_CODE = #{city}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findBranchCompanyPage" resultMap="FindBranchCompanyPageResultMap" parameterType="com.lj.business.member.dto.company.FindBranchCompanyPage">
+		SELECT <include refid="Page_Column_List" />
+		FROM branch_company
+		<include refid="findBranchCompanyPage_condition" />
+		order by REGISTER_TIME desc
+		limit ${start}, ${limit}
+	</select>
+
+	<select id="findBranchCompanyPageCount" resultType="int" parameterType="com.lj.business.member.dto.company.FindBranchCompanyPage">
+		select count(*) 
+		FROM branch_company
+		<include refid="findBranchCompanyPage_condition" />
+	</select>
+	<!-- 分公司分页查询 - end -->
+	
+	<sql id="findBranchCompanyDetail_Column_List" >
+	    bc.CODE, bc.COMPANY_NO, bc.DEALER_CODE, bc.COMPANY_NAME, bc.STATUS, bc.COMPANY_TYPE, 
+	    bc.PROVINCE_CODE, bc.PROVINCE_NAME, 
+	    bc.CITY_CODE, bc.CITY_NAME, bc.BUSINESS_LICENSE, bc.LEGAL_PERSON_NAME, bc.LEGAL_PERSON_ID, bc.LEGAL_PERSON_CARD_FRONT, 
+	    bc.LEGAL_PERSON_CARD_REVERSE, bc.BUSINESS_PERSON, bc.DEALER_RESPONSIBLE_PERSON, bc.DEALER_RESPONSIBLE_MOBILE, 
+	    bc.ATTACHMENT, bc.MERCHANT_NO, bc.MERCHANT_NAME, bc.REGISTER_TIME, bc.CREATE_DATE, bc.UPDATE_DATE, 
+	    bc.REMARK, bc.REMARK2, bc.REMARK3, bc.REMARK4,
+	    cba.CODE, cba.COMPANY_NO, cba.COMPANY_NAME, cba.BANKCARD_NO, cba.BANK_CODE, cba.BANK_NAME, cba.CUST_NAME, cba.BRANCH, 
+    	cba.IS_DEFAULT, cba.MERCHANT_NO, cba.CREATE_DATE, cba.UPDATE_DATE
+  	</sql>
+	
+	<select id="findBranchCompanyDetail" resultMap="FindBranchCompanyDetailResultMap" >
+		SELECT <include refid="findBranchCompanyDetail_Column_List" />
+		FROM branch_company bc
+		left join company_bank_account cba on bc.COMPANY_NO = cba.COMPANY_NO
+		where bc.CODE = #{code}
+	</select>
+	
+	
+	<select id="findCountByDealerCode" resultType="int">
+		SELECT count(*)
+		FROM branch_company bc
+		where bc.DEALER_CODE = #{dealerCode}
+	</select>
+	
+	<!-- 根据经销商代码查询经销商列表 -->
+	<select id="findBranchCompanyByDealerCode" parameterType="string" resultMap="FindBranchCompanyReturnResultMap">
+		SELECT <include refid="Base_Column_List"/>
+		  FROM branch_company bc
+		 where bc.DEALER_CODE = #{dealerCode}
+		 order by status desc, CREATE_DATE desc
+	</select>
+	
+	<select id="findBranchCompanySelective" parameterType="com.lj.business.member.dto.company.FindBranchCompanyPage" resultMap="FindBranchCompanyReturnResultMap">
+		SELECT <include refid="Base_Column_List"/>
+		  FROM branch_company 
+		  <where>
+			<if test="status != null and status !=''">
+				and STATUS = #{status,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+</mapper>

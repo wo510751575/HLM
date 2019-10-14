@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lj.business.weixin.dao.IImChatInfoDao" >
+  <resultMap id="BaseResultMap" type="com.lj.business.weixin.domain.ImChatInfo" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="NO_WX_GM" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="SENDER_FLAG" property="senderFlag" jdbcType="INTEGER" />
+    <result column="SENDER_SYNC_STATUS" property="senderSyncStatus" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+    <result column="RECEIVED_TIME" property="receivedTime" jdbcType="TIMESTAMP" />
+    <result column="RESOURCES_PATH" property="resourcesPath" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+    <result column="CHATROOM_TYPE" property="chatroomType" jdbcType="INTEGER" />
+    <result column="CHATROOM_NO_WX" property="chatroomNoWx" jdbcType="VARCHAR" />
+    <result column="MSG_SOURCE" property="msgSource" jdbcType="INTEGER" />
+    <result column="THIRD_READ_FLAG" property="thirdReadFlag" jdbcType="INTEGER" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="ERROR_CODE" property="errorCode" jdbcType="VARCHAR" />
+    <result column="ERROR_MESSAGE" property="errorMessage" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+    <result column="BIG_IMG" property="bigImg" jdbcType="VARCHAR" />
+    <result column="MID_IMG" property="midImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lj.business.weixin.domain.ImChatInfo" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="findImChatInfoPageResultMap" type="com.lj.business.weixin.dto.imchat.FindImChatInfoPageReturn" >
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="NO_WX_GM" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="SENDER_FLAG" property="senderFlag" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+    <result column="RESOURCES_PATH" property="resourcesPath" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+    <result column="CHATROOM_TYPE" property="chatroomType" jdbcType="INTEGER" />
+    <result column="CHATROOM_NO_WX" property="chatroomNoWx" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="ERROR_CODE" property="errorCode" jdbcType="VARCHAR" />
+    <result column="ERROR_MESSAGE" property="errorMessage" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="BIG_IMG" property="bigImg" jdbcType="VARCHAR" />
+    <result column="MID_IMG" property="midImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="findChatInfoPageFromWebResultMap" type="com.lj.business.weixin.dto.imchat.FindChatInfoPageFromWebReturn" >
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO_GM" property="memberNoGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME_GM" property="memberNameGm" jdbcType="VARCHAR" />
+    <result column="NO_WX_GM" property="noWxGm" jdbcType="VARCHAR" />
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_NAME" property="memberName" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="SENDER_FLAG" property="senderFlag" jdbcType="INTEGER" />
+    <result column="SENDER_SYNC_STATUS" property="senderSyncStatus" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+    <result column="RESOURCES_PATH" property="resourcesPath" jdbcType="VARCHAR" />
+    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+    <result column="CHATROOM_TYPE" property="chatroomType" jdbcType="INTEGER" />
+    <result column="CHATROOM_NO_WX" property="chatroomNoWx" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+    <result column="MSG_SOURCE" property="msgSource" jdbcType="INTEGER" />
+    <result column="THIRD_READ_FLAG" property="thirdReadFlag" jdbcType="INTEGER" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="ERROR_CODE" property="errorCode" jdbcType="VARCHAR" />
+    <result column="ERROR_MESSAGE" property="errorMessage" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="findOfflineChatInfoGroupResultMap" type="com.lj.business.weixin.dto.imchat.FindOfflineChatInfoGroup" >
+    <result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR" />
+    <result column="NO_WX" property="noWx" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="CHATROOM_TYPE" property="chatroomType" jdbcType="VARCHAR" />
+    
+    <collection property="chatList" javaType="java.util.List" ofType="com.lj.business.weixin.dto.imchat.FindOfflineChatInfoDetail">  
+	    <result column="CODE" property="msgId" jdbcType="VARCHAR" />
+    	<result column="SENDER_FLAG" property="senderFlag" jdbcType="INTEGER" />
+	    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+	    <result column="CHAT_TIME" property="chatTime" jdbcType="TIMESTAMP" />
+	    <result column="RESOURCES_PATH" property="resources" jdbcType="VARCHAR" />
+	    <result column="SHARE_TITLE" property="shareTitle" jdbcType="VARCHAR" />
+	    <result column="SHARE_DES" property="shareDes" jdbcType="VARCHAR" />
+	    <result column="SHARE_URL" property="shareUrl" jdbcType="VARCHAR" />
+	    <result column="CHATROOM_NO_WX" property="groupUserName" jdbcType="VARCHAR" />
+	    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+	    
+	    <!-- 群聊增加字段-->
+	    <result column="groupUserName" property="groupUserName" jdbcType="VARCHAR" />
+	</collection>
+	
+  </resultMap>
+  
+  <resultMap id="FindUnreadCountResultMap" type="HashMap">
+	<result property="key" column="UNREAD_KEY" />
+	<result property="value" column="UNREAD_COUNT" />
+  </resultMap> 
+  
+  <sql id="Base_Column_List" >
+    CODE, MEMBER_NO_GM, MEMBER_NAME_GM, NO_WX_GM, MEMBER_NO, MEMBER_NAME, NO_WX, ALIAS, 
+     MERCHANT_NO, MERCHANT_NAME, SENDER_FLAG, SENDER_SYNC_STATUS, 
+    TYPE, STATUS, CHAT_TIME, RECEIVED_TIME, RESOURCES_PATH, SHARE_TITLE, SHARE_DES, SHARE_URL, 
+    MSG_SOURCE, THIRD_READ_FLAG,CHATROOM_TYPE, CHATROOM_NO_WX,  
+    IMEI, ERROR_CODE, ERROR_MESSAGE, CREATE_DATE, REMARK, 
+    REMARK2, REMARK3, REMARK4,BIG_IMG,MID_IMG
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from im_chat_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from im_chat_info
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lj.business.weixin.domain.ImChatInfo" >
+    insert into im_chat_info (CODE, MEMBER_NO_GM, MEMBER_NAME_GM, 
+      NO_WX_GM, MEMBER_NO, MEMBER_NAME, 
+      NO_WX, ALIAS,  
+       MERCHANT_NO, MERCHANT_NAME, 
+      SENDER_FLAG, SENDER_SYNC_STATUS, TYPE, 
+      STATUS, CHAT_TIME, RECEIVED_TIME, 
+      RESOURCES_PATH, SHARE_TITLE, SHARE_DES, 
+      SHARE_URL, CHATROOM_TYPE, CHATROOM_NO_WX, 
+      MSG_SOURCE, IMEI, THIRD_READ_FLAG, 
+      CHAT_ASSISTANT_CODE, ERROR_CODE, ERROR_MESSAGE, 
+      CREATE_DATE, REMARK, REMARK2, 
+      REMARK3, REMARK4, CONTENT
+      )
+    values (#{code,jdbcType=VARCHAR}, #{memberNoGm,jdbcType=VARCHAR}, #{memberNameGm,jdbcType=VARCHAR}, 
+      #{noWxGm,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{noWx,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR},  
+       #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{senderFlag,jdbcType=INTEGER}, #{senderSyncStatus,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{chatTime,jdbcType=TIMESTAMP}, #{receivedTime,jdbcType=TIMESTAMP}, 
+      #{resourcesPath,jdbcType=VARCHAR}, #{shareTitle,jdbcType=VARCHAR}, #{shareDes,jdbcType=VARCHAR}, 
+      #{shareUrl,jdbcType=VARCHAR}, #{chatroomType,jdbcType=INTEGER}, #{chatroomNoWx,jdbcType=VARCHAR}, 
+      #{msgSource,jdbcType=INTEGER}, #{imei,jdbcType=VARCHAR}, #{thirdReadFlag,jdbcType=INTEGER}, 
+      #{chatAssistantCode,jdbcType=VARCHAR}, #{errorCode,jdbcType=VARCHAR}, #{errorMessage,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.business.weixin.domain.ImChatInfo" >
+    insert into im_chat_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM,
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM,
+      </if>
+      <if test="noWxGm != null" >
+        NO_WX_GM,
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO,
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME,
+      </if>
+      <if test="noWx != null" >
+        NO_WX,
+      </if>
+      <if test="alias != null" >
+        ALIAS,
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="senderFlag != null" >
+        SENDER_FLAG,
+      </if>
+      <if test="senderSyncStatus != null" >
+        SENDER_SYNC_STATUS,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="chatTime != null" >
+        CHAT_TIME,
+      </if>
+      <if test="receivedTime != null" >
+        RECEIVED_TIME,
+      </if>
+      <if test="resourcesPath != null" >
+        RESOURCES_PATH,
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE,
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES,
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL,
+      </if>
+      <if test="chatroomType != null" >
+        CHATROOM_TYPE,
+      </if>
+      <if test="chatroomNoWx != null" >
+        CHATROOM_NO_WX,
+      </if>
+      <if test="msgSource != null" >
+        MSG_SOURCE,
+      </if>
+      <if test="imei != null" >
+        IMEI,
+      </if>
+      <if test="thirdReadFlag != null" >
+        THIRD_READ_FLAG,
+      </if>
+      <if test="chatAssistantCode != null" >
+        CHAT_ASSISTANT_CODE,
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE,
+      </if>
+      <if test="errorMessage != null" >
+        ERROR_MESSAGE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNoGm != null" >
+        #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxGm != null" >
+        #{noWxGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderFlag != null" >
+        #{senderFlag,jdbcType=INTEGER},
+      </if>
+      <if test="senderSyncStatus != null" >
+        #{senderSyncStatus,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="chatTime != null" >
+        #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedTime != null" >
+        #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourcesPath != null" >
+        #{resourcesPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chatroomType != null" >
+        #{chatroomType,jdbcType=INTEGER},
+      </if>
+      <if test="chatroomNoWx != null" >
+        #{chatroomNoWx,jdbcType=VARCHAR},
+      </if>
+      <if test="msgSource != null" >
+        #{msgSource,jdbcType=INTEGER},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdReadFlag != null" >
+        #{thirdReadFlag,jdbcType=INTEGER},
+      </if>
+      <if test="chatAssistantCode != null" >
+        #{chatAssistantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorCode != null" >
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorMessage != null" >
+        #{errorMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.business.weixin.domain.ImChatInfo" >
+    update im_chat_info
+    <set >
+      <if test="memberNoGm != null" >
+        MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNameGm != null" >
+        MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      </if>
+      <if test="noWxGm != null" >
+        NO_WX_GM = #{noWxGm,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null" >
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="noWx != null" >
+        NO_WX = #{noWx,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        ALIAS = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderFlag != null" >
+        SENDER_FLAG = #{senderFlag,jdbcType=INTEGER},
+      </if>
+      <if test="senderSyncStatus != null" >
+        SENDER_SYNC_STATUS = #{senderSyncStatus,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="chatTime != null" >
+        CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedTime != null" >
+        RECEIVED_TIME = #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourcesPath != null" >
+        RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareDes != null" >
+        SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chatroomType != null" >
+        CHATROOM_TYPE = #{chatroomType,jdbcType=INTEGER},
+      </if>
+      <if test="chatroomNoWx != null" >
+        CHATROOM_NO_WX = #{chatroomNoWx,jdbcType=VARCHAR},
+      </if>
+      <if test="msgSource != null" >
+        MSG_SOURCE = #{msgSource,jdbcType=INTEGER},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdReadFlag != null" >
+        THIRD_READ_FLAG = #{thirdReadFlag,jdbcType=INTEGER},
+      </if>
+      <if test="chatAssistantCode != null" >
+        CHAT_ASSISTANT_CODE = #{chatAssistantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorMessage != null" >
+        ERROR_MESSAGE = #{errorMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bigImg != null" >
+        BIG_IMG = #{bigImg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="midImg != null" >
+        MID_IMG = #{midImg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lj.business.weixin.domain.ImChatInfo" >
+    update im_chat_info
+    set MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      NO_WX_GM = #{noWxGm,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      ALIAS = #{alias,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SENDER_FLAG = #{senderFlag,jdbcType=INTEGER},
+      SENDER_SYNC_STATUS = #{senderSyncStatus,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      RECEIVED_TIME = #{receivedTime,jdbcType=TIMESTAMP},
+      RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      CHATROOM_TYPE = #{chatroomType,jdbcType=INTEGER},
+      CHATROOM_NO_WX = #{chatroomNoWx,jdbcType=VARCHAR},
+      MSG_SOURCE = #{msgSource,jdbcType=INTEGER},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      THIRD_READ_FLAG = #{thirdReadFlag,jdbcType=INTEGER},
+      CHAT_ASSISTANT_CODE = #{chatAssistantCode,jdbcType=VARCHAR},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      ERROR_MESSAGE = #{errorMessage,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.business.weixin.domain.ImChatInfo" >
+    update im_chat_info
+    set MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR},
+      MEMBER_NAME_GM = #{memberNameGm,jdbcType=VARCHAR},
+      NO_WX_GM = #{noWxGm,jdbcType=VARCHAR},
+      MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      NO_WX = #{noWx,jdbcType=VARCHAR},
+      ALIAS = #{alias,jdbcType=VARCHAR},
+      MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      SENDER_FLAG = #{senderFlag,jdbcType=INTEGER},
+      SENDER_SYNC_STATUS = #{senderSyncStatus,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      RECEIVED_TIME = #{receivedTime,jdbcType=TIMESTAMP},
+      RESOURCES_PATH = #{resourcesPath,jdbcType=VARCHAR},
+      SHARE_TITLE = #{shareTitle,jdbcType=VARCHAR},
+      SHARE_DES = #{shareDes,jdbcType=VARCHAR},
+      SHARE_URL = #{shareUrl,jdbcType=VARCHAR},
+      CHATROOM_TYPE = #{chatroomType,jdbcType=INTEGER},
+      CHATROOM_NO_WX = #{chatroomNoWx,jdbcType=VARCHAR},
+      MSG_SOURCE = #{msgSource,jdbcType=INTEGER},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      THIRD_READ_FLAG = #{thirdReadFlag,jdbcType=INTEGER},
+      CHAT_ASSISTANT_CODE = #{chatAssistantCode,jdbcType=VARCHAR},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      ERROR_MESSAGE = #{errorMessage,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <sql id="findImChatInfoPage_condition" >
+  	 <where>
+  	 
+	       <if test=" chatroomType != null and chatroomType != ''" >
+	        and  CHATROOM_TYPE  = #{chatroomType,jdbcType=VARCHAR}
+	      </if>
+	      <if test="memberNoGm != null and memberNoGm != ''" >
+	        and  MEMBER_NO_GM  = #{memberNoGm,jdbcType=VARCHAR}
+	      </if>
+	       <if test="memberNo != null and memberNo != ''" >
+	        and  MEMBER_NO  = #{memberNo,jdbcType=VARCHAR}
+	      </if>
+	       <if test="type != null and type != ''" >
+	        and  TYPE  = #{type,jdbcType=VARCHAR}
+	      </if>
+	       <if test="noWxGm != null and noWxGm != ''" >
+	        and  NO_WX_GM  = #{noWxGm,jdbcType=VARCHAR}
+	      </if>
+	       <if test="noWx != null and noWx != ''" >
+	        and  NO_WX  = #{noWx,jdbcType=VARCHAR}
+	      </if>
+	       <if test="status != null and status != ''" >
+	        and  STATUS  = #{status,jdbcType=CHAR}
+	      </if>
+	       <if test="senderFlag != null and senderFlag != ''" >
+	        and  SENDER_FLAG  = #{senderFlag,jdbcType=INTEGER}
+	      </if>
+			<if test="chatTimeBegin != null">
+				<![CDATA[and CHAT_TIME >= #{chatTimeBegin}]]>
+			</if>
+			<if test="chatTimeEnd != null"> 
+				<![CDATA[and CHAT_TIME <= #{chatTimeEnd}]]>
+			</if>
+			<if test="leStatus != null">
+				<![CDATA[and  STATUS  <= #{leStatus}]]>
+			</if>
+      </where>
+  </sql>
+  
+  <!-- 分页查询 -->
+   <select id="findImChatInfoPage" resultMap="findImChatInfoPageResultMap" parameterType="com.lj.business.weixin.dto.imchat.FindImChatInfoPage" >
+  SELECT   <include refid="Base_Column_List" />
+    		,
+    		<include refid="Blob_Column_List" />
+  FROM im_chat_info
+ 	 <include refid="findImChatInfoPage_condition" />
+   order by CHAT_TIME ${sortDir}
+   limit ${start} , ${limit}
+  </select>
+  
+  <select id="findImChatInfoPageCount" resultType="int" parameterType="com.lj.business.weixin.dto.imchat.FindImChatInfoPage" >
+    select  count(*) FROM im_chat_info
+     <include refid="findImChatInfoPage_condition" />
+  </select>
+  
+    <!-- 查找离线聊天记录信息 begin -->
+	<sql id="findOfflineChatInfoWhere">
+		<where>
+			<!-- 过滤掉公众号消息-‘gh_’开头的微信  -->
+			AND NO_WX NOT LIKE 'gh_%'
+			and NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+	        <choose>
+	        	<when test="clientFlag == 1">	<!-- 导购客户端 -->
+	        		and ((STATUS = '1' and SENDER_FLAG = 2) or (STATUS = '2' and SENDER_FLAG = 1 and SENDER_SYNC_STATUS = 0))<!-- 客户发送给导购，或者由第三方（导购助手）代替导购发送给客户的 -->
+					and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	        		<!-- and CHATROOM_TYPE = 1  导购客户端离线消息需要支持群聊 update by 段志鹏 2018-11-11 -->
+	        	</when>
+	        	<otherwise>	<!-- 中控客户端 -->
+	        		and STATUS = '1'
+	        		and SENDER_FLAG = 1 <!-- 导购发送给客户 -->
+	        	</otherwise>
+	        </choose>
+			<if test="lastLoginTime != null">
+				and CHAT_TIME  >= #{lastLoginTime,jdbcType=TIMESTAMP}
+			</if>
+			<!-- zlh只查询72小时内的数据进行重发，防止人为失误重发过多 	注释，现改成按批推送，每次获取所有离线消息-->
+<!-- 			<![CDATA[ and CREATE_DATE IS NOT NULL AND CREATE_DATE > DATE_ADD(NOW(), INTERVAL -4320 MINUTE)]]>  -->
+		</where>
+    </sql>
+
+	<select id="findOfflineChatInfo" resultMap="findOfflineChatInfoGroupResultMap" parameterType="com.lj.business.weixin.dto.imchat.FindOfflineChatInfo">
+		select
+			    MEMBER_NO, NO_WX, ALIAS,CHATROOM_TYPE, CODE, SENDER_FLAG, TYPE, 
+<!-- 			FIXBUG 导致离线消息一直推送    UNIX_TIMESTAMP(CHAT_TIME) * 1000  -->
+			    CHAT_TIME, 
+			    RESOURCES_PATH, SHARE_TITLE, SHARE_DES, SHARE_URL, CHATROOM_NO_WX, CONTENT,
+			    
+			    CHATROOM_NO_WX groupUserName
+		  from im_chat_info
+		       <include refid="findOfflineChatInfoWhere" />
+<!-- 		FIXBUG 导致离线消息一直推送 order by MEMBER_NO asc, CHAT_TIME asc -->
+			order by CHAT_TIME asc
+	</select>
+  	<!-- 查找离线聊天记录信息 end -->
+  	
+  	<!-- 客户端已接收到服务器推送的离线聊天记录，则更新这些离线记录为已发送 -->
+  	<update id="updateOfflineChatInfoToSend">
+  		update im_chat_info
+  		   set STATUS = '2',
+  		       RECEIVED_TIME = now()
+  		 where STATUS = '1'
+  		 and NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+	        <choose>
+	        	<when test="clientFlag == 1">	<!-- 导购客户端 -->
+	        		and SENDER_FLAG = 2 <!-- 客户发送给导购 -->
+					and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	        	</when>
+	        	<otherwise>	<!-- 中控客户端 -->
+	        		and SENDER_FLAG = 1 <!-- 导购发送给客户 -->
+	        	</otherwise>
+	        </choose>
+			<if test="chatTimeBegin != null">
+				and CHAT_TIME  >= #{chatTimeBegin,jdbcType=TIMESTAMP}
+			</if>
+			<if test="chatTimeEnd != null">
+				<![CDATA[and CHAT_TIME  <= #{chatTimeEnd,jdbcType=TIMESTAMP}]]>
+			</if>
+  	</update>
+  	
+  	<!-- 导购客户端已接收到由第三方（导购助手）代替导购发送的离线消息，需更新其同步状态 -->
+  	<update id="updateOfflineChatInfoToSync">
+  		update im_chat_info
+  		   set SENDER_SYNC_STATUS = 1
+  		 where SENDER_SYNC_STATUS = 0
+  		   and SENDER_FLAG = 1
+  		   and STATUS = '2'
+		   and NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+		   and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+			<if test="chatTimeBegin != null">
+				and CHAT_TIME  >= #{chatTimeBegin,jdbcType=TIMESTAMP}
+			</if>
+			<if test="chatTimeEnd != null">
+				<![CDATA[and CHAT_TIME  <= #{chatTimeEnd,jdbcType=TIMESTAMP}]]>
+			</if>
+  	</update>
+  	
+  	<!-- 修改聊天记录为已发送 -->
+  	<update id="updateChatInfoToSend">
+  		update im_chat_info
+  		   set STATUS = '2'
+  		 where STATUS = '1'
+      	   and CODE in
+      	<foreach item="item" index="index" collection="codeList" open="(" separator="," close=")">  
+            #{item}  
+        </foreach>
+  	</update>
+  	
+  <select id="findImByDate" resultType="java.lang.String" parameterType="map">
+  	SELECT DISTINCT MEMBER_NO_GM AS memberNoGm FROM im_chat_info
+  	where MEMBER_NO is not null
+  	<![CDATA[
+	  	and CHAT_TIME >= #{beginTime,jdbcType=TIMESTAMP}
+	  	and CHAT_TIME <= #{endTime,jdbcType=TIMESTAMP}
+  	]]>
+  </select>
+  
+    <select id="findCountImChatByGM" resultType="map">
+  	select MEMBER_NO_GM memberNoGm, NO_WX noWx, count(1) number
+  	from im_chat_info
+  	where MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+  	<![CDATA[
+	  	and CHAT_TIME >= #{beginTime,jdbcType=TIMESTAMP}
+	  	and CHAT_TIME <= #{endTime,jdbcType=TIMESTAMP}
+  	]]>
+  	group by NO_WX
+  </select>
+    
+    <select id="findImFristInfo" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from im_chat_info
+  	where MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+  	and NO_WX = #{noWx,jdbcType=VARCHAR}
+  	<![CDATA[
+	  	and CHAT_TIME >= #{startTime,jdbcType=TIMESTAMP}
+	  	and CHAT_TIME <= #{endTime,jdbcType=TIMESTAMP}
+  	]]>
+  	order by CHAT_TIME asc
+  	limit 1
+  </select>
+  	
+  	<select id="findImChatInfoPageOMS" resultType="java.util.Map">
+    SELECT DATE_FORMAT(CHAT_TIME, "%Y-%m-%d") dateFormat, COUNT(*) num,CONTENT content
+	FROM im_chat_info 
+	<where>
+       <if test="memberNoGm != null and memberNoGm != ''" >
+        and  MEMBER_NO_GM  = #{memberNoGm,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null">
+			<![CDATA[and CHAT_TIME >= #{startTime}]]>
+		</if>
+		<if test="endTime != null"> 
+			<![CDATA[and CHAT_TIME <= #{endTime}]]>
+		</if>
+		<if test="talker != null and talker !=''" >
+	        and  NO_WX = #{talker}
+	      </if>
+      </where>
+		GROUP BY dateFormat
+		ORDER BY CHAT_TIME DESC
+		LIMIT ${start} , ${limit}
+  	</select>
+  	
+  	<select id="findImChatStatisticsOMS" resultType="map" parameterType="map" >
+   	SELECT tt.MEMBER_NO_GM memberNogm,tt.MEMBER_NAME_GM memberNamegm,tt.SHOP_NAME shopName,tt.chatdate,COUNT(1) peoplecount FROM(
+		SELECT MEMBER_NO_GM,MEMBER_NAME_GM,MEMBER_NO,MEMBER_NAME,LEFT(CHAT_TIME, 10) chatdate FROM im_chat_info
+	  <where>
+	  <if test="merchantNo != null and merchantNo != ''" >
+        and  MERCHANT_NO  = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memberNamegm != null and memberNamegm != ''" >
+        and  MEMBER_NAME_GM  = #{memberNamegm,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null">
+			<![CDATA[and CHAT_TIME >= #{startTime}]]>
+	  </if>
+	  <if test="endTime != null"> 
+			<![CDATA[and CHAT_TIME <= #{endTime}]]>
+	  </if>
+	  <if test=" null != memberNos and memberNos.size > 0 ">
+	  	and MEMBER_NO IN
+	  	<foreach item="item" index="index" collection="memberNos" open="(" separator="," close=")">  
+            #{item} 
+        </foreach>
+      </if>
+      </where>
+		GROUP BY MEMBER_NO_GM,MEMBER_NAME_GM,MEMBER_NO,MEMBER_NAME,LEFT(CHAT_TIME, 10)
+		)tt
+		GROUP BY tt.MEMBER_NO_GM,tt.MEMBER_NAME_GM,tt.tt.chatdate
+		ORDER BY tt.chatdate DESC, peoplecount DESC
+		LIMIT ${start} , ${limit}
+  	</select>
+  	
+  	<!-- 所有终端微信（终端）未读聊天客户总数 -->
+  	<select id="findUnreadPersonCount" resultType="int" parameterType="com.lj.business.weixin.dto.imchat.FindUnreadCountByTerminal">
+	  	SELECT count(DISTINCT(MEMBER_NO)) UNREAD_COUNT
+	      FROM im_chat_info
+	     where THIRD_READ_FLAG = 0
+	     	<![CDATA[AND STATUS <= 2]]>
+	       and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	       and MEMBER_NO is not null
+	       <if test="chatTimeBegin != null">
+				<![CDATA[and CHAT_TIME > #{chatTimeBegin}]]>
+		   </if>
+	  	   and NO_WX_GM in
+	       <foreach item="item" index="index" collection="noWxList" open="(" separator="," close=")">  
+	         #{item}  
+	       </foreach>
+  	</select>
+  	
+  	<!-- 终端微信（终端）未读聊天客户数统计（导购助手 -按终端分组） -->
+  	<select id="findUnreadPersonCountByWx" resultType="java.util.Map" parameterType="com.lj.business.weixin.dto.imchat.FindUnreadCountByTerminal">
+	  	SELECT NO_WX_GM NO_WX, count(DISTINCT(MEMBER_NO)) UNREAD_COUNT
+	      FROM im_chat_info
+	     where THIRD_READ_FLAG = 0
+	     	<![CDATA[AND STATUS <= 2]]>
+	       and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	       and MEMBER_NO is not null
+	       <if test="chatTimeBegin != null">
+				<![CDATA[and CHAT_TIME > #{chatTimeBegin}]]>
+		   </if>
+		   <if test="memberNoGm != null">
+				and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+			</if>
+	  	   and NO_WX_GM in
+	       <foreach item="item" index="index" collection="noWxList" open="(" separator="," close=")">  
+	         #{item}  
+	       </foreach>
+	     group by NO_WX_GM
+  	</select>
+  	
+  	<!-- 导购未读聊天客户数统计 -->
+  	<select id="findUnreadPersonCountByGm" resultType="java.util.Map" parameterType="com.lj.business.weixin.dto.imchat.FindUnreadCountByTerminal">
+	  	SELECT MEMBER_NO_GM memberNoGm, count(DISTINCT(MEMBER_NO)) UNREAD_COUNT
+	      FROM im_chat_info
+	     where THIRD_READ_FLAG = 0
+	     	<![CDATA[AND STATUS <= 2]]>
+	       and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+	       and MEMBER_NO is not null
+	       AND CHATROOM_TYPE =1
+		   <if test="memberNoGms != null and memberNoGms.size() >0">
+				and MEMBER_NO_GM in<foreach item="item" index="index" collection="memberNoGms" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+			<if test="noWxGm != null">
+				and NO_WX_GM = #{noWxGm,jdbcType=VARCHAR}
+			</if>
+	     group by MEMBER_NO_GM
+  	</select>
+  	
+  	<!-- 客户未读聊天记录数统计（导购助手） -->
+  	<select id="findUnreadCountByMemberFromWeb" resultType="com.lj.business.weixin.dto.imchat.FindUnreadCountByMemberReturn" parameterType="com.lj.business.weixin.dto.imchat.FindUnreadCountByMember">
+	  	SELECT MEMBER_NO memberNo, count(MEMBER_NO) unreadCount, min(CHAT_TIME) chatTimeBegin
+	      FROM im_chat_info
+	     where THIRD_READ_FLAG = 0
+	     <![CDATA[AND STATUS <= 2]]>
+	       and MEMBER_NO is not null
+	       and NO_WX_GM = #{noWxShop,jdbcType=VARCHAR}
+	       and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	       <if test="chatTimeBegin != null">
+				<![CDATA[and CHAT_TIME > #{chatTimeBegin}]]>
+		   </if>
+	  	   and MEMBER_NO in
+	       <foreach item="item" index="index" collection="memberNoList" open="(" separator="," close=")">  
+	         #{item}  
+	       </foreach>
+	     group by MEMBER_NO
+  	</select>
+
+	<!-- 分页查询客户聊天记录（导购助手）- begin -->
+	<sql id="findChatInfoPageFromWeb_condition">
+		<where>
+			and MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+			<if test="memberNoGm != null">
+				and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+			</if>
+			<if test="noWxGm != null">
+				and NO_WX_GM = #{noWxGm}
+			</if>
+			
+			<if test="thirdReadFlag != null">
+				and THIRD_READ_FLAG = #{thirdReadFlag,jdbcType=INTEGER}
+			</if>
+			<if test="chatTimeBegin != null">
+				<![CDATA[and CHAT_TIME > #{chatTimeBegin}]]>
+			</if>
+			<if test="chatTimeEnd != null">
+				<![CDATA[and CHAT_TIME < #{chatTimeEnd}]]>
+			</if>
+			<if test="chatDate != null">
+				and DATE(CHAT_TIME) = #{chatDate,jdbcType=DATE}
+			</if>
+			<if test="filterFailChat == 1">
+				<![CDATA[and status <= 2]]>
+			</if>
+		</where>
+	</sql>
+
+	<select id="findChatInfoPageFromWebCount" resultType="int" parameterType="com.lj.business.weixin.dto.imchat.FindChatInfoPageFromWeb">
+		select count(CODE) FROM im_chat_info
+		<include refid="findChatInfoPageFromWeb_condition" />
+	</select>
+
+	<select id="findChatInfoPageFromWebList" resultMap="findChatInfoPageFromWebResultMap" parameterType="com.lj.business.weixin.dto.imchat.FindChatInfoPageFromWeb">
+		SELECT CODE, MEMBER_NO_GM, MEMBER_NAME_GM, NO_WX_GM, MEMBER_NO, MEMBER_NAME, NO_WX, ALIAS, 
+			    SENDER_FLAG, SENDER_SYNC_STATUS, 
+			    TYPE, STATUS, CHAT_TIME, CONTENT, RESOURCES_PATH, SHARE_TITLE, SHARE_DES, SHARE_URL, CHATROOM_TYPE, CHATROOM_NO_WX, MSG_SOURCE, 
+			    THIRD_READ_FLAG, IMEI, ERROR_CODE, ERROR_MESSAGE
+		  FROM im_chat_info
+		<include refid="findChatInfoPageFromWeb_condition" />
+		 order by CHAT_TIME ${sortDir}
+		 limit ${start} , ${limit}
+	</select>
+	<!-- 分页查询客户聊天记录（导购助手）- end -->
+	
+  	<!-- 更新第三方已读（导购助手） -->
+  	<update id="updateThirdHaveReadFromWeb" parameterType="com.lj.business.weixin.dto.imchat.UpdateThirdHaveReadFromWeb">
+	  	update im_chat_info
+	  	   set THIRD_READ_FLAG = 1
+	     where THIRD_READ_FLAG = 0
+		   and MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+		   <if test="noWxGm != null and noWxGm != ''" >
+	        	and  NO_WX_GM  = #{noWxGm,jdbcType=VARCHAR}
+	      </if>
+	      <if test="memberNoGm != null and memberNoGm != ''" >
+	        	and  MEMBER_NO_GM  = #{memberNoGm,jdbcType=VARCHAR}
+	      </if>
+		   <![CDATA[and status <= 2]]>
+			<if test="chatTimeBegin != null">
+				<![CDATA[and CHAT_TIME >= #{chatTimeBegin}]]>
+			</if>
+			<if test="chatTimeEnd != null">
+				<![CDATA[and CHAT_TIME <= #{chatTimeEnd}]]>
+			</if>
+  	</update>
+  	
+  	<!-- 查询终端微信和客户微信下所有无客户信息聊天记录(按聊天时间顺序排序) -->
+  <select id="findImChatInfoByNonMember" resultMap="ResultMapWithBLOBs"  >
+    select <include refid="Base_Column_List" />, <include refid="Blob_Column_List" />
+      from im_chat_info
+     where 
+        NO_WX_GM = #{noWxShop,jdbcType=VARCHAR}
+       and NO_WX = #{noWx,jdbcType=VARCHAR}
+       and MEMBER_NO is null
+     order by CHAT_TIME asc
+  </select>
+  	
+  	<!-- 查找导购与客户的最后一条聊天记录 -->
+  <select id="getLastChatInfo" resultType="com.lj.business.weixin.dto.imchat.FindAutoAnswerChatInfoReturn"  >
+    select SENDER_FLAG senderFlag,TYPE,CONTENT
+      from im_chat_info
+     where MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+     and  NO_WX_GM  = #{noWxGm,jdbcType=VARCHAR}
+		   <choose>
+				<when test="memberNoGm != null and memberNoGm != ''" >
+					and MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+					and CHATROOM_TYPE = 1	<!-- 导购编号不为空时，单聊 -->
+				</when>
+				<otherwise>		
+					and CHATROOM_TYPE = 2	<!-- 导购编号为空时，群聊 -->
+				</otherwise>
+			</choose>
+       	   and (STATUS = '2' or STATUS = '1')
+     order by CHAT_TIME desc
+   	 limit 1
+  </select>
+  
+   <select id="findImChatInfoByMecCount" resultType="int" parameterType="map" >
+    select  count(*) FROM im_chat_info
+    where SENDER_FLAG = 1
+    and (STATUS = '2' or STATUS = '1')
+     <if test="noWxGm != null and noWxGm != ''" >
+        and  NO_WX_GM  = #{noWxGm,jdbcType=VARCHAR}
+      </if>
+       <if test="noWx != null and noWx != ''" >
+        and  NO_WX  = #{noWx,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantNo != null and merchantNo != ''" >
+        and  MERCHANT_NO  = #{merchantNo,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  
+  <!-- 统计客户与导购的聊天记录数-begin -->
+  <sql id="stsMemberChatCount_condition">
+	<where>
+		im.member_no is not null
+		and im.status = 2 
+		<if test="chatBeginTime != null">
+		<![CDATA[and im.chat_time >= #{chatBeginTime}]]>
+		</if>
+		<if test="chatEndTime != null"> 
+			<![CDATA[and im.chat_time <= #{chatEndTime}]]>
+		</if>
+		<if test="shopNos != null and shopNos.size() > 0">
+			and im.SHOP_NO in
+			<foreach item="item" index="index" collection="shopNos" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="merchantNo != null and merchantNo !='' ">
+			and im.MERCHANT_NO = #{merchantNo}
+		</if>
+	</where>
+  </sql>
+  <select id="stsMemberChatCount" parameterType="com.lj.business.weixin.dto.imchat.FindMemberChatCount" resultType="com.lj.business.weixin.dto.imchat.FindMemberChatCountReturn">
+  	select member_no memberNo, member_no_gm memberNoGm, count(*) chatCount 
+      from weixin.im_chat_info im 
+   <include refid="stsMemberChatCount_condition"/>
+     group by member_no, member_no_gm 
+  </select>
+  <!-- 统计客户与导购的聊天记录数-end -->
+  
+  <select id="findChatTimesByGmAndMemberNo" parameterType="com.lj.business.weixin.dto.imchat.FindChatTimesByGmAndMemberNo" resultType="int">
+  	select count(*) 
+    from weixin.im_chat_info im 
+    <where>
+    	<if test="memberNoGm != null and memberNoGm !='' ">
+			AND im.MEMBER_NO_GM = #{memberNoGm}
+		</if>
+		<if test="memberNo != null and memberNo !='' ">
+			AND im.MEMBER_NO = #{memberNo}
+		</if>
+	    <if test="chatBeginTime != null">
+			<![CDATA[and im.chat_time >= #{chatBeginTime}]]>
+		</if>
+		<if test="chatEndTime != null"> 
+			<![CDATA[and im.chat_time <= #{chatEndTime}]]>
+		</if>
+    </where>
+  </select>
+  
+  <!-- 查找最后一条聊天记录 -->
+  <select id="findLastImChatInfo"  parameterType="com.lj.business.weixin.dto.imchat.FindImChatInfo" resultType="com.lj.business.weixin.dto.imchat.FindImChatInfoReturn">
+     select a.NO_WX_GM as noWxGm,
+      a.NO_WX as noWx,
+      a.chat_time as chatTime,
+      a.TYPE as type,
+      a.status as status from im_chat_info a where no_wx_gm=#{noWxGm} order by chat_time asc limit 1
+  
+  </select>
+  
+  <delete id="delete" parameterType="com.lj.business.weixin.dto.imchat.UpdateImChatInfo">
+  	delete from im_chat_info
+  	where NO_WX_GM  = #{noWxGm,jdbcType=VARCHAR}
+  	and MERCHANT_NO  = #{merchantNo,jdbcType=VARCHAR}
+  </delete>
+  
+   <!-- 分页商户下每个终端客户的最新的一条聊天记录 2019.05.14  -->
+   <select id="findLastImChatInfoPage" resultMap="findImChatInfoPageResultMap" parameterType="com.lj.business.weixin.dto.imchat.FindImChatInfoPage" >
+		select
+		c.code,c.MEMBER_NAME_GM,c.MEMBER_NO_GM,c.NO_WX_GM,c.MEMBER_NO,c.MEMBER_NAME,c.NO_WX,ALIAS,
+		SENDER_FLAG, TYPE, STATUS, CHAT_TIME,
+		RESOURCES_PATH, SHARE_TITLE, SHARE_DES, SHARE_URL, CHATROOM_TYPE, CHATROOM_NO_WX,
+		IMEI, ERROR_CODE, ERROR_MESSAGE, CONTENT from (
+		select * from im_chat_info t where t.`STATUS`='2' and
+		t.CHATROOM_TYPE='1'
+		<if test="memberNameGm != null and memberNameGm != ''">
+			and t.MEMBER_NAME_GM like CONCAT('%',#{memberNameGm,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="memberName != null and memberName != ''">
+			and t.MEMBER_NAME like CONCAT('%',#{memberName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="memberNoGm != null and memberNoGm != ''">
+			and t.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+		</if>
+		<if test="memberNo != null and memberNo != ''">
+			and t.MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+		</if>
+		<if test="chatTimeBegin != null">
+			<![CDATA[and t.CHAT_TIME >= #{chatTimeBegin}]]>
+		</if>
+		<if test="chatTimeEnd != null"> 
+			<![CDATA[and t.CHAT_TIME <= #{chatTimeEnd}]]>
+		</if>
+		<if test="memberNos != null and memberNos.size() > 0">
+				and t.MEMBER_NO in
+				<foreach item="item" index="index" collection="memberNos"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+		</if>
+		and t.MERCHANT_NO=#{merchantNo}  ORDER BY t.CHAT_TIME desc 
+		) c GROUP BY c.NO_WX_GM,c.MEMBER_NO ORDER BY c.CHAT_TIME desc 
+	   limit ${start} , ${limit}
+  </select>
+  <!-- 总数：商户下每个终端客户的最新的一条聊天记录 2019.05.14  -->
+  <select id="findLastImChatInfoPageCount" resultType="int" parameterType="com.lj.business.weixin.dto.imchat.FindImChatInfoPage" >
+    SELECT count(tc.`code`) from (
+	select  code from (
+	select * from im_chat_info t where t.`STATUS`='2' and t.CHATROOM_TYPE='1' 
+	<if test="memberNameGm != null and memberNameGm != ''">
+			and t.MEMBER_NAME_GM like CONCAT('%',#{memberNameGm,jdbcType=VARCHAR},'%')
+		</if>
+	<if test="memberName != null and memberName != ''">
+		and t.MEMBER_NAME like CONCAT('%',#{memberName,jdbcType=VARCHAR},'%')
+	</if>
+	<if test="memberNoGm != null and memberNoGm != ''">
+		and t.MEMBER_NO_GM = #{memberNoGm,jdbcType=VARCHAR}
+	</if>
+	<if test="memberNo != null and memberNo != ''">
+		and t.MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+	</if>
+	<if test="chatTimeBegin != null">
+		<![CDATA[and t.CHAT_TIME >= #{chatTimeBegin}]]>
+	</if>
+	<if test="chatTimeEnd != null"> 
+		<![CDATA[and t.CHAT_TIME <= #{chatTimeEnd}]]>
+	</if>
+	<if test="memberNos != null and memberNos.size() > 0">
+				and t.MEMBER_NO in
+				<foreach item="item" index="index" collection="memberNos"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+	</if>
+	and t.MERCHANT_NO=#{merchantNo}  
+	) c GROUP BY c.NO_WX_GM,c.MEMBER_NO  
+	)tc
+  </select>
+ 
+  <!-- 聊天类型单聊:CHATROOM_TYPE = 1  导购发送:SENDER_FLAG = 1 发送状态成功:`STATUS` = '2' 消息来源属于导购:MSG_SOURCE = 1 -->
+  <select id="selectChatCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(CHAT_TIME) 
+  	FROM im_chat_info
+  	WHERE 
+  	CHATROOM_TYPE = 1 AND SENDER_FLAG = 1 AND `STATUS` = '2' AND (MSG_SOURCE = 1 or MSG_SOURCE = 3)
+  	<if test="map.memberNoGm">
+  		AND MEMBER_NO_GM = #{map.memberNoGm,jdbcType=VARCHAR}
+  	</if>
+  	<if test="map.startTime != null">
+		<![CDATA[and CREATE_DATE >= #{map.startTime}]]>
+	</if>
+	<if test="map.endTime != null"> 
+		<![CDATA[and CREATE_DATE <= #{map.endTime}]]>
+	</if>
+  </select>
+  
+  <select id="findChatCount" resultType="java.lang.Integer">
+  	SELECT COUNT(DISTINCT MEMBER_NO) 
+  	FROM im_chat_info
+  	WHERE 
+  	CHATROOM_TYPE = 1 AND SENDER_FLAG = 1 AND `STATUS` = '2' AND (MSG_SOURCE = 1 or MSG_SOURCE = 3)
+  	<if test="mapChat.memberNoGm">
+  		AND MEMBER_NO_GM = #{mapChat.memberNoGm,jdbcType=VARCHAR}
+  	</if>
+  	<if test="mapChat.startTime != null">
+		<![CDATA[and CREATE_DATE >= #{mapChat.startTime}]]>
+	</if>
+	<if test="mapChat.endTime != null"> 
+		<![CDATA[and CREATE_DATE <= #{mapChat.endTime}]]>
+	</if>
+  </select>
+  
+  
+</mapper>
