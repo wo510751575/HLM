@@ -73,12 +73,8 @@ public class HxIndexController extends BaseController {
 			if(StringUtils.isEmpty(host)) {
 				h5Host = localCacheSystemParams.getSystemParam(HxConstant.systemAliasName,HxConstant.group_h5, HxConstant.host_h5);
 			}
-			String h5Url=null;
-			if(h5Host.endsWith("/")) {
-				h5Url=h5Host+"login";
-			}else {
-				h5Url=h5Host+"/"+"login";
-			}
+//			String h5Url=h5Host.endsWith("/")?(h5Host+"login"):(h5Host+"/"+"login");
+			String h5Url=h5Host.endsWith("/")?(h5Host+"hlm-web"):(h5Host+"/"+"hlm-web");
 			//如果是门诊员工则跳转到H5
 			String returnString = "redirect:" + h5Url + "?token=" + token.getAccessToken();
 			
