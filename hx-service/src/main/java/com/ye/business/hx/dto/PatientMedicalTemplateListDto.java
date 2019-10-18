@@ -40,8 +40,51 @@ public class PatientMedicalTemplateListDto implements Serializable {
      * 创建时间 .
      */
     private Date createTime;
+    
+    
+    private Integer levelCode;
+    
+    private String parentCodes;
+    
+    
 
-    public static String getRootId() {
+    /**  
+	 * @Title:  getParentCodes <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getParentCodes() {
+		return parentCodes;
+	}
+
+	/**  
+	 * @Title:  setParentCodes <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setParentCodes(String parentCodes) {
+		this.parentCodes = parentCodes;
+	}
+
+	/**  
+	 * @Title:  getLevelCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public Integer getLevelCode() {
+		return levelCode;
+	}
+
+	/**  
+	 * @Title:  setLevelCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public void setLevelCode(Integer levelCode) {
+		this.levelCode = levelCode;
+	}
+
+	public static String getRootId() {
 		return "1";
 	}
     

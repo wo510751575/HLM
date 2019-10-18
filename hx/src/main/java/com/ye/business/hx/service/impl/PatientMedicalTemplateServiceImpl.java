@@ -78,6 +78,7 @@ public class PatientMedicalTemplateServiceImpl implements IPatientMedicalTemplat
 			patientMedicalTemplate.setRemark2(patientMedicalTemplateDto.getRemark2());
 			patientMedicalTemplate.setRemark3(patientMedicalTemplateDto.getRemark3());
 			patientMedicalTemplate.setRemark4(patientMedicalTemplateDto.getRemark4());
+			patientMedicalTemplate.setListCode(patientMedicalTemplateDto.getListCode());
 			patientMedicalTemplateDao.insertSelective(patientMedicalTemplate);
 			logger.debug("addPatientMedicalTemplate(PatientMedicalTemplateDto) - end - return"); 
 		}catch (TsfaServiceException e) {

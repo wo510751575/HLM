@@ -1,5 +1,6 @@
 package com.ye.business.hx.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 /**
  * Copyright &copy; 2018-2021  All rights reserved.
@@ -8,21 +9,23 @@ import java.util.Date;
  * 
  */
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import com.lj.base.core.pagination.Page;
 import com.lj.base.core.util.AssertUtils;
 import com.lj.base.core.util.GUID;
-import com.lj.base.core.util.StringUtils;
 import com.lj.base.exception.TsfaServiceException;
-
-import com.ye.business.hx.dto.PatientMedicalTemplateListDto;
-import com.ye.business.hx.dto.FindPatientMedicalTemplateListPage;
 import com.ye.business.hx.constant.ErrorCode;
 import com.ye.business.hx.dao.IPatientMedicalTemplateListDao;
 import com.ye.business.hx.domain.PatientMedicalTemplateList;
+import com.ye.business.hx.dto.FindPatientMedicalTemplateListPage;
+import com.ye.business.hx.dto.PatientMedicalTemplateListDto;
+import com.ye.business.hx.dto.PatientMedicalTemplateListVo;
 import com.ye.business.hx.service.IPatientMedicalTemplateListService;
 /**
  * 类说明：实现类
@@ -49,23 +52,43 @@ public class PatientMedicalTemplateListServiceImpl implements IPatientMedicalTem
 	
 	
 	@Override
-	public void addPatientMedicalTemplateList(
+	public boolean addPatientMedicalTemplateList(
 			PatientMedicalTemplateListDto patientMedicalTemplateListDto) throws TsfaServiceException {
 		logger.debug("addPatientMedicalTemplateList(AddPatientMedicalTemplateList addPatientMedicalTemplateList={}) - start", patientMedicalTemplateListDto); 
 
 		AssertUtils.notNull(patientMedicalTemplateListDto);
 		try {
+			//查询父节点
+			PatientMedicalTemplateList parent = patientMedicalTemplateListDao.selectByPrimaryKey(patientMedicalTemplateListDto.getParentCode());
+			AssertUtils.notNull(parent);
+			//只允许建3层
+			if(parent.getLevelCode()==3) {
+				return false;
+			}
 			PatientMedicalTemplateList patientMedicalTemplateList = new PatientMedicalTemplateList();
 			//add数据录入
 			patientMedicalTemplateList.setCode(GUID.generateCode());
 			patientMedicalTemplateList.setName(patientMedicalTemplateListDto.getName());
 			patientMedicalTemplateList.setParentCode(patientMedicalTemplateListDto.getParentCode());
 			patientMedicalTemplateList.setParentName(patientMedicalTemplateListDto.getParentName());
-			patientMedicalTemplateList.setOrderNo(patientMedicalTemplateListDto.getOrderNo());
+			patientMedicalTemplateList.setOrderNo(patientMedicalTemplateListDto.getOrderNo()==null?1:patientMedicalTemplateListDto.getOrderNo());
 			patientMedicalTemplateList.setCreater(patientMedicalTemplateListDto.getCreater());
 			patientMedicalTemplateList.setCreateTime(new Date());
+			if(parent.getLevelCode()!=null) {
+				patientMedicalTemplateList.setLevelCode(parent.getLevelCode()+1);
+			}
+			
+			if(parent.getParentCodes()==null) {
+				patientMedicalTemplateList.setParentCode("1");
+				patientMedicalTemplateList.setParentCodes("1");
+			}else {
+				patientMedicalTemplateList.setParentCode(parent.getCode());
+				patientMedicalTemplateList.setParentCodes(parent.getParentCodes()+","+parent.getCode());
+			}
+			
 			patientMedicalTemplateListDao.insertSelective(patientMedicalTemplateList);
-			logger.debug("addPatientMedicalTemplateList(PatientMedicalTemplateListDto) - end - return"); 
+			logger.debug("addPatientMedicalTemplateList(PatientMedicalTemplateListDto) - end - return");
+			return true;
 		}catch (TsfaServiceException e) {
 			logger.error(e.getMessage(),e);
 			throw e;
@@ -88,16 +111,49 @@ public class PatientMedicalTemplateListServiceImpl implements IPatientMedicalTem
 	 * @author 段志鹏 CreateDate: 2017年12月14日
 	 *
 	 */
-	public List<PatientMedicalTemplateListDto>  findPatientMedicalTemplateLists(FindPatientMedicalTemplateListPage findPatientMedicalTemplateListPage)throws TsfaServiceException{
+	public List<PatientMedicalTemplateListVo>  findPatientMedicalTemplateLists(FindPatientMedicalTemplateListPage findPatientMedicalTemplateListPage)throws TsfaServiceException{
 		AssertUtils.notNull(findPatientMedicalTemplateListPage);
-		List<PatientMedicalTemplateListDto> returnList=null;
+		List<PatientMedicalTemplateListVo> returnList = null;
+		List<PatientMedicalTemplateListVo> listOne = new ArrayList<PatientMedicalTemplateListVo>();
 		try {
 			returnList = patientMedicalTemplateListDao.findPatientMedicalTemplateLists(findPatientMedicalTemplateListPage);
+			//组装第一层
+			if(returnList!=null) {
+				for (PatientMedicalTemplateListVo voOne : returnList) {
+					if(voOne.getLevelCode()==1) {
+						listOne.add(voOne);
+					}
+				}
+				//组装第二层
+				if(listOne!=null) {
+					for (PatientMedicalTemplateListVo voTwo : listOne) {
+						List<PatientMedicalTemplateListVo> listTwo = new ArrayList<PatientMedicalTemplateListVo>();
+						for (PatientMedicalTemplateListVo patientMedicalTemplateListVo : returnList) {
+							if(patientMedicalTemplateListVo.getLevelCode()==2&&patientMedicalTemplateListVo.getParentCode().equals(voTwo.getCode())) {
+								listTwo.add(patientMedicalTemplateListVo);
+							}
+						}
+						voTwo.setChildren(listTwo);
+						//组装第三层
+						if(listTwo!=null) {
+							for (PatientMedicalTemplateListVo voThree : listTwo) {
+								List<PatientMedicalTemplateListVo> listThree = new ArrayList<PatientMedicalTemplateListVo>();
+								for (PatientMedicalTemplateListVo patientMedicalTemplateListVo : returnList) {
+									if(patientMedicalTemplateListVo.getLevelCode()==3&&patientMedicalTemplateListVo.getParentCode().equals(voThree.getCode())) {
+										listThree.add(patientMedicalTemplateListVo);
+									}
+								}
+								voThree.setChildren(listThree);
+							}
+						}
+					}
+				}
+			}
 		} catch (Exception e) {
 			logger.error("查找模版目录信息信息错误！", e);
 			throw new TsfaServiceException(ErrorCode.PATIENT_MEDICAL_TEMPLATE_LIST_NOT_EXIST_ERROR,"模版目录信息不存在");
 		}
-		return returnList;
+		return listOne;
 	}
 	
 
@@ -208,7 +264,7 @@ public class PatientMedicalTemplateListServiceImpl implements IPatientMedicalTem
 			logger.error("删除模版目录信息错误！",e);
 			throw new TsfaServiceException(ErrorCode.PATIENT_MEDICAL_TEMPLATE_LIST_ADD_ERROR,"删除模版目录信息错误！",e);
 		}
-	} 
+	}
 
 
 }

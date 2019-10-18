@@ -1,5 +1,10 @@
 package com.ye.business.hx.service;
 
+import java.util.List;
+
+import com.lj.base.core.pagination.Page;
+import com.lj.base.exception.TsfaServiceException;
+import com.ye.business.hx.dto.FindPatientMedicalTemplateListPage;
 /**
  * Copyright &copy; 2017-2020  All rights reserved.
  *
@@ -7,12 +12,7 @@ package com.ye.business.hx.service;
  * 
  */
 import com.ye.business.hx.dto.PatientMedicalTemplateListDto;
-import com.ye.business.hx.dto.FindPatientMedicalTemplateListPage;
-
-import com.lj.base.core.pagination.Page;
-import com.lj.base.exception.TsfaServiceException;
-
-import java.util.List;
+import com.ye.business.hx.dto.PatientMedicalTemplateListVo;
 /**
  * 类说明：接口类
  * 
@@ -39,7 +39,7 @@ public interface IPatientMedicalTemplateListService {
 	 * @author 段志鹏 CreateDate: 2017-12-14
 	 *
 	 */
-	public void addPatientMedicalTemplateList(PatientMedicalTemplateListDto patientMedicalTemplateListDto) throws TsfaServiceException;
+	public boolean addPatientMedicalTemplateList(PatientMedicalTemplateListDto patientMedicalTemplateListDto) throws TsfaServiceException;
 	
 	/**
 	 * 
@@ -68,7 +68,7 @@ public interface IPatientMedicalTemplateListService {
 	 * @author 段志鹏 CreateDate: 2017-12-14
 	 *
 	 */
-	public List<PatientMedicalTemplateListDto>  findPatientMedicalTemplateLists(FindPatientMedicalTemplateListPage findPatientMedicalTemplateListPage)throws TsfaServiceException;
+	public List<PatientMedicalTemplateListVo>  findPatientMedicalTemplateLists(FindPatientMedicalTemplateListPage findPatientMedicalTemplateListPage)throws TsfaServiceException;
 
 	/**
 	 * 
@@ -104,4 +104,6 @@ public interface IPatientMedicalTemplateListService {
 	 * @throws TsfaServiceException
 	 */
 	public void del(PatientMedicalTemplateListDto patientMedicalTemplateListDto)throws TsfaServiceException;
+
+	
 }

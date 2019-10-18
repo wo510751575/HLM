@@ -199,4 +199,8 @@ public interface ErrorCode {
 	 * 没有绑定打卡班次
 	 */
 	public static final String CLOCK_IN_WORK_SET_NOT_EXIST_ERROR = "clock_in_work_set_not_exist_error";
+	/**
+	 * 层级超过限制
+	 */
+	public static final String LEVEL_OUT_ERROR = "level_out_error";
 }

@@ -1,6 +1,5 @@
 package com.lj.business.api.controller.hx;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +9,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lj.base.core.util.AssertUtils;
 import com.lj.base.exception.TsfaServiceException;
+import com.lj.business.api.common.ErrorCode;
 import com.lj.business.api.controller.Action;
 import com.lj.business.api.domain.GeneralResponse;
 import com.ye.business.hx.dto.FindPatientMedicalTemplateListPage;
 import com.ye.business.hx.dto.FindPatientMedicalTemplatePage;
 import com.ye.business.hx.dto.PatientMedicalTemplateDto;
 import com.ye.business.hx.dto.PatientMedicalTemplateListDto;
+import com.ye.business.hx.dto.PatientMedicalTemplateListVo;
 import com.ye.business.hx.service.IPatientMedicalTemplateListService;
 import com.ye.business.hx.service.IPatientMedicalTemplateService;
 
@@ -37,8 +38,12 @@ public class MedicalTemplateListAction extends Action {
 	@ResponseBody
 	@RequestMapping(value = "add.do", produces = "application/json;charset=UTF-8")
 	public GeneralResponse add(PatientMedicalTemplateListDto patientMedicalTemplateDto) throws TsfaServiceException {
-		patientMedicalTemplateListService.addPatientMedicalTemplateList(patientMedicalTemplateDto);
-		return GeneralResponse.generateSuccessResponse();
+		boolean result = patientMedicalTemplateListService.addPatientMedicalTemplateList(patientMedicalTemplateDto);
+		if(result) {
+			return GeneralResponse.generateSuccessResponse();
+		}else {
+			return GeneralResponse.generateFailureResponse(ErrorCode.LEVEL_OUT_ERROR, "模板目录不允许超过3级!");
+		}
 	}
 	
 	@ResponseBody
@@ -62,7 +67,7 @@ public class MedicalTemplateListAction extends Action {
 	
 	@ResponseBody
 	@RequestMapping(value = "list.do", produces = "application/json;charset=UTF-8")
-	public List<PatientMedicalTemplateListDto> list(PatientMedicalTemplateListDto patientMedicalTemplateDto) throws TsfaServiceException {
+	public List<PatientMedicalTemplateListVo> list(PatientMedicalTemplateListDto patientMedicalTemplateDto) throws TsfaServiceException {
 
 		AssertUtils.notNullAndEmpty(patientMedicalTemplateDto);
 		
@@ -70,13 +75,14 @@ public class MedicalTemplateListAction extends Action {
 		page.setParam(patientMedicalTemplateDto);
 		page.setSortBy("createDesc");
 		
-		List<PatientMedicalTemplateListDto> sourceList = patientMedicalTemplateListService.findPatientMedicalTemplateLists(page);
+		List<PatientMedicalTemplateListVo> sourceList = patientMedicalTemplateListService.findPatientMedicalTemplateLists(page);
 		
-		List<PatientMedicalTemplateListDto> list = new ArrayList<PatientMedicalTemplateListDto>();
-		PatientMedicalTemplateListDto.sortList(list, sourceList, PatientMedicalTemplateListDto.getRootId(), true);
-		logger.debug("templateList --> list( return={}) - end",list);
-		return list;
+//		List<PatientMedicalTemplateListDto> list = new ArrayList<PatientMedicalTemplateListDto>();
+//		PatientMedicalTemplateListDto.sortList(list, sourceList, PatientMedicalTemplateListDto.getRootId(), true);
+		logger.debug("templateList --> list( return={}) - end",sourceList);
+		return sourceList;
 	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "del.do", produces = "application/json;charset=UTF-8")
@@ -89,7 +95,7 @@ public class MedicalTemplateListAction extends Action {
 		PatientMedicalTemplateListDto paramListDto = new PatientMedicalTemplateListDto();
 		paramListDto.setParentCode(patientMedicalTemplateDto.getCode());
 		findPatientMedicalTemplateListPage.setParam(paramListDto);
-		List<PatientMedicalTemplateListDto> list = patientMedicalTemplateListService.findPatientMedicalTemplateLists(findPatientMedicalTemplateListPage);
+		List<PatientMedicalTemplateListVo> list = patientMedicalTemplateListService.findPatientMedicalTemplateLists(findPatientMedicalTemplateListPage);
 		if(list.size()>0) {
 			return GeneralResponse.generateFailureResponse("", "当前目录不能删除，请先删除子目录或模板");
 		}

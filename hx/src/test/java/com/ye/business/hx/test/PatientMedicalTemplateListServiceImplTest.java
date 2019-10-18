@@ -17,6 +17,7 @@ import com.lj.base.mvc.web.test.SpringTestCase;
 import java.util.List;
 
 import com.ye.business.hx.dto.PatientMedicalTemplateListDto;
+import com.ye.business.hx.dto.PatientMedicalTemplateListVo;
 import com.ye.business.hx.dto.FindPatientMedicalTemplateListPage;
 import com.ye.business.hx.service.IPatientMedicalTemplateListService;
 /**
@@ -134,7 +135,7 @@ public class PatientMedicalTemplateListServiceImplTest extends SpringTestCase{
 	@Test
 	public void findPatientMedicalTemplateLists() throws TsfaServiceException{
 		FindPatientMedicalTemplateListPage findPatientMedicalTemplateListPage = new FindPatientMedicalTemplateListPage();
-		List<PatientMedicalTemplateListDto> page = patientMedicalTemplateListService.findPatientMedicalTemplateLists(findPatientMedicalTemplateListPage);
+		List<PatientMedicalTemplateListVo> page = patientMedicalTemplateListService.findPatientMedicalTemplateLists(findPatientMedicalTemplateListPage);
 		Assert.assertNotNull(page);
 		
 	}

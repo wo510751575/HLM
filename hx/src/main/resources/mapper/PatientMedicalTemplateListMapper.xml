@@ -9,10 +9,26 @@
     <result column="order_no" property="orderNo" jdbcType="INTEGER" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="level_code" property="levelCode" jdbcType="INTEGER" />
+    <result column="parent_codes" property="parentCodes" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <resultMap id="TempListMap" type="com.ye.business.hx.dto.PatientMedicalTemplateListVo" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+    <result column="parent_name" property="parentName" jdbcType="CHAR" />
+    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="level_code" property="levelCode" jdbcType="INTEGER" />
+    <result column="parent_codes" property="parentCodes" jdbcType="VARCHAR" />
+  </resultMap>
+  
   <sql id="Base_Column_List" >
-    code, name, parent_code, parent_name, order_no, creater, create_time
+    code, name, parent_code, parent_name, order_no, creater, create_time, level_code, parent_codes
   </sql>
+  
   
   <resultMap id="FindResultMap"
 		type="com.ye.business.hx.dto.PatientMedicalTemplateListDto" extends="BaseResultMap"></resultMap>
@@ -29,9 +45,10 @@
 			</if>
 		</where>
 	</sql>
+	
+	
 	<!-- 不分页查询 -->
-	<select id="findPatientMedicalTemplateLists" resultMap="FindResultMap"
-		parameterType="com.ye.business.hx.dto.FindPatientMedicalTemplateListPage">
+	<select id="findPatientMedicalTemplateLists" resultMap="TempListMap" parameterType="com.ye.business.hx.dto.FindPatientMedicalTemplateListPage">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM patient_medical_template_list
@@ -90,6 +107,12 @@
       <if test="createTime != null" >
         create_time,
       </if>
+      <if test="parentCodes != null" >
+        parent_codes,
+      </if>
+      <if test="levelCode != null" >
+        level_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="code != null" >
@@ -112,6 +135,12 @@
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentCodes != null" >
+        #{parentCodes,jdbcType=VARCHAR},
+      </if>
+      <if test="levelCode != null" >
+         #{levelCode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

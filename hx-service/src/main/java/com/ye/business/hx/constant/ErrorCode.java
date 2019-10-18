@@ -396,4 +396,26 @@ public class ErrorCode {
 	public static final String PATIENT_MEDICAL_TEMPLATE_LIST_FIND_PAGE_ERROR = "patient_medical_template_list_find_page_error";
 	/** 模版目录信息不存在错误. */
 	public static final String PATIENT_MEDICAL_TEMPLATE_LIST_NOT_EXIST_ERROR = "patient_medical_template_list_not_exist_error";
+	
+	/** 新增患者影像信息错误. */
+	public static final String PATIENT_IMG_ADD_ERROR = "patient_img_add_error";
+	/** 患者影像信息更新错误. */
+	public static final String PATIENT_IMG_UPDATE_ERROR = "patient_img_update_error";
+	/** 查找患者影像信息错误. */
+	public static final String PATIENT_IMG_FIND_ERROR = "patient_img_find_error";
+	/** 患者影像信息分页查询错误. */
+	public static final String PATIENT_IMG_FIND_PAGE_ERROR = "patient_img_find_page_error";
+	/** 患者影像信息不存在错误. */
+	public static final String PATIENT_IMG_NOT_EXIST_ERROR = "patient_img_not_exist_error";
+	
+	/** 新增患者影像类型信息错误. */
+	public static final String PATIENT_IMG_TYPE_ADD_ERROR = "patient_img_type_add_error";
+	/** 患者影像类型信息更新错误. */
+	public static final String PATIENT_IMG_TYPE_UPDATE_ERROR = "patient_img_type_update_error";
+	/** 查找患者影像类型信息错误. */
+	public static final String PATIENT_IMG_TYPE_FIND_ERROR = "patient_img_type_find_error";
+	/** 患者影像类型信息分页查询错误. */
+	public static final String PATIENT_IMG_TYPE_FIND_PAGE_ERROR = "patient_img_type_find_page_error";
+	/** 患者影像类型信息不存在错误. */
+	public static final String PATIENT_IMG_TYPE_NOT_EXIST_ERROR = "patient_img_type_not_exist_error";
 }
