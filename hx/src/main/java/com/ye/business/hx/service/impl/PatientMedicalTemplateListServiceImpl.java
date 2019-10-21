@@ -61,19 +61,24 @@ public class PatientMedicalTemplateListServiceImpl implements IPatientMedicalTem
 			//查询父节点
 			PatientMedicalTemplateList parent = patientMedicalTemplateListDao.selectByPrimaryKey(patientMedicalTemplateListDto.getParentCode());
 			AssertUtils.notNull(parent);
-			//只允许建3层
-			if(parent.getLevelCode()==3) {
+			//第四层只允许建模板
+			if(parent.getLevelCode()==3&&patientMedicalTemplateListDto.getType().equals("1")) {
 				return false;
 			}
 			PatientMedicalTemplateList patientMedicalTemplateList = new PatientMedicalTemplateList();
 			//add数据录入
-			patientMedicalTemplateList.setCode(GUID.generateCode());
+			if(patientMedicalTemplateListDto.getCode()==null) {
+				patientMedicalTemplateList.setCode(GUID.generateCode());
+			}else {
+				patientMedicalTemplateList.setCode(patientMedicalTemplateListDto.getCode());
+			}
 			patientMedicalTemplateList.setName(patientMedicalTemplateListDto.getName());
 			patientMedicalTemplateList.setParentCode(patientMedicalTemplateListDto.getParentCode());
 			patientMedicalTemplateList.setParentName(patientMedicalTemplateListDto.getParentName());
 			patientMedicalTemplateList.setOrderNo(patientMedicalTemplateListDto.getOrderNo()==null?1:patientMedicalTemplateListDto.getOrderNo());
 			patientMedicalTemplateList.setCreater(patientMedicalTemplateListDto.getCreater());
 			patientMedicalTemplateList.setCreateTime(new Date());
+			patientMedicalTemplateList.setType(patientMedicalTemplateListDto.getType());
 			if(parent.getLevelCode()!=null) {
 				patientMedicalTemplateList.setLevelCode(parent.getLevelCode()+1);
 			}
@@ -144,6 +149,18 @@ public class PatientMedicalTemplateListServiceImpl implements IPatientMedicalTem
 									}
 								}
 								voThree.setChildren(listThree);
+								//组装第四层
+								if(listThree!=null) {
+									for (PatientMedicalTemplateListVo voFour : listThree) {
+										List<PatientMedicalTemplateListVo> listFour = new ArrayList<PatientMedicalTemplateListVo>();
+										for (PatientMedicalTemplateListVo patientMedicalTemplateListVo : returnList) {
+											if(patientMedicalTemplateListVo.getLevelCode()==4&&patientMedicalTemplateListVo.getParentCode().equals(voFour.getCode())) {
+												listFour.add(patientMedicalTemplateListVo);
+											}
+										}
+										voFour.setChildren(listFour);
+									}
+								}
 							}
 						}
 					}
@@ -208,7 +225,8 @@ public class PatientMedicalTemplateListServiceImpl implements IPatientMedicalTem
 			findPatientMedicalTemplateListReturn.setOrderNo(patientMedicalTemplateList.getOrderNo());
 			findPatientMedicalTemplateListReturn.setCreater(patientMedicalTemplateList.getCreater());
 			findPatientMedicalTemplateListReturn.setCreateTime(patientMedicalTemplateList.getCreateTime());
-			
+			findPatientMedicalTemplateListReturn.setLevelCode(patientMedicalTemplateList.getLevelCode());
+			findPatientMedicalTemplateListReturn.setParentCodes(patientMedicalTemplateList.getParentCodes());
 			logger.debug("findPatientMedicalTemplateList(PatientMedicalTemplateListDto) - end - return value={}", findPatientMedicalTemplateListReturn); 
 			return findPatientMedicalTemplateListReturn;
 		}catch (TsfaServiceException e) {

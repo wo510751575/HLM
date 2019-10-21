@@ -84,6 +84,37 @@ public class UploadAction {
 	/**
 	 * 
 	 *
+	 * 方法说明：上传病历影像
+	 *
+	 * @author 
+	 *   
+	 * CreateDate: 2017-08-03
+	 * 
+	 * @param uploadFile
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping(value="uploadMedicalImage.do",method=RequestMethod.POST,produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String uploadMedicalImage(@RequestParam(required=false) MultipartFile uploadFile) throws IllegalStateException, IOException {
+		logger.debug("uploadMedicalImage(MultipartFile uploadFile={}) - start", uploadFile); 
+
+		if (uploadFile == null || uploadFile.isEmpty()) {
+			throw new TsfaServiceException(ErrorCode.HEAD_IMAGE_IS_EMPTY, "上传病历影像文件为空");
+		}
+		String UPLOAD_PATH =  localCacheSystemParams.getSystemParam(SystemAliasName.ms.toString(),SystemParamConstant.UPLOAD_GROUP, SystemParamConstant.UPLOAD_PATH);
+
+		String pth = FileUtil.saveFile(UPLOAD_PATH + ApiConstans.IMG_MEDICAL , uploadFile);
+		String returnString = ApiConstans.IMG_MEDICAL + pth;
+		logger.debug("uploadMedicalImage() - end - return value={}", returnString); 
+		return returnString;
+	}
+	
+	
+	/**
+	 * 
+	 *
 	 * 方法说明：上传二维码
 	 *
 	 * @author 

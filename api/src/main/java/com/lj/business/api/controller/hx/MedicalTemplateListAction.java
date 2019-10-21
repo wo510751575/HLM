@@ -38,6 +38,8 @@ public class MedicalTemplateListAction extends Action {
 	@ResponseBody
 	@RequestMapping(value = "add.do", produces = "application/json;charset=UTF-8")
 	public GeneralResponse add(PatientMedicalTemplateListDto patientMedicalTemplateDto) throws TsfaServiceException {
+		//类型:1-模板目录;2-模板
+		patientMedicalTemplateDto.setType("1");
 		boolean result = patientMedicalTemplateListService.addPatientMedicalTemplateList(patientMedicalTemplateDto);
 		if(result) {
 			return GeneralResponse.generateSuccessResponse();
@@ -110,6 +112,13 @@ public class MedicalTemplateListAction extends Action {
 		}
 		
 		patientMedicalTemplateListService.del(patientMedicalTemplateDto);
+		//如果type=2 则删除模板目录,同时删除病历模板
+		if(patientMedicalTemplateDto.getType().equals("2")) {
+			PatientMedicalTemplateDto patientMedicalTemplate = new PatientMedicalTemplateDto();
+			patientMedicalTemplate.setCode(patientMedicalTemplateDto.getCode());
+			patientMedicalTemplateService.del(patientMedicalTemplate );
+		}
+		
 		return GeneralResponse.generateSuccessResponse();
 	}
 }

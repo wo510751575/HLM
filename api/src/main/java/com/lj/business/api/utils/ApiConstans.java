@@ -33,6 +33,11 @@ public class ApiConstans {
 	public static final String IMG_PRE ="/headImg/" ;
 	
 	/**
+	 * 病历影像文件夹
+	 */
+	public static final String IMG_MEDICAL ="/medicalImg/" ;
+	
+	/**
 	 * 工作流附件
 	 */
 	public static final String WORKFLOW_FILES_PRE ="/imgCache/workflow/" ;

@@ -11,6 +11,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="level_code" property="levelCode" jdbcType="INTEGER" />
     <result column="parent_codes" property="parentCodes" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   
   <resultMap id="TempListMap" type="com.ye.business.hx.dto.PatientMedicalTemplateListVo" >
@@ -23,10 +24,11 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="level_code" property="levelCode" jdbcType="INTEGER" />
     <result column="parent_codes" property="parentCodes" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    code, name, parent_code, parent_name, order_no, creater, create_time, level_code, parent_codes
+    code, name, parent_code, parent_name, order_no, creater, create_time, level_code, parent_codes, type
   </sql>
   
   
@@ -113,6 +115,9 @@
       <if test="levelCode != null" >
         level_code,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="code != null" >
@@ -141,6 +146,9 @@
       </if>
       <if test="levelCode != null" >
          #{levelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

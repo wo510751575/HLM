@@ -58,7 +58,11 @@ public class PatientMedicalTemplateServiceImpl implements IPatientMedicalTemplat
 		try {
 			PatientMedicalTemplate patientMedicalTemplate = new PatientMedicalTemplate();
 			//add数据录入
-			patientMedicalTemplate.setCode(GUID.generateCode());
+			if(patientMedicalTemplateDto.getCode()!=null) {
+				patientMedicalTemplate.setCode(patientMedicalTemplateDto.getCode());
+			}else {
+				patientMedicalTemplate.setCode(GUID.generateByUUID());
+			}
 			patientMedicalTemplate.setName(patientMedicalTemplateDto.getName());
 			patientMedicalTemplate.setMainRemark(patientMedicalTemplateDto.getMainRemark());
 			patientMedicalTemplate.setMainCurrentRemark(patientMedicalTemplateDto.getMainCurrentRemark());

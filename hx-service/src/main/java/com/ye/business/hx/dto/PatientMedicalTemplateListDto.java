@@ -45,10 +45,31 @@ public class PatientMedicalTemplateListDto implements Serializable {
     private Integer levelCode;
     
     private String parentCodes;
+    //类型:1-模板目录;2-模板
+    private String type;
     
     
 
+    
     /**  
+	 * @Title:  getType <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**  
+	 * @Title:  setType <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**  
 	 * @Title:  getParentCodes <BR>  
 	 * @Description: please write your description <BR>  
 	 * @return: String <BR>  
