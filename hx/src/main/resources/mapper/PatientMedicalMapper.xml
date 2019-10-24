@@ -40,6 +40,7 @@
     <result column="C_CHECK_AUXILIARY_REMARK" property="checkAuxiliaryRemark" jdbcType="VARCHAR" />
     <result column="C_DENTAL_POSITION" property="dentalPosition" jdbcType="VARCHAR" />
     <result column="C_DENTAL_SURFACE" property="dentalSurface" jdbcType="VARCHAR" />
+    <result column="C_REMARK" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   
   <resultMap id="dmResultMap" type="com.ye.business.hx.dto.PatientMedicalDmDto">
@@ -47,6 +48,7 @@
     <result column="D_DENTAL_POSITION" property="dentalPosition" jdbcType="VARCHAR" />
     <result column="D_DENTAL_SURFACE" property="dentalSurface" jdbcType="VARCHAR" />
     <result column="D_DM_DISPOSAL_REMARK" property="dmDisposalRemark" jdbcType="VARCHAR" />
+    <result column="D_REMARK" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   
   <resultMap id="planResultMap" type="com.ye.business.hx.dto.PatientMedicalPlanDto">
@@ -55,6 +57,7 @@
     <result column="P_DENTAL_SURFACE" property="dentalSurface" jdbcType="VARCHAR" />
     <result column="P_PLAN_DIAGNOSIS_REMARK" property="planDiagnosisRemark" jdbcType="VARCHAR" />
     <result column="P_PLAN_TREATMENT_REMARK" property="planTreatmentRemark" jdbcType="VARCHAR" />
+    <result column="P_REMARK" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   
   <resultMap id="FindResultMap" type="com.ye.business.hx.dto.PatientMedicalDto" extends="BaseResultMap">
@@ -74,15 +77,16 @@
   </sql>
 	<sql id="check_Column_List">
       ck.CODE C_CODE,ck.CHECK_ORAL_REMARK C_CHECK_ORAL_REMARK,ck.CHECK_AUXILIARY_REMARK C_CHECK_AUXILIARY_REMARK
-      ,ck.DENTAL_POSITION C_DENTAL_POSITION,ck.DENTAL_SURFACE C_DENTAL_SURFACE
+      ,ck.DENTAL_POSITION C_DENTAL_POSITION,ck.DENTAL_SURFACE C_DENTAL_SURFACE, ck.REMARK C_REMARK
   </sql>
   <sql id="dm_Column_List">
       dm.CODE D_CODE,dm.DENTAL_POSITION D_DENTAL_POSITION,dm.DENTAL_SURFACE D_DENTAL_SURFACE
-      ,dm.DM_DISPOSAL_REMARK D_DM_DISPOSAL_REMARK
+      ,dm.DM_DISPOSAL_REMARK D_DM_DISPOSAL_REMARK, dm.REMARK D_REMARK
   </sql>
 	<sql id="plan_Column_List">
       plan.CODE P_CODE,plan.DENTAL_POSITION P_DENTAL_POSITION,plan.DENTAL_SURFACE P_DENTAL_SURFACE
-      ,plan.PLAN_DIAGNOSIS_REMARK P_PLAN_DIAGNOSIS_REMARK,plan.PLAN_TREATMENT_REMARK P_PLAN_TREATMENT_REMARK
+      ,plan.PLAN_DIAGNOSIS_REMARK P_PLAN_DIAGNOSIS_REMARK,plan.PLAN_TREATMENT_REMARK P_PLAN_TREATMENT_REMARK,
+      plan.REMARK P_REMARK
   </sql>
 	
 	<sql id="findPage_condition">

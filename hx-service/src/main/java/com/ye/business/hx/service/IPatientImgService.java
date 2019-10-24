@@ -98,6 +98,15 @@ public interface IPatientImgService {
 	 *
 	 */
 	public Page<PatientImgDto> findPatientImgPage(FindPatientImgPage findPatientImgPage) throws TsfaServiceException;
+
+	/**   
+	 * @Title: deleteImg   
+	 * @Description: TODO(删除影像图片)   
+	 * @param: @param dto      
+	 * @return: void      
+	 * @throws   
+	 */
+	public void deleteImg(PatientImgDto dto)throws TsfaServiceException;
 	
 
 }

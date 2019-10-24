@@ -316,5 +316,19 @@
 		<property name="serviceName" value="patientMedicalTemplateListService" />
 		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientMedicalTemplateListService" />
 	</bean>
+	
+	<!-- 患者影像 -->
+	<bean id="patientImgService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientImgService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientImgService" />
+	</bean>
+	
+	<!-- 患者影像类型 -->
+	<bean id="patientImgTypeService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientImgTypeService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientImgTypeService" />
+	</bean>
 </beans> 
 

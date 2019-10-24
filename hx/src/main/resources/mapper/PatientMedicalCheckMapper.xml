@@ -77,6 +77,12 @@
     delete from patient_medical_check
     where CODE = #{code,jdbcType=VARCHAR}
   </delete>
+  
+  <delete id="deleteByMedicalCode" parameterType="java.lang.String" >
+  	delete from patient_medical_check
+    where MEDICAL_CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
   <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientMedicalCheck" >
     insert into patient_medical_check
     <trim prefix="(" suffix=")" suffixOverrides="," >

@@ -20,4 +20,13 @@ public interface IPatientMedicalCheckDao {
 	int findPatientMedicalCheckPageCount(FindPatientMedicalCheckPage findPatientMedicalCheckPage);
 
 	List<PatientMedicalCheckDto> findPatientMedicalCheckPage(FindPatientMedicalCheckPage findPatientMedicalCheckPage);
+
+	/**   
+	 * @Title: deleteByMedicalCode   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param code      
+	 * @return: void      
+	 * @throws   
+	 */
+	void deleteByMedicalCode(String code);
 }

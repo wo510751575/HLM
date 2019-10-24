@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ape.common.utils.StringUtils;
 import com.lj.base.core.util.AssertUtils;
 import com.lj.base.exception.TsfaServiceException;
@@ -41,9 +42,10 @@ public class MedicalAction extends Action {
 	 * @return
 	 * @throws TsfaServiceException
 	 */
+	
 	@ResponseBody
 	@RequestMapping(value = "addMedical.do", produces = "application/json;charset=UTF-8")
-	public String addMedical(PatientMedicalDto patientMedicalDto) throws TsfaServiceException {
+	public String addMedical(PatientMedicalDto patientMedicalDto,String checksJson,String dmsJson,String plansJson) throws TsfaServiceException {
 
 		AssertUtils.notNullAndEmpty(patientMedicalDto);
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getPatientNo(), "患者编号不能为空");
@@ -56,6 +58,14 @@ public class MedicalAction extends Action {
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getVisitingDate(), "接诊时间不能为空");
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getCreateId(), "创建人编号不能为空");
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getCreateName(), "创建人不能为空");
+		
+		List<PatientMedicalCheckDto> checks = JSONArray.parseArray(checksJson,PatientMedicalCheckDto.class);
+		List<PatientMedicalDmDto> dms = JSONArray.parseArray(dmsJson,PatientMedicalDmDto.class);
+		List<PatientMedicalPlanDto> plans = JSONArray.parseArray(plansJson,PatientMedicalPlanDto.class);
+		
+		patientMedicalDto.setChecks(checks);
+		patientMedicalDto.setDms(dms);
+		patientMedicalDto.setPlans(plans);
 		
 		//选了牙位，必填
 		if(patientMedicalDto.getChecks().size()>0) {
@@ -113,11 +123,19 @@ public class MedicalAction extends Action {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "editMedical.do", produces = "application/json;charset=UTF-8")
-	public String editMedical(PatientMedicalDto patientMedicalDto) throws TsfaServiceException {
+	public String editMedical(PatientMedicalDto patientMedicalDto,String checksJson,String dmsJson,String plansJson) throws TsfaServiceException {
 		AssertUtils.notNullAndEmpty(patientMedicalDto);
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getCode(), "编号不能为空");
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getUpdateId(), "更新人编号不能为空");
 		AssertUtils.notNullAndEmpty(patientMedicalDto.getUpdateName(), "更新人不能为空");
+		
+		List<PatientMedicalCheckDto> checks = JSONArray.parseArray(checksJson,PatientMedicalCheckDto.class);
+		List<PatientMedicalDmDto> dms = JSONArray.parseArray(dmsJson,PatientMedicalDmDto.class);
+		List<PatientMedicalPlanDto> plans = JSONArray.parseArray(plansJson,PatientMedicalPlanDto.class);
+		
+		patientMedicalDto.setChecks(checks);
+		patientMedicalDto.setDms(dms);
+		patientMedicalDto.setPlans(plans);
 		
 		//选了牙位，必填
 		if(patientMedicalDto.getChecks().size()>0) {

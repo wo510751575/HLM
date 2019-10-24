@@ -209,6 +209,26 @@ public class PatientImgServiceImpl implements IPatientImgService {
 
 		logger.debug("findPatientImgPage(FindPatientImgPage) - end - return value={}", returnPage); 
 		return  returnPage;
+	}
+
+
+	/**   
+	 * <p>Title: deleteImg</p>   
+	 * <p>Description: </p>   
+	 * @param dto
+	 * @throws TsfaServiceException   
+	 * @see com.ye.business.hx.service.IPatientImgService#deleteImg(com.ye.business.hx.dto.PatientImgDto)   
+	 */
+	@Override
+	public void deleteImg(PatientImgDto dto) throws TsfaServiceException {
+		logger.debug("deleteImg(PatientImgDto dto = {}) - start",dto);
+		try {
+			patientImgDao.deleteByPrimaryKey(dto.getCode());
+		} catch (Exception e) {
+			logger.error("删除影像图片错误!");
+			throw e;
+		}
+		logger.debug("deleteImg(PatientImgDto dto = {}) - end");
 	} 
 
 

@@ -282,5 +282,20 @@
 			value="com.ye.business.hx.service.IPatientMedicalTemplateListService" />
 	</bean>
 	
+	<!-- 患者影像 -->
+	<bean name="/patientImgService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientImgServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientImgService" />
+	</bean>
+	
+	<!-- 患者影像类型 -->
+	<bean name="/patientImgTypeService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientImgTypeServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientImgTypeService" />
+	</bean>
 	
 </beans>

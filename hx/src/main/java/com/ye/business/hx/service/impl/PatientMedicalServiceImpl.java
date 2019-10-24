@@ -185,6 +185,54 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			patientMedical.setUpdateName(patientMedicalDto.getUpdateName());
 			patientMedical.setUpdateDate(new Date());
 			AssertUtils.notUpdateMoreThanOne(patientMedicalDao.updateByPrimaryKeySelective(patientMedical));
+			
+			//口腔检查 
+			patientMedicalCheckDao.deleteByMedicalCode(patientMedicalDto.getCode());
+			if(patientMedicalDto.getChecks().size()>0) {
+				for (PatientMedicalCheckDto check : patientMedicalDto.getChecks()) {
+					PatientMedicalCheck record = new PatientMedicalCheck();
+					record.setCode(GUID.generateByUUID());
+					record.setRemark(check.getRemark());
+					record.setMedicalCode(patientMedical.getCode());
+					record.setCheckAuxiliaryRemark(check.getCheckAuxiliaryRemark());
+					record.setCheckOralRemark(check.getCheckOralRemark());
+					record.setDentalPosition(check.getDentalPosition());
+					record.setDentalSurface(check.getDentalSurface());
+					patientMedicalCheckDao.insertSelective(record);
+				}
+			}
+			
+			//处置与医嘱
+			patientMedicalDmDao.deleteByMedicalCode(patientMedicalDto.getCode());
+			if(patientMedicalDto.getDms().size()>0) {
+				for (PatientMedicalDmDto dm : patientMedicalDto.getDms()) {
+					PatientMedicalDm record = new PatientMedicalDm();
+					record.setCode(GUID.generateByUUID());
+					record.setRemark(dm.getRemark());
+					record.setMedicalCode(patientMedical.getCode());
+					record.setDmDisposalRemark(dm.getDmDisposalRemark());
+					record.setDentalPosition(dm.getDentalPosition());
+					record.setDentalSurface(dm.getDentalSurface());
+					patientMedicalDmDao.insertSelective(record);
+				}
+			}
+			
+			//诊断与治疗计划
+			patientMedicalPlanDao.deleteByMedicalCode(patientMedicalDto.getCode());
+			if(patientMedicalDto.getPlans().size()>0) {
+				for (PatientMedicalPlanDto plan : patientMedicalDto.getPlans()) {
+					PatientMedicalPlan record = new PatientMedicalPlan();
+					record.setCode(GUID.generateByUUID());
+					record.setRemark(plan.getRemark());
+					record.setMedicalCode(patientMedical.getCode());
+					record.setPlanDiagnosisRemark(plan.getPlanDiagnosisRemark());
+					record.setPlanTreatmentRemark(plan.getPlanTreatmentRemark());
+					record.setDentalPosition(plan.getDentalPosition());
+					record.setDentalSurface(plan.getDentalSurface());
+					patientMedicalPlanDao.insertSelective(record);
+				}
+			}
+			
 			logger.debug("updatePatientMedical(PatientMedicalDto) - end - return"); 
 		}catch (TsfaServiceException e) {
 			logger.error(e.getMessage(),e);
@@ -328,7 +376,6 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 				patientServiceDto.setUpdateName(patientMedicalDto.getUpdateName());
 				patientServiceDto.setUpdateDate(patientMedicalDto.getUpdateDate());
 				patientServiceDto.setMedicalDate(patientMedicalDto.getCreateDate());
-				
 				this.patientServiceService.updatePatientService(patientServiceDto);
 			}
 			
@@ -336,6 +383,8 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			if(patientMedicalDto.getChecks().size()>0) {
 				for (PatientMedicalCheckDto check : patientMedicalDto.getChecks()) {
 					PatientMedicalCheck record = new PatientMedicalCheck();
+					record.setCode(GUID.generateByUUID());
+					record.setRemark(check.getRemark());
 					record.setMedicalCode(patientMedical.getCode());
 					record.setCheckAuxiliaryRemark(check.getCheckAuxiliaryRemark());
 					record.setCheckOralRemark(check.getCheckOralRemark());
@@ -349,6 +398,8 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			if(patientMedicalDto.getDms().size()>0) {
 				for (PatientMedicalDmDto dm : patientMedicalDto.getDms()) {
 					PatientMedicalDm record = new PatientMedicalDm();
+					record.setCode(GUID.generateByUUID());
+					record.setRemark(dm.getRemark());
 					record.setMedicalCode(patientMedical.getCode());
 					record.setDmDisposalRemark(dm.getDmDisposalRemark());
 					record.setDentalPosition(dm.getDentalPosition());
@@ -361,6 +412,8 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			if(patientMedicalDto.getPlans().size()>0) {
 				for (PatientMedicalPlanDto plan : patientMedicalDto.getPlans()) {
 					PatientMedicalPlan record = new PatientMedicalPlan();
+					record.setCode(GUID.generateByUUID());
+					record.setRemark(plan.getRemark());
 					record.setMedicalCode(patientMedical.getCode());
 					record.setPlanDiagnosisRemark(plan.getPlanDiagnosisRemark());
 					record.setPlanTreatmentRemark(plan.getPlanTreatmentRemark());
