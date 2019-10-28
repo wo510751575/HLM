@@ -7,6 +7,7 @@ package com.ye.business.hx.service;
  * 
  */
 import com.ye.business.hx.dto.PatientImgDto;
+import com.ye.business.hx.domain.PatientImg;
 import com.ye.business.hx.dto.FindPatientImgPage;
 
 
@@ -69,7 +70,7 @@ public interface IPatientImgService {
 	 * @author 段志鹏 CreateDate: 2017-12-14
 	 *
 	 */
-	public List<PatientImgDto>  findPatientImgs(FindPatientImgPage findPatientImgPage)throws TsfaServiceException;
+	public List<PatientImg>  findPatientImgs(FindPatientImgPage findPatientImgPage)throws TsfaServiceException;
 
 	/**
 	 * 

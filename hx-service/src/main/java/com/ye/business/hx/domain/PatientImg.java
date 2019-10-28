@@ -1,8 +1,9 @@
 package com.ye.business.hx.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PatientImg {
+public class PatientImg implements Serializable{
     /**
      * CODE .
      */

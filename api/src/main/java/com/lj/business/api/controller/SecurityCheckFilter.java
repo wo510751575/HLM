@@ -66,7 +66,7 @@ public class SecurityCheckFilter extends OncePerRequestFilter {
 		"delGuidCardSave.do","getSignature.do", "/im/chat/uploadFileFromWeb.do", "/weixin/toWxAuth.do","/product/hotKeyword.do"
 		, "/read/addReadDetail.do","/recruit/questionss.do","/member/forecastName/","/mecMember/iem","/member/iem","/fitUpInfo/", "/dealerapply/", "/mecupload/"
 		,"/uploadWorkflowFiles.do","/member/h5SupplyMemberInfo","/h5/selectZKQcode.do","/h5/selectJudePhone.do","/h5/toSelectJudePhonePage.do","/firend/addFriendsTaskFailNotify.do"
-		,"/im/index","/member/h5Login.do","/upload/uploadHeadImage.do","/servlet/validateCodeServlet"
+		,"/im/index","/member/h5Login.do","/upload/uploadHeadImage.do","/servlet/validateCodeServlet","upload/uploadMedicalImage.do"
 		};
 
 	// 不需要遵循业务框架提交参数格式的请求

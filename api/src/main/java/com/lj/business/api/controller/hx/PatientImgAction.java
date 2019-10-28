@@ -11,8 +11,12 @@
  */
 package com.lj.business.api.controller.hx;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -24,8 +28,10 @@ import com.lj.base.core.util.AssertUtils;
 import com.lj.base.core.util.GUID;
 import com.lj.business.api.controller.Action;
 import com.lj.business.api.domain.GeneralResponse;
+import com.ye.business.hx.domain.PatientImg;
 import com.ye.business.hx.dto.FindPatientImgPage;
 import com.ye.business.hx.dto.FindPatientImgTypePage;
+import com.ye.business.hx.dto.PatienImgListDto;
 import com.ye.business.hx.dto.PatientImgDto;
 import com.ye.business.hx.dto.PatientImgTypeDto;
 import com.ye.business.hx.service.IPatientImgService;
@@ -72,15 +78,41 @@ public class PatientImgAction extends Action {
 			patientImgDto.setCreateId(dto.getCreateId());
 			patientImgDto.setImgUrl(imgUrl);
 			patientImgDto.setPatientCode(dto.getPatientCode());
+			patientImgDto.setReservationDate(dto.getReservationDate());
 			patientImgService.addPatientImg(patientImgDto );
 		}
+		return GeneralResponse.generateSuccessResponse();
+	}
+	
+	/**
+	 * 
+	 * @Title: save   
+	 * @Description: TODO(编辑影像图片)   
+	 * @param: @param dto
+	 * @param: @return      
+	 * @return: GeneralResponse      
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping(value="/edit.do", produces = "application/json;charset=UTF-8")
+	public GeneralResponse edit(PatientImgDto dto) {
+		AssertUtils.notNullAndEmpty(dto);
+		AssertUtils.notNullAndEmpty(dto.getCode(),"code不能为空");
+		dto.setUpdateDate(new Date());
+		patientImgService.updatePatientImg(dto);
 		return GeneralResponse.generateSuccessResponse();
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/delete.do", produces = "application/json;charset=UTF-8")
 	public GeneralResponse delete(PatientImgDto dto) {
-		patientImgService.deleteImg(dto);
+		AssertUtils.notNullAndEmpty(dto.getCode());
+		String[] str = dto.getCode().split(",");
+		for (String code : str) {
+			PatientImgDto patientImgDto = new PatientImgDto();
+			patientImgDto.setCode(code);
+			patientImgService.deleteImg(patientImgDto);
+		}
 		return GeneralResponse.generateSuccessResponse();
 	}
 	
@@ -94,10 +126,34 @@ public class PatientImgAction extends Action {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/list.do", produces = "application/json;charset=UTF-8")
-	public GeneralResponse imgList(FindPatientImgPage findPatientImgPage) {
+	public GeneralResponse imgList(FindPatientImgPage findPatientImgPage,PatientImgDto param) {
 		AssertUtils.notNullAndEmpty(findPatientImgPage);
-		List<PatientImgDto> list = patientImgService.findPatientImgs(findPatientImgPage);
-		return GeneralResponse.generateSuccessResponse(list);
+		findPatientImgPage.setParam(param);
+		List<PatientImg> list = patientImgService.findPatientImgs(findPatientImgPage);
+		
+		SimpleDateFormat sft = new SimpleDateFormat("yyyy-MM-dd");
+		//第一次循环创建一个map
+		Map<String,List<PatientImg>> map = new HashMap<String, List<PatientImg>>();
+		for (PatientImg patientImgDto : list) {
+			List<PatientImg> imgList = new ArrayList<>();
+			map.put(sft.format(patientImgDto.getReservationDate()), imgList);
+		}
+		//第二次循环把相同时间的数据放到一个list
+		for (PatientImg patientImgDto : list) {
+			for(String key:map.keySet()) {
+				if(sft.format(patientImgDto.getReservationDate()).equals(key)) {
+					map.get(key).add(patientImgDto);
+				}
+			}
+		}
+		List<PatienImgListDto> imgList = new ArrayList<>();
+		for(String key:map.keySet()) {
+			PatienImgListDto patienImgListDto = new PatienImgListDto();
+			patienImgListDto.setReservationDate(key);
+			patienImgListDto.setList(map.get(key));
+			imgList.add(patienImgListDto);
+		}
+		return GeneralResponse.generateSuccessResponse(imgList);
 	}
 	
 	/**

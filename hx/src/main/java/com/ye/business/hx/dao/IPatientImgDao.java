@@ -27,7 +27,7 @@ public interface IPatientImgDao {
 	 * @return: List<PatientImgDto>      
 	 * @throws   
 	 */
-	List<PatientImgDto> findPatientImgs(FindPatientImgPage findPatientImgPage);
+	List<PatientImg> findPatientImgs(FindPatientImgPage findPatientImgPage);
 
 	/**   
 	 * @Title: findPatientImgPage   

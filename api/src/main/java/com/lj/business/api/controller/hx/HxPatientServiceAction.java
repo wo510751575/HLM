@@ -3,6 +3,7 @@ package com.lj.business.api.controller.hx;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -110,6 +111,31 @@ public class HxPatientServiceAction extends Action {
 //		findPatientServicePage.getParam().setVistitingStatusNot(VistitingStatus.CANCEL.toString());
 
 		return this.patientServiceService.findPatientReservationPage(findPatientServicePage);
+	}
+	
+	/**
+	 * 方法说明：预约列表
+	 * 
+	 * @param findPatientServicePage
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "findPatientReservationList.do", produces = "application/json;charset=UTF-8")
+	public List<PatientServiceDto> findPatientReservationList(PatientServiceDto param,FindPatientServicePage findPatientServicePage) throws TsfaServiceException {
+
+		AssertUtils.notNullAndEmpty(findPatientServicePage);
+		AssertUtils.notNullAndEmpty(param);
+//		AssertUtils.notNullAndEmpty(param.getMerchantNo(), "商户编号不能为空");
+		findPatientServicePage.setParam(param);
+//		AssertUtils.notNullAndEmpty(findPatientServicePage.getParam().getShopNo(), "门店编号不能为空");
+
+		findPatientServicePage.setSortBy("dateDesc"); // 排序dateAsc
+		
+		
+		// 去掉取消状态的
+//		findPatientServicePage.getParam().setVistitingStatusNot(VistitingStatus.CANCEL.toString());
+
+		return this.patientServiceService.findPatientServices(findPatientServicePage);
 	}
 	
 	/**

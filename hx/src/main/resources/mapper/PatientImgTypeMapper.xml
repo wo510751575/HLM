@@ -15,6 +15,23 @@
   <sql id="Base_Column_List" >
     CODE, NAME, CREATE_DATE, CREATE_ID, REMARK, REMARK2, REMARK3, REMARK4, IS_DELETE
   </sql>
+  
+  <sql id="findPage_condition">
+		<where>
+			<!-- 查询条件根据业务需求自由添加 -->
+			<if test="param!=null">
+				<if test="param.code != null and param.code !='' ">
+					<![CDATA[and pm.CODE =#{param.code}]]>
+				</if>
+			</if>
+		</where>
+		<if test="sortBy != null and sortBy != ''">
+			<if test="'createDesc'.equals(sortBy)">
+				order by pm.CREATE_DATE desc
+			</if>
+		</if>
+	</sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -138,4 +155,11 @@
       IS_DELETE = #{isDelete,jdbcType=VARCHAR}
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
+  
+  <select id="findPatientImgTypes" parameterType="com.ye.business.hx.dto.FindPatientImgTypePage" 
+  resultType="com.ye.business.hx.dto.PatientImgTypeDto">
+  	select <include refid="Base_Column_List"/>
+  	from patient_img_type
+  	<include refid="findPage_condition"/>
+  </select>
 </mapper>

@@ -94,9 +94,9 @@ public class PatientImgServiceImpl implements IPatientImgService {
 	 * @author 段志鹏 CreateDate: 2017年12月14日
 	 *
 	 */
-	public List<PatientImgDto>  findPatientImgs(FindPatientImgPage findPatientImgPage)throws TsfaServiceException{
+	public List<PatientImg>  findPatientImgs(FindPatientImgPage findPatientImgPage)throws TsfaServiceException{
 		AssertUtils.notNull(findPatientImgPage);
-		List<PatientImgDto> returnList=null;
+		List<PatientImg> returnList=null;
 		try {
 			returnList = patientImgDao.findPatientImgs(findPatientImgPage);
 		} catch (Exception e) {

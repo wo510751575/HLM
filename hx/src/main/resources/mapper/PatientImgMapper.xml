@@ -21,6 +21,28 @@
     CODE, PATIENT_CODE, IMG_URL, CREATE_DATE, CREATE_ID, REMARK, REMARK2, REMARK3, REMARK4, 
     UPDATE_DATE, UPDATE_ID, IMG_TYPE_CODE, RESERVATION_DATE, IS_DELETE
   </sql>
+  
+  <sql id="findPage_condition">
+  	<where>
+  		<if test="param != null">
+  			<if test="param.code != null and param.code != ''">
+  				<![CDATA[and CODE =#{param.code}]]>
+  			</if>
+  			<if test="param.patientCode != null and param.patientCode != ''">
+  				<![CDATA[and PATIENT_CODE =#{param.patientCode}]]>
+  			</if>
+  			<if test="param.imgTypeCode != null and param.imgTypeCode != ''">
+  				<![CDATA[and IMG_TYPE_CODE =#{param.imgTypeCode}]]>
+  			</if>
+  		</if>
+  	</where>
+  	<if test="sortBy != null and sortBy != ''">
+  		<if test="'createDate'.equals(sortBy)">
+  			order by CREATE_DATE desc
+  		</if>
+  	</if>
+  </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -196,4 +218,11 @@
       IS_DELETE = #{isDelete,jdbcType=VARCHAR}
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
+  
+  <select id="findPatientImgs" parameterType="com.ye.business.hx.dto.FindPatientImgPage" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from patient_img
+    <include refid="findPage_condition" />
+  </select>
 </mapper>
