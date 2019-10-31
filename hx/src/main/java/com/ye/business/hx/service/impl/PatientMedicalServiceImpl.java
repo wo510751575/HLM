@@ -1,5 +1,6 @@
 package com.ye.business.hx.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 /**
  * Copyright &copy; 2017-2020  All rights reserved.
@@ -22,15 +23,18 @@ import com.lj.base.core.util.AssertUtils;
 import com.lj.base.core.util.GUID;
 import com.lj.base.exception.TsfaServiceException;
 import com.ye.business.hx.constant.ErrorCode;
+import com.ye.business.hx.dao.IPatientImgDao;
 import com.ye.business.hx.dao.IPatientMedicalCheckDao;
 import com.ye.business.hx.dao.IPatientMedicalDao;
 import com.ye.business.hx.dao.IPatientMedicalDmDao;
 import com.ye.business.hx.dao.IPatientMedicalPlanDao;
+import com.ye.business.hx.domain.PatientImg;
 import com.ye.business.hx.domain.PatientMedical;
 import com.ye.business.hx.domain.PatientMedicalCheck;
 import com.ye.business.hx.domain.PatientMedicalDm;
 import com.ye.business.hx.domain.PatientMedicalPlan;
 import com.ye.business.hx.dto.FindPatientMedicalPage;
+import com.ye.business.hx.dto.PatientImgDto;
 import com.ye.business.hx.dto.PatientMedicalCheckDto;
 import com.ye.business.hx.dto.PatientMedicalDmDto;
 import com.ye.business.hx.dto.PatientMedicalDto;
@@ -70,6 +74,8 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 	private IPatientMedicalDmDao patientMedicalDmDao;
 	@Resource
 	private IPatientMedicalPlanDao patientMedicalPlanDao;
+	@Resource
+	private IPatientImgDao patientImgDao;
 	
 	@Override
 	public void addPatientMedical(
@@ -474,6 +480,17 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 			findPatientMedicalReturn.setCreateId(patientMedical.getCreateId());
 			findPatientMedicalReturn.setCreateName(patientMedical.getCreateName());
 			findPatientMedicalReturn.setRemark(patientMedical.getRemark());
+			//图片地址
+			String imgCodes = patientMedical.getRemark2();
+			if(StringUtils.isNotEmpty(imgCodes)) {
+				List<PatientImg> list = new ArrayList<PatientImg>();
+				String[] imgArr = imgCodes.split(",");
+				for (String imgCode : imgArr) {
+					PatientImg patientImg = patientImgDao.selectByPrimaryKey(imgCode);
+					list.add(patientImg);
+				}
+				patientMedical.setImgs(list);
+			}
 			findPatientMedicalReturn.setRemark2(patientMedical.getRemark2());
 			findPatientMedicalReturn.setRemark3(patientMedical.getRemark3());
 			findPatientMedicalReturn.setRemark4(patientMedical.getRemark4());
@@ -499,6 +516,16 @@ public class PatientMedicalServiceImpl implements IPatientMedicalService {
 		AssertUtils.notAllNull(code,"Code不能为空");
 		try {
 			PatientMedicalDto patientMedical = patientMedicalDao.selectByCode(code);
+			String imgCodes = patientMedical.getRemark2();
+			if(StringUtils.isNotEmpty(imgCodes)) {
+				List<PatientImg> list = new ArrayList<PatientImg>();
+				String[] imgArr = imgCodes.split(",");
+				for (String imgCode : imgArr) {
+					PatientImg patientImg = patientImgDao.selectByPrimaryKey(imgCode);
+					list.add(patientImg);
+				}
+				patientMedical.setImgs(list);
+			}
 			logger.debug("findPatientMedical(String code) - end - return value={}", patientMedical); 
 			return patientMedical;
 		}catch (TsfaServiceException e) {

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IGumCheckDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.GumCheck">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
+    <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+    <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
+    <result column="POSITION" jdbcType="VARCHAR" property="position" />
+    <result column="PLAQUE_S" jdbcType="INTEGER" property="plaqueS" />
+    <result column="PLAQUE_M" jdbcType="INTEGER" property="plaqueM" />
+    <result column="PLAQUE_L" jdbcType="INTEGER" property="plaqueL" />
+    <result column="BLEEDING_S" jdbcType="INTEGER" property="bleedingS" />
+    <result column="BLEEDING_M" jdbcType="INTEGER" property="bleedingM" />
+    <result column="BLEEDING_L" jdbcType="INTEGER" property="bleedingL" />
+    <result column="PD_S" jdbcType="INTEGER" property="pdS" />
+    <result column="PD_M" jdbcType="INTEGER" property="pdM" />
+    <result column="PD_L" jdbcType="INTEGER" property="pdL" />
+    <result column="GM_S" jdbcType="INTEGER" property="gmS" />
+    <result column="GM_M" jdbcType="INTEGER" property="gmM" />
+    <result column="GM_L" jdbcType="INTEGER" property="gmL" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, PATIENT_NO, CREATE_DATE, CREATE_ID, POSITION, PLAQUE_S, PLAQUE_M, PLAQUE_L, 
+    BLEEDING_S, BLEEDING_M, BLEEDING_L, PD_S, PD_M, PD_L, GM_S, GM_M, GM_L, REMARK, REMARK2, 
+    REMARK3, REMARK4
+  </sql>
+  
+  <sql id="findPage_condition">
+  	<where>
+	<!-- 查询条件根据业务需求自由添加  -->
+		<if test="param!=null">
+			<if test="param.code != null and param.code !='' ">
+			<![CDATA[and code =#{param.code}]]>
+			</if>
+			<if test="param.patientNo != null and param.patientNo !='' ">
+			<![CDATA[and PATIENT_NO =#{param.patientNo}]]>
+			</if>
+		</if>
+	</where>
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from gum_ckeck
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from gum_ckeck
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.GumCheck">
+    insert into gum_ckeck (CODE, PATIENT_NO, CREATE_DATE, 
+      CREATE_ID, POSITION, PLAQUE_S, 
+      PLAQUE_M, PLAQUE_L, BLEEDING_S, 
+      BLEEDING_M, BLEEDING_L, PD_S, 
+      PD_M, PD_L, GM_S, GM_M, 
+      GM_L, REMARK, REMARK2, 
+      REMARK3, REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{createId,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{plaqueS,jdbcType=INTEGER}, 
+      #{plaqueM,jdbcType=INTEGER}, #{plaqueL,jdbcType=INTEGER}, #{bleedingS,jdbcType=INTEGER}, 
+      #{bleedingM,jdbcType=INTEGER}, #{bleedingL,jdbcType=INTEGER}, #{pdS,jdbcType=INTEGER}, 
+      #{pdM,jdbcType=INTEGER}, #{pdL,jdbcType=INTEGER}, #{gmS,jdbcType=INTEGER}, #{gmM,jdbcType=INTEGER}, 
+      #{gmL,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.GumCheck">
+    insert into gum_ckeck
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="position != null">
+        POSITION,
+      </if>
+      <if test="plaqueS != null">
+        PLAQUE_S,
+      </if>
+      <if test="plaqueM != null">
+        PLAQUE_M,
+      </if>
+      <if test="plaqueL != null">
+        PLAQUE_L,
+      </if>
+      <if test="bleedingS != null">
+        BLEEDING_S,
+      </if>
+      <if test="bleedingM != null">
+        BLEEDING_M,
+      </if>
+      <if test="bleedingL != null">
+        BLEEDING_L,
+      </if>
+      <if test="pdS != null">
+        PD_S,
+      </if>
+      <if test="pdM != null">
+        PD_M,
+      </if>
+      <if test="pdL != null">
+        PD_L,
+      </if>
+      <if test="gmS != null">
+        GM_S,
+      </if>
+      <if test="gmM != null">
+        GM_M,
+      </if>
+      <if test="gmL != null">
+        GM_L,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null">
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="plaqueS != null">
+        #{plaqueS,jdbcType=INTEGER},
+      </if>
+      <if test="plaqueM != null">
+        #{plaqueM,jdbcType=INTEGER},
+      </if>
+      <if test="plaqueL != null">
+        #{plaqueL,jdbcType=INTEGER},
+      </if>
+      <if test="bleedingS != null">
+        #{bleedingS,jdbcType=INTEGER},
+      </if>
+      <if test="bleedingM != null">
+        #{bleedingM,jdbcType=INTEGER},
+      </if>
+      <if test="bleedingL != null">
+        #{bleedingL,jdbcType=INTEGER},
+      </if>
+      <if test="pdS != null">
+        #{pdS,jdbcType=INTEGER},
+      </if>
+      <if test="pdM != null">
+        #{pdM,jdbcType=INTEGER},
+      </if>
+      <if test="pdL != null">
+        #{pdL,jdbcType=INTEGER},
+      </if>
+      <if test="gmS != null">
+        #{gmS,jdbcType=INTEGER},
+      </if>
+      <if test="gmM != null">
+        #{gmM,jdbcType=INTEGER},
+      </if>
+      <if test="gmL != null">
+        #{gmL,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.GumCheck">
+    update gum_ckeck
+    <set>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="plaqueS != null">
+        PLAQUE_S = #{plaqueS,jdbcType=INTEGER},
+      </if>
+      <if test="plaqueM != null">
+        PLAQUE_M = #{plaqueM,jdbcType=INTEGER},
+      </if>
+      <if test="plaqueL != null">
+        PLAQUE_L = #{plaqueL,jdbcType=INTEGER},
+      </if>
+      <if test="bleedingS != null">
+        BLEEDING_S = #{bleedingS,jdbcType=INTEGER},
+      </if>
+      <if test="bleedingM != null">
+        BLEEDING_M = #{bleedingM,jdbcType=INTEGER},
+      </if>
+      <if test="bleedingL != null">
+        BLEEDING_L = #{bleedingL,jdbcType=INTEGER},
+      </if>
+      <if test="pdS != null">
+        PD_S = #{pdS,jdbcType=INTEGER},
+      </if>
+      <if test="pdM != null">
+        PD_M = #{pdM,jdbcType=INTEGER},
+      </if>
+      <if test="pdL != null">
+        PD_L = #{pdL,jdbcType=INTEGER},
+      </if>
+      <if test="gmS != null">
+        GM_S = #{gmS,jdbcType=INTEGER},
+      </if>
+      <if test="gmM != null">
+        GM_M = #{gmM,jdbcType=INTEGER},
+      </if>
+      <if test="gmL != null">
+        GM_L = #{gmL,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.GumCheck">
+    update gum_ckeck
+    set PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      POSITION = #{position,jdbcType=VARCHAR},
+      PLAQUE_S = #{plaqueS,jdbcType=INTEGER},
+      PLAQUE_M = #{plaqueM,jdbcType=INTEGER},
+      PLAQUE_L = #{plaqueL,jdbcType=INTEGER},
+      BLEEDING_S = #{bleedingS,jdbcType=INTEGER},
+      BLEEDING_M = #{bleedingM,jdbcType=INTEGER},
+      BLEEDING_L = #{bleedingL,jdbcType=INTEGER},
+      PD_S = #{pdS,jdbcType=INTEGER},
+      PD_M = #{pdM,jdbcType=INTEGER},
+      PD_L = #{pdL,jdbcType=INTEGER},
+      GM_S = #{gmS,jdbcType=INTEGER},
+      GM_M = #{gmM,jdbcType=INTEGER},
+      GM_L = #{gmL,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findGumChecks" parameterType="com.ye.business.hx.dto.FindGumCheckPage" resultType="com.ye.business.hx.dto.GumCheckDto">
+  	select <include refid="Base_Column_List"/>
+  	from gum_ckeck
+  	<include refid="findPage_condition"/>
+  </select>
+  
+</mapper>

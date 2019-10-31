@@ -418,4 +418,39 @@ public class ErrorCode {
 	public static final String PATIENT_IMG_TYPE_FIND_PAGE_ERROR = "patient_img_type_find_page_error";
 	/** 患者影像类型信息不存在错误. */
 	public static final String PATIENT_IMG_TYPE_NOT_EXIST_ERROR = "patient_img_type_not_exist_error";
+	
+	/** 新增牙周检查信息错误. */
+	public static final String GUM_CHECK_ADD_ERROR = "gum_check_add_error";
+	/** 牙周检查信息更新错误. */
+	public static final String GUM_CHECK_UPDATE_ERROR = "gum_check_update_error";
+	/** 查找牙周检查信息错误. */
+	public static final String GUM_CHECK_FIND_ERROR = "gum_check_find_error";
+	/** 牙周检查信息分页查询错误. */
+	public static final String GUM_CHECK_FIND_PAGE_ERROR = "gum_check_find_page_error";
+	/** 牙周检查信息不存在错误. */
+	public static final String GUM_CHECK_NOT_EXIST_ERROR = "gum_check_not_exist_error";
+	
+	/** 新增牙齿检查信息错误. */
+	public static final String TOOTH_CHECK_ADD_ERROR = "tooth_check_add_error";
+	/** 牙齿检查信息更新错误. */
+	public static final String TOOTH_CHECK_UPDATE_ERROR = "tooth_check_update_error";
+	/** 查找牙齿检查信息错误. */
+	public static final String TOOTH_CHECK_FIND_ERROR = "tooth_check_find_error";
+	/** 牙齿检查信息分页查询错误. */
+	public static final String TOOTH_CHECK_FIND_PAGE_ERROR = "tooth_check_find_page_error";
+	/** 牙齿检查信息不存在错误. */
+	public static final String TOOTH_CHECK_NOT_EXIST_ERROR = "tooth_check_not_exist_error";
+	/** 删除牙齿检查信息错误. */
+	public static final String TOOTH_CHECK_DELETE_ERROR = "tooth_check_delete_error";
+	
+	/** 新增症状信息错误. */
+	public static final String PATIENT_SYMPTOM_ADD_ERROR = "patient_symptom_add_error";
+	/** 症状信息更新错误. */
+	public static final String PATIENT_SYMPTOM_UPDATE_ERROR = "patient_symptom_update_error";
+	/** 查找症状信息错误. */
+	public static final String PATIENT_SYMPTOM_FIND_ERROR = "patient_symptom_find_error";
+	/** 症状信息分页查询错误. */
+	public static final String PATIENT_SYMPTOM_FIND_PAGE_ERROR = "patient_symptom_find_page_error";
+	/** 症状信息不存在错误. */
+	public static final String PATIENT_SYMPTOM_NOT_EXIST_ERROR = "patient_symptom_not_exist_error";
 }

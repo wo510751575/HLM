@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ye.business.hx.dao.IToothCheckDao">
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.ToothCheck">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="DENTAL_POSITION" jdbcType="VARCHAR" property="dentalPosition" />
+    <result column="SYMPTOM" jdbcType="VARCHAR" property="symptom" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
+    <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
+    <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+    <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, DENTAL_POSITION, SYMPTOM, REMARK, REMARK2, REMARK3, REMARK4, CREATE_DATE, PATIENT_NO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tooth_ckeck
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tooth_ckeck
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.ToothCheck">
+    insert into tooth_ckeck (CODE, DENTAL_POSITION, SYMPTOM, 
+      REMARK, REMARK2, REMARK3, 
+      REMARK4, CREATE_DATE, PATIENT_NO
+      )
+    values (#{code,jdbcType=VARCHAR}, #{dentalPosition,jdbcType=VARCHAR}, #{symptom,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{patientNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.ToothCheck">
+    insert into tooth_ckeck
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="dentalPosition != null">
+        DENTAL_POSITION,
+      </if>
+      <if test="symptom != null">
+        SYMPTOM,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="remark2 != null">
+        REMARK2,
+      </if>
+      <if test="remark3 != null">
+        REMARK3,
+      </if>
+      <if test="remark4 != null">
+        REMARK4,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalPosition != null">
+        #{dentalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="symptom != null">
+        #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="patientNo != null">
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.ToothCheck">
+    update tooth_ckeck
+    <set>
+      <if test="dentalPosition != null">
+        DENTAL_POSITION = #{dentalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="symptom != null">
+        SYMPTOM = #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null">
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null">
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="patientNo != null">
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.ToothCheck">
+    update tooth_ckeck
+    set DENTAL_POSITION = #{dentalPosition,jdbcType=VARCHAR},
+      SYMPTOM = #{symptom,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+
+
+  
+  <resultMap id="FindResultMap" type="com.ye.business.hx.dto.ToothCheckDto" extends="BaseResultMap"></resultMap>
+  
+  <sql id="findPage_condition">
+	<where>
+	<!-- 查询条件根据业务需求自由添加  -->
+		<if test="param!=null">
+			<if test="param.code != null and param.code !='' ">
+			<![CDATA[and code =#{param.code}]]>
+			</if>
+			<if test="param.patientNo != null and param.patientNo !='' ">
+			<![CDATA[and PATIENT_NO =#{param.patientNo}]]>
+			</if>
+			<if test="param.createDateStart != null">
+				and CREATE_DATE &gt;=#{param.createDateStart}
+			</if>
+			<if test="param.createDateEnd != null">
+				and CREATE_DATE &lt;=#{param.createDateEnd}
+			</if>
+		</if>
+	</where>
+  </sql>
+  
+	<!-- 不分页查询 -->
+	<select id="findToothChecks" resultMap="FindResultMap" parameterType="com.ye.business.hx.dto.FindToothCheckPage">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM tooth_ckeck
+	<include refid="findPage_condition" />
+	
+	</select>
+	<!-- 分页查询 -->
+	<select id="findToothCheckPage" resultMap="FindResultMap" parameterType="com.ye.business.hx.dto.FindToothCheckPage">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM tooth_ckeck
+	<include refid="findPage_condition" />
+	
+	limit ${start} , ${limit}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findToothCheckPageCount" resultType="int" parameterType="com.ye.business.hx.dto.FindToothCheckPage">
+	select count(*)
+	FROM tooth_ckeck
+	<include refid="findPage_condition" />
+	</select>
+</mapper>

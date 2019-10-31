@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.ye.business.hx.domain.PatientImg;
+
 public class PatientMedicalDto implements Serializable { 
 
     /**
@@ -118,6 +120,33 @@ public class PatientMedicalDto implements Serializable {
      */
     private List<PatientMedicalPlanDto> plans = new ArrayList<>();
     
+    /**
+     * 影像图片集合
+     */
+    private List<PatientImg> imgs;
+    
+    
+    
+	
+
+	/**  
+	 * @Title:  getImgs <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: List<PatientImg> <BR>  
+	 */
+	public List<PatientImg> getImgs() {
+		return imgs;
+	}
+
+	/**  
+	 * @Title:  setImgs <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: List<PatientImg> <BR>  
+	 */
+	public void setImgs(List<PatientImg> imgs) {
+		this.imgs = imgs;
+	}
+
 	public List<PatientMedicalCheckDto> getChecks() {
 		return checks;
 	}

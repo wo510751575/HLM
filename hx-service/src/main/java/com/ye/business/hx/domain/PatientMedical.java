@@ -1,6 +1,7 @@
 package com.ye.business.hx.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class PatientMedical {
     /** CODE*/
@@ -95,8 +96,31 @@ public class PatientMedical {
 
     /** 更新时间*/
     private Date updateDate;
+    
+    /**  影像图片集合*/
+    private List<PatientImg> imgs;
+    
+    
 
-    public String getCode() {
+    /**  
+	 * @Title:  getImgs <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: List<PatientImg> <BR>  
+	 */
+	public List<PatientImg> getImgs() {
+		return imgs;
+	}
+
+	/**  
+	 * @Title:  setImgs <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: List<PatientImg> <BR>  
+	 */
+	public void setImgs(List<PatientImg> imgs) {
+		this.imgs = imgs;
+	}
+
+	public String getCode() {
         return code;
     }
 

@@ -298,4 +298,28 @@
 			value="com.ye.business.hx.service.IPatientImgTypeService" />
 	</bean>
 	
+	<!-- 牙周检查 -->
+	<bean name="/gumCheckService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="gumCheckServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IGumCheckService" />
+	</bean>
+	
+	<!-- 牙齿检查 -->
+	<bean name="/toothCheckService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="toothCheckServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IToothCheckService" />
+	</bean>
+	
+	<!-- 牙齿症状 -->
+	<bean name="/patientSymptomService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientSymptomServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientSymptomService" />
+	</bean>
+	
 </beans>
