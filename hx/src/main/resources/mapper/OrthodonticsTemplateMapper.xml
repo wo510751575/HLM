@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IOrthodonticsTemplateDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.OrthodonticsTemplate" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="PARENT_CODES" property="parentCodes" jdbcType="VARCHAR" />
+    <result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="INTEGER" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="LEVEL_CODE" property="levelCode" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="CHECK" property="check" jdbcType="VARCHAR" />
+    <result column="MANAGEMENT" property="management" jdbcType="VARCHAR" />
+    <result column="DOCTOR_ADVICE" property="doctorAdvice" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
+    <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="com.ye.business.hx.dto.OrthodonticsTemplateVo" id="findResultMap" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, NAME, PARENT_CODE, PARENT_CODES, PARENT_NAME, ORDER_NO, CREATER, CREATE_DATE, 
+    LEVEL_CODE, TYPE, CHECK, MANAGEMENT, DOCTOR_ADVICE, REMARK, REMARK2, REMARK3, REMARK4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orthodontics_template
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orthodontics_template
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.OrthodonticsTemplate" >
+    insert into orthodontics_template (CODE, NAME, PARENT_CODE, 
+      PARENT_CODES, PARENT_NAME, ORDER_NO, 
+      CREATER, CREATE_DATE, LEVEL_CODE, 
+      TYPE, CHECK, MANAGEMENT, 
+      DOCTOR_ADVICE, REMARK, REMARK2, 
+      REMARK3, REMARK4)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
+      #{parentCodes,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}, 
+      #{creater,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{levelCode,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{check,jdbcType=VARCHAR}, #{management,jdbcType=VARCHAR}, 
+      #{doctorAdvice,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.OrthodonticsTemplate" >
+    insert into orthodontics_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE,
+      </if>
+      <if test="parentCodes != null" >
+        PARENT_CODES,
+      </if>
+      <if test="parentName != null" >
+        PARENT_NAME,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="levelCode != null" >
+        LEVEL_CODE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="check != null" >
+        CHECK,
+      </if>
+      <if test="management != null" >
+        MANAGEMENT,
+      </if>
+      <if test="doctorAdvice != null" >
+        DOCTOR_ADVICE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+      <if test="remark3 != null" >
+        REMARK3,
+      </if>
+      <if test="remark4 != null" >
+        REMARK4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCodes != null" >
+        #{parentCodes,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="levelCode != null" >
+        #{levelCode,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="check != null" >
+        #{check,jdbcType=VARCHAR},
+      </if>
+      <if test="management != null" >
+        #{management,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAdvice != null" >
+        #{doctorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.OrthodonticsTemplate" >
+    update orthodontics_template
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCodes != null" >
+        PARENT_CODES = #{parentCodes,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        PARENT_NAME = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="levelCode != null" >
+        LEVEL_CODE = #{levelCode,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="check != null" >
+        CHECK = #{check,jdbcType=VARCHAR},
+      </if>
+      <if test="management != null" >
+        MANAGEMENT = #{management,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAdvice != null" >
+        DOCTOR_ADVICE = #{doctorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        REMARK3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        REMARK4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.OrthodonticsTemplate" >
+    update orthodontics_template
+    set NAME = #{name,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      PARENT_CODES = #{parentCodes,jdbcType=VARCHAR},
+      PARENT_NAME = #{parentName,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      LEVEL_CODE = #{levelCode,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=INTEGER},
+      CHECK = #{check,jdbcType=VARCHAR},
+      MANAGEMENT = #{management,jdbcType=VARCHAR},
+      DOCTOR_ADVICE = #{doctorAdvice,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR},
+      REMARK3 = #{remark3,jdbcType=VARCHAR},
+      REMARK4 = #{remark4,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findOrthodonticsTemplates" parameterType="com.ye.business.hx.dto.FindOrthodonticsTemplatePage" resultMap="findResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from orthodontics_template
+  </select>
+</mapper>

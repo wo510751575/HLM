@@ -294,7 +294,9 @@
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
   
-  <select id="findGumChecks" parameterType="com.ye.business.hx.dto.FindGumCheckPage" resultType="com.ye.business.hx.dto.GumCheckDto">
+  <resultMap type="com.ye.business.hx.dto.GumCheckDto" id="findResultMap" extends="BaseResultMap"></resultMap>
+  
+  <select id="findGumChecks" parameterType="com.ye.business.hx.dto.FindGumCheckPage" resultMap="findResultMap">
   	select <include refid="Base_Column_List"/>
   	from gum_ckeck
   	<include refid="findPage_condition"/>

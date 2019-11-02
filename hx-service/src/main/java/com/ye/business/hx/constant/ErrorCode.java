@@ -453,4 +453,69 @@ public class ErrorCode {
 	public static final String PATIENT_SYMPTOM_FIND_PAGE_ERROR = "patient_symptom_find_page_error";
 	/** 症状信息不存在错误. */
 	public static final String PATIENT_SYMPTOM_NOT_EXIST_ERROR = "patient_symptom_not_exist_error";
+	
+	/** 新增牙型/牙骨信息错误. */
+	public static final String DIAGNOSIS_ADD_ERROR = "diagnosis_add_error";
+	/** 牙型/牙骨信息更新错误. */
+	public static final String DIAGNOSIS_UPDATE_ERROR = "diagnosis_update_error";
+	/** 查找牙型/牙骨信息错误. */
+	public static final String DIAGNOSIS_FIND_ERROR = "diagnosis_find_error";
+	/** 牙型/牙骨信息分页查询错误. */
+	public static final String DIAGNOSIS_FIND_PAGE_ERROR = "diagnosis_find_page_error";
+	/** 牙型/牙骨信息不存在错误. */
+	public static final String DIAGNOSIS_NOT_EXIST_ERROR = "diagnosis_not_exist_error";
+	/** 删除牙型/牙骨信息错误. */
+	public static final String DIAGNOSIS_DELETE_ERROR = "diagnosis_delete_error";
+	
+	/** 新增知情同意书信息错误. */
+	public static final String INFORMED_CONSENT_ADD_ERROR = "informed_consent_add_error";
+	/** 知情同意书信息更新错误. */
+	public static final String INFORMED_CONSENT_UPDATE_ERROR = "informed_consent_update_error";
+	/** 查找知情同意书信息错误. */
+	public static final String INFORMED_CONSENT_FIND_ERROR = "informed_consent_find_error";
+	/** 知情同意书信息分页查询错误. */
+	public static final String INFORMED_CONSENT_FIND_PAGE_ERROR = "informed_consent_find_page_error";
+	/** 知情同意书信息不存在错误. */
+	public static final String INFORMED_CONSENT_NOT_EXIST_ERROR = "informed_consent_not_exist_error";
+	/** 删除知情同意书错误. */
+	public static final String INFORMED_CONSENT_DELETE_ERROR = "informed_consent_delete_error";
+	
+	/** 新增正畸计划配置信息错误. */
+	public static final String ORTHODONTICS_PLAN_ADD_ERROR = "orthodontics_plan_add_error";
+	/** 正畸计划配置信息更新错误. */
+	public static final String ORTHODONTICS_PLAN_UPDATE_ERROR = "orthodontics_plan_update_error";
+	/** 查找正畸计划配置信息错误. */
+	public static final String ORTHODONTICS_PLAN_FIND_ERROR = "orthodontics_plan_find_error";
+	/** 正畸计划配置信息分页查询错误. */
+	public static final String ORTHODONTICS_PLAN_FIND_PAGE_ERROR = "orthodontics_plan_find_page_error";
+	/** 正畸计划配置信息不存在错误. */
+	public static final String ORTHODONTICS_PLAN_NOT_EXIST_ERROR = "orthodontics_plan_not_exist_error";
+	/** 删除正畸计划配置信息错误. */
+	public static final String ORTHODONTICS_PLAN_DELETE_ERROR = "orthodontics_plan_delete_error";
+	
+	/** 新增治疗方案信息错误. */
+	public static final String TREATMENT_PLAN_ADD_ERROR = "treatment_plan_add_error";
+	/** 治疗方案信息更新错误. */
+	public static final String TREATMENT_PLAN_UPDATE_ERROR = "treatment_plan_update_error";
+	/** 查找治疗方案信息错误. */
+	public static final String TREATMENT_PLAN_FIND_ERROR = "treatment_plan_find_error";
+	/** 治疗方案信息分页查询错误. */
+	public static final String TREATMENT_PLAN_FIND_PAGE_ERROR = "treatment_plan_find_page_error";
+	/** 治疗方案信息不存在错误. */
+	public static final String TREATMENT_PLAN_NOT_EXIST_ERROR = "treatment_plan_not_exist_error";
+	/** 删除治疗方案信息错误. */
+	public static final String TREATMENT_PLAN_DELETE_ERROR = "treatment_plan_delete_error";
+	
+	/** 新增正畸过程模板信息错误. */
+	public static final String ORTHODONTICS_TEMPLATE_ADD_ERROR = "orthodontics_template_add_error";
+	/** 正畸过程模板信息更新错误. */
+	public static final String ORTHODONTICS_TEMPLATE_UPDATE_ERROR = "orthodontics_template_update_error";
+	/** 查找正畸过程模板信息错误. */
+	public static final String ORTHODONTICS_TEMPLATE_FIND_ERROR = "orthodontics_template_find_error";
+	/** 正畸过程模板信息分页查询错误. */
+	public static final String ORTHODONTICS_TEMPLATE_FIND_PAGE_ERROR = "orthodontics_template_find_page_error";
+	/** 正畸过程模板信息不存在错误. */
+	public static final String ORTHODONTICS_TEMPLATE_NOT_EXIST_ERROR = "orthodontics_template_not_exist_error";
+	/** 删除正畸过程模板信息错误. */
+	public static final String ORTHODONTICS_TEMPLATE_DELETE_ERROR = "orthodontics_template_delete_error";
 }

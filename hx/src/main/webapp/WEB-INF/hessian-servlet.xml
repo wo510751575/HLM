@@ -322,4 +322,44 @@
 			value="com.ye.business.hx.service.IPatientSymptomService" />
 	</bean>
 	
+	<!-- 牙型/牙骨 -->
+	<bean name="/diagnosisService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="diagnosisServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IDiagnosisService" />
+	</bean>
+	
+	<!-- 知情同意书 -->
+	<bean name="/informedConsentService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="informedConsentServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IInformedConsentService" />
+	</bean>
+	
+	<!-- 正畸计划配置 -->
+	<bean name="/orthodonticsPlanService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="orthodonticsPlanServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IOrthodonticsPlanService" />
+	</bean>
+	
+	<!-- 治疗方案 -->
+	<bean name="/treatmentPlanService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="treatmentPlanServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.ITreatmentPlanService" />
+	</bean>
+	
+	<!-- 正畸过程模板 -->
+	<bean name="/orthodonticsTemplateService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="orthodonticsTemplateServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IOrthodonticsTemplateService" />
+	</bean>
+	
 </beans>
