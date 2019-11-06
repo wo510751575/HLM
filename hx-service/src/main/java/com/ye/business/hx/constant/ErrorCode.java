@@ -429,6 +429,8 @@ public class ErrorCode {
 	public static final String GUM_CHECK_FIND_PAGE_ERROR = "gum_check_find_page_error";
 	/** 牙周检查信息不存在错误. */
 	public static final String GUM_CHECK_NOT_EXIST_ERROR = "gum_check_not_exist_error";
+	/** 查询时间列表信息错误. */
+	public static final String GUM_CHECK_TIME_LIST_ERROR = "gum_check_time_list_error";
 	
 	/** 新增牙齿检查信息错误. */
 	public static final String TOOTH_CHECK_ADD_ERROR = "tooth_check_add_error";
@@ -442,6 +444,8 @@ public class ErrorCode {
 	public static final String TOOTH_CHECK_NOT_EXIST_ERROR = "tooth_check_not_exist_error";
 	/** 删除牙齿检查信息错误. */
 	public static final String TOOTH_CHECK_DELETE_ERROR = "tooth_check_delete_error";
+	/** 查询时间列表信息错误. */
+	public static final String TOOTH_CHECK_TIME_LIST_ERROR = "tooth_check_time_list_error";
 	
 	/** 新增症状信息错误. */
 	public static final String PATIENT_SYMPTOM_ADD_ERROR = "patient_symptom_add_error";
@@ -518,4 +522,48 @@ public class ErrorCode {
 	public static final String ORTHODONTICS_TEMPLATE_NOT_EXIST_ERROR = "orthodontics_template_not_exist_error";
 	/** 删除正畸过程模板信息错误. */
 	public static final String ORTHODONTICS_TEMPLATE_DELETE_ERROR = "orthodontics_template_delete_error";
+	
+	/** 新增牙列检查信息错误. */
+	public static final String DENTITION_CHECK_ADD_ERROR = "dentition_check_add_error";
+	/** 牙列检查信息更新错误. */
+	public static final String DENTITION_CHECK_UPDATE_ERROR = "dentition_check_update_error";
+	/** 查找牙列检查信息错误. */
+	public static final String DENTITION_CHECK_FIND_ERROR = "dentition_check_find_error";
+	/** 牙列检查信息分页查询错误. */
+	public static final String DENTITION_CHECK_FIND_PAGE_ERROR = "dentition_check_find_page_error";
+	/** 牙列检查信息不存在错误. */
+	public static final String DENTITION_CHECK_NOT_EXIST_ERROR = "dentition_check_not_exist_error";
+	
+	/** 新增面部检查信息错误. */
+	public static final String FACE_CHECK_ADD_ERROR = "face_check_add_error";
+	/** 面部检查信息更新错误. */
+	public static final String FACE_CHECK_UPDATE_ERROR = "face_check_update_error";
+	/** 查找面部检查信息错误. */
+	public static final String FACE_CHECK_FIND_ERROR = "face_check_find_error";
+	/** 面部检查信息分页查询错误. */
+	public static final String FACE_CHECK_FIND_PAGE_ERROR = "face_check_find_page_error";
+	/** 面部检查信息不存在错误. */
+	public static final String FACE_CHECK_NOT_EXIST_ERROR = "face_check_not_exist_error";
+	
+	/** 新增一般检查信息错误. */
+	public static final String GENERAL_CHECK_ADD_ERROR = "general_check_add_error";
+	/** 一般检查信息更新错误. */
+	public static final String GENERAL_CHECK_UPDATE_ERROR = "general_check_update_error";
+	/** 查找一般检查信息错误. */
+	public static final String GENERAL_CHECK_FIND_ERROR = "general_check_find_error";
+	/** 一般检查信息分页查询错误. */
+	public static final String GENERAL_CHECK_FIND_PAGE_ERROR = "general_check_find_page_error";
+	/** 一般检查信息不存在错误. */
+	public static final String GENERAL_CHECK_NOT_EXIST_ERROR = "general_check_not_exist_error";
+	
+	/** 新增软组织检查信息错误. */
+	public static final String SOFT_CHECK_ADD_ERROR = "soft_check_add_error";
+	/** 软组织检查信息更新错误. */
+	public static final String SOFT_CHECK_UPDATE_ERROR = "soft_check_update_error";
+	/** 查找软组织检查信息错误. */
+	public static final String SOFT_CHECK_FIND_ERROR = "soft_check_find_error";
+	/** 软组织检查信息分页查询错误. */
+	public static final String SOFT_CHECK_FIND_PAGE_ERROR = "soft_check_find_page_error";
+	/** 软组织检查信息不存在错误. */
+	public static final String SOFT_CHECK_NOT_EXIST_ERROR = "soft_check_not_exist_error";
 }

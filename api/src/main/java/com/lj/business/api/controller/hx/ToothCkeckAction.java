@@ -11,7 +11,11 @@
  */
 package com.lj.business.api.controller.hx;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -25,6 +29,7 @@ import com.lj.base.core.util.GUID;
 import com.lj.business.api.controller.Action;
 import com.lj.business.api.domain.GeneralResponse;
 import com.ye.business.hx.dto.FindToothCheckPage;
+import com.ye.business.hx.dto.GumCheckDto;
 import com.ye.business.hx.dto.ToothCheckDto;
 import com.ye.business.hx.service.IToothCheckService;
 
@@ -78,4 +83,22 @@ public class ToothCkeckAction extends Action {
 		Page<ToothCheckDto> page = toothCheckService.findToothCheckPage(findToothCheckPage);
 		return GeneralResponse.generateSuccessResponse(page);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/timeList.do",produces="application/json;charset=UTF-8")
+	public GeneralResponse timeList(FindToothCheckPage findToothCheckPage,ToothCheckDto param) {
+		AssertUtils.notNullAndEmpty(param);
+		findToothCheckPage.setParam(param);
+		List<Date> list = toothCheckService.findTimeList(findToothCheckPage);
+		List<ToothCheckDto> listDate = new ArrayList<>(); 
+		if(list!=null) {
+			for (Date date : list) {
+				ToothCheckDto toothCheckDto = new ToothCheckDto();
+				toothCheckDto.setCreateDate(date);
+				listDate.add(toothCheckDto);
+			}
+		}
+		return GeneralResponse.generateSuccessResponse(listDate);
+	}
+	
 }

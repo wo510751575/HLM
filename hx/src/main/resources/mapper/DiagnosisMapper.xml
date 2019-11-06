@@ -5,7 +5,7 @@
     <id column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="TYPE" property="type" jdbcType="INTEGER" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
     <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
@@ -32,7 +32,7 @@
       CREATE_DATE, REMARK, REMARK2, 
       REMARK3, REMARK4)
     values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{createDate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
       #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ye.business.hx.domain.Diagnosis" >
@@ -74,7 +74,7 @@
         #{type,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -100,7 +100,7 @@
         TYPE = #{type,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
@@ -121,7 +121,7 @@
     update diagnosis
     set NAME = #{name,jdbcType=VARCHAR},
       TYPE = #{type,jdbcType=INTEGER},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       REMARK = #{remark,jdbcType=VARCHAR},
       REMARK2 = #{remark2,jdbcType=VARCHAR},
       REMARK3 = #{remark3,jdbcType=VARCHAR},

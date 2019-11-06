@@ -5,16 +5,16 @@
     <id column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="PATIENT_CODE" property="patientCode" jdbcType="VARCHAR" />
     <result column="IMG_URL" property="imgUrl" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
     <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
     <result column="REMARK4" property="remark4" jdbcType="VARCHAR" />
-    <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="UPDATE_ID" property="updateId" jdbcType="VARCHAR" />
     <result column="IMG_TYPE_CODE" property="imgTypeCode" jdbcType="VARCHAR" />
-    <result column="RESERVATION_DATE" property="reservationDate" jdbcType="DATE" />
+    <result column="RESERVATION_DATE" property="reservationDate" jdbcType="TIMESTAMP" />
     <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -60,10 +60,10 @@
       UPDATE_DATE, UPDATE_ID, IMG_TYPE_CODE, 
       RESERVATION_DATE, IS_DELETE)
     values (#{code,jdbcType=VARCHAR}, #{patientCode,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=DATE}, #{createId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
-      #{updateDate,jdbcType=DATE}, #{updateId,jdbcType=VARCHAR}, #{imgTypeCode,jdbcType=VARCHAR}, 
-      #{reservationDate,jdbcType=DATE}, #{isDelete,jdbcType=VARCHAR})
+      #{updateDate,jdbcType=TIMESTAMP}, #{updateId,jdbcType=VARCHAR}, #{imgTypeCode,jdbcType=VARCHAR}, 
+      #{reservationDate,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientImg" >
     insert into patient_img
@@ -122,7 +122,7 @@
         #{imgUrl,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createId != null" >
         #{createId,jdbcType=VARCHAR},
@@ -140,7 +140,7 @@
         #{remark4,jdbcType=VARCHAR},
       </if>
       <if test="updateDate != null" >
-        #{updateDate,jdbcType=DATE},
+        #{updateDate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateId != null" >
         #{updateId,jdbcType=VARCHAR},
@@ -149,7 +149,7 @@
         #{imgTypeCode,jdbcType=VARCHAR},
       </if>
       <if test="reservationDate != null" >
-        #{reservationDate,jdbcType=DATE},
+        #{reservationDate,jdbcType=TIMESTAMP},
       </if>
       <if test="isDelete != null" >
         #{isDelete,jdbcType=VARCHAR},
@@ -166,7 +166,7 @@
         IMG_URL = #{imgUrl,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createId != null" >
         CREATE_ID = #{createId,jdbcType=VARCHAR},
@@ -184,7 +184,7 @@
         REMARK4 = #{remark4,jdbcType=VARCHAR},
       </if>
       <if test="updateDate != null" >
-        UPDATE_DATE = #{updateDate,jdbcType=DATE},
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateId != null" >
         UPDATE_ID = #{updateId,jdbcType=VARCHAR},
@@ -193,7 +193,7 @@
         IMG_TYPE_CODE = #{imgTypeCode,jdbcType=VARCHAR},
       </if>
       <if test="reservationDate != null" >
-        RESERVATION_DATE = #{reservationDate,jdbcType=DATE},
+        RESERVATION_DATE = #{reservationDate,jdbcType=TIMESTAMP},
       </if>
       <if test="isDelete != null" >
         IS_DELETE = #{isDelete,jdbcType=VARCHAR},
@@ -205,16 +205,16 @@
     update patient_img
     set PATIENT_CODE = #{patientCode,jdbcType=VARCHAR},
       IMG_URL = #{imgUrl,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       CREATE_ID = #{createId,jdbcType=VARCHAR},
       REMARK = #{remark,jdbcType=VARCHAR},
       REMARK2 = #{remark2,jdbcType=VARCHAR},
       REMARK3 = #{remark3,jdbcType=VARCHAR},
       REMARK4 = #{remark4,jdbcType=VARCHAR},
-      UPDATE_DATE = #{updateDate,jdbcType=DATE},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
       UPDATE_ID = #{updateId,jdbcType=VARCHAR},
       IMG_TYPE_CODE = #{imgTypeCode,jdbcType=VARCHAR},
-      RESERVATION_DATE = #{reservationDate,jdbcType=DATE},
+      RESERVATION_DATE = #{reservationDate,jdbcType=TIMESTAMP},
       IS_DELETE = #{isDelete,jdbcType=VARCHAR}
     where CODE = #{code,jdbcType=VARCHAR}
   </update>

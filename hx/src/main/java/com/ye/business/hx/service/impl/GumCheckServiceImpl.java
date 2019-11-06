@@ -1,5 +1,6 @@
 package com.ye.business.hx.service.impl;
 
+import java.util.Date;
 /**
  * Copyright &copy; 2018-2021  All rights reserved.
  *
@@ -229,6 +230,20 @@ public class GumCheckServiceImpl implements IGumCheckService {
 
 		logger.debug("findGumCheckPage(FindGumCheckPage) - end - return value={}", returnPage); 
 		return  returnPage;
+	}
+
+
+	
+	@Override
+	public List<Date> findTimeList(FindGumCheckPage findGumCheckPage) throws TsfaServiceException {
+		logger.debug("findTimeList(FindGumCheckPage findGumCheckPage = {})-start",findGumCheckPage);
+		try {
+			List<Date> list = gumCheckDao.findTimeList(findGumCheckPage);
+			return list;
+		} catch (Exception e) {
+			logger.error("查询时间列表信息错误!");
+			throw new TsfaServiceException(ErrorCode.GUM_CHECK_TIME_LIST_ERROR,"查询时间列表信息错误.！",e);
+		}
 	} 
 
 

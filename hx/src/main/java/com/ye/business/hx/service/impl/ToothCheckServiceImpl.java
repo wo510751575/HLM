@@ -232,6 +232,20 @@ public class ToothCheckServiceImpl implements IToothCheckService {
 			throw new TsfaServiceException(ErrorCode.TOOTH_CHECK_DELETE_ERROR,"删除牙齿检查信息错误!",e);
 		}
 		
+	}
+
+
+	
+	@Override
+	public List<Date> findTimeList(FindToothCheckPage findToothCheckPage) throws TsfaServiceException {
+		logger.debug("findTimeList(FindToothCheckPage findToothCheckPage = {})-start",findToothCheckPage);
+		try {
+			List<Date> list = toothCheckDao.findTimeList(findToothCheckPage);
+			return list;
+		} catch (Exception e) {
+			logger.error("查询时间列表信息错误!",e);
+			throw new TsfaServiceException(ErrorCode.TOOTH_CHECK_TIME_LIST_ERROR,"查询时间列表信息错误!",e);
+		}
 	} 
 
 

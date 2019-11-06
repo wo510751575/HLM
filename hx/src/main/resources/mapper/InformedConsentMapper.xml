@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.InformedConsent" >
     <id column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="TITLE" property="title" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
     <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
@@ -38,7 +38,7 @@
     insert into informed_consent (CODE, TITLE, CREATE_DATE, 
       REMARK, REMARK2, REMARK3, 
       REMARK4, CONTENT)
-    values (#{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+    values (#{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
       #{remark4,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
@@ -78,7 +78,7 @@
         #{title,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -104,7 +104,7 @@
         TITLE = #{title,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
@@ -127,7 +127,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ye.business.hx.domain.InformedConsent" >
     update informed_consent
     set TITLE = #{title,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       REMARK = #{remark,jdbcType=VARCHAR},
       REMARK2 = #{remark2,jdbcType=VARCHAR},
       REMARK3 = #{remark3,jdbcType=VARCHAR},
@@ -138,7 +138,7 @@
   <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.InformedConsent" >
     update informed_consent
     set TITLE = #{title,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       REMARK = #{remark,jdbcType=VARCHAR},
       REMARK2 = #{remark2,jdbcType=VARCHAR},
       REMARK3 = #{remark3,jdbcType=VARCHAR},

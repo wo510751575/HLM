@@ -1,5 +1,6 @@
 package com.ye.business.hx.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ye.business.hx.domain.GumCheck;
@@ -48,4 +49,14 @@ public interface IGumCheckDao {
 	 * @throws   
 	 */
 	int findGumCheckPageCount(FindGumCheckPage findGumCheckPage);
+
+	/**   
+	 * @Title: findTimeList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param findGumCheckPage
+	 * @param: @return      
+	 * @return: List<Date>      
+	 * @throws   
+	 */
+	List<Date> findTimeList(FindGumCheckPage findGumCheckPage);
 }

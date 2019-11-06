@@ -5,7 +5,7 @@
     <id column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="LEVEL" property="level" jdbcType="INTEGER" />
   </resultMap>
@@ -14,7 +14,7 @@
     <id column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="LEVEL" property="level" jdbcType="INTEGER" />
   </resultMap>
@@ -58,7 +58,7 @@
       CREATE_DATE, REMARK, LEVEL
       )
     values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}
+      #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientSymptom" >
@@ -94,7 +94,7 @@
         #{parentCode,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -114,7 +114,7 @@
         PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
@@ -129,7 +129,7 @@
     update patient_symptom
     set NAME = #{name,jdbcType=VARCHAR},
       PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       REMARK = #{remark,jdbcType=VARCHAR},
       LEVEL = #{level,jdbcType=INTEGER}
     where CODE = #{code,jdbcType=VARCHAR}

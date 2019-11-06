@@ -13,6 +13,7 @@ import com.ye.business.hx.dto.FindToothCheckPage;
 import com.lj.base.core.pagination.Page;
 import com.lj.base.exception.TsfaServiceException;
 
+import java.util.Date;
 import java.util.List;
 /**
  * 类说明：接口类
@@ -107,6 +108,16 @@ public interface IToothCheckService {
 	 * @throws   
 	 */
 	public void delete(ToothCheckDto toothCheckDto)throws TsfaServiceException;
+
+	/**   
+	 * @Title: findTimeList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param findToothCheckPage
+	 * @param: @return      
+	 * @return: List<Date>      
+	 * @throws   
+	 */
+	public List<Date> findTimeList(FindToothCheckPage findToothCheckPage)throws TsfaServiceException;
 	
 
 }

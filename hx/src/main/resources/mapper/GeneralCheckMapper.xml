@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IGeneralCheckDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.GeneralCheck" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="CHIEF_COMPLAINT" property="chiefComplaint" jdbcType="VARCHAR" />
+    <result column="BAD_HABITS" property="badHabits" jdbcType="VARCHAR" />
+    <result column="ORAL_HYGIENE" property="oralHygiene" jdbcType="VARCHAR" />
+    <result column="CERVICAL_VERTEBRA" property="cervicalVertebra" jdbcType="VARCHAR" />
+    <result column="WRIST_BONE" property="wristBone" jdbcType="VARCHAR" />
+    <result column="MENSTRUATION" property="menstruation" jdbcType="VARCHAR" />
+    <result column="MENARCHE" property="menarche" jdbcType="VARCHAR" />
+    <result column="CORRECTIVE_HISTORY" property="correctiveHistory" jdbcType="VARCHAR" />
+    <result column="ATTENDING_DOCTOR" property="attendingDoctor" jdbcType="VARCHAR" />
+    <result column="TOOTH_EXTRACTION" property="toothExtraction" jdbcType="VARCHAR" />
+    <result column="DENTAL_CARIES" property="dentalCaries" jdbcType="VARCHAR" />
+    <result column="EARLY_LOSS" property="earlyLoss" jdbcType="VARCHAR" />
+    <result column="MALOCCLUSION" property="malocclusion" jdbcType="VARCHAR" />
+    <result column="DENTAL_CARIES_REPLACE" property="dentalCariesReplace" jdbcType="VARCHAR" />
+    <result column="EARLY_LOSS_REPLACE" property="earlyLossReplace" jdbcType="VARCHAR" />
+    <result column="MALOCCLUSION_REPLACE" property="malocclusionReplace" jdbcType="VARCHAR" />
+    <result column="CLEFT_LIP" property="cleftLip" jdbcType="VARCHAR" />
+    <result column="CLEFT_PALATE" property="cleftPalate" jdbcType="VARCHAR" />
+    <result column="OTHERS" property="others" jdbcType="VARCHAR" />
+    <result column="PATIENT_NO" property="patientNo" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, CHIEF_COMPLAINT, BAD_HABITS, ORAL_HYGIENE, CERVICAL_VERTEBRA, WRIST_BONE, MENSTRUATION, 
+    MENARCHE, CORRECTIVE_HISTORY, ATTENDING_DOCTOR, TOOTH_EXTRACTION, DENTAL_CARIES, 
+    EARLY_LOSS, MALOCCLUSION, DENTAL_CARIES_REPLACE, EARLY_LOSS_REPLACE, MALOCCLUSION_REPLACE, 
+    CLEFT_LIP, CLEFT_PALATE, OTHERS, PATIENT_NO, REMARK, CREATE_DATE, CREATE_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from general_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from general_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.GeneralCheck" >
+    insert into general_check (CODE, CHIEF_COMPLAINT, BAD_HABITS, 
+      ORAL_HYGIENE, CERVICAL_VERTEBRA, WRIST_BONE, 
+      MENSTRUATION, MENARCHE, CORRECTIVE_HISTORY, 
+      ATTENDING_DOCTOR, TOOTH_EXTRACTION, DENTAL_CARIES, 
+      EARLY_LOSS, MALOCCLUSION, DENTAL_CARIES_REPLACE, 
+      EARLY_LOSS_REPLACE, MALOCCLUSION_REPLACE, 
+      CLEFT_LIP, CLEFT_PALATE, OTHERS, 
+      PATIENT_NO, REMARK, CREATE_DATE, 
+      CREATE_ID)
+    values (#{code,jdbcType=VARCHAR}, #{chiefComplaint,jdbcType=VARCHAR}, #{badHabits,jdbcType=VARCHAR}, 
+      #{oralHygiene,jdbcType=VARCHAR}, #{cervicalVertebra,jdbcType=VARCHAR}, #{wristBone,jdbcType=VARCHAR}, 
+      #{menstruation,jdbcType=VARCHAR}, #{menarche,jdbcType=VARCHAR}, #{correctiveHistory,jdbcType=VARCHAR}, 
+      #{attendingDoctor,jdbcType=VARCHAR}, #{toothExtraction,jdbcType=VARCHAR}, #{dentalCaries,jdbcType=VARCHAR}, 
+      #{earlyLoss,jdbcType=VARCHAR}, #{malocclusion,jdbcType=VARCHAR}, #{dentalCariesReplace,jdbcType=VARCHAR}, 
+      #{earlyLossReplace,jdbcType=VARCHAR}, #{malocclusionReplace,jdbcType=VARCHAR}, 
+      #{cleftLip,jdbcType=VARCHAR}, #{cleftPalate,jdbcType=VARCHAR}, #{others,jdbcType=VARCHAR}, 
+      #{patientNo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.GeneralCheck" >
+    insert into general_check
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="chiefComplaint != null" >
+        CHIEF_COMPLAINT,
+      </if>
+      <if test="badHabits != null" >
+        BAD_HABITS,
+      </if>
+      <if test="oralHygiene != null" >
+        ORAL_HYGIENE,
+      </if>
+      <if test="cervicalVertebra != null" >
+        CERVICAL_VERTEBRA,
+      </if>
+      <if test="wristBone != null" >
+        WRIST_BONE,
+      </if>
+      <if test="menstruation != null" >
+        MENSTRUATION,
+      </if>
+      <if test="menarche != null" >
+        MENARCHE,
+      </if>
+      <if test="correctiveHistory != null" >
+        CORRECTIVE_HISTORY,
+      </if>
+      <if test="attendingDoctor != null" >
+        ATTENDING_DOCTOR,
+      </if>
+      <if test="toothExtraction != null" >
+        TOOTH_EXTRACTION,
+      </if>
+      <if test="dentalCaries != null" >
+        DENTAL_CARIES,
+      </if>
+      <if test="earlyLoss != null" >
+        EARLY_LOSS,
+      </if>
+      <if test="malocclusion != null" >
+        MALOCCLUSION,
+      </if>
+      <if test="dentalCariesReplace != null" >
+        DENTAL_CARIES_REPLACE,
+      </if>
+      <if test="earlyLossReplace != null" >
+        EARLY_LOSS_REPLACE,
+      </if>
+      <if test="malocclusionReplace != null" >
+        MALOCCLUSION_REPLACE,
+      </if>
+      <if test="cleftLip != null" >
+        CLEFT_LIP,
+      </if>
+      <if test="cleftPalate != null" >
+        CLEFT_PALATE,
+      </if>
+      <if test="others != null" >
+        OTHERS,
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefComplaint != null" >
+        #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="badHabits != null" >
+        #{badHabits,jdbcType=VARCHAR},
+      </if>
+      <if test="oralHygiene != null" >
+        #{oralHygiene,jdbcType=VARCHAR},
+      </if>
+      <if test="cervicalVertebra != null" >
+        #{cervicalVertebra,jdbcType=VARCHAR},
+      </if>
+      <if test="wristBone != null" >
+        #{wristBone,jdbcType=VARCHAR},
+      </if>
+      <if test="menstruation != null" >
+        #{menstruation,jdbcType=VARCHAR},
+      </if>
+      <if test="menarche != null" >
+        #{menarche,jdbcType=VARCHAR},
+      </if>
+      <if test="correctiveHistory != null" >
+        #{correctiveHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="attendingDoctor != null" >
+        #{attendingDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="toothExtraction != null" >
+        #{toothExtraction,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalCaries != null" >
+        #{dentalCaries,jdbcType=VARCHAR},
+      </if>
+      <if test="earlyLoss != null" >
+        #{earlyLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="malocclusion != null" >
+        #{malocclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalCariesReplace != null" >
+        #{dentalCariesReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="earlyLossReplace != null" >
+        #{earlyLossReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="malocclusionReplace != null" >
+        #{malocclusionReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="cleftLip != null" >
+        #{cleftLip,jdbcType=VARCHAR},
+      </if>
+      <if test="cleftPalate != null" >
+        #{cleftPalate,jdbcType=VARCHAR},
+      </if>
+      <if test="others != null" >
+        #{others,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.GeneralCheck" >
+    update general_check
+    <set >
+      <if test="chiefComplaint != null" >
+        CHIEF_COMPLAINT = #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="badHabits != null" >
+        BAD_HABITS = #{badHabits,jdbcType=VARCHAR},
+      </if>
+      <if test="oralHygiene != null" >
+        ORAL_HYGIENE = #{oralHygiene,jdbcType=VARCHAR},
+      </if>
+      <if test="cervicalVertebra != null" >
+        CERVICAL_VERTEBRA = #{cervicalVertebra,jdbcType=VARCHAR},
+      </if>
+      <if test="wristBone != null" >
+        WRIST_BONE = #{wristBone,jdbcType=VARCHAR},
+      </if>
+      <if test="menstruation != null" >
+        MENSTRUATION = #{menstruation,jdbcType=VARCHAR},
+      </if>
+      <if test="menarche != null" >
+        MENARCHE = #{menarche,jdbcType=VARCHAR},
+      </if>
+      <if test="correctiveHistory != null" >
+        CORRECTIVE_HISTORY = #{correctiveHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="attendingDoctor != null" >
+        ATTENDING_DOCTOR = #{attendingDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="toothExtraction != null" >
+        TOOTH_EXTRACTION = #{toothExtraction,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalCaries != null" >
+        DENTAL_CARIES = #{dentalCaries,jdbcType=VARCHAR},
+      </if>
+      <if test="earlyLoss != null" >
+        EARLY_LOSS = #{earlyLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="malocclusion != null" >
+        MALOCCLUSION = #{malocclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalCariesReplace != null" >
+        DENTAL_CARIES_REPLACE = #{dentalCariesReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="earlyLossReplace != null" >
+        EARLY_LOSS_REPLACE = #{earlyLossReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="malocclusionReplace != null" >
+        MALOCCLUSION_REPLACE = #{malocclusionReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="cleftLip != null" >
+        CLEFT_LIP = #{cleftLip,jdbcType=VARCHAR},
+      </if>
+      <if test="cleftPalate != null" >
+        CLEFT_PALATE = #{cleftPalate,jdbcType=VARCHAR},
+      </if>
+      <if test="others != null" >
+        OTHERS = #{others,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.GeneralCheck" >
+    update general_check
+    set CHIEF_COMPLAINT = #{chiefComplaint,jdbcType=VARCHAR},
+      BAD_HABITS = #{badHabits,jdbcType=VARCHAR},
+      ORAL_HYGIENE = #{oralHygiene,jdbcType=VARCHAR},
+      CERVICAL_VERTEBRA = #{cervicalVertebra,jdbcType=VARCHAR},
+      WRIST_BONE = #{wristBone,jdbcType=VARCHAR},
+      MENSTRUATION = #{menstruation,jdbcType=VARCHAR},
+      MENARCHE = #{menarche,jdbcType=VARCHAR},
+      CORRECTIVE_HISTORY = #{correctiveHistory,jdbcType=VARCHAR},
+      ATTENDING_DOCTOR = #{attendingDoctor,jdbcType=VARCHAR},
+      TOOTH_EXTRACTION = #{toothExtraction,jdbcType=VARCHAR},
+      DENTAL_CARIES = #{dentalCaries,jdbcType=VARCHAR},
+      EARLY_LOSS = #{earlyLoss,jdbcType=VARCHAR},
+      MALOCCLUSION = #{malocclusion,jdbcType=VARCHAR},
+      DENTAL_CARIES_REPLACE = #{dentalCariesReplace,jdbcType=VARCHAR},
+      EARLY_LOSS_REPLACE = #{earlyLossReplace,jdbcType=VARCHAR},
+      MALOCCLUSION_REPLACE = #{malocclusionReplace,jdbcType=VARCHAR},
+      CLEFT_LIP = #{cleftLip,jdbcType=VARCHAR},
+      CLEFT_PALATE = #{cleftPalate,jdbcType=VARCHAR},
+      OTHERS = #{others,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

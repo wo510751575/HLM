@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IDentitionCheckDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.DentitionCheck" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="FRONT" property="front" jdbcType="VARCHAR" />
+    <result column="FRONT_URL" property="frontUrl" jdbcType="VARCHAR" />
+    <result column="UP" property="up" jdbcType="VARCHAR" />
+    <result column="UP_URL" property="upUrl" jdbcType="VARCHAR" />
+    <result column="DOWN" property="down" jdbcType="VARCHAR" />
+    <result column="DOWN_URL" property="downUrl" jdbcType="VARCHAR" />
+    <result column="LEFT" property="left" jdbcType="VARCHAR" />
+    <result column="LEFT_URL" property="leftUrl" jdbcType="VARCHAR" />
+    <result column="RIGHT" property="right" jdbcType="VARCHAR" />
+    <result column="RIGHT_URL" property="rightUrl" jdbcType="VARCHAR" />
+    <result column="FRONT_TEETH" property="frontTeeth" jdbcType="VARCHAR" />
+    <result column="FRONT_TEETH_URL" property="frontTeethUrl" jdbcType="VARCHAR" />
+    <result column="OTHER_CODE" property="otherCode" jdbcType="VARCHAR" />
+    <result column="OTHER_URL" property="otherUrl" jdbcType="VARCHAR" />
+    <result column="UP_TEETH" property="upTeeth" jdbcType="VARCHAR" />
+    <result column="DOWN_TEETH" property="downTeeth" jdbcType="VARCHAR" />
+    <result column="MORE_TEETH" property="moreTeeth" jdbcType="VARCHAR" />
+    <result column="LOSS" property="loss" jdbcType="VARCHAR" />
+    <result column="DISLOCATION" property="dislocation" jdbcType="VARCHAR" />
+    <result column="ANTERIOR_RATIO" property="anteriorRatio" jdbcType="VARCHAR" />
+    <result column="OVERALL_RATIO" property="overallRatio" jdbcType="VARCHAR" />
+    <result column="LEFT_MOLAR" property="leftMolar" jdbcType="VARCHAR" />
+    <result column="RIGHT_MOLAR" property="rightMolar" jdbcType="VARCHAR" />
+    <result column="LEFT_FANGS" property="leftFangs" jdbcType="VARCHAR" />
+    <result column="RIGHT_FANGS" property="rightFangs" jdbcType="VARCHAR" />
+    <result column="ANTERIOR_TEETH" property="anteriorTeeth" jdbcType="VARCHAR" />
+    <result column="ARCH_FORM" property="archForm" jdbcType="VARCHAR" />
+    <result column="POSTERIOR_TEETH" property="posteriorTeeth" jdbcType="VARCHAR" />
+    <result column="CANINE_TEETH" property="canineTeeth" jdbcType="VARCHAR" />
+    <result column="MAXILLARY_OVERBITE" property="maxillaryOverbite" jdbcType="VARCHAR" />
+    <result column="MAXILLARY" property="maxillary" jdbcType="VARCHAR" />
+    <result column="MANDIBLE" property="mandible" jdbcType="VARCHAR" />
+    <result column="OTHER" property="other" jdbcType="VARCHAR" />
+    <result column="PATIENT_NO" property="patientNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, FRONT, FRONT_URL, UP, UP_URL, DOWN, DOWN_URL, LEFT, LEFT_URL, RIGHT, RIGHT_URL, 
+    FRONT_TEETH, FRONT_TEETH_URL, OTHER_CODE, OTHER_URL, UP_TEETH, DOWN_TEETH, MORE_TEETH, 
+    LOSS, DISLOCATION, ANTERIOR_RATIO, OVERALL_RATIO, LEFT_MOLAR, RIGHT_MOLAR, LEFT_FANGS, 
+    RIGHT_FANGS, ANTERIOR_TEETH, ARCH_FORM, POSTERIOR_TEETH, CANINE_TEETH, MAXILLARY_OVERBITE, 
+    MAXILLARY, MANDIBLE, OTHER, PATIENT_NO, CREATE_DATE, CREATE_ID, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dentition_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dentition_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.DentitionCheck" >
+    insert into dentition_check (CODE, FRONT, FRONT_URL, 
+      UP, UP_URL, DOWN, DOWN_URL, 
+      LEFT, LEFT_URL, RIGHT, 
+      RIGHT_URL, FRONT_TEETH, FRONT_TEETH_URL, 
+      OTHER_CODE, OTHER_URL, UP_TEETH, 
+      DOWN_TEETH, MORE_TEETH, LOSS, 
+      DISLOCATION, ANTERIOR_RATIO, OVERALL_RATIO, 
+      LEFT_MOLAR, RIGHT_MOLAR, LEFT_FANGS, 
+      RIGHT_FANGS, ANTERIOR_TEETH, ARCH_FORM, 
+      POSTERIOR_TEETH, CANINE_TEETH, MAXILLARY_OVERBITE, 
+      MAXILLARY, MANDIBLE, OTHER, 
+      PATIENT_NO, CREATE_DATE, CREATE_ID, 
+      REMARK)
+    values (#{code,jdbcType=VARCHAR}, #{front,jdbcType=VARCHAR}, #{frontUrl,jdbcType=VARCHAR}, 
+      #{up,jdbcType=VARCHAR}, #{upUrl,jdbcType=VARCHAR}, #{down,jdbcType=VARCHAR}, #{downUrl,jdbcType=VARCHAR}, 
+      #{left,jdbcType=VARCHAR}, #{leftUrl,jdbcType=VARCHAR}, #{right,jdbcType=VARCHAR}, 
+      #{rightUrl,jdbcType=VARCHAR}, #{frontTeeth,jdbcType=VARCHAR}, #{frontTeethUrl,jdbcType=VARCHAR}, 
+      #{otherCode,jdbcType=VARCHAR}, #{otherUrl,jdbcType=VARCHAR}, #{upTeeth,jdbcType=VARCHAR}, 
+      #{downTeeth,jdbcType=VARCHAR}, #{moreTeeth,jdbcType=VARCHAR}, #{loss,jdbcType=VARCHAR}, 
+      #{dislocation,jdbcType=VARCHAR}, #{anteriorRatio,jdbcType=VARCHAR}, #{overallRatio,jdbcType=VARCHAR}, 
+      #{leftMolar,jdbcType=VARCHAR}, #{rightMolar,jdbcType=VARCHAR}, #{leftFangs,jdbcType=VARCHAR}, 
+      #{rightFangs,jdbcType=VARCHAR}, #{anteriorTeeth,jdbcType=VARCHAR}, #{archForm,jdbcType=VARCHAR}, 
+      #{posteriorTeeth,jdbcType=VARCHAR}, #{canineTeeth,jdbcType=VARCHAR}, #{maxillaryOverbite,jdbcType=VARCHAR}, 
+      #{maxillary,jdbcType=VARCHAR}, #{mandible,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, 
+      #{patientNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.DentitionCheck" >
+    insert into dentition_check
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="front != null" >
+        FRONT,
+      </if>
+      <if test="frontUrl != null" >
+        FRONT_URL,
+      </if>
+      <if test="up != null" >
+        UP,
+      </if>
+      <if test="upUrl != null" >
+        UP_URL,
+      </if>
+      <if test="down != null" >
+        DOWN,
+      </if>
+      <if test="downUrl != null" >
+        DOWN_URL,
+      </if>
+      <if test="left != null" >
+        LEFT,
+      </if>
+      <if test="leftUrl != null" >
+        LEFT_URL,
+      </if>
+      <if test="right != null" >
+        RIGHT,
+      </if>
+      <if test="rightUrl != null" >
+        RIGHT_URL,
+      </if>
+      <if test="frontTeeth != null" >
+        FRONT_TEETH,
+      </if>
+      <if test="frontTeethUrl != null" >
+        FRONT_TEETH_URL,
+      </if>
+      <if test="otherCode != null" >
+        OTHER_CODE,
+      </if>
+      <if test="otherUrl != null" >
+        OTHER_URL,
+      </if>
+      <if test="upTeeth != null" >
+        UP_TEETH,
+      </if>
+      <if test="downTeeth != null" >
+        DOWN_TEETH,
+      </if>
+      <if test="moreTeeth != null" >
+        MORE_TEETH,
+      </if>
+      <if test="loss != null" >
+        LOSS,
+      </if>
+      <if test="dislocation != null" >
+        DISLOCATION,
+      </if>
+      <if test="anteriorRatio != null" >
+        ANTERIOR_RATIO,
+      </if>
+      <if test="overallRatio != null" >
+        OVERALL_RATIO,
+      </if>
+      <if test="leftMolar != null" >
+        LEFT_MOLAR,
+      </if>
+      <if test="rightMolar != null" >
+        RIGHT_MOLAR,
+      </if>
+      <if test="leftFangs != null" >
+        LEFT_FANGS,
+      </if>
+      <if test="rightFangs != null" >
+        RIGHT_FANGS,
+      </if>
+      <if test="anteriorTeeth != null" >
+        ANTERIOR_TEETH,
+      </if>
+      <if test="archForm != null" >
+        ARCH_FORM,
+      </if>
+      <if test="posteriorTeeth != null" >
+        POSTERIOR_TEETH,
+      </if>
+      <if test="canineTeeth != null" >
+        CANINE_TEETH,
+      </if>
+      <if test="maxillaryOverbite != null" >
+        MAXILLARY_OVERBITE,
+      </if>
+      <if test="maxillary != null" >
+        MAXILLARY,
+      </if>
+      <if test="mandible != null" >
+        MANDIBLE,
+      </if>
+      <if test="other != null" >
+        OTHER,
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="front != null" >
+        #{front,jdbcType=VARCHAR},
+      </if>
+      <if test="frontUrl != null" >
+        #{frontUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="up != null" >
+        #{up,jdbcType=VARCHAR},
+      </if>
+      <if test="upUrl != null" >
+        #{upUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="down != null" >
+        #{down,jdbcType=VARCHAR},
+      </if>
+      <if test="downUrl != null" >
+        #{downUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="left != null" >
+        #{left,jdbcType=VARCHAR},
+      </if>
+      <if test="leftUrl != null" >
+        #{leftUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="right != null" >
+        #{right,jdbcType=VARCHAR},
+      </if>
+      <if test="rightUrl != null" >
+        #{rightUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="frontTeeth != null" >
+        #{frontTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="frontTeethUrl != null" >
+        #{frontTeethUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCode != null" >
+        #{otherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="otherUrl != null" >
+        #{otherUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="upTeeth != null" >
+        #{upTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="downTeeth != null" >
+        #{downTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="moreTeeth != null" >
+        #{moreTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="loss != null" >
+        #{loss,jdbcType=VARCHAR},
+      </if>
+      <if test="dislocation != null" >
+        #{dislocation,jdbcType=VARCHAR},
+      </if>
+      <if test="anteriorRatio != null" >
+        #{anteriorRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="overallRatio != null" >
+        #{overallRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="leftMolar != null" >
+        #{leftMolar,jdbcType=VARCHAR},
+      </if>
+      <if test="rightMolar != null" >
+        #{rightMolar,jdbcType=VARCHAR},
+      </if>
+      <if test="leftFangs != null" >
+        #{leftFangs,jdbcType=VARCHAR},
+      </if>
+      <if test="rightFangs != null" >
+        #{rightFangs,jdbcType=VARCHAR},
+      </if>
+      <if test="anteriorTeeth != null" >
+        #{anteriorTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="archForm != null" >
+        #{archForm,jdbcType=VARCHAR},
+      </if>
+      <if test="posteriorTeeth != null" >
+        #{posteriorTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="canineTeeth != null" >
+        #{canineTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="maxillaryOverbite != null" >
+        #{maxillaryOverbite,jdbcType=VARCHAR},
+      </if>
+      <if test="maxillary != null" >
+        #{maxillary,jdbcType=VARCHAR},
+      </if>
+      <if test="mandible != null" >
+        #{mandible,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.DentitionCheck" >
+    update dentition_check
+    <set >
+      <if test="front != null" >
+        FRONT = #{front,jdbcType=VARCHAR},
+      </if>
+      <if test="frontUrl != null" >
+        FRONT_URL = #{frontUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="up != null" >
+        UP = #{up,jdbcType=VARCHAR},
+      </if>
+      <if test="upUrl != null" >
+        UP_URL = #{upUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="down != null" >
+        DOWN = #{down,jdbcType=VARCHAR},
+      </if>
+      <if test="downUrl != null" >
+        DOWN_URL = #{downUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="left != null" >
+        LEFT = #{left,jdbcType=VARCHAR},
+      </if>
+      <if test="leftUrl != null" >
+        LEFT_URL = #{leftUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="right != null" >
+        RIGHT = #{right,jdbcType=VARCHAR},
+      </if>
+      <if test="rightUrl != null" >
+        RIGHT_URL = #{rightUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="frontTeeth != null" >
+        FRONT_TEETH = #{frontTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="frontTeethUrl != null" >
+        FRONT_TEETH_URL = #{frontTeethUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCode != null" >
+        OTHER_CODE = #{otherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="otherUrl != null" >
+        OTHER_URL = #{otherUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="upTeeth != null" >
+        UP_TEETH = #{upTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="downTeeth != null" >
+        DOWN_TEETH = #{downTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="moreTeeth != null" >
+        MORE_TEETH = #{moreTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="loss != null" >
+        LOSS = #{loss,jdbcType=VARCHAR},
+      </if>
+      <if test="dislocation != null" >
+        DISLOCATION = #{dislocation,jdbcType=VARCHAR},
+      </if>
+      <if test="anteriorRatio != null" >
+        ANTERIOR_RATIO = #{anteriorRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="overallRatio != null" >
+        OVERALL_RATIO = #{overallRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="leftMolar != null" >
+        LEFT_MOLAR = #{leftMolar,jdbcType=VARCHAR},
+      </if>
+      <if test="rightMolar != null" >
+        RIGHT_MOLAR = #{rightMolar,jdbcType=VARCHAR},
+      </if>
+      <if test="leftFangs != null" >
+        LEFT_FANGS = #{leftFangs,jdbcType=VARCHAR},
+      </if>
+      <if test="rightFangs != null" >
+        RIGHT_FANGS = #{rightFangs,jdbcType=VARCHAR},
+      </if>
+      <if test="anteriorTeeth != null" >
+        ANTERIOR_TEETH = #{anteriorTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="archForm != null" >
+        ARCH_FORM = #{archForm,jdbcType=VARCHAR},
+      </if>
+      <if test="posteriorTeeth != null" >
+        POSTERIOR_TEETH = #{posteriorTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="canineTeeth != null" >
+        CANINE_TEETH = #{canineTeeth,jdbcType=VARCHAR},
+      </if>
+      <if test="maxillaryOverbite != null" >
+        MAXILLARY_OVERBITE = #{maxillaryOverbite,jdbcType=VARCHAR},
+      </if>
+      <if test="maxillary != null" >
+        MAXILLARY = #{maxillary,jdbcType=VARCHAR},
+      </if>
+      <if test="mandible != null" >
+        MANDIBLE = #{mandible,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        OTHER = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.DentitionCheck" >
+    update dentition_check
+    set FRONT = #{front,jdbcType=VARCHAR},
+      FRONT_URL = #{frontUrl,jdbcType=VARCHAR},
+      UP = #{up,jdbcType=VARCHAR},
+      UP_URL = #{upUrl,jdbcType=VARCHAR},
+      DOWN = #{down,jdbcType=VARCHAR},
+      DOWN_URL = #{downUrl,jdbcType=VARCHAR},
+      LEFT = #{left,jdbcType=VARCHAR},
+      LEFT_URL = #{leftUrl,jdbcType=VARCHAR},
+      RIGHT = #{right,jdbcType=VARCHAR},
+      RIGHT_URL = #{rightUrl,jdbcType=VARCHAR},
+      FRONT_TEETH = #{frontTeeth,jdbcType=VARCHAR},
+      FRONT_TEETH_URL = #{frontTeethUrl,jdbcType=VARCHAR},
+      OTHER_CODE = #{otherCode,jdbcType=VARCHAR},
+      OTHER_URL = #{otherUrl,jdbcType=VARCHAR},
+      UP_TEETH = #{upTeeth,jdbcType=VARCHAR},
+      DOWN_TEETH = #{downTeeth,jdbcType=VARCHAR},
+      MORE_TEETH = #{moreTeeth,jdbcType=VARCHAR},
+      LOSS = #{loss,jdbcType=VARCHAR},
+      DISLOCATION = #{dislocation,jdbcType=VARCHAR},
+      ANTERIOR_RATIO = #{anteriorRatio,jdbcType=VARCHAR},
+      OVERALL_RATIO = #{overallRatio,jdbcType=VARCHAR},
+      LEFT_MOLAR = #{leftMolar,jdbcType=VARCHAR},
+      RIGHT_MOLAR = #{rightMolar,jdbcType=VARCHAR},
+      LEFT_FANGS = #{leftFangs,jdbcType=VARCHAR},
+      RIGHT_FANGS = #{rightFangs,jdbcType=VARCHAR},
+      ANTERIOR_TEETH = #{anteriorTeeth,jdbcType=VARCHAR},
+      ARCH_FORM = #{archForm,jdbcType=VARCHAR},
+      POSTERIOR_TEETH = #{posteriorTeeth,jdbcType=VARCHAR},
+      CANINE_TEETH = #{canineTeeth,jdbcType=VARCHAR},
+      MAXILLARY_OVERBITE = #{maxillaryOverbite,jdbcType=VARCHAR},
+      MAXILLARY = #{maxillary,jdbcType=VARCHAR},
+      MANDIBLE = #{mandible,jdbcType=VARCHAR},
+      OTHER = #{other,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

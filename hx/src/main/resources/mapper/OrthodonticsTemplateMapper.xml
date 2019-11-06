@@ -9,7 +9,7 @@
     <result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
     <result column="ORDER_NO" property="orderNo" jdbcType="INTEGER" />
     <result column="CREATER" property="creater" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="LEVEL_CODE" property="levelCode" jdbcType="INTEGER" />
     <result column="TYPE" property="type" jdbcType="INTEGER" />
     <result column="CHECK" property="check" jdbcType="VARCHAR" />
@@ -46,7 +46,7 @@
       REMARK3, REMARK4)
     values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
       #{parentCodes,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}, 
-      #{creater,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{levelCode,jdbcType=INTEGER}, 
+      #{creater,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{levelCode,jdbcType=INTEGER}, 
       #{type,jdbcType=INTEGER}, #{check,jdbcType=VARCHAR}, #{management,jdbcType=VARCHAR}, 
       #{doctorAdvice,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
       #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR})
@@ -129,7 +129,7 @@
         #{creater,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="levelCode != null" >
         #{levelCode,jdbcType=INTEGER},
@@ -182,7 +182,7 @@
         CREATER = #{creater,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="levelCode != null" >
         LEVEL_CODE = #{levelCode,jdbcType=INTEGER},
@@ -222,7 +222,7 @@
       PARENT_NAME = #{parentName,jdbcType=VARCHAR},
       ORDER_NO = #{orderNo,jdbcType=INTEGER},
       CREATER = #{creater,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       LEVEL_CODE = #{levelCode,jdbcType=INTEGER},
       TYPE = #{type,jdbcType=INTEGER},
       CHECK = #{check,jdbcType=VARCHAR},

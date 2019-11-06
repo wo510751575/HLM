@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.PatientImgType" >
     <id column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
@@ -47,7 +47,7 @@
       CREATE_ID, REMARK, REMARK2, 
       REMARK3, REMARK4, IS_DELETE
       )
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{createId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
       #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}
       )
@@ -91,7 +91,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createId != null" >
         #{createId,jdbcType=VARCHAR},
@@ -120,7 +120,7 @@
         NAME = #{name,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createId != null" >
         CREATE_ID = #{createId,jdbcType=VARCHAR},
@@ -146,7 +146,7 @@
   <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.PatientImgType" >
     update patient_img_type
     set NAME = #{name,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       CREATE_ID = #{createId,jdbcType=VARCHAR},
       REMARK = #{remark,jdbcType=VARCHAR},
       REMARK2 = #{remark2,jdbcType=VARCHAR},

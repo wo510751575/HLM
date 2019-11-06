@@ -6,7 +6,7 @@
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="STEP" property="step" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="INTEGER" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
     <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
@@ -34,7 +34,7 @@
       REMARK2, REMARK3, REMARK4
       )
     values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{step,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
       #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}
       )
   </insert>
@@ -83,7 +83,7 @@
         #{status,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -112,7 +112,7 @@
         STATUS = #{status,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
@@ -134,7 +134,7 @@
     set NAME = #{name,jdbcType=VARCHAR},
       STEP = #{step,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=INTEGER},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       REMARK = #{remark,jdbcType=VARCHAR},
       REMARK2 = #{remark2,jdbcType=VARCHAR},
       REMARK3 = #{remark3,jdbcType=VARCHAR},

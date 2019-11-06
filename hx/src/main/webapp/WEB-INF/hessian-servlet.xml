@@ -362,4 +362,36 @@
 			value="com.ye.business.hx.service.IOrthodonticsTemplateService" />
 	</bean>
 	
+	<!-- 一般检查 -->
+	<bean name="/generalCheckService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="generalCheckServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IGeneralCheckService" />
+	</bean>
+	
+	<!-- 面部检查 -->
+	<bean name="/faceCheckService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="faceCheckServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IFaceCheckService" />
+	</bean>
+	
+	<!-- 软组织检查 -->
+	<bean name="/softCheckService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="softCheckServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.ISoftCheckService" />
+	</bean>
+	
+	<!-- 牙列检查 -->
+	<bean name="/dentitionCheckService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="dentitionCheckServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IDentitionCheckService" />
+	</bean>
+	
 </beans>

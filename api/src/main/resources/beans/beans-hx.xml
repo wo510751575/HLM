@@ -387,5 +387,33 @@
 		<property name="serviceInterface" value="com.ye.business.hx.service.IOrthodonticsTemplateService" />
 	</bean>
 	
+	<!-- 一般检查 -->
+	<bean id="generalCheckService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="generalCheckService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IGeneralCheckService" />
+	</bean>
+	
+	<!-- 面部检查 -->
+	<bean id="faceCheckService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="faceCheckService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IFaceCheckService" />
+	</bean>
+	
+	<!-- 软组织检查 -->
+	<bean id="softCheckService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="softCheckService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.ISoftCheckService" />
+	</bean>
+	
+	<!-- 牙列检查 -->
+	<bean id="dentitionCheckService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="dentitionCheckService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IDentitionCheckService" />
+	</bean>
+	
 </beans> 
 

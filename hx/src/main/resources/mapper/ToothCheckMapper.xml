@@ -9,7 +9,7 @@
     <result column="REMARK2" jdbcType="VARCHAR" property="remark2" />
     <result column="REMARK3" jdbcType="VARCHAR" property="remark3" />
     <result column="REMARK4" jdbcType="VARCHAR" property="remark4" />
-    <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -32,7 +32,7 @@
       )
     values (#{code,jdbcType=VARCHAR}, #{dentalPosition,jdbcType=VARCHAR}, #{symptom,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
-      #{remark4,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{patientNo,jdbcType=VARCHAR}
+      #{remark4,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{patientNo,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ye.business.hx.domain.ToothCheck">
@@ -89,7 +89,7 @@
         #{remark4,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="patientNo != null">
         #{patientNo,jdbcType=VARCHAR},
@@ -118,7 +118,7 @@
         REMARK4 = #{remark4,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="patientNo != null">
         PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
@@ -134,7 +134,7 @@
       REMARK2 = #{remark2,jdbcType=VARCHAR},
       REMARK3 = #{remark3,jdbcType=VARCHAR},
       REMARK4 = #{remark4,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       PATIENT_NO = #{patientNo,jdbcType=VARCHAR}
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
@@ -169,7 +169,7 @@
 	<include refid="Base_Column_List" />
 	FROM tooth_ckeck
 	<include refid="findPage_condition" />
-	
+	order by CREATE_DATE DESC
 	</select>
 	<!-- 分页查询 -->
 	<select id="findToothCheckPage" resultMap="FindResultMap" parameterType="com.ye.business.hx.dto.FindToothCheckPage">
@@ -177,7 +177,7 @@
 	<include refid="Base_Column_List" />
 	FROM tooth_ckeck
 	<include refid="findPage_condition" />
-	
+	order by CREATE_DATE DESC
 	limit ${start} , ${limit}
 	</select>
 	<!-- 查询总数 -->
@@ -185,5 +185,12 @@
 	select count(*)
 	FROM tooth_ckeck
 	<include refid="findPage_condition" />
+	</select>
+	
+	<select id="findTimeList" parameterType="com.ye.business.hx.dto.FindToothCheckPage" resultType="java.util.Date">
+	select distinct CREATE_DATE 
+	from tooth_ckeck
+	<include refid="findPage_condition" />
+	order by CREATE_DATE DESC
 	</select>
 </mapper>

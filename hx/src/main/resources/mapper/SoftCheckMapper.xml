@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.ISoftCheckDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.SoftCheck" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MAXILLA" property="maxilla" jdbcType="VARCHAR" />
+    <result column="MANDIBLE" property="mandible" jdbcType="VARCHAR" />
+    <result column="MANDIBULAR_ANGLE" property="mandibularAngle" jdbcType="VARCHAR" />
+    <result column="TONGUE_BODY" property="tongueBody" jdbcType="VARCHAR" />
+    <result column="UPPER_LIP" property="upperLip" jdbcType="VARCHAR" />
+    <result column="LOWER_LIP" property="lowerLip" jdbcType="VARCHAR" />
+    <result column="LINGUAL_FRENULUM" property="lingualFrenulum" jdbcType="VARCHAR" />
+    <result column="LABIAL_FRENULUM" property="labialFrenulum" jdbcType="VARCHAR" />
+    <result column="TONSIL" property="tonsil" jdbcType="VARCHAR" />
+    <result column="ADENOID" property="adenoid" jdbcType="VARCHAR" />
+    <result column="PALATAL_LID" property="palatalLid" jdbcType="VARCHAR" />
+    <result column="PAIN_LEFT" property="painLeft" jdbcType="VARCHAR" />
+    <result column="PAIN_RIGHT" property="painRight" jdbcType="VARCHAR" />
+    <result column="BANG_LEFT" property="bangLeft" jdbcType="VARCHAR" />
+    <result column="BANG_RIGHT" property="bangRight" jdbcType="VARCHAR" />
+    <result column="OPEN_MOUTH" property="openMouth" jdbcType="VARCHAR" />
+    <result column="CLOSE_MOUTH" property="closeMouth" jdbcType="VARCHAR" />
+    <result column="APERTURE" property="aperture" jdbcType="VARCHAR" />
+    <result column="RESPIRATORY_TRACT" property="respiratoryTract" jdbcType="VARCHAR" />
+    <result column="DEGREE" property="degree" jdbcType="VARCHAR" />
+    <result column="OTHER" property="other" jdbcType="VARCHAR" />
+    <result column="PATIENT_NO" property="patientNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, MAXILLA, MANDIBLE, MANDIBULAR_ANGLE, TONGUE_BODY, UPPER_LIP, LOWER_LIP, LINGUAL_FRENULUM, 
+    LABIAL_FRENULUM, TONSIL, ADENOID, PALATAL_LID, PAIN_LEFT, PAIN_RIGHT, BANG_LEFT, 
+    BANG_RIGHT, OPEN_MOUTH, CLOSE_MOUTH, APERTURE, RESPIRATORY_TRACT, DEGREE, OTHER, 
+    PATIENT_NO, CREATE_DATE, CREATE_ID, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from soft_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from soft_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.SoftCheck" >
+    insert into soft_check (CODE, MAXILLA, MANDIBLE, 
+      MANDIBULAR_ANGLE, TONGUE_BODY, UPPER_LIP, 
+      LOWER_LIP, LINGUAL_FRENULUM, LABIAL_FRENULUM, 
+      TONSIL, ADENOID, PALATAL_LID, 
+      PAIN_LEFT, PAIN_RIGHT, BANG_LEFT, 
+      BANG_RIGHT, OPEN_MOUTH, CLOSE_MOUTH, 
+      APERTURE, RESPIRATORY_TRACT, DEGREE, 
+      OTHER, PATIENT_NO, CREATE_DATE, 
+      CREATE_ID, REMARK)
+    values (#{code,jdbcType=VARCHAR}, #{maxilla,jdbcType=VARCHAR}, #{mandible,jdbcType=VARCHAR}, 
+      #{mandibularAngle,jdbcType=VARCHAR}, #{tongueBody,jdbcType=VARCHAR}, #{upperLip,jdbcType=VARCHAR}, 
+      #{lowerLip,jdbcType=VARCHAR}, #{lingualFrenulum,jdbcType=VARCHAR}, #{labialFrenulum,jdbcType=VARCHAR}, 
+      #{tonsil,jdbcType=VARCHAR}, #{adenoid,jdbcType=VARCHAR}, #{palatalLid,jdbcType=VARCHAR}, 
+      #{painLeft,jdbcType=VARCHAR}, #{painRight,jdbcType=VARCHAR}, #{bangLeft,jdbcType=VARCHAR}, 
+      #{bangRight,jdbcType=VARCHAR}, #{openMouth,jdbcType=VARCHAR}, #{closeMouth,jdbcType=VARCHAR}, 
+      #{aperture,jdbcType=VARCHAR}, #{respiratoryTract,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, 
+      #{other,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.SoftCheck" >
+    insert into soft_check
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="maxilla != null" >
+        MAXILLA,
+      </if>
+      <if test="mandible != null" >
+        MANDIBLE,
+      </if>
+      <if test="mandibularAngle != null" >
+        MANDIBULAR_ANGLE,
+      </if>
+      <if test="tongueBody != null" >
+        TONGUE_BODY,
+      </if>
+      <if test="upperLip != null" >
+        UPPER_LIP,
+      </if>
+      <if test="lowerLip != null" >
+        LOWER_LIP,
+      </if>
+      <if test="lingualFrenulum != null" >
+        LINGUAL_FRENULUM,
+      </if>
+      <if test="labialFrenulum != null" >
+        LABIAL_FRENULUM,
+      </if>
+      <if test="tonsil != null" >
+        TONSIL,
+      </if>
+      <if test="adenoid != null" >
+        ADENOID,
+      </if>
+      <if test="palatalLid != null" >
+        PALATAL_LID,
+      </if>
+      <if test="painLeft != null" >
+        PAIN_LEFT,
+      </if>
+      <if test="painRight != null" >
+        PAIN_RIGHT,
+      </if>
+      <if test="bangLeft != null" >
+        BANG_LEFT,
+      </if>
+      <if test="bangRight != null" >
+        BANG_RIGHT,
+      </if>
+      <if test="openMouth != null" >
+        OPEN_MOUTH,
+      </if>
+      <if test="closeMouth != null" >
+        CLOSE_MOUTH,
+      </if>
+      <if test="aperture != null" >
+        APERTURE,
+      </if>
+      <if test="respiratoryTract != null" >
+        RESPIRATORY_TRACT,
+      </if>
+      <if test="degree != null" >
+        DEGREE,
+      </if>
+      <if test="other != null" >
+        OTHER,
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="maxilla != null" >
+        #{maxilla,jdbcType=VARCHAR},
+      </if>
+      <if test="mandible != null" >
+        #{mandible,jdbcType=VARCHAR},
+      </if>
+      <if test="mandibularAngle != null" >
+        #{mandibularAngle,jdbcType=VARCHAR},
+      </if>
+      <if test="tongueBody != null" >
+        #{tongueBody,jdbcType=VARCHAR},
+      </if>
+      <if test="upperLip != null" >
+        #{upperLip,jdbcType=VARCHAR},
+      </if>
+      <if test="lowerLip != null" >
+        #{lowerLip,jdbcType=VARCHAR},
+      </if>
+      <if test="lingualFrenulum != null" >
+        #{lingualFrenulum,jdbcType=VARCHAR},
+      </if>
+      <if test="labialFrenulum != null" >
+        #{labialFrenulum,jdbcType=VARCHAR},
+      </if>
+      <if test="tonsil != null" >
+        #{tonsil,jdbcType=VARCHAR},
+      </if>
+      <if test="adenoid != null" >
+        #{adenoid,jdbcType=VARCHAR},
+      </if>
+      <if test="palatalLid != null" >
+        #{palatalLid,jdbcType=VARCHAR},
+      </if>
+      <if test="painLeft != null" >
+        #{painLeft,jdbcType=VARCHAR},
+      </if>
+      <if test="painRight != null" >
+        #{painRight,jdbcType=VARCHAR},
+      </if>
+      <if test="bangLeft != null" >
+        #{bangLeft,jdbcType=VARCHAR},
+      </if>
+      <if test="bangRight != null" >
+        #{bangRight,jdbcType=VARCHAR},
+      </if>
+      <if test="openMouth != null" >
+        #{openMouth,jdbcType=VARCHAR},
+      </if>
+      <if test="closeMouth != null" >
+        #{closeMouth,jdbcType=VARCHAR},
+      </if>
+      <if test="aperture != null" >
+        #{aperture,jdbcType=VARCHAR},
+      </if>
+      <if test="respiratoryTract != null" >
+        #{respiratoryTract,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.SoftCheck" >
+    update soft_check
+    <set >
+      <if test="maxilla != null" >
+        MAXILLA = #{maxilla,jdbcType=VARCHAR},
+      </if>
+      <if test="mandible != null" >
+        MANDIBLE = #{mandible,jdbcType=VARCHAR},
+      </if>
+      <if test="mandibularAngle != null" >
+        MANDIBULAR_ANGLE = #{mandibularAngle,jdbcType=VARCHAR},
+      </if>
+      <if test="tongueBody != null" >
+        TONGUE_BODY = #{tongueBody,jdbcType=VARCHAR},
+      </if>
+      <if test="upperLip != null" >
+        UPPER_LIP = #{upperLip,jdbcType=VARCHAR},
+      </if>
+      <if test="lowerLip != null" >
+        LOWER_LIP = #{lowerLip,jdbcType=VARCHAR},
+      </if>
+      <if test="lingualFrenulum != null" >
+        LINGUAL_FRENULUM = #{lingualFrenulum,jdbcType=VARCHAR},
+      </if>
+      <if test="labialFrenulum != null" >
+        LABIAL_FRENULUM = #{labialFrenulum,jdbcType=VARCHAR},
+      </if>
+      <if test="tonsil != null" >
+        TONSIL = #{tonsil,jdbcType=VARCHAR},
+      </if>
+      <if test="adenoid != null" >
+        ADENOID = #{adenoid,jdbcType=VARCHAR},
+      </if>
+      <if test="palatalLid != null" >
+        PALATAL_LID = #{palatalLid,jdbcType=VARCHAR},
+      </if>
+      <if test="painLeft != null" >
+        PAIN_LEFT = #{painLeft,jdbcType=VARCHAR},
+      </if>
+      <if test="painRight != null" >
+        PAIN_RIGHT = #{painRight,jdbcType=VARCHAR},
+      </if>
+      <if test="bangLeft != null" >
+        BANG_LEFT = #{bangLeft,jdbcType=VARCHAR},
+      </if>
+      <if test="bangRight != null" >
+        BANG_RIGHT = #{bangRight,jdbcType=VARCHAR},
+      </if>
+      <if test="openMouth != null" >
+        OPEN_MOUTH = #{openMouth,jdbcType=VARCHAR},
+      </if>
+      <if test="closeMouth != null" >
+        CLOSE_MOUTH = #{closeMouth,jdbcType=VARCHAR},
+      </if>
+      <if test="aperture != null" >
+        APERTURE = #{aperture,jdbcType=VARCHAR},
+      </if>
+      <if test="respiratoryTract != null" >
+        RESPIRATORY_TRACT = #{respiratoryTract,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        DEGREE = #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        OTHER = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.SoftCheck" >
+    update soft_check
+    set MAXILLA = #{maxilla,jdbcType=VARCHAR},
+      MANDIBLE = #{mandible,jdbcType=VARCHAR},
+      MANDIBULAR_ANGLE = #{mandibularAngle,jdbcType=VARCHAR},
+      TONGUE_BODY = #{tongueBody,jdbcType=VARCHAR},
+      UPPER_LIP = #{upperLip,jdbcType=VARCHAR},
+      LOWER_LIP = #{lowerLip,jdbcType=VARCHAR},
+      LINGUAL_FRENULUM = #{lingualFrenulum,jdbcType=VARCHAR},
+      LABIAL_FRENULUM = #{labialFrenulum,jdbcType=VARCHAR},
+      TONSIL = #{tonsil,jdbcType=VARCHAR},
+      ADENOID = #{adenoid,jdbcType=VARCHAR},
+      PALATAL_LID = #{palatalLid,jdbcType=VARCHAR},
+      PAIN_LEFT = #{painLeft,jdbcType=VARCHAR},
+      PAIN_RIGHT = #{painRight,jdbcType=VARCHAR},
+      BANG_LEFT = #{bangLeft,jdbcType=VARCHAR},
+      BANG_RIGHT = #{bangRight,jdbcType=VARCHAR},
+      OPEN_MOUTH = #{openMouth,jdbcType=VARCHAR},
+      CLOSE_MOUTH = #{closeMouth,jdbcType=VARCHAR},
+      APERTURE = #{aperture,jdbcType=VARCHAR},
+      RESPIRATORY_TRACT = #{respiratoryTract,jdbcType=VARCHAR},
+      DEGREE = #{degree,jdbcType=VARCHAR},
+      OTHER = #{other,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

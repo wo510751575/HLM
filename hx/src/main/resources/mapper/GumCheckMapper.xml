@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.GumCheck">
     <id column="CODE" jdbcType="VARCHAR" property="code" />
     <result column="PATIENT_NO" jdbcType="VARCHAR" property="patientNo" />
-    <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="CREATE_ID" jdbcType="VARCHAR" property="createId" />
     <result column="POSITION" jdbcType="VARCHAR" property="position" />
     <result column="PLAQUE_S" jdbcType="INTEGER" property="plaqueS" />
@@ -40,6 +40,12 @@
 			<if test="param.patientNo != null and param.patientNo !='' ">
 			<![CDATA[and PATIENT_NO =#{param.patientNo}]]>
 			</if>
+			<if test="param.startDate != null ">
+				and CREATE_DATE &gt;=#{param.startDate}
+			</if>
+			<if test="param.endDate != null ">
+				and CREATE_DATE &lt;=#{param.endDate}
+			</if>
 		</if>
 	</where>
   </sql>
@@ -62,7 +68,7 @@
       PD_M, PD_L, GM_S, GM_M, 
       GM_L, REMARK, REMARK2, 
       REMARK3, REMARK4)
-    values (#{code,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+    values (#{code,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{createId,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{plaqueS,jdbcType=INTEGER}, 
       #{plaqueM,jdbcType=INTEGER}, #{plaqueL,jdbcType=INTEGER}, #{bleedingS,jdbcType=INTEGER}, 
       #{bleedingM,jdbcType=INTEGER}, #{bleedingL,jdbcType=INTEGER}, #{pdS,jdbcType=INTEGER}, 
@@ -145,7 +151,7 @@
         #{patientNo,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createId != null">
         #{createId,jdbcType=VARCHAR},
@@ -210,7 +216,7 @@
         PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createId != null">
         CREATE_ID = #{createId,jdbcType=VARCHAR},
@@ -272,7 +278,7 @@
   <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.GumCheck">
     update gum_ckeck
     set PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       CREATE_ID = #{createId,jdbcType=VARCHAR},
       POSITION = #{position,jdbcType=VARCHAR},
       PLAQUE_S = #{plaqueS,jdbcType=INTEGER},
@@ -300,6 +306,14 @@
   	select <include refid="Base_Column_List"/>
   	from gum_ckeck
   	<include refid="findPage_condition"/>
+  	order by CREATE_DATE DESC
+  </select>
+  
+  <select id="findTimeList" parameterType="com.ye.business.hx.dto.FindGumCheckPage" resultType="java.util.Date">
+  	select distinct CREATE_DATE 
+	from gum_ckeck
+	<include refid="findPage_condition" />
+	order by CREATE_DATE DESC
   </select>
   
 </mapper>

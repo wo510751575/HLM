@@ -19,6 +19,16 @@ public class GumCheckDto implements Serializable {
      * 创建时间 .
      */
     private Date createDate;
+    
+    /**
+     * 创建时间 .
+     */
+    private Date startDate;
+    
+    /**
+     * 创建时间 .
+     */
+    private Date endDate;
 
     /**
      * 创建人 .
@@ -109,8 +119,46 @@ public class GumCheckDto implements Serializable {
      *  .
      */
     private String remark4;
+    
+    
 
-    /**
+    /**  
+	 * @Title:  getStartDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	/**  
+	 * @Title:  setStartDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**  
+	 * @Title:  getEndDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**  
+	 * @Title:  setEndDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
      *  .
      *
      */

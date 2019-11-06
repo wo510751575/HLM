@@ -11,6 +11,8 @@
  */
 package com.lj.business.api.controller.hx;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ import com.lj.business.api.domain.GeneralResponse;
 import com.ye.business.hx.dto.FindGumCheckPage;
 import com.ye.business.hx.dto.GumCheckDto;
 import com.ye.business.hx.dto.GumCheckVo;
+import com.ye.business.hx.dto.ToothCheckDto;
 import com.ye.business.hx.service.IGumCheckService;
 
 /**   
@@ -71,6 +74,18 @@ public class GumCheckAction extends Action {
 	public GeneralResponse list(FindGumCheckPage findGumCheckPage,GumCheckDto param) {
 		AssertUtils.notNullAndEmpty(param);
 		findGumCheckPage.setParam(param);
+		if(param.getCreateDate()!=null) {
+			SimpleDateFormat sft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = sft.format(param.getCreateDate()).substring(0, 10);
+			try {
+				param.setStartDate(sft.parse(date+" 00:00:00"));
+				param.setEndDate(sft.parse(date+" 23:59:59"));
+			} catch (ParseException e) {
+				logger.error("时间转换错误!");;
+				e.printStackTrace();
+				return GeneralResponse.generateFailureResponse(e);
+			}
+		}
 		List<GumCheckDto> list = gumCheckService.findGumChecks(findGumCheckPage);
 		//组装数据
 		Map<String,List<GumCheckDto>> map = new HashMap<>();
@@ -144,4 +159,22 @@ public class GumCheckAction extends Action {
 		return GeneralResponse.generateSuccessResponse(gumCheckVoList);
 	}
 	
+	
+
+	@ResponseBody
+	@RequestMapping(value="/timeList.do",produces="application/json;charset=UTF-8")
+	public GeneralResponse timeList(FindGumCheckPage findGumCheckPage,GumCheckDto param) {
+		AssertUtils.notNullAndEmpty(param);
+		findGumCheckPage.setParam(param);
+		List<Date> list = gumCheckService.findTimeList(findGumCheckPage);
+		List<GumCheckDto> listDate = new ArrayList<>(); 
+		if(list!=null) {
+			for (Date date : list) {
+				GumCheckDto gumCheckDto = new GumCheckDto();
+				gumCheckDto.setCreateDate(date);
+				listDate.add(gumCheckDto);
+			}
+		}
+		return GeneralResponse.generateSuccessResponse(listDate);
+	}
 }

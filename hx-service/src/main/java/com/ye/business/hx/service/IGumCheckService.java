@@ -13,6 +13,7 @@ import com.ye.business.hx.dto.FindGumCheckPage;
 import com.lj.base.core.pagination.Page;
 import com.lj.base.exception.TsfaServiceException;
 
+import java.util.Date;
 import java.util.List;
 /**
  * 类说明：接口类
@@ -98,6 +99,16 @@ public interface IGumCheckService {
 	 *
 	 */
 	public Page<GumCheckDto> findGumCheckPage(FindGumCheckPage findGumCheckPage) throws TsfaServiceException;
+
+	/**   
+	 * @Title: findTimeList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param findGumCheckPage
+	 * @param: @return      
+	 * @return: List<Date>      
+	 * @throws   
+	 */
+	public List<Date> findTimeList(FindGumCheckPage findGumCheckPage)throws TsfaServiceException;
 	
 
 }

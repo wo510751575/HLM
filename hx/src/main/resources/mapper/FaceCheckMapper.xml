@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IFaceCheckDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.FaceCheck" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="POSITIVE" property="positive" jdbcType="VARCHAR" />
+    <result column="POSITIVE_CODE" property="positiveCode" jdbcType="VARCHAR" />
+    <result column="POSITIVE_SMILE" property="positiveSmile" jdbcType="VARCHAR" />
+    <result column="POSITIVE_SMILE_CODE" property="positiveSmileCode" jdbcType="VARCHAR" />
+    <result column="SIDE" property="side" jdbcType="VARCHAR" />
+    <result column="SIDE_CODE" property="sideCode" jdbcType="VARCHAR" />
+    <result column="RIGHT" property="right" jdbcType="VARCHAR" />
+    <result column="RIGHT_CODE" property="rightCode" jdbcType="VARCHAR" />
+    <result column="LETF" property="letf" jdbcType="VARCHAR" />
+    <result column="LETF_CODE" property="letfCode" jdbcType="VARCHAR" />
+    <result column="OTHER" property="other" jdbcType="VARCHAR" />
+    <result column="OTHER_CODE" property="otherCode" jdbcType="VARCHAR" />
+    <result column="FRONTAL_TYPE" property="frontalType" jdbcType="VARCHAR" />
+    <result column="CHIN_SOCKET" property="chinSocket" jdbcType="VARCHAR" />
+    <result column="LIP_SHAPE" property="lipShape" jdbcType="VARCHAR" />
+    <result column="SYMMETRY" property="symmetry" jdbcType="VARCHAR" />
+    <result column="SMILE_PULLING" property="smilePulling" jdbcType="VARCHAR" />
+    <result column="RELAX_PULLING" property="relaxPulling" jdbcType="VARCHAR" />
+    <result column="FACE_SHAPE" property="faceShape" jdbcType="VARCHAR" />
+    <result column="NASOLABIAL_ANGLE" property="nasolabialAngle" jdbcType="VARCHAR" />
+    <result column="LABIAL_GROOVE" property="labialGroove" jdbcType="VARCHAR" />
+    <result column="CHIN_POSITION" property="chinPosition" jdbcType="VARCHAR" />
+    <result column="OTHERS" property="others" jdbcType="VARCHAR" />
+    <result column="PATIENT_NO" property="patientNo" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ID" property="createId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, POSITIVE, POSITIVE_CODE, POSITIVE_SMILE, POSITIVE_SMILE_CODE, SIDE, SIDE_CODE, 
+    RIGHT, RIGHT_CODE, LETF, LETF_CODE, OTHER, OTHER_CODE, FRONTAL_TYPE, CHIN_SOCKET, 
+    LIP_SHAPE, SYMMETRY, SMILE_PULLING, RELAX_PULLING, FACE_SHAPE, NASOLABIAL_ANGLE, 
+    LABIAL_GROOVE, CHIN_POSITION, OTHERS, PATIENT_NO, CREATE_DATE, CREATE_ID, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from face_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from face_check
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.FaceCheck" >
+    insert into face_check (CODE, POSITIVE, POSITIVE_CODE, 
+      POSITIVE_SMILE, POSITIVE_SMILE_CODE, SIDE, 
+      SIDE_CODE, RIGHT, RIGHT_CODE, 
+      LETF, LETF_CODE, OTHER, 
+      OTHER_CODE, FRONTAL_TYPE, CHIN_SOCKET, 
+      LIP_SHAPE, SYMMETRY, SMILE_PULLING, 
+      RELAX_PULLING, FACE_SHAPE, NASOLABIAL_ANGLE, 
+      LABIAL_GROOVE, CHIN_POSITION, OTHERS, 
+      PATIENT_NO, CREATE_DATE, CREATE_ID, 
+      REMARK)
+    values (#{code,jdbcType=VARCHAR}, #{positive,jdbcType=VARCHAR}, #{positiveCode,jdbcType=VARCHAR}, 
+      #{positiveSmile,jdbcType=VARCHAR}, #{positiveSmileCode,jdbcType=VARCHAR}, #{side,jdbcType=VARCHAR}, 
+      #{sideCode,jdbcType=VARCHAR}, #{right,jdbcType=VARCHAR}, #{rightCode,jdbcType=VARCHAR}, 
+      #{letf,jdbcType=VARCHAR}, #{letfCode,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, 
+      #{otherCode,jdbcType=VARCHAR}, #{frontalType,jdbcType=VARCHAR}, #{chinSocket,jdbcType=VARCHAR}, 
+      #{lipShape,jdbcType=VARCHAR}, #{symmetry,jdbcType=VARCHAR}, #{smilePulling,jdbcType=VARCHAR}, 
+      #{relaxPulling,jdbcType=VARCHAR}, #{faceShape,jdbcType=VARCHAR}, #{nasolabialAngle,jdbcType=VARCHAR}, 
+      #{labialGroove,jdbcType=VARCHAR}, #{chinPosition,jdbcType=VARCHAR}, #{others,jdbcType=VARCHAR}, 
+      #{patientNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.FaceCheck" >
+    insert into face_check
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="positive != null" >
+        POSITIVE,
+      </if>
+      <if test="positiveCode != null" >
+        POSITIVE_CODE,
+      </if>
+      <if test="positiveSmile != null" >
+        POSITIVE_SMILE,
+      </if>
+      <if test="positiveSmileCode != null" >
+        POSITIVE_SMILE_CODE,
+      </if>
+      <if test="side != null" >
+        SIDE,
+      </if>
+      <if test="sideCode != null" >
+        SIDE_CODE,
+      </if>
+      <if test="right != null" >
+        RIGHT,
+      </if>
+      <if test="rightCode != null" >
+        RIGHT_CODE,
+      </if>
+      <if test="letf != null" >
+        LETF,
+      </if>
+      <if test="letfCode != null" >
+        LETF_CODE,
+      </if>
+      <if test="other != null" >
+        OTHER,
+      </if>
+      <if test="otherCode != null" >
+        OTHER_CODE,
+      </if>
+      <if test="frontalType != null" >
+        FRONTAL_TYPE,
+      </if>
+      <if test="chinSocket != null" >
+        CHIN_SOCKET,
+      </if>
+      <if test="lipShape != null" >
+        LIP_SHAPE,
+      </if>
+      <if test="symmetry != null" >
+        SYMMETRY,
+      </if>
+      <if test="smilePulling != null" >
+        SMILE_PULLING,
+      </if>
+      <if test="relaxPulling != null" >
+        RELAX_PULLING,
+      </if>
+      <if test="faceShape != null" >
+        FACE_SHAPE,
+      </if>
+      <if test="nasolabialAngle != null" >
+        NASOLABIAL_ANGLE,
+      </if>
+      <if test="labialGroove != null" >
+        LABIAL_GROOVE,
+      </if>
+      <if test="chinPosition != null" >
+        CHIN_POSITION,
+      </if>
+      <if test="others != null" >
+        OTHERS,
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createId != null" >
+        CREATE_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="positive != null" >
+        #{positive,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveCode != null" >
+        #{positiveCode,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveSmile != null" >
+        #{positiveSmile,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveSmileCode != null" >
+        #{positiveSmileCode,jdbcType=VARCHAR},
+      </if>
+      <if test="side != null" >
+        #{side,jdbcType=VARCHAR},
+      </if>
+      <if test="sideCode != null" >
+        #{sideCode,jdbcType=VARCHAR},
+      </if>
+      <if test="right != null" >
+        #{right,jdbcType=VARCHAR},
+      </if>
+      <if test="rightCode != null" >
+        #{rightCode,jdbcType=VARCHAR},
+      </if>
+      <if test="letf != null" >
+        #{letf,jdbcType=VARCHAR},
+      </if>
+      <if test="letfCode != null" >
+        #{letfCode,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCode != null" >
+        #{otherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="frontalType != null" >
+        #{frontalType,jdbcType=VARCHAR},
+      </if>
+      <if test="chinSocket != null" >
+        #{chinSocket,jdbcType=VARCHAR},
+      </if>
+      <if test="lipShape != null" >
+        #{lipShape,jdbcType=VARCHAR},
+      </if>
+      <if test="symmetry != null" >
+        #{symmetry,jdbcType=VARCHAR},
+      </if>
+      <if test="smilePulling != null" >
+        #{smilePulling,jdbcType=VARCHAR},
+      </if>
+      <if test="relaxPulling != null" >
+        #{relaxPulling,jdbcType=VARCHAR},
+      </if>
+      <if test="faceShape != null" >
+        #{faceShape,jdbcType=VARCHAR},
+      </if>
+      <if test="nasolabialAngle != null" >
+        #{nasolabialAngle,jdbcType=VARCHAR},
+      </if>
+      <if test="labialGroove != null" >
+        #{labialGroove,jdbcType=VARCHAR},
+      </if>
+      <if test="chinPosition != null" >
+        #{chinPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="others != null" >
+        #{others,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.FaceCheck" >
+    update face_check
+    <set >
+      <if test="positive != null" >
+        POSITIVE = #{positive,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveCode != null" >
+        POSITIVE_CODE = #{positiveCode,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveSmile != null" >
+        POSITIVE_SMILE = #{positiveSmile,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveSmileCode != null" >
+        POSITIVE_SMILE_CODE = #{positiveSmileCode,jdbcType=VARCHAR},
+      </if>
+      <if test="side != null" >
+        SIDE = #{side,jdbcType=VARCHAR},
+      </if>
+      <if test="sideCode != null" >
+        SIDE_CODE = #{sideCode,jdbcType=VARCHAR},
+      </if>
+      <if test="right != null" >
+        RIGHT = #{right,jdbcType=VARCHAR},
+      </if>
+      <if test="rightCode != null" >
+        RIGHT_CODE = #{rightCode,jdbcType=VARCHAR},
+      </if>
+      <if test="letf != null" >
+        LETF = #{letf,jdbcType=VARCHAR},
+      </if>
+      <if test="letfCode != null" >
+        LETF_CODE = #{letfCode,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        OTHER = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCode != null" >
+        OTHER_CODE = #{otherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="frontalType != null" >
+        FRONTAL_TYPE = #{frontalType,jdbcType=VARCHAR},
+      </if>
+      <if test="chinSocket != null" >
+        CHIN_SOCKET = #{chinSocket,jdbcType=VARCHAR},
+      </if>
+      <if test="lipShape != null" >
+        LIP_SHAPE = #{lipShape,jdbcType=VARCHAR},
+      </if>
+      <if test="symmetry != null" >
+        SYMMETRY = #{symmetry,jdbcType=VARCHAR},
+      </if>
+      <if test="smilePulling != null" >
+        SMILE_PULLING = #{smilePulling,jdbcType=VARCHAR},
+      </if>
+      <if test="relaxPulling != null" >
+        RELAX_PULLING = #{relaxPulling,jdbcType=VARCHAR},
+      </if>
+      <if test="faceShape != null" >
+        FACE_SHAPE = #{faceShape,jdbcType=VARCHAR},
+      </if>
+      <if test="nasolabialAngle != null" >
+        NASOLABIAL_ANGLE = #{nasolabialAngle,jdbcType=VARCHAR},
+      </if>
+      <if test="labialGroove != null" >
+        LABIAL_GROOVE = #{labialGroove,jdbcType=VARCHAR},
+      </if>
+      <if test="chinPosition != null" >
+        CHIN_POSITION = #{chinPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="others != null" >
+        OTHERS = #{others,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.FaceCheck" >
+    update face_check
+    set POSITIVE = #{positive,jdbcType=VARCHAR},
+      POSITIVE_CODE = #{positiveCode,jdbcType=VARCHAR},
+      POSITIVE_SMILE = #{positiveSmile,jdbcType=VARCHAR},
+      POSITIVE_SMILE_CODE = #{positiveSmileCode,jdbcType=VARCHAR},
+      SIDE = #{side,jdbcType=VARCHAR},
+      SIDE_CODE = #{sideCode,jdbcType=VARCHAR},
+      RIGHT = #{right,jdbcType=VARCHAR},
+      RIGHT_CODE = #{rightCode,jdbcType=VARCHAR},
+      LETF = #{letf,jdbcType=VARCHAR},
+      LETF_CODE = #{letfCode,jdbcType=VARCHAR},
+      OTHER = #{other,jdbcType=VARCHAR},
+      OTHER_CODE = #{otherCode,jdbcType=VARCHAR},
+      FRONTAL_TYPE = #{frontalType,jdbcType=VARCHAR},
+      CHIN_SOCKET = #{chinSocket,jdbcType=VARCHAR},
+      LIP_SHAPE = #{lipShape,jdbcType=VARCHAR},
+      SYMMETRY = #{symmetry,jdbcType=VARCHAR},
+      SMILE_PULLING = #{smilePulling,jdbcType=VARCHAR},
+      RELAX_PULLING = #{relaxPulling,jdbcType=VARCHAR},
+      FACE_SHAPE = #{faceShape,jdbcType=VARCHAR},
+      NASOLABIAL_ANGLE = #{nasolabialAngle,jdbcType=VARCHAR},
+      LABIAL_GROOVE = #{labialGroove,jdbcType=VARCHAR},
+      CHIN_POSITION = #{chinPosition,jdbcType=VARCHAR},
+      OTHERS = #{others,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>
