@@ -50,4 +50,33 @@ public interface IOrthodonticsPlanDao {
 	 * @throws   
 	 */
 	int findOrthodonticsPlanPageCount(FindOrthodonticsPlanPage findOrthodonticsPlanPage);
+
+	/**   
+	 * @Title: selectByPatientNo   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param patientNo
+	 * @param: @return      
+	 * @return: OrthodonticsPlan      
+	 * @throws   
+	 */
+	OrthodonticsPlan selectByPatientNo(String patientNo);
+
+	/**   
+	 * @Title: selectMaxSort   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return      
+	 * @return: int      
+	 * @throws   
+	 */
+	Integer selectMaxSort();
+
+
+	/**   
+	 * @Title: updateSort   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param orthodonticsPlanDto      
+	 * @return: void      
+	 * @throws   
+	 */
+	void updateSort(OrthodonticsPlanDto orthodonticsPlanDto);
 }

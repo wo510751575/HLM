@@ -12,7 +12,6 @@
 package com.lj.business.api.controller.hx;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -25,7 +24,6 @@ import com.lj.base.core.util.AssertUtils;
 import com.lj.base.core.util.GUID;
 import com.lj.business.api.controller.Action;
 import com.lj.business.api.domain.GeneralResponse;
-import com.ye.business.hx.dto.DiagnosisDto;
 import com.ye.business.hx.dto.FindInformedConsentPage;
 import com.ye.business.hx.dto.InformedConsentDto;
 import com.ye.business.hx.service.IInformedConsentService;

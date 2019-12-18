@@ -109,12 +109,11 @@ public class OrthodonticsTemplateServiceImpl implements IOrthodonticsTemplateSer
 	 * @author 段志鹏 CreateDate: 2017年12月14日
 	 *
 	 */
-	public List<OrthodonticsTemplateVo>  findOrthodonticsTemplates(FindOrthodonticsTemplatePage findOrthodonticsTemplatePage)throws TsfaServiceException{
-		AssertUtils.notNull(findOrthodonticsTemplatePage);
-		List<OrthodonticsTemplateVo> returnList=null;
+	public List<OrthodonticsTemplateVo>  findOrthodonticsTemplates()throws TsfaServiceException{
+		List<OrthodonticsTemplateVo> returnList= new ArrayList<>();
 		List<OrthodonticsTemplateVo> oneList = new ArrayList<>();
 		try {
-			returnList = orthodonticsTemplateDao.findOrthodonticsTemplates(findOrthodonticsTemplatePage);
+			returnList = orthodonticsTemplateDao.findOrthodonticsTemplates();
 			if(returnList!=null) {
 				//组装第一层
 				for (OrthodonticsTemplateVo oneDto : returnList) {
@@ -141,7 +140,7 @@ public class OrthodonticsTemplateServiceImpl implements IOrthodonticsTemplateSer
 										threeList.add(oneDto);
 									}
 								}
-								orthodonticsTemplateVo.setChildren(threeList);
+								twoVo.setChildren(threeList);
 								if(threeList!=null) {
 									//组装第四层
 									for(OrthodonticsTemplateVo threeVo : threeList) {

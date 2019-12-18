@@ -62,7 +62,7 @@ public class FaceCheckAction extends Action {
 	@ResponseBody
 	@RequestMapping(value="/get.do",produces="application/json;charset=UTF-8")
 	public GeneralResponse get(FaceCheckDto faceCheckDto) {
-		AssertUtils.notNullAndEmpty(faceCheckDto.getCode(),"code不能为空!");
+		AssertUtils.notNullAndEmpty(faceCheckDto.getPatientNo(),"患者编号不能为空!");
 		FaceCheckDto findFaceCheck = faceCheckService.findFaceCheck(faceCheckDto);
 		return GeneralResponse.generateSuccessResponse(findFaceCheck);
 	}

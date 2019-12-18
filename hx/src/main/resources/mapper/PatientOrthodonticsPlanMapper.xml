@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IPatientOrthodonticsPlanDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.PatientOrthodonticsPlan" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="CHIEF_COMPLAINT" property="chiefComplaint" jdbcType="VARCHAR" />
+    <result column="PROBLEM" property="problem" jdbcType="VARCHAR" />
+    <result column="TARGET" property="target" jdbcType="VARCHAR" />
+    <result column="TOOTH_TYPE" property="toothType" jdbcType="VARCHAR" />
+    <result column="DENTAL_BONE" property="dentalBone" jdbcType="VARCHAR" />
+    <result column="TREATMENT_PLAN" property="treatmentPlan" jdbcType="VARCHAR" />
+    <result column="SURE" property="sure" jdbcType="VARCHAR" />
+    <result column="PATIENT_NO" property="patientNo" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, CHIEF_COMPLAINT, PROBLEM, TARGET, TOOTH_TYPE, DENTAL_BONE, TREATMENT_PLAN, 
+    SURE, PATIENT_NO, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from patient_orthodontics_plan
+    where PATIENT_NO = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from patient_orthodontics_plan
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.PatientOrthodonticsPlan" >
+    insert into patient_orthodontics_plan (CODE, CHIEF_COMPLAINT, PROBLEM, 
+      TARGET, TOOTH_TYPE, DENTAL_BONE, 
+      TREATMENT_PLAN, SURE, PATIENT_NO, 
+      REMARK)
+    values (#{code,jdbcType=VARCHAR}, #{chiefComplaint,jdbcType=VARCHAR}, #{problem,jdbcType=VARCHAR}, 
+      #{target,jdbcType=VARCHAR}, #{toothType,jdbcType=VARCHAR}, #{dentalBone,jdbcType=VARCHAR}, 
+      #{treatmentPlan,jdbcType=VARCHAR}, #{sure,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.PatientOrthodonticsPlan" >
+    insert into patient_orthodontics_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="chiefComplaint != null" >
+        CHIEF_COMPLAINT,
+      </if>
+      <if test="problem != null" >
+        PROBLEM,
+      </if>
+      <if test="target != null" >
+        TARGET,
+      </if>
+      <if test="toothType != null" >
+        TOOTH_TYPE,
+      </if>
+      <if test="dentalBone != null" >
+        DENTAL_BONE,
+      </if>
+      <if test="treatmentPlan != null" >
+        TREATMENT_PLAN,
+      </if>
+      <if test="sure != null" >
+        SURE,
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefComplaint != null" >
+        #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="problem != null" >
+        #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="toothType != null" >
+        #{toothType,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalBone != null" >
+        #{dentalBone,jdbcType=VARCHAR},
+      </if>
+      <if test="treatmentPlan != null" >
+        #{treatmentPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="sure != null" >
+        #{sure,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.PatientOrthodonticsPlan" >
+    update patient_orthodontics_plan
+    <set >
+      <if test="chiefComplaint != null" >
+        CHIEF_COMPLAINT = #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="problem != null" >
+        PROBLEM = #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        TARGET = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="toothType != null" >
+        TOOTH_TYPE = #{toothType,jdbcType=VARCHAR},
+      </if>
+      <if test="dentalBone != null" >
+        DENTAL_BONE = #{dentalBone,jdbcType=VARCHAR},
+      </if>
+      <if test="treatmentPlan != null" >
+        TREATMENT_PLAN = #{treatmentPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="sure != null" >
+        SURE = #{sure,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PATIENT_NO = #{patientNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.PatientOrthodonticsPlan" >
+    update patient_orthodontics_plan
+    set CHIEF_COMPLAINT = #{chiefComplaint,jdbcType=VARCHAR},
+      PROBLEM = #{problem,jdbcType=VARCHAR},
+      TARGET = #{target,jdbcType=VARCHAR},
+      TOOTH_TYPE = #{toothType,jdbcType=VARCHAR},
+      DENTAL_BONE = #{dentalBone,jdbcType=VARCHAR},
+      TREATMENT_PLAN = #{treatmentPlan,jdbcType=VARCHAR},
+      SURE = #{sure,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

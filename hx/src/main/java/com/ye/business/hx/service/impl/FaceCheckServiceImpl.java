@@ -180,7 +180,7 @@ public class FaceCheckServiceImpl implements IFaceCheckService {
 		AssertUtils.notNull(faceCheckDto);
 		AssertUtils.notAllNull(faceCheckDto.getCode(),"Code不能为空");
 		try {
-			FaceCheck faceCheck = faceCheckDao.selectByPrimaryKey(faceCheckDto.getCode());
+			FaceCheck faceCheck = faceCheckDao.selectByPrimaryKey(faceCheckDto.getPatientNo());
 			if(faceCheck == null){
 				return null;
 				//throw new TsfaServiceException(ErrorCode.FACE_CHECK_NOT_EXIST_ERROR,"面部检查信息不存在");

@@ -394,4 +394,36 @@
 			value="com.ye.business.hx.service.IDentitionCheckService" />
 	</bean>
 	
+	<!-- 正畸病历/正畸过程 -->
+	<bean name="/orthodonticsProcessService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="orthodonticsProcessServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IOrthodonticsProcessService" />
+	</bean>
+	
+	<!-- 正畸病历-正畸计划 -->
+	<bean name="/patientTreatmentPlanService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientTreatmentPlanServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientTreatmentPlanService" />
+	</bean>
+	
+	<!-- 正畸计划-治疗计划 -->
+	<bean name="/patientOrthodonticsPlanService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="patientOrthodonticsPlanServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IPatientOrthodonticsPlanService" />
+	</bean>
+	
+	<!-- 正畸过程记录 -->
+	<bean name="/orthodonticsProcessRecordService"
+		class="com.lj.base.mvc.remote.hession.spring.HessianServiceExporter">
+		<property name="service" ref="orthodonticsProcessRecordServiceImpl" />
+		<property name="serviceInterface"
+			value="com.ye.business.hx.service.IOrthodonticsProcessRecordService" />
+	</bean>
+	
 </beans>

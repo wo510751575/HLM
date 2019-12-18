@@ -63,14 +63,13 @@ public interface IOrthodonticsTemplateService {
 	 *
 	 * 方法说明：不分页查询正畸过程模板信息
 	 *
-	 * @param findOrthodonticsTemplatePage
 	 * @return
 	 * @throws TsfaServiceException
 	 *
 	 * @author 段志鹏 CreateDate: 2017-12-14
 	 *
 	 */
-	public List<OrthodonticsTemplateVo>  findOrthodonticsTemplates(FindOrthodonticsTemplatePage findOrthodonticsTemplatePage)throws TsfaServiceException;
+	public List<OrthodonticsTemplateVo>  findOrthodonticsTemplates()throws TsfaServiceException;
 
 	/**
 	 * 

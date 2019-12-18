@@ -36,7 +36,7 @@ public class SoftCheckDto implements Serializable {
     private String upperLip;
 
     /**
-     *  .
+     *  下唇:正常，功能过度，功能不足
      */
     private String lowerLip;
 

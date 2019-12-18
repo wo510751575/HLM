@@ -19,7 +19,8 @@ public class TreatmentPlanDto implements Serializable {
      * 步骤 .
      */
     private String step;
-
+    /**
+   
     /**
      * 是否启用:1-启用;2-禁用 .
      */
@@ -49,167 +50,191 @@ public class TreatmentPlanDto implements Serializable {
      *  .
      */
     private String remark4;
-
+    
     /**
      *  .
-     *
      */
-    public String getCode() {
-        return code;
-    }
+    private String patientNo;
 
-    /**
-     *  .
-     *
-     */
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
+	/**  
+	 * @Title:  getCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getCode() {
+		return code;
+	}
 
-    /**
-     * 方案名称 .
-     *
-     */
-    public String getName() {
-        return name;
-    }
+	/**  
+	 * @Title:  setCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /**
-     * 方案名称 .
-     *
-     */
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	/**  
+	 * @Title:  getName <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * 步骤 .
-     *
-     */
-    public String getStep() {
-        return step;
-    }
+	/**  
+	 * @Title:  setName <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * 步骤 .
-     *
-     */
-    public void setStep(String step) {
-        this.step = step == null ? null : step.trim();
-    }
+	/**  
+	 * @Title:  getStep <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getStep() {
+		return step;
+	}
 
-    /**
-     * 是否启用:1-启用;2-禁用 .
-     *
-     */
-    public Integer getStatus() {
-        return status;
-    }
+	/**  
+	 * @Title:  setStep <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setStep(String step) {
+		this.step = step;
+	}
 
-    /**
-     * 是否启用:1-启用;2-禁用 .
-     *
-     */
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	/**  
+	 * @Title:  getStatus <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public Integer getStatus() {
+		return status;
+	}
 
-    /**
-     * 创建时间 .
-     *
-     */
-    public Date getCreateDate() {
-        return createDate;
-    }
+	/**  
+	 * @Title:  setStatus <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    /**
-     * 创建时间 .
-     *
-     */
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	/**  
+	 * @Title:  getCreateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark() {
-        return remark;
-    }
+	/**  
+	 * @Title:  setCreateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+	/**  
+	 * @Title:  getRemark <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark() {
+		return remark;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark2() {
-        return remark2;
-    }
+	/**  
+	 * @Title:  setRemark <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark2(String remark2) {
-        this.remark2 = remark2 == null ? null : remark2.trim();
-    }
+	/**  
+	 * @Title:  getRemark2 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark2() {
+		return remark2;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark3() {
-        return remark3;
-    }
+	/**  
+	 * @Title:  setRemark2 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark3(String remark3) {
-        this.remark3 = remark3 == null ? null : remark3.trim();
-    }
+	/**  
+	 * @Title:  getRemark3 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark3() {
+		return remark3;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark4() {
-        return remark4;
-    }
+	/**  
+	 * @Title:  setRemark3 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark4(String remark4) {
-        this.remark4 = remark4 == null ? null : remark4.trim();
-    }
+	/**  
+	 * @Title:  getRemark4 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark4() {
+		return remark4;
+	}
 
-    /**
-     * 输出BEAN数据信息
-     * @author LeoPeng
-     */
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("TreatmentPlan [code=").append(code);
-        builder.append(",name=").append(name); 
-        builder.append(",step=").append(step); 
-        builder.append(",status=").append(status); 
-        builder.append(",createDate=").append(createDate); 
-        builder.append(",remark=").append(remark); 
-        builder.append(",remark2=").append(remark2); 
-        builder.append(",remark3=").append(remark3); 
-        builder.append(",remark4=").append(remark4); 
-        builder.append("]");
-        return builder.toString();
-    }
+	/**  
+	 * @Title:  setRemark4 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark4(String remark4) {
+		this.remark4 = remark4;
+	}
+
+	/**  
+	 * @Title:  getPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getPatientNo() {
+		return patientNo;
+	}
+
+	/**  
+	 * @Title:  setPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setPatientNo(String patientNo) {
+		this.patientNo = patientNo;
+	}
+    
+
 }

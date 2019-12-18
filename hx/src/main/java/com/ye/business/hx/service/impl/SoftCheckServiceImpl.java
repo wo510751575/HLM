@@ -175,9 +175,8 @@ public class SoftCheckServiceImpl implements ISoftCheckService {
 		logger.debug("findSoftCheck(FindSoftCheck findSoftCheck={}) - start", softCheckDto); 
 
 		AssertUtils.notNull(softCheckDto);
-		AssertUtils.notAllNull(softCheckDto.getCode(),"Code不能为空");
 		try {
-			SoftCheck softCheck = softCheckDao.selectByPrimaryKey(softCheckDto.getCode());
+			SoftCheck softCheck = softCheckDao.selectByPrimaryKey(softCheckDto.getPatientNo());
 			if(softCheck == null){
 				return null;
 				//throw new TsfaServiceException(ErrorCode.SOFT_CHECK_NOT_EXIST_ERROR,"软组织检查信息不存在");

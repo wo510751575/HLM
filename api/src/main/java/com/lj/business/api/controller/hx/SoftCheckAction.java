@@ -28,7 +28,7 @@ import com.ye.business.hx.service.ISoftCheckService;
 
 /**   
  * @ClassName:  SoftCheckAction   
- * @Description:TODO(这里用一句话描述这个类的作用)   
+ * @Description:TODO(正畸检查/颌骨及软组织检查)   
  * @author: 贾光朝 
  * @date:   2019-11-05 11:25   
  *     
@@ -64,7 +64,7 @@ public class SoftCheckAction extends Action {
 	@ResponseBody
 	@RequestMapping(value="/get.do",produces="application/json;charset=UTF-8")
 	public GeneralResponse get(SoftCheckDto softCheckDto) {
-		AssertUtils.notNullAndEmpty(softCheckDto.getCode(),"code不能为空!");
+		AssertUtils.notNullAndEmpty(softCheckDto.getPatientNo(),"患者编号不能为空!");
 		SoftCheckDto findSoftCheck = softCheckService.findSoftCheck(softCheckDto);
 		return GeneralResponse.generateSuccessResponse(findSoftCheck);
 		

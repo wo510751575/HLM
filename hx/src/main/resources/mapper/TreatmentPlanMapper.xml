@@ -142,7 +142,7 @@
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
   
-  <select id="findTreatmentPlanPageCount" parameterType="com.ye.business.hx.dto.FindTreatmentPlanPage">
+  <select id="findTreatmentPlanPageCount" parameterType="com.ye.business.hx.dto.FindTreatmentPlanPage" resultType="java.lang.Integer">
   	select count(*) 
   	from treatment_plan
   </select>

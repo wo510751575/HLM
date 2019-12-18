@@ -28,7 +28,7 @@ public interface IOrthodonticsTemplateDao {
 	 * @return: List<OrthodonticsTemplateDto>      
 	 * @throws   
 	 */
-	List<OrthodonticsTemplateVo> findOrthodonticsTemplates(FindOrthodonticsTemplatePage findOrthodonticsTemplatePage);
+	List<OrthodonticsTemplateVo> findOrthodonticsTemplates();
 
 	/**   
 	 * @Title: findOrthodonticsTemplatePage   

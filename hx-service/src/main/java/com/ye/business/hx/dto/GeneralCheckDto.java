@@ -81,7 +81,7 @@ public class GeneralCheckDto implements Serializable {
     private String dentalCariesReplace;
 
     /**
-     * 替牙错颌：无，前牙反颌，下颌后缩，下颌后斜，不详 .
+     * 替牙早失：有，无，不详.
      */
     private String earlyLossReplace;
 

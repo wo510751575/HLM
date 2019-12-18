@@ -462,8 +462,8 @@
   <select id="selectByPatientReservationCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from patient_medical
-    where PATIENT_RESERVATION_CODE = #{patientReservationCode,jdbcType=VARCHAR}
+    from patient_medical pm
+    where pm.PATIENT_RESERVATION_CODE = #{patientReservationCode,jdbcType=VARCHAR}
     limit 1
   </select>
   <update id="updateByPrimaryKeyMedical" parameterType="com.ye.business.hx.domain.PatientMedical">

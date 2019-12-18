@@ -141,28 +141,16 @@
   	</where>
   </select>
   
-  <select id="findDiagnosisPageCount" parameterType="com.ye.business.hx.dto.FindDiagnosisPage">
+  <select id="findDiagnosisPageCount" parameterType="com.ye.business.hx.dto.FindDiagnosisPage" resultType="java.lang.Integer">
   	select count(*)
   	from diagnosis
-  	<where>
-  		<if test="param != null and param != ''">
-  			<if test="parm.type != null">
-  				TYPE = #{parm.type,jdbcType=INTEGER},
-  			</if>
-  		</if>
-  	</where>
+  	where TYPE = #{param.type,jdbcType=INTEGER}
   </select>
   
   <select id="findDiagnosisPage" parameterType="com.ye.business.hx.dto.FindDiagnosisPage" resultMap="findResultMap" >
   	select <include refid="Base_Column_List"/>
   	from diagnosis
-  	<where>
-  		<if test="param != null and param != ''">
-  			<if test="parm.type != null">
-  				TYPE = #{parm.type,jdbcType=INTEGER},
-  			</if>
-  		</if>
-  	</where>
+  	where TYPE = #{param.type,jdbcType=INTEGER}
   	order by CREATE_DATE desc
   	limit ${start} , ${limit}
   </select>

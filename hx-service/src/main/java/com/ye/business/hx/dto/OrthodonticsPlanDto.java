@@ -14,11 +14,21 @@ public class OrthodonticsPlanDto implements Serializable {
      * 类型:1-主诉;2-问题;3-矫治目标;4-治疗步骤 .
      */
     private Integer type;
+    
+    /**
+     * 排序.
+     */
+    private Integer sort;
 
     /**
      * 创建时间 .
      */
     private Date createDate;
+    
+    /**
+     * 创建时间 .
+     */
+    private Date updateDate;
 
     /**
      *  .
@@ -43,151 +53,280 @@ public class OrthodonticsPlanDto implements Serializable {
     /**
      * 内容 .
      */
-    private String content;
-
+    private String name;
+    
     /**
-     * CODE .
-     *
+     * 客户编号 .
      */
-    public String getCode() {
-        return code;
-    }
-
+    private String patientNo;
+    
     /**
-     * CODE .
-     *
+     * 上移/下移.
      */
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
-
+    private boolean move;
+    
     /**
-     * 类型:1-主诉;2-问题;3-矫治目标;4-治疗步骤 .
-     *
+     * 上移下移code.
      */
-    public Integer getType() {
-        return type;
-    }
-
+    private String nextCode;
+    
     /**
-     * 类型:1-主诉;2-问题;3-矫治目标;4-治疗步骤 .
-     *
+     * 上移下移排序.
      */
-    public void setType(Integer type) {
-        this.type = type;
-    }
+    private Integer nextSort;
 
-    /**
-     * 创建时间 .
-     *
-     */
-    public Date getCreateDate() {
-        return createDate;
-    }
+	/**  
+	 * @Title:  getCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getCode() {
+		return code;
+	}
 
-    /**
-     * 创建时间 .
-     *
-     */
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	/**  
+	 * @Title:  setCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark() {
-        return remark;
-    }
+	/**  
+	 * @Title:  getType <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public Integer getType() {
+		return type;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+	/**  
+	 * @Title:  setType <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark2() {
-        return remark2;
-    }
+	/**  
+	 * @Title:  getSort <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public Integer getSort() {
+		return sort;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark2(String remark2) {
-        this.remark2 = remark2 == null ? null : remark2.trim();
-    }
+	/**  
+	 * @Title:  setSort <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark3() {
-        return remark3;
-    }
+	/**  
+	 * @Title:  getCreateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark3(String remark3) {
-        this.remark3 = remark3 == null ? null : remark3.trim();
-    }
+	/**  
+	 * @Title:  setCreateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public String getRemark4() {
-        return remark4;
-    }
+	/**  
+	 * @Title:  getUpdateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public Date getUpdateDate() {
+		return updateDate;
+	}
 
-    /**
-     *  .
-     *
-     */
-    public void setRemark4(String remark4) {
-        this.remark4 = remark4 == null ? null : remark4.trim();
-    }
+	/**  
+	 * @Title:  setUpdateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 
-    /**
-     * 内容 .
-     *
-     */
-    public String getContent() {
-        return content;
-    }
+	/**  
+	 * @Title:  getRemark <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark() {
+		return remark;
+	}
 
-    /**
-     * 内容 .
-     *
-     */
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+	/**  
+	 * @Title:  setRemark <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
-    /**
-     * 输出BEAN数据信息
-     * @author LeoPeng
-     */
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("OrthodonticsPlan [code=").append(code);
-        builder.append(",type=").append(type); 
-        builder.append(",createDate=").append(createDate); 
-        builder.append(",remark=").append(remark); 
-        builder.append(",remark2=").append(remark2); 
-        builder.append(",remark3=").append(remark3); 
-        builder.append(",remark4=").append(remark4); 
-        builder.append(",content=").append(content); 
-        builder.append("]");
-        return builder.toString();
-    }
+	/**  
+	 * @Title:  getRemark2 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark2() {
+		return remark2;
+	}
+
+	/**  
+	 * @Title:  setRemark2 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
+	}
+
+	/**  
+	 * @Title:  getRemark3 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark3() {
+		return remark3;
+	}
+
+	/**  
+	 * @Title:  setRemark3 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
+	}
+
+	/**  
+	 * @Title:  getRemark4 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getRemark4() {
+		return remark4;
+	}
+
+	/**  
+	 * @Title:  setRemark4 <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setRemark4(String remark4) {
+		this.remark4 = remark4;
+	}
+
+	/**  
+	 * @Title:  getName <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**  
+	 * @Title:  setName <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**  
+	 * @Title:  getPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getPatientNo() {
+		return patientNo;
+	}
+
+	/**  
+	 * @Title:  setPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setPatientNo(String patientNo) {
+		this.patientNo = patientNo;
+	}
+
+
+	/**  
+	 * @Title:  isMove <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: boolean <BR>  
+	 */
+	public boolean isMove() {
+		return move;
+	}
+
+	/**  
+	 * @Title:  setMove <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: boolean <BR>  
+	 */
+	public void setMove(boolean move) {
+		this.move = move;
+	}
+
+	/**  
+	 * @Title:  getNextCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getNextCode() {
+		return nextCode;
+	}
+
+	/**  
+	 * @Title:  setNextCode <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setNextCode(String nextCode) {
+		this.nextCode = nextCode;
+	}
+
+	/**  
+	 * @Title:  getNextSort <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public Integer getNextSort() {
+		return nextSort;
+	}
+
+	/**  
+	 * @Title:  setNextSort <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public void setNextSort(Integer nextSort) {
+		this.nextSort = nextSort;
+	}
+    
+    
 }

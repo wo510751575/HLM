@@ -9,9 +9,9 @@
     <result column="POSITIVE_SMILE_CODE" property="positiveSmileCode" jdbcType="VARCHAR" />
     <result column="SIDE" property="side" jdbcType="VARCHAR" />
     <result column="SIDE_CODE" property="sideCode" jdbcType="VARCHAR" />
-    <result column="RIGHT" property="right" jdbcType="VARCHAR" />
+    <result column="RIGHT_URL" property="right" jdbcType="VARCHAR" />
     <result column="RIGHT_CODE" property="rightCode" jdbcType="VARCHAR" />
-    <result column="LETF" property="letf" jdbcType="VARCHAR" />
+    <result column="LETF_URL" property="letf" jdbcType="VARCHAR" />
     <result column="LETF_CODE" property="letfCode" jdbcType="VARCHAR" />
     <result column="OTHER" property="other" jdbcType="VARCHAR" />
     <result column="OTHER_CODE" property="otherCode" jdbcType="VARCHAR" />
@@ -33,7 +33,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     CODE, POSITIVE, POSITIVE_CODE, POSITIVE_SMILE, POSITIVE_SMILE_CODE, SIDE, SIDE_CODE, 
-    RIGHT, RIGHT_CODE, LETF, LETF_CODE, OTHER, OTHER_CODE, FRONTAL_TYPE, CHIN_SOCKET, 
+    RIGHT_URL, RIGHT_CODE, LETF_URL, LETF_CODE, OTHER, OTHER_CODE, FRONTAL_TYPE, CHIN_SOCKET, 
     LIP_SHAPE, SYMMETRY, SMILE_PULLING, RELAX_PULLING, FACE_SHAPE, NASOLABIAL_ANGLE, 
     LABIAL_GROOVE, CHIN_POSITION, OTHERS, PATIENT_NO, CREATE_DATE, CREATE_ID, REMARK
   </sql>
@@ -41,7 +41,7 @@
     select 
     <include refid="Base_Column_List" />
     from face_check
-    where CODE = #{code,jdbcType=VARCHAR}
+    where PATIENT_NO = #{code,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from face_check
@@ -50,8 +50,8 @@
   <insert id="insert" parameterType="com.ye.business.hx.domain.FaceCheck" >
     insert into face_check (CODE, POSITIVE, POSITIVE_CODE, 
       POSITIVE_SMILE, POSITIVE_SMILE_CODE, SIDE, 
-      SIDE_CODE, RIGHT, RIGHT_CODE, 
-      LETF, LETF_CODE, OTHER, 
+      SIDE_CODE, RIGHT_URL, RIGHT_CODE, 
+      LETF_URL, LETF_CODE, OTHER, 
       OTHER_CODE, FRONTAL_TYPE, CHIN_SOCKET, 
       LIP_SHAPE, SYMMETRY, SMILE_PULLING, 
       RELAX_PULLING, FACE_SHAPE, NASOLABIAL_ANGLE, 
@@ -94,13 +94,13 @@
         SIDE_CODE,
       </if>
       <if test="right != null" >
-        RIGHT,
+        RIGHT_URL,
       </if>
       <if test="rightCode != null" >
         RIGHT_CODE,
       </if>
       <if test="letf != null" >
-        LETF,
+        LETF_URL,
       </if>
       <if test="letfCode != null" >
         LETF_CODE,
@@ -266,13 +266,13 @@
         SIDE_CODE = #{sideCode,jdbcType=VARCHAR},
       </if>
       <if test="right != null" >
-        RIGHT = #{right,jdbcType=VARCHAR},
+        RIGHT_URL = #{right,jdbcType=VARCHAR},
       </if>
       <if test="rightCode != null" >
         RIGHT_CODE = #{rightCode,jdbcType=VARCHAR},
       </if>
       <if test="letf != null" >
-        LETF = #{letf,jdbcType=VARCHAR},
+        LETF_URL = #{letf,jdbcType=VARCHAR},
       </if>
       <if test="letfCode != null" >
         LETF_CODE = #{letfCode,jdbcType=VARCHAR},
@@ -339,9 +339,9 @@
       POSITIVE_SMILE_CODE = #{positiveSmileCode,jdbcType=VARCHAR},
       SIDE = #{side,jdbcType=VARCHAR},
       SIDE_CODE = #{sideCode,jdbcType=VARCHAR},
-      RIGHT = #{right,jdbcType=VARCHAR},
+      RIGHT_URL = #{right,jdbcType=VARCHAR},
       RIGHT_CODE = #{rightCode,jdbcType=VARCHAR},
-      LETF = #{letf,jdbcType=VARCHAR},
+      LETF_URL = #{letf,jdbcType=VARCHAR},
       LETF_CODE = #{letfCode,jdbcType=VARCHAR},
       OTHER = #{other,jdbcType=VARCHAR},
       OTHER_CODE = #{otherCode,jdbcType=VARCHAR},

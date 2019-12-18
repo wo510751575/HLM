@@ -172,7 +172,7 @@ public class GeneralCheckServiceImpl implements IGeneralCheckService {
 		AssertUtils.notNull(generalCheckDto);
 		AssertUtils.notAllNull(generalCheckDto.getCode(),"Code不能为空");
 		try {
-			GeneralCheck generalCheck = generalCheckDao.selectByPrimaryKey(generalCheckDto.getCode());
+			GeneralCheck generalCheck = generalCheckDao.selectByPrimaryKey(generalCheckDto.getPatientNo());
 			if(generalCheck == null){
 				return null;
 				//throw new TsfaServiceException(ErrorCode.GENERAL_CHECK_NOT_EXIST_ERROR,"一般检查信息不存在");

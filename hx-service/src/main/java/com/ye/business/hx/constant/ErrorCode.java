@@ -566,4 +566,50 @@ public class ErrorCode {
 	public static final String SOFT_CHECK_FIND_PAGE_ERROR = "soft_check_find_page_error";
 	/** 软组织检查信息不存在错误. */
 	public static final String SOFT_CHECK_NOT_EXIST_ERROR = "soft_check_not_exist_error";
+	
+	/** 新增正畸病历/正畸过程信息错误. */
+	public static final String ORTHODONTICS_PROCESS_ADD_ERROR = "orthodontics_process_add_error";
+	/** 正畸病历/正畸过程信息更新错误. */
+	public static final String ORTHODONTICS_PROCESS_UPDATE_ERROR = "orthodontics_process_update_error";
+	/** 查找正畸病历/正畸过程信息错误. */
+	public static final String ORTHODONTICS_PROCESS_FIND_ERROR = "orthodontics_process_find_error";
+	/** 正畸病历/正畸过程信息分页查询错误. */
+	public static final String ORTHODONTICS_PROCESS_FIND_PAGE_ERROR = "orthodontics_process_find_page_error";
+	/** 正畸病历/正畸过程信息不存在错误. */
+	public static final String ORTHODONTICS_PROCESS_NOT_EXIST_ERROR = "orthodontics_process_not_exist_error";
+	
+	/** 新增正畸病历-正畸计划信息错误. */
+	public static final String PATIENT_ORTHODONTICS_PLAN_ADD_ERROR = "patient_orthodontics_plan_add_error";
+	/** 正畸病历-正畸计划信息更新错误. */
+	public static final String PATIENT_ORTHODONTICS_PLAN_UPDATE_ERROR = "patient_orthodontics_plan_update_error";
+	/** 查找正畸病历-正畸计划信息错误. */
+	public static final String PATIENT_ORTHODONTICS_PLAN_FIND_ERROR = "patient_orthodontics_plan_find_error";
+	/** 正畸病历-正畸计划信息分页查询错误. */
+	public static final String PATIENT_ORTHODONTICS_PLAN_FIND_PAGE_ERROR = "patient_orthodontics_plan_find_page_error";
+	/** 正畸病历-正畸计划信息不存在错误. */
+	public static final String PATIENT_ORTHODONTICS_PLAN_NOT_EXIST_ERROR = "patient_orthodontics_plan_not_exist_error";
+	
+	/** 新增正畸计划-治疗计划信息错误. */
+	public static final String PATIENT_TREATMENT_PLAN_ADD_ERROR = "patient_treatment_plan_add_error";
+	/** 正畸计划-治疗计划信息更新错误. */
+	public static final String PATIENT_TREATMENT_PLAN_UPDATE_ERROR = "patient_treatment_plan_update_error";
+	/** 查找正畸计划-治疗计划信息错误. */
+	public static final String PATIENT_TREATMENT_PLAN_FIND_ERROR = "patient_treatment_plan_find_error";
+	/** 正畸计划-治疗计划信息分页查询错误. */
+	public static final String PATIENT_TREATMENT_PLAN_FIND_PAGE_ERROR = "patient_treatment_plan_find_page_error";
+	/** 正畸计划-治疗计划信息不存在错误. */
+	public static final String PATIENT_TREATMENT_PLAN_NOT_EXIST_ERROR = "patient_treatment_plan_not_exist_error";
+	
+	/** 新增正畸过程信息错误. */
+	public static final String ORTHODONTICS_PROCESS_RECORD_ADD_ERROR = "orthodontics_process_record_add_error";
+	/** 正畸过程信息更新错误. */
+	public static final String ORTHODONTICS_PROCESS_RECORD_UPDATE_ERROR = "orthodontics_process_record_update_error";
+	/** 查找正畸过程信息错误. */
+	public static final String ORTHODONTICS_PROCESS_RECORD_FIND_ERROR = "orthodontics_process_record_find_error";
+	/** 正畸过程信息分页查询错误. */
+	public static final String ORTHODONTICS_PROCESS_RECORD_FIND_PAGE_ERROR = "orthodontics_process_record_find_page_error";
+	/** 正畸过程信息不存在错误. */
+	public static final String ORTHODONTICS_PROCESS_RECORD_NOT_EXIST_ERROR = "orthodontics_process_record_not_exist_error";
+
+	
 }

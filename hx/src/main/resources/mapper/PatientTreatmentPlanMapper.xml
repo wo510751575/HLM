@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.ye.business.hx.dao.IPatientTreatmentPlanDao">
+	<resultMap id="BaseResultMap"
+		type="com.ye.business.hx.domain.PatientTreatmentPlan">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<id column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="STEP" property="step" jdbcType="VARCHAR" />
+		<result column="ATTENTION" property="attention"
+			jdbcType="VARCHAR" />
+		<result column="EXPLAINS" property="explain" jdbcType="VARCHAR" />
+		<result column="PATIENT_NO" property="patientNo"
+			jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="INTEGER" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="findResultMap"
+		type="com.ye.business.hx.dto.PatientTreatmentPlanDto">
+		<id column="CODE" property="code" jdbcType="VARCHAR" />
+		<id column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ATTENTION" property="attention"
+			jdbcType="VARCHAR" />
+		<result column="EXPLAINS" property="explain" jdbcType="VARCHAR" />
+		<result column="INFORMED_CONSENT" property="informedConsent"
+			jdbcType="VARCHAR" />
+		<result column="INFORMED_NAME" property="informedName"
+			jdbcType="VARCHAR" />
+		<result column="PATIENT_NO" property="patientNo"
+			jdbcType="VARCHAR" />
+		<collection property="orthodonticsPlanDtoList"
+			javaType="java.util.List"
+			ofType="com.ye.business.hx.dto.OrthodonticsPlanDto">
+			<id column="OCODE" property="code" jdbcType="VARCHAR" />
+			<result column="TYPE" property="type" jdbcType="INTEGER" />
+			<result column="OSORT" property="sort" jdbcType="INTEGER" />
+			<result column="CONTENT" property="name" jdbcType="VARCHAR" />
+			<result column="OPATIENT_NO" property="patientNo"
+				jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<select id="findPatientTreatmentPlans"
+		parameterType="com.ye.business.hx.dto.FindPatientTreatmentPlanPage"
+		resultMap="findResultMap">
+		select p.CODE,p.NAME, p.ATTENTION,
+		p.EXPLAINS,p.INFORMED_CONSENT,p.INFORMED_NAME, p.PATIENT_NO,
+		o.CODE as
+		OCODE, o.TYPE, o.SORT as OSORT, o.CONTENT ,o.PATIENT_NO as
+		OPATIENT_NO
+		from patient_treatment_plan p , orthodontics_plan o
+		where p.CODE =
+		o.REMARK4
+		and p.code in (select code from patient_treatment_plan where
+		PATIENT_NO =
+		#{param.patientNo})
+		order by o.SORT asc
+	</select>
+
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.ye.business.hx.domain.PatientTreatmentPlan"
+		extends="BaseResultMap">
+		<result column="INFORMED_CONSENT" property="informedConsent"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CODE,NAME, STEP, ATTENTION, EXPLAINS, PATIENT_NO, SORT,
+		CREATE_DATE
+	</sql>
+	<sql id="Blob_Column_List">
+		INFORMED_CONSENT
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from patient_treatment_plan
+		where PATIENT_NO = #{code,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		patient_treatment_plan
+		where CODE = #{code,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ye.business.hx.domain.PatientTreatmentPlan">
+		insert into patient_treatment_plan (CODE, STEP,
+		ATTENTION,
+		EXPLAINS, PATIENT_NO, SORT,
+		CREATE_DATE, INFORMED_CONSENT)
+		values (#{code,jdbcType=VARCHAR}, #{step,jdbcType=VARCHAR},
+		#{attention,jdbcType=VARCHAR},
+		#{explain,jdbcType=VARCHAR},
+		#{patientNo,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{informedConsent,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ye.business.hx.domain.PatientTreatmentPlan">
+		insert into patient_treatment_plan
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				CODE,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="step != null">
+				STEP,
+			</if>
+			<if test="attention != null">
+				ATTENTION,
+			</if>
+			<if test="explain != null">
+				EXPLAINS,
+			</if>
+			<if test="patientNo != null">
+				PATIENT_NO,
+			</if>
+			<if test="sort != null">
+				SORT,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="informedConsent != null">
+				INFORMED_CONSENT,
+			</if>
+			<if test="informedName != null">
+				INFORMED_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="step != null">
+				#{step,jdbcType=VARCHAR},
+			</if>
+			<if test="attention != null">
+				#{attention,jdbcType=VARCHAR},
+			</if>
+			<if test="explain != null">
+				#{explain,jdbcType=VARCHAR},
+			</if>
+			<if test="patientNo != null">
+				#{patientNo,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="informedConsent != null">
+				#{informedConsent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="informedName != null">
+				#{informedName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ye.business.hx.domain.PatientTreatmentPlan">
+		update patient_treatment_plan
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="step != null">
+				STEP = #{step,jdbcType=VARCHAR},
+			</if>
+			<if test="attention != null">
+				ATTENTION = #{attention,jdbcType=VARCHAR},
+			</if>
+			<if test="explain != null">
+				EXPLAINS = #{explain,jdbcType=VARCHAR},
+			</if>
+			<if test="patientNo != null">
+				PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="informedConsent != null">
+				INFORMED_CONSENT =
+				#{informedConsent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="informedName != null">
+				INFORMED_NAME = #{informedName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CODE = #{code,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs"
+		parameterType="com.ye.business.hx.domain.PatientTreatmentPlan">
+		update patient_treatment_plan
+		set STEP =
+		#{step,jdbcType=VARCHAR},
+		ATTENTION = #{attention,jdbcType=VARCHAR},
+		EXPLAINS = #{explain,jdbcType=VARCHAR},
+		PATIENT_NO =
+		#{patientNo,jdbcType=VARCHAR},
+		SORT = #{sort,jdbcType=INTEGER},
+		CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+		INFORMED_CONSENT =
+		#{informedConsent,jdbcType=LONGVARCHAR}
+		where CODE =
+		#{code,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ye.business.hx.domain.PatientTreatmentPlan">
+		update patient_treatment_plan
+		set STEP =
+		#{step,jdbcType=VARCHAR},
+		ATTENTION = #{attention,jdbcType=VARCHAR},
+		EXPLAINS = #{explain,jdbcType=VARCHAR},
+		PATIENT_NO =
+		#{patientNo,jdbcType=VARCHAR},
+		SORT = #{sort,jdbcType=INTEGER},
+		CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+		where CODE =
+		#{code,jdbcType=VARCHAR}
+	</update>
+
+
+</mapper>

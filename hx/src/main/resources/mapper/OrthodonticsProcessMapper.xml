@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ye.business.hx.dao.IOrthodonticsProcessDao" >
+  <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.OrthodonticsProcess" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="TOOTH_POSITION" property="toothPosition" jdbcType="VARCHAR" />
+    <result column="EXPLAINS" property="explain" jdbcType="VARCHAR" />
+    <result column="PATIENT_NO" property="patientNo" jdbcType="VARCHAR" />
+    <result column="ATTENDING_DOCTOR" property="attendingDoctor" jdbcType="VARCHAR" />
+    <result column="NURSE" property="nurse" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RECORD_CODE" property="recordCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="com.ye.business.hx.dto.OrthodonticsProcessDto" id="findResultMap" extends="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, TYPE, TOOTH_POSITION, EXPLAINS, PATIENT_NO, ATTENDING_DOCTOR, NURSE, CREATE_DATE, 
+    REMARK ,UPDATE_DATE ,RECORD_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="findResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orthodontics_process
+    where RECORD_CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orthodontics_process
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ye.business.hx.domain.OrthodonticsProcess" >
+    insert into orthodontics_process (CODE, TYPE, TOOTH_POSITION, 
+      EXPLAINS, PATIENT_NO, ATTENDING_DOCTOR, 
+      NURSE, CREATE_DATE, REMARK
+      )
+    values (#{code,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{toothPosition,jdbcType=VARCHAR}, 
+      #{explain,jdbcType=VARCHAR}, #{patientNo,jdbcType=VARCHAR}, #{attendingDoctor,jdbcType=VARCHAR}, 
+      #{nurse,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ye.business.hx.domain.OrthodonticsProcess" >
+    insert into orthodontics_process
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="toothPosition != null" >
+        TOOTH_POSITION,
+      </if>
+      <if test="explain != null" >
+        EXPLAINS,
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO,
+      </if>
+      <if test="attendingDoctor != null" >
+        ATTENDING_DOCTOR,
+      </if>
+      <if test="nurse != null" >
+        NURSE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="recordCode != null" >
+        RECORD_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="toothPosition != null" >
+        #{toothPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null" >
+        #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attendingDoctor != null" >
+        #{attendingDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="nurse != null" >
+        #{nurse,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordCode != null" >
+        #{recordCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.OrthodonticsProcess" >
+    update orthodontics_process
+    <set >
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="toothPosition != null" >
+        TOOTH_POSITION = #{toothPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null" >
+        EXPLAINS = #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attendingDoctor != null" >
+        ATTENDING_DOCTOR = #{attendingDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="nurse != null" >
+        NURSE = #{nurse,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ye.business.hx.domain.OrthodonticsProcess" >
+    update orthodontics_process
+    set TYPE = #{type,jdbcType=INTEGER},
+      TOOTH_POSITION = #{toothPosition,jdbcType=VARCHAR},
+      EXPLAINS = #{explain,jdbcType=VARCHAR},
+      PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
+      ATTENDING_DOCTOR = #{attendingDoctor,jdbcType=VARCHAR},
+      NURSE = #{nurse,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

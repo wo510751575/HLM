@@ -17,7 +17,7 @@
     <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    CODE, TITLE, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+    CODE, TITLE, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4,CONTENT
   </sql>
   <sql id="Blob_Column_List" >
     CONTENT
@@ -153,7 +153,7 @@
   	limit ${start} , ${limit}
   </select>
   
-  <select id="findInformedConsentPageCount" parameterType="com.ye.business.hx.dto.FindInformedConsentPage">
+  <select id="findInformedConsentPageCount" parameterType="com.ye.business.hx.dto.FindInformedConsentPage" resultType="java.lang.Integer">
   	select count(*)
   	from informed_consent
   </select>

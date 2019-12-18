@@ -415,5 +415,33 @@
 		<property name="serviceInterface" value="com.ye.business.hx.service.IDentitionCheckService" />
 	</bean>
 	
+	<!-- 正畸病历/正畸过程 -->
+	<bean id="orthodonticsProcessService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="orthodonticsProcessService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IOrthodonticsProcessService" />
+	</bean>
+	
+	<!-- 正畸病历-正畸计划 -->
+	<bean id="patientTreatmentPlanService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientTreatmentPlanService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientTreatmentPlanService" />
+	</bean>
+	
+	<!-- 正畸计划-治疗计划 -->
+	<bean id="patientOrthodonticsPlanService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="patientOrthodonticsPlanService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IPatientOrthodonticsPlanService" />
+	</bean>
+	
+	<!-- 正畸过程 -->
+	<bean id="orthodonticsProcessRecordService" parent="systemHessianFactoryBean">
+		<property name="systemAliasName" value="hx" />
+		<property name="serviceName" value="orthodonticsProcessRecordService" />
+		<property name="serviceInterface" value="com.ye.business.hx.service.IOrthodonticsProcessRecordService" />
+	</bean>
+	
 </beans> 
 

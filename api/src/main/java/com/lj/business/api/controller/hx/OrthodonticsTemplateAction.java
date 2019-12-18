@@ -82,9 +82,7 @@ public class OrthodonticsTemplateAction extends Action {
 	@ResponseBody
 	@RequestMapping(value="/list.do")
 	public GeneralResponse list(FindOrthodonticsTemplatePage findOrthodonticsTemplatePage,OrthodonticsTemplateDto param) {
-		AssertUtils.notNullAndEmpty(param);
-		findOrthodonticsTemplatePage.setParam(param);
-		List<OrthodonticsTemplateVo> list = orthodonticsTemplateService.findOrthodonticsTemplates(findOrthodonticsTemplatePage);
+		List<OrthodonticsTemplateVo> list = orthodonticsTemplateService.findOrthodonticsTemplates();
 		return GeneralResponse.generateSuccessResponse(list);
 	}
 }

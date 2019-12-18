@@ -28,7 +28,7 @@ import com.ye.business.hx.service.IGeneralCheckService;
 
 /**   
  * @ClassName:  GeneralCheckAction   
- * @Description:TODO(这里用一句话描述这个类的作用)   
+ * @Description:TODO(正畸检查/一般检查)   
  * @author: 贾光朝 
  * @date:   2019-11-05 10:29   
  *     
@@ -62,7 +62,7 @@ public class GeneralCheckAction extends Action {
 	@ResponseBody
 	@RequestMapping(value="/get.do",produces="application/json;charset=UTF-8")
 	public GeneralResponse get(GeneralCheckDto generalCheckDto) {
-		AssertUtils.notNullAndEmpty(generalCheckDto.getCode(),"code不能为空!");
+		AssertUtils.notNullAndEmpty(generalCheckDto.getPatientNo(),"患者编号不能为空!");
 		GeneralCheckDto generalCheck = generalCheckService.findGeneralCheck(generalCheckDto);
 		return GeneralResponse.generateSuccessResponse(generalCheck);
 	}

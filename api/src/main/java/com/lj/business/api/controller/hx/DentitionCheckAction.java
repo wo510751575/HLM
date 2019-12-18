@@ -28,7 +28,7 @@ import com.ye.business.hx.service.IDentitionCheckService;
 
 /**   
  * @ClassName:  DentitionCheckAction   
- * @Description:TODO(这里用一句话描述这个类的作用)   
+ * @Description:TODO(正畸检查/牙列检查)   
  * @author: 贾光朝 
  * @date:   2019-11-05 11:40   
  *     
@@ -62,7 +62,7 @@ public class DentitionCheckAction extends Action {
 	@ResponseBody
 	@RequestMapping(value="/get.do",produces="application/json;charset=UTF-8")
 	public GeneralResponse get(DentitionCheckDto dentitionCheckDto) {
-		AssertUtils.notNullAndEmpty(dentitionCheckDto.getCode(),"code不能为空!");
+		AssertUtils.notNullAndEmpty(dentitionCheckDto.getPatientNo(),"患者编号不能为空!");
 		DentitionCheckDto findDentitionCheck = dentitionCheckService.findDentitionCheck(dentitionCheckDto);
 		return GeneralResponse.generateSuccessResponse(findDentitionCheck);
 	}

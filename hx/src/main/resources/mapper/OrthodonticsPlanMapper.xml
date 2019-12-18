@@ -4,7 +4,9 @@
   <resultMap id="BaseResultMap" type="com.ye.business.hx.domain.OrthodonticsPlan" >
     <id column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
     <result column="REMARK3" property="remark3" jdbcType="VARCHAR" />
@@ -17,19 +19,26 @@
     <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    CODE, TYPE, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4
+    CODE, TYPE, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4, CONTENT ,SORT ,PATIENT_NO
   </sql>
   <sql id="Blob_Column_List" >
     CONTENT
   </sql>
+  
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from orthodontics_plan
     where CODE = #{code,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectByPatientNo" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orthodontics_plan
+    where PATIENT_NO = #{patientNo,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from orthodontics_plan
     where CODE = #{code,jdbcType=VARCHAR}
@@ -51,6 +60,9 @@
       <if test="type != null" >
         TYPE,
       </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
       <if test="createDate != null" >
         CREATE_DATE,
       </if>
@@ -69,6 +81,9 @@
       <if test="content != null" >
         CONTENT,
       </if>
+       <if test="patientNo != null" >
+        PATIENT_NO,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="code != null" >
@@ -76,6 +91,9 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
@@ -95,6 +113,9 @@
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
       </if>
+      <if test="patientNo != null" >
+        #{patientNo,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ye.business.hx.domain.OrthodonticsPlan" >
@@ -103,8 +124,14 @@
       <if test="type != null" >
         TYPE = #{type,jdbcType=INTEGER},
       </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
       <if test="createDate != null" >
         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
@@ -120,6 +147,9 @@
       </if>
       <if test="content != null" >
         CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="patientNo != null" >
+        PATIENT_NO = #{patientNo,jdbcType=VARCHAR},
       </if>
     </set>
     where CODE = #{code,jdbcType=VARCHAR}
@@ -146,29 +176,54 @@
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
   
-  <select id="findOrthodonticsPlanPageCount" parameterType="com.ye.business.hx.dto.FindOrthodonticsPlanPage">
+  <select id="findOrthodonticsPlanPageCount" parameterType="com.ye.business.hx.dto.FindOrthodonticsPlanPage" resultType="java.lang.Integer">
   	select count(*) 
   	from orthodontics_plan
   	<where>
-  		<if test="param != null and param != ''">
-  			<if test="param.type != null">
-  				TYPE = #{param.type}
-  			</if>
+  		<if test="param.type != 0">
+  			TYPE = #{param.type}
   		</if>
+  		<choose>
+  			<when test="param.patientNo != null and param.patientNo != ''">
+  				and PATIENT_NO = #{param.patientNo}
+  			</when>
+  			<otherwise>
+  				and PATIENT_NO is null
+  			</otherwise>
+  		</choose>
   	</where>
   </select>
   
   <select id="findOrthodonticsPlanPage" parameterType="com.ye.business.hx.dto.FindOrthodonticsPlanPage" resultMap="findResultMap">
-  	select <include refid="Base_Column_List"/>
+  	select CODE, TYPE, CREATE_DATE, REMARK, REMARK2, REMARK3, REMARK4, CONTENT as name ,SORT,UPDATE_DATE
   	from orthodontics_plan
   	<where>
-  		<if test="param != null and param != ''">
-  			<if test="param.type != null">
-  				TYPE = #{param.type}
-  			</if>
+  		<if test="param.type != 0">
+  			TYPE = #{param.type}
   		</if>
+  		<choose>
+  			<when test="param.patientNo != null and param.patientNo != ''">
+  				and PATIENT_NO = #{param.patientNo}
+  			</when>
+  			<otherwise>
+  				and PATIENT_NO is null
+  			</otherwise>
+  		</choose>
   	</where>
-  	order by CREATE_DATE DESC
+  	order by SORT ASC
   	limit ${start} , ${limit}
   </select>
+  
+  <select id="selectMaxSort" resultType="java.lang.Integer">
+  	select max(sort) from orthodontics_plan
+  </select>
+  
+  
+  <update id="updateSort" parameterType="com.ye.business.hx.dto.OrthodonticsPlanDto">
+  	update orthodontics_plan
+  	set sort = #{sort}
+  	where CODE = #{nextCode}
+  </update>
+  
+  
 </mapper>

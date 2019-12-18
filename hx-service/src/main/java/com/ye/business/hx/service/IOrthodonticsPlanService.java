@@ -107,6 +107,15 @@ public interface IOrthodonticsPlanService {
 	 * @throws   
 	 */
 	public void delete(OrthodonticsPlanDto orthodonticsPlanDto)throws TsfaServiceException;
+
+	/**   
+	 * @Title: getMaxSort   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return      
+	 * @return: Integer      
+	 * @throws   
+	 */
+	public Integer getMaxSort();
 	
 
 }

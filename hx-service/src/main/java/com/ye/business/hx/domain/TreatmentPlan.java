@@ -47,8 +47,33 @@ public class TreatmentPlan {
      *  .
      */
     private String remark4;
-
+    
     /**
+     *  .
+     */
+    private String patientNo;
+    
+    
+
+    /**  
+	 * @Title:  getPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getPatientNo() {
+		return patientNo;
+	}
+
+	/**  
+	 * @Title:  setPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setPatientNo(String patientNo) {
+		this.patientNo = patientNo;
+	}
+
+	/**
      *  .
      *
      */

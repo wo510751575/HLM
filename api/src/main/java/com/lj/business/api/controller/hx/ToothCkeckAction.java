@@ -13,9 +13,7 @@ package com.lj.business.api.controller.hx;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -29,7 +27,6 @@ import com.lj.base.core.util.GUID;
 import com.lj.business.api.controller.Action;
 import com.lj.business.api.domain.GeneralResponse;
 import com.ye.business.hx.dto.FindToothCheckPage;
-import com.ye.business.hx.dto.GumCheckDto;
 import com.ye.business.hx.dto.ToothCheckDto;
 import com.ye.business.hx.service.IToothCheckService;
 

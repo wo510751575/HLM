@@ -37,7 +37,7 @@
     select 
     <include refid="Base_Column_List" />
     from general_check
-    where CODE = #{code,jdbcType=VARCHAR}
+    where PATIENT_NO = #{code,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from general_check

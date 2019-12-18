@@ -86,4 +86,11 @@ public class OrthodonticsPlanAction extends Action {
 		Page<OrthodonticsPlanDto> page = orthodonticsPlanService.findOrthodonticsPlanPage(findOrthodonticsPlanPage);
 		return GeneralResponse.generateSuccessResponse(page);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getMaxSort.do",produces="application/json;charset=UTF-8")
+	public GeneralResponse getMaxSort(OrthodonticsPlanDto param) {
+		Integer sort = orthodonticsPlanService.getMaxSort();
+		return GeneralResponse.generateSuccessResponse(sort);
+	}
 }

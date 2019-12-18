@@ -12,7 +12,7 @@
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="LEVEL_CODE" property="levelCode" jdbcType="INTEGER" />
     <result column="TYPE" property="type" jdbcType="INTEGER" />
-    <result column="CHECK" property="check" jdbcType="VARCHAR" />
+    <result column="CHECKS" property="check" jdbcType="VARCHAR" />
     <result column="MANAGEMENT" property="management" jdbcType="VARCHAR" />
     <result column="DOCTOR_ADVICE" property="doctorAdvice" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
   
   <sql id="Base_Column_List" >
     CODE, NAME, PARENT_CODE, PARENT_CODES, PARENT_NAME, ORDER_NO, CREATER, CREATE_DATE, 
-    LEVEL_CODE, TYPE, CHECK, MANAGEMENT, DOCTOR_ADVICE, REMARK, REMARK2, REMARK3, REMARK4
+    LEVEL_CODE, TYPE, CHECKS, MANAGEMENT, DOCTOR_ADVICE, REMARK, REMARK2, REMARK3, REMARK4
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -41,7 +41,7 @@
     insert into orthodontics_template (CODE, NAME, PARENT_CODE, 
       PARENT_CODES, PARENT_NAME, ORDER_NO, 
       CREATER, CREATE_DATE, LEVEL_CODE, 
-      TYPE, CHECK, MANAGEMENT, 
+      TYPE, CHECKS, MANAGEMENT, 
       DOCTOR_ADVICE, REMARK, REMARK2, 
       REMARK3, REMARK4)
     values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
@@ -85,7 +85,7 @@
         TYPE,
       </if>
       <if test="check != null" >
-        CHECK,
+        CHECKS,
       </if>
       <if test="management != null" >
         MANAGEMENT,
@@ -191,7 +191,7 @@
         TYPE = #{type,jdbcType=INTEGER},
       </if>
       <if test="check != null" >
-        CHECK = #{check,jdbcType=VARCHAR},
+        CHECKS = #{check,jdbcType=VARCHAR},
       </if>
       <if test="management != null" >
         MANAGEMENT = #{management,jdbcType=VARCHAR},
@@ -225,7 +225,7 @@
       CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       LEVEL_CODE = #{levelCode,jdbcType=INTEGER},
       TYPE = #{type,jdbcType=INTEGER},
-      CHECK = #{check,jdbcType=VARCHAR},
+      CHECKS = #{check,jdbcType=VARCHAR},
       MANAGEMENT = #{management,jdbcType=VARCHAR},
       DOCTOR_ADVICE = #{doctorAdvice,jdbcType=VARCHAR},
       REMARK = #{remark,jdbcType=VARCHAR},
@@ -235,7 +235,7 @@
     where CODE = #{code,jdbcType=VARCHAR}
   </update>
   
-  <select id="findOrthodonticsTemplates" parameterType="com.ye.business.hx.dto.FindOrthodonticsTemplatePage" resultMap="findResultMap">
+  <select id="findOrthodonticsTemplates"  resultMap="findResultMap">
   	select <include refid="Base_Column_List"/>
   	from orthodontics_template
   </select>

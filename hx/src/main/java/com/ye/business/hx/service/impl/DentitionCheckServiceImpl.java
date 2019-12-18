@@ -199,9 +199,8 @@ public class DentitionCheckServiceImpl implements IDentitionCheckService {
 		logger.debug("findDentitionCheck(FindDentitionCheck findDentitionCheck={}) - start", dentitionCheckDto); 
 
 		AssertUtils.notNull(dentitionCheckDto);
-		AssertUtils.notAllNull(dentitionCheckDto.getCode(),"Code不能为空");
 		try {
-			DentitionCheck dentitionCheck = dentitionCheckDao.selectByPrimaryKey(dentitionCheckDto.getCode());
+			DentitionCheck dentitionCheck = dentitionCheckDao.selectByPrimaryKey(dentitionCheckDto.getPatientNo());
 			if(dentitionCheck == null){
 				return null;
 				//throw new TsfaServiceException(ErrorCode.DENTITION_CHECK_NOT_EXIST_ERROR,"牙列检查信息不存在");

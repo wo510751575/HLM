@@ -12,11 +12,21 @@ public class OrthodonticsPlan {
      * 类型:1-主诉;2-问题;3-矫治目标;4-治疗步骤 .
      */
     private Integer type;
+    
+    /**
+     * 排序.
+     */
+    private Integer sort;
 
     /**
      * 创建时间 .
      */
     private Date createDate;
+    
+    /**
+     * 创建时间 .
+     */
+    private Date updateDate;
 
     /**
      *  .
@@ -42,8 +52,71 @@ public class OrthodonticsPlan {
      * 内容 .
      */
     private String content;
-
+    
     /**
+     * 客户编号 .
+     */
+    private String patientNo;
+    
+    
+    
+    
+
+    /**  
+	 * @Title:  getPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public String getPatientNo() {
+		return patientNo;
+	}
+
+	/**  
+	 * @Title:  setPatientNo <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: String <BR>  
+	 */
+	public void setPatientNo(String patientNo) {
+		this.patientNo = patientNo;
+	}
+
+	/**  
+	 * @Title:  getSort <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public Integer getSort() {
+		return sort;
+	}
+
+	/**  
+	 * @Title:  setSort <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Integer <BR>  
+	 */
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
+	/**  
+	 * @Title:  getUpdateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	/**  
+	 * @Title:  setUpdateDate <BR>  
+	 * @Description: please write your description <BR>  
+	 * @return: Date <BR>  
+	 */
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	/**
      * CODE .
      *
      */
